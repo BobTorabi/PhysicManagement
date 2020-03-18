@@ -1,0 +1,892 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PhysicManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="bigint" />
+          <Property Name="PatientFullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="DoctorFullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="Date" Type="date" />
+          <Property Name="PersianDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="SessionNumber" Type="int" />
+          <Property Name="AttendanceStatusId" Type="int" />
+          <Property Name="PhysicTreatmentId" Type="int" />
+          <Property Name="TreatmentPhaseText" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Cancer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="EnglishTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CancerOAR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CancerId" Type="int" />
+          <Property Name="OrganTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="Tolerance" Type="nvarchar" MaxLength="500" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Reserve1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Reserve2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CancerTargets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CancerId" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Optimum" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Contour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="bigint" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="ExtraInfo1" Type="nvarchar" MaxLength="50" />
+          <Property Name="ExtraInfo2" Type="nvarchar" MaxLength="50" />
+          <Property Name="AcceptDate" Type="datetime" />
+          <Property Name="AcceptUser" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ContourDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MediacalRecordId" Type="bigint" />
+          <Property Name="ContourId" Type="bigint" />
+          <Property Name="CancerOARId" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="SelectDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Degree" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="MedicalRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PatientId" Type="int" />
+          <Property Name="PatientFirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PatientLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorId" Type="int" />
+          <Property Name="DoctorFirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoctorLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CancerId" Type="int" />
+          <Property Name="CancerTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="SystemCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceptionDate" Type="datetime" />
+          <Property Name="CTCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CTEnterDate" Type="datetime" />
+          <Property Name="MRICode" Type="nvarchar" MaxLength="50" />
+          <Property Name="MRIEnterDate" Type="datetime" />
+          <Property Name="CTDescription" Type="nvarchar(max)" />
+          <Property Name="TreatmentProcessId" Type="int" />
+          <Property Name="LastTreatmentProcessChangeDate" Type="datetime" />
+          <Property Name="TPCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TPEnterDate" Type="datetime" />
+          <Property Name="NeedsFusion" Type="bit" />
+          <Property Name="TPDescription" Type="nvarchar(max)" />
+          <Property Name="ContourAcceptDate" Type="datetime" />
+          <Property Name="ContourAcceptUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhasesCount" Type="int" />
+          <Property Name="PhasesPrescribedDate" Type="datetime" />
+          <Property Name="IsOnGoing" Type="bit" />
+          <Property Name="PhysicTreatementAcceptDate" Type="datetime" />
+          <Property Name="PhysicTreatementAcceptUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsOnCalendar" Type="bit" />
+          <Property Name="CalendarStartDate" Type="datetime" />
+          <Property Name="calendarEndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="NationalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="GenderIsMale" Type="bit" />
+          <Property Name="Province" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="RegisterDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PhysicTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="int" />
+          <Property Name="PhaseNumber" Type="int" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="ActionUser" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhysicTreatmentId" Type="int" />
+          <Property Name="CancerOARId" Type="int" />
+          <Property Name="PlannedDose" Type="nvarchar" MaxLength="500" />
+          <Property Name="Evaluation" Type="nvarchar" MaxLength="500" />
+          <Property Name="HadContour" Type="bit" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="ActionUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="Reserve1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Reserve2" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsAcceptedByPhysic" Type="bit" />
+          <Property Name="IsAcceptedByDoctor" Type="bit" />
+          <Property Name="AcceptedDoctorUser" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlanHostory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhysicTreatmentPlanId" Type="int" />
+          <Property Name="Note" Type="nvarchar" MaxLength="500" />
+          <Property Name="ChangeDate" Type="datetime" />
+          <Property Name="ActionUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="HasAlarm" Type="bit" />
+          <Property Name="IsDoctor" Type="bit" />
+        </EntityType>
+        <EntityType Name="TreatmentPhase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="bigint" />
+          <Property Name="PhaseNumber" Type="int" />
+          <Property Name="PhaseText" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dose" Type="float" />
+          <Property Name="Fraction" Type="int" />
+          <Property Name="Target" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="PrescribeDate" Type="datetime" />
+          <Property Name="PrescribesdUser" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TreatmentProcess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StepNumber" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="EnglishTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Calendar_MedicalRecord">
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
+          <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Calendar">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CancerOAR_Cancer">
+          <End Role="Cancer" Type="Self.Cancer" Multiplicity="0..1" />
+          <End Role="CancerOAR" Type="Self.CancerOAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cancer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CancerOAR">
+              <PropertyRef Name="CancerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CancerTargets_Cancer">
+          <End Role="Cancer" Type="Self.Cancer" Multiplicity="0..1" />
+          <End Role="CancerTargets" Type="Self.CancerTargets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cancer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CancerTargets">
+              <PropertyRef Name="CancerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contour_MedicalRecord">
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
+          <End Role="Contour" Type="Self.Contour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contour">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
+          <End Role="PhysicTreatment" Type="Self.PhysicTreatment" Multiplicity="0..1" />
+          <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlan">
+              <PropertyRef Name="PhysicTreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
+          <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="0..1" />
+          <End Role="PhysicTreatmentPlanHostory" Type="Self.PhysicTreatmentPlanHostory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatmentPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlanHostory">
+              <PropertyRef Name="PhysicTreatmentPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhysicManagementModelStoreContainer">
+          <EntitySet Name="Calendar" EntityType="Self.Calendar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cancer" EntityType="Self.Cancer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CancerOAR" EntityType="Self.CancerOAR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CancerTargets" EntityType="Self.CancerTargets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contour" EntityType="Self.Contour" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContourDetails" EntityType="Self.ContourDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicTreatment" EntityType="Self.PhysicTreatment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicTreatmentPlan" EntityType="Self.PhysicTreatmentPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicTreatmentPlanHostory" EntityType="Self.PhysicTreatmentPlanHostory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentProcess" EntityType="Self.TreatmentProcess" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Calendar_MedicalRecord" Association="Self.FK_Calendar_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Calendar" EntitySet="Calendar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CancerOAR_Cancer" Association="Self.FK_CancerOAR_Cancer">
+            <End Role="Cancer" EntitySet="Cancer" />
+            <End Role="CancerOAR" EntitySet="CancerOAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CancerTargets_Cancer" Association="Self.FK_CancerTargets_Cancer">
+            <End Role="Cancer" EntitySet="Cancer" />
+            <End Role="CancerTargets" EntitySet="CancerTargets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contour_MedicalRecord" Association="Self.FK_Contour_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Contour" EntitySet="Contour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="Self.FK_PhysicTreatmentPlan_PhysicTreatment">
+            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" Association="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
+            <End Role="PhysicTreatmentPlanHostory" EntitySet="PhysicTreatmentPlanHostory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhysicManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Calendar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="PatientFullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorFullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="PersianDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SessionNumber" Type="Int32" />
+          <Property Name="AttendanceStatusId" Type="Int32" />
+          <Property Name="PhysicTreatmentId" Type="Int32" />
+          <Property Name="TreatmentPhaseText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalRecord" Relationship="Self.FK_Calendar_MedicalRecord" FromRole="Calendar" ToRole="MedicalRecord" />
+        </EntityType>
+        <EntityType Name="Cancer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EnglishTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CancerOAR" Relationship="Self.FK_CancerOAR_Cancer" FromRole="Cancer" ToRole="CancerOAR" />
+          <NavigationProperty Name="CancerTargets" Relationship="Self.FK_CancerTargets_Cancer" FromRole="Cancer" ToRole="CancerTargets" />
+        </EntityType>
+        <EntityType Name="CancerOAR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CancerId" Type="Int32" />
+          <Property Name="OrganTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Tolerance" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reserve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reserve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cancer" Relationship="Self.FK_CancerOAR_Cancer" FromRole="CancerOAR" ToRole="Cancer" />
+        </EntityType>
+        <EntityType Name="CancerTargets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CancerId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Optimum" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cancer" Relationship="Self.FK_CancerTargets_Cancer" FromRole="CancerTargets" ToRole="Cancer" />
+        </EntityType>
+        <EntityType Name="Contour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExtraInfo1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ExtraInfo2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptDate" Type="DateTime" Precision="3" />
+          <Property Name="AcceptUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MedicalRecord" Relationship="Self.FK_Contour_MedicalRecord" FromRole="Contour" ToRole="MedicalRecord" />
+        </EntityType>
+        <EntityType Name="ContourDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MediacalRecordId" Type="Int64" />
+          <Property Name="ContourId" Type="Int64" />
+          <Property Name="CancerOARId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SelectDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MedicalRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PatientId" Type="Int32" />
+          <Property Name="PatientFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PatientLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorId" Type="Int32" />
+          <Property Name="DoctorFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CancerId" Type="Int32" />
+          <Property Name="CancerTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SystemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceptionDate" Type="DateTime" Precision="3" />
+          <Property Name="CTCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CTEnterDate" Type="DateTime" Precision="3" />
+          <Property Name="MRICode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MRIEnterDate" Type="DateTime" Precision="3" />
+          <Property Name="CTDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TreatmentProcessId" Type="Int32" />
+          <Property Name="LastTreatmentProcessChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="TPCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TPEnterDate" Type="DateTime" Precision="3" />
+          <Property Name="NeedsFusion" Type="Boolean" />
+          <Property Name="TPDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContourAcceptDate" Type="DateTime" Precision="3" />
+          <Property Name="ContourAcceptUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhasesCount" Type="Int32" />
+          <Property Name="PhasesPrescribedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsOnGoing" Type="Boolean" />
+          <Property Name="PhysicTreatementAcceptDate" Type="DateTime" Precision="3" />
+          <Property Name="PhysicTreatementAcceptUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsOnCalendar" Type="Boolean" />
+          <Property Name="CalendarStartDate" Type="DateTime" Precision="3" />
+          <Property Name="calendarEndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Calendar" Relationship="Self.FK_Calendar_MedicalRecord" FromRole="MedicalRecord" ToRole="Calendar" />
+          <NavigationProperty Name="Contour" Relationship="Self.FK_Contour_MedicalRecord" FromRole="MedicalRecord" ToRole="Contour" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GenderIsMale" Type="Boolean" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PhysicTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int32" />
+          <Property Name="PhaseNumber" Type="Int32" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="Self.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatment" ToRole="PhysicTreatmentPlan" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhysicTreatmentId" Type="Int32" />
+          <Property Name="CancerOARId" Type="Int32" />
+          <Property Name="PlannedDose" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Evaluation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="HadContour" Type="Boolean" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reserve1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Reserve2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAcceptedByPhysic" Type="Boolean" />
+          <Property Name="IsAcceptedByDoctor" Type="Boolean" />
+          <Property Name="AcceptedDoctorUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhysicTreatment" Relationship="Self.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatment" />
+          <NavigationProperty Name="PhysicTreatmentPlanHostory" Relationship="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatmentPlanHostory" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlanHostory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhysicTreatmentPlanId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HasAlarm" Type="Boolean" />
+          <Property Name="IsDoctor" Type="Boolean" />
+          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" FromRole="PhysicTreatmentPlanHostory" ToRole="PhysicTreatmentPlan" />
+        </EntityType>
+        <EntityType Name="TreatmentPhase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="PhaseNumber" Type="Int32" />
+          <Property Name="PhaseText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dose" Type="Double" />
+          <Property Name="Fraction" Type="Int32" />
+          <Property Name="Target" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrescribeDate" Type="DateTime" Precision="3" />
+          <Property Name="PrescribesdUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TreatmentProcess">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StepNumber" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EnglishTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Calendar_MedicalRecord">
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
+          <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Calendar">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CancerOAR_Cancer">
+          <End Role="Cancer" Type="Self.Cancer" Multiplicity="0..1" />
+          <End Role="CancerOAR" Type="Self.CancerOAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cancer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CancerOAR">
+              <PropertyRef Name="CancerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CancerTargets_Cancer">
+          <End Role="Cancer" Type="Self.Cancer" Multiplicity="0..1" />
+          <End Role="CancerTargets" Type="Self.CancerTargets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cancer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CancerTargets">
+              <PropertyRef Name="CancerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contour_MedicalRecord">
+          <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
+          <End Role="Contour" Type="Self.Contour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contour">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
+          <End Role="PhysicTreatment" Type="Self.PhysicTreatment" Multiplicity="0..1" />
+          <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlan">
+              <PropertyRef Name="PhysicTreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
+          <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="0..1" />
+          <End Role="PhysicTreatmentPlanHostory" Type="Self.PhysicTreatmentPlanHostory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatmentPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlanHostory">
+              <PropertyRef Name="PhysicTreatmentPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PhysicManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Calendar" EntityType="Self.Calendar" />
+          <EntitySet Name="Cancer" EntityType="Self.Cancer" />
+          <EntitySet Name="CancerOAR" EntityType="Self.CancerOAR" />
+          <EntitySet Name="CancerTargets" EntityType="Self.CancerTargets" />
+          <EntitySet Name="Contour" EntityType="Self.Contour" />
+          <EntitySet Name="ContourDetails" EntityType="Self.ContourDetails" />
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" />
+          <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" />
+          <EntitySet Name="PhysicTreatment" EntityType="Self.PhysicTreatment" />
+          <EntitySet Name="PhysicTreatmentPlan" EntityType="Self.PhysicTreatmentPlan" />
+          <EntitySet Name="PhysicTreatmentPlanHostory" EntityType="Self.PhysicTreatmentPlanHostory" />
+          <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" />
+          <EntitySet Name="TreatmentProcess" EntityType="Self.TreatmentProcess" />
+          <AssociationSet Name="FK_Calendar_MedicalRecord" Association="Self.FK_Calendar_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Calendar" EntitySet="Calendar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CancerOAR_Cancer" Association="Self.FK_CancerOAR_Cancer">
+            <End Role="Cancer" EntitySet="Cancer" />
+            <End Role="CancerOAR" EntitySet="CancerOAR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CancerTargets_Cancer" Association="Self.FK_CancerTargets_Cancer">
+            <End Role="Cancer" EntitySet="Cancer" />
+            <End Role="CancerTargets" EntitySet="CancerTargets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contour_MedicalRecord" Association="Self.FK_Contour_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Contour" EntitySet="Contour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="Self.FK_PhysicTreatmentPlan_PhysicTreatment">
+            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" Association="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
+            <End Role="PhysicTreatmentPlanHostory" EntitySet="PhysicTreatmentPlanHostory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhysicManagementModelStoreContainer" CdmEntityContainer="PhysicManagementEntities">
+          <EntitySetMapping Name="Calendar">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Calendar">
+              <MappingFragment StoreEntitySet="Calendar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PatientFullName" ColumnName="PatientFullName" />
+                <ScalarProperty Name="DoctorFullName" ColumnName="DoctorFullName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PersianDate" ColumnName="PersianDate" />
+                <ScalarProperty Name="SessionNumber" ColumnName="SessionNumber" />
+                <ScalarProperty Name="AttendanceStatusId" ColumnName="AttendanceStatusId" />
+                <ScalarProperty Name="PhysicTreatmentId" ColumnName="PhysicTreatmentId" />
+                <ScalarProperty Name="TreatmentPhaseText" ColumnName="TreatmentPhaseText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cancer">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Cancer">
+              <MappingFragment StoreEntitySet="Cancer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EnglishTitle" ColumnName="EnglishTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CancerOAR">
+            <EntityTypeMapping TypeName="PhysicManagementModel.CancerOAR">
+              <MappingFragment StoreEntitySet="CancerOAR">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CancerId" ColumnName="CancerId" />
+                <ScalarProperty Name="OrganTitle" ColumnName="OrganTitle" />
+                <ScalarProperty Name="Tolerance" ColumnName="Tolerance" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Reserve1" ColumnName="Reserve1" />
+                <ScalarProperty Name="Reserve2" ColumnName="Reserve2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CancerTargets">
+            <EntityTypeMapping TypeName="PhysicManagementModel.CancerTargets">
+              <MappingFragment StoreEntitySet="CancerTargets">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CancerId" ColumnName="CancerId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Optimum" ColumnName="Optimum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contour">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Contour">
+              <MappingFragment StoreEntitySet="Contour">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ExtraInfo1" ColumnName="ExtraInfo1" />
+                <ScalarProperty Name="ExtraInfo2" ColumnName="ExtraInfo2" />
+                <ScalarProperty Name="AcceptDate" ColumnName="AcceptDate" />
+                <ScalarProperty Name="AcceptUser" ColumnName="AcceptUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContourDetails">
+            <EntityTypeMapping TypeName="PhysicManagementModel.ContourDetails">
+              <MappingFragment StoreEntitySet="ContourDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MediacalRecordId" ColumnName="MediacalRecordId" />
+                <ScalarProperty Name="ContourId" ColumnName="ContourId" />
+                <ScalarProperty Name="CancerOARId" ColumnName="CancerOARId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SelectDate" ColumnName="SelectDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctor">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MedicalRecord">
+            <EntityTypeMapping TypeName="PhysicManagementModel.MedicalRecord">
+              <MappingFragment StoreEntitySet="MedicalRecord">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
+                <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DoctorFirstName" ColumnName="DoctorFirstName" />
+                <ScalarProperty Name="DoctorLastName" ColumnName="DoctorLastName" />
+                <ScalarProperty Name="CancerId" ColumnName="CancerId" />
+                <ScalarProperty Name="CancerTitle" ColumnName="CancerTitle" />
+                <ScalarProperty Name="SystemCode" ColumnName="SystemCode" />
+                <ScalarProperty Name="ReceptionDate" ColumnName="ReceptionDate" />
+                <ScalarProperty Name="CTCode" ColumnName="CTCode" />
+                <ScalarProperty Name="CTEnterDate" ColumnName="CTEnterDate" />
+                <ScalarProperty Name="MRICode" ColumnName="MRICode" />
+                <ScalarProperty Name="MRIEnterDate" ColumnName="MRIEnterDate" />
+                <ScalarProperty Name="CTDescription" ColumnName="CTDescription" />
+                <ScalarProperty Name="TreatmentProcessId" ColumnName="TreatmentProcessId" />
+                <ScalarProperty Name="LastTreatmentProcessChangeDate" ColumnName="LastTreatmentProcessChangeDate" />
+                <ScalarProperty Name="TPCode" ColumnName="TPCode" />
+                <ScalarProperty Name="TPEnterDate" ColumnName="TPEnterDate" />
+                <ScalarProperty Name="NeedsFusion" ColumnName="NeedsFusion" />
+                <ScalarProperty Name="TPDescription" ColumnName="TPDescription" />
+                <ScalarProperty Name="ContourAcceptDate" ColumnName="ContourAcceptDate" />
+                <ScalarProperty Name="ContourAcceptUser" ColumnName="ContourAcceptUser" />
+                <ScalarProperty Name="PhasesCount" ColumnName="PhasesCount" />
+                <ScalarProperty Name="PhasesPrescribedDate" ColumnName="PhasesPrescribedDate" />
+                <ScalarProperty Name="IsOnGoing" ColumnName="IsOnGoing" />
+                <ScalarProperty Name="PhysicTreatementAcceptDate" ColumnName="PhysicTreatementAcceptDate" />
+                <ScalarProperty Name="PhysicTreatementAcceptUser" ColumnName="PhysicTreatementAcceptUser" />
+                <ScalarProperty Name="IsOnCalendar" ColumnName="IsOnCalendar" />
+                <ScalarProperty Name="CalendarStartDate" ColumnName="CalendarStartDate" />
+                <ScalarProperty Name="calendarEndDate" ColumnName="calendarEndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patient">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="GenderIsMale" ColumnName="GenderIsMale" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatment">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatment">
+              <MappingFragment StoreEntitySet="PhysicTreatment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatmentPlan">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlan">
+              <MappingFragment StoreEntitySet="PhysicTreatmentPlan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PhysicTreatmentId" ColumnName="PhysicTreatmentId" />
+                <ScalarProperty Name="CancerOARId" ColumnName="CancerOARId" />
+                <ScalarProperty Name="PlannedDose" ColumnName="PlannedDose" />
+                <ScalarProperty Name="Evaluation" ColumnName="Evaluation" />
+                <ScalarProperty Name="HadContour" ColumnName="HadContour" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
+                <ScalarProperty Name="Reserve1" ColumnName="Reserve1" />
+                <ScalarProperty Name="Reserve2" ColumnName="Reserve2" />
+                <ScalarProperty Name="IsAcceptedByPhysic" ColumnName="IsAcceptedByPhysic" />
+                <ScalarProperty Name="IsAcceptedByDoctor" ColumnName="IsAcceptedByDoctor" />
+                <ScalarProperty Name="AcceptedDoctorUser" ColumnName="AcceptedDoctorUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatmentPlanHostory">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlanHostory">
+              <MappingFragment StoreEntitySet="PhysicTreatmentPlanHostory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PhysicTreatmentPlanId" ColumnName="PhysicTreatmentPlanId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
+                <ScalarProperty Name="HasAlarm" ColumnName="HasAlarm" />
+                <ScalarProperty Name="IsDoctor" ColumnName="IsDoctor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentPhase">
+            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentPhase">
+              <MappingFragment StoreEntitySet="TreatmentPhase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="PhaseText" ColumnName="PhaseText" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="Fraction" ColumnName="Fraction" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PrescribeDate" ColumnName="PrescribeDate" />
+                <ScalarProperty Name="PrescribesdUser" ColumnName="PrescribesdUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentProcess">
+            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentProcess">
+              <MappingFragment StoreEntitySet="TreatmentProcess">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StepNumber" ColumnName="StepNumber" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="EnglishTitle" ColumnName="EnglishTitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
