@@ -14,6 +14,12 @@ namespace PhysicManagement.Model
     
     public partial class Contour
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Contour()
+        {
+            this.ContourDetails = new HashSet<ContourDetails>();
+        }
+    
         public long Id { get; set; }
         public Nullable<long> MedicalRecordId { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
@@ -23,6 +29,8 @@ namespace PhysicManagement.Model
         public Nullable<System.DateTime> AcceptDate { get; set; }
         public string AcceptUser { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ContourDetails> ContourDetails { get; set; }
         public virtual MedicalRecord MedicalRecord { get; set; }
     }
 }
