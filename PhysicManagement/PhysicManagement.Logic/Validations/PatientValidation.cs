@@ -2,7 +2,7 @@
 
 namespace PhysicManagement.Logic.Validations
 {
-    class PatientValidation
+   public class PatientValidation
     {
         public class PatientEntityValidate : AbstractValidator<Model.Patient>
         {
