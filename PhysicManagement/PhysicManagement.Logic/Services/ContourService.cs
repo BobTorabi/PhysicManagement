@@ -24,6 +24,16 @@ namespace PhysicManagement.Logic.Services
 
         #region ContourDetail section
 
+        public List<Model.ContourDetails> GetContourDetailsList()
+        { }
+        public Model.ContourDetails GetContourDetailsById(int entityId)
+        { }
+        public bool AddContourDetails(Model.ContourDetails entity)
+        { }
+        public bool UpdateContourDetails(Model.ContourDetails entity)
+        { }
+        public bool DeleteContourDetails(Model.ContourDetails entityId)
+        { }
         #endregion
 
 
