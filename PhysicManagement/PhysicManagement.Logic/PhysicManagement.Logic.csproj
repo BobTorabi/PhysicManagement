@@ -58,12 +58,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\CancerService.cs" />
+    <Compile Include="Services\ContourService.cs" />
     <Compile Include="Services\DoctorService.cs" />
     <Compile Include="Services\MedicalRecordService.cs" />
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicTreatmentPlanService.cs" />
+    <Compile Include="Services\PhysicTreatmentService.cs" />
+    <Compile Include="Services\TreatmentService.cs" />
+    <Compile Include="Validations\CalendarValidation.cs" />
     <Compile Include="Validations\CancerValidation.cs" />
+    <Compile Include="Validations\ContourValidation.cs" />
+    <Compile Include="Validations\DoctorValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
   </ItemGroup>

@@ -73,6 +73,8 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
+        // MediacalRecord CRUD needed
+
 
     }
 

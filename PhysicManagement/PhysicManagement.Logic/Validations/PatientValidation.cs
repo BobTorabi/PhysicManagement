@@ -16,7 +16,7 @@ namespace PhysicManagement.Logic.Validations
                 RuleFor(x => x.NationalCode).NotEmpty().NotNull().WithMessage("پر کردن این فیلد اجباری است");
                 RuleFor(x => x.NationalCode).Must(Common.Validate.IsNationalCode).WithMessage("کد ملی وارد شده صحیح نمی باشد");
                 RuleFor(x => x.Mobile).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است");
-                RuleFor(x => x.Mobile).Must(Common.Validate.IsMobile).WithMessage("شماره وارد شده صحیح نمی باشد");
+                RuleFor(x => x.Mobile).Must(Common.Validate.IsMobile).WithMessage("شماره موبایل وارد شده صحیح نمی باشد");
                 RuleFor(x => x.GenderIsMale).NotEmpty().WithMessage("پر کردن این فیلد اجباری است");
                 RuleFor(x => x.Province).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است");
                 RuleFor(x => x.Province).Must(Common.Validate.IsPersianName).WithMessage("این فیلد باید به ربان فارسی پر شود");

@@ -14,9 +14,9 @@ namespace PhysicManagement.Logic.Validations
             public DoctorEntityValidate()
             {
                 RuleFor(e => e.Id).NotNull().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد");
-                RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("نام نمیتواند مقدار خالی داشته باشد");
-                RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("نام خانوادگی نمیتواند مقدار خالی داشته باشد");
-                RuleFor(x => x.Code).NotNull().NotEmpty().WithMessage("کد نمیتواند مقدار خالی داشته باشد");
+                RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("نام نمی تواند مقدار خالی داشته باشد");
+                RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("نام خانوادگی نمی تواند مقدار خالی داشته باشد");
+                RuleFor(x => x.Code).NotNull().NotEmpty().WithMessage("کد نمی تواند مقدار خالی داشته باشد");
             }
         }
     }
