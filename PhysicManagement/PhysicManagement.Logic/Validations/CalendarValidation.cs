@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PhysicManagement.Logic.Validations
 {
-    class CalendarValidation
+   public class CalendarValidation
     {
+
     }
 }

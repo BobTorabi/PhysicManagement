@@ -10,6 +10,8 @@ namespace PhysicManagement.Logic.Services
 {
     public class DoctorService
     {
+        #region Doctor section
+
         public List<Model.Doctor> GetDoctorList()
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -69,5 +71,6 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+        #endregion
     }
 }
