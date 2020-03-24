@@ -73,6 +73,7 @@
     <Compile Include="Validations\DoctorValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
+    <Compile Include="Validations\TreatmentValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
