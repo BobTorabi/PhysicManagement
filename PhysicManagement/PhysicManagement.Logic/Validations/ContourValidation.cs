@@ -9,7 +9,7 @@ namespace PhysicManagement.Logic.Validations
 {
     public class ContourValidation
     {
-        public class ContourEntityValidate : AbstractValidator<Model.ContourDetails>
+        public class ContourEntityValidate : AbstractValidator<Model.Contour>
         {
             public ContourEntityValidate()
             {
