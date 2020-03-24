@@ -61,8 +61,10 @@
     <Compile Include="Services\CancerService.cs" />
     <Compile Include="Services\DoctorService.cs" />
     <Compile Include="Services\MedicalRecordService.cs" />
+    <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicTreatmentPlanService.cs" />
     <Compile Include="Validations\CancerValidation.cs" />
+    <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
   </ItemGroup>
   <ItemGroup>
