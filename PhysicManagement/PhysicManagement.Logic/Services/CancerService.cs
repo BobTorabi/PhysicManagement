@@ -23,10 +23,19 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
-
+       
+        public Model.Cancer GetCancerByTitle(string title)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Cancer.Where(x=>x.Title == title).FirstOrDefault();
+                return Entity;
+            }
+        }
         public bool AddCancer(Model.Cancer entity)
         {
-            var validation = new CancerValidation.CancerEntityValidate().Validate(entity);
+            var validation = new CancerValidation.
+                            CancerEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
@@ -131,7 +140,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
-        #region CancerOAR section
+        #region Cancer Targets section
         public List<Model.CancerTargets> GetCancerTargetList()
         {
             using (var db = new Model.PhysicManagementEntities())

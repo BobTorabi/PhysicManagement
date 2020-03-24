@@ -6,9 +6,9 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f7cfb5f41c3a4473a9d43751401ba37a" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="PhysicManagementModel.Calendar" Width="1.5" PointX="8.125" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Cancer" Width="1.5" PointX="12.875" PointY="5.625" IsExpanded="true" FillColor="192, 0, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.CancerOAR" Width="1.5" PointX="15.125" PointY="4.125" IsExpanded="true" FillColor="192, 0, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.CancerTargets" Width="1.5" PointX="15.125" PointY="7.375" IsExpanded="true" FillColor="192, 0, 0" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Cancer" Width="1.5" PointX="13.125" PointY="4.125" IsExpanded="true" FillColor="192, 0, 0" />
+        <EntityTypeShape EntityType="PhysicManagementModel.CancerOAR" Width="1.5" PointX="15.375" PointY="2.625" IsExpanded="true" FillColor="192, 0, 0" />
+        <EntityTypeShape EntityType="PhysicManagementModel.CancerTargets" Width="1.5" PointX="15.375" PointY="5.875" IsExpanded="true" FillColor="192, 0, 0" />
         <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="8" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="PhysicManagementModel.Doctor" Width="1.5" PointX="3.625" PointY="13.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatment" Width="1.625" PointX="7.75" PointY="14.125" IsExpanded="true" FillColor="Green" />

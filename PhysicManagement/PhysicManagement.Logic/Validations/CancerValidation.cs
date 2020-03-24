@@ -14,6 +14,7 @@ namespace PhysicManagement.Logic.Validations
             public CancerEntityValidate() {
                 RuleFor(e => e.Id).NotNull().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد");
                 RuleFor(e => e.Title).NotEmpty().WithMessage("عنوان اجباری است");
+               
             }
         }
         public class CancerOAREntityValidate : AbstractValidator<Model.CancerOAR>
