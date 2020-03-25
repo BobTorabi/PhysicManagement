@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace PhysicManagement.Logic.Services
 {
-    class PhysicUserService
+    public class PhysicUserService
     {
-        //Add PhysicUser CRUD
+        #region PhysicUser section
+
+        public List<Model.PhysicUser> GetPhysicUserList()
+        { }
+        public Model.PhysicUser GetPhysicUserById(int entityId)
+        { }
+        public bool AddPhysicUser(Model.PhysicUser entity)
+        { }
+        public bool UpdatePhysicUser(Model.PhysicUser entity)
+        { }
+        public bool DeletePhysicUser(Model.PhysicUser entityId)
+        { }
+        #endregion
     }
 }
