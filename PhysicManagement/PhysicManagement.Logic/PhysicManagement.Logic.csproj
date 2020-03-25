@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AlarmService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\CancerService.cs" />
     <Compile Include="Services\ContourService.cs" />
@@ -66,7 +67,10 @@
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicTreatmentPlanService.cs" />
     <Compile Include="Services\PhysicTreatmentService.cs" />
+    <Compile Include="Services\PhysicUserService.cs" />
+    <Compile Include="Services\ResidentService.cs" />
     <Compile Include="Services\TreatmentService.cs" />
+    <Compile Include="Validations\AlarmValidation.cs" />
     <Compile Include="Validations\CalendarValidation.cs" />
     <Compile Include="Validations\CancerValidation.cs" />
     <Compile Include="Validations\ContourValidation.cs" />
@@ -74,6 +78,8 @@
     <Compile Include="Validations\MedicalRecordValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
+    <Compile Include="Validations\PhysicUserValidation.cs" />
+    <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />
   </ItemGroup>
   <ItemGroup>

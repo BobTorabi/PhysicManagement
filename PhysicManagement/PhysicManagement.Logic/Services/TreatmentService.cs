@@ -130,5 +130,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
+
+        // Add TreatmentDevice CRUD section 
     }
 }
