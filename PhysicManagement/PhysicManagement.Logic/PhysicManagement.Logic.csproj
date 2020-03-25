@@ -71,6 +71,7 @@
     <Compile Include="Validations\CancerValidation.cs" />
     <Compile Include="Validations\ContourValidation.cs" />
     <Compile Include="Validations\DoctorValidation.cs" />
+    <Compile Include="Validations\MedicalRecordValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />

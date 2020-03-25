@@ -53,6 +53,10 @@ namespace PhysicManagement.Model
         public Nullable<bool> IsOnCalendar { get; set; }
         public Nullable<System.DateTime> CalendarStartDate { get; set; }
         public Nullable<System.DateTime> calendarEndDate { get; set; }
+        public Nullable<System.DateTime> CalendarEndDate { get; set; }
+        public Nullable<int> TreatmentDeviceId { get; set; }
+        public string TreatmentDeviceTitle { get; set; }
+        public Nullable<bool> TreatmentDeviceIsQueued { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calendar> Calendar { get; set; }

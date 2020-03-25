@@ -12,28 +12,17 @@ namespace PhysicManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Doctor
+    public partial class PhysicUser
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Doctor()
-        {
-            this.MedicalRecord = new HashSet<MedicalRecord>();
-        }
-    
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Mobile { get; set; }
-        public string Code { get; set; }
-        public string Gender { get; set; }
-        public string Degree { get; set; }
-        public string Description { get; set; }
-        public string ExpertiseMajor { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalRecord> MedicalRecord { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsAdmin { get; set; }
+        public string Mobile { get; set; }
+        public string Degree { get; set; }
+        public string Description { get; set; }
     }
 }
