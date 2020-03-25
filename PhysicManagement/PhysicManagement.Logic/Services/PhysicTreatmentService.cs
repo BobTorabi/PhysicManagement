@@ -73,11 +73,11 @@ namespace PhysicManagement.Logic.Services
             {
                 return db.PhysicTreatmentPlan.OrderBy(x => x.PhysicTreatment).ToList();
             }
-                
+
         }
         public Model.PhysicTreatmentPlan GetPhysicTreatmentPlanById(int entityId)
         {
-            using(var db = new Model.PhysicManagementEntities())
+            using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicTreatmentPlan.Find(entityId);
                 return Entity;
@@ -89,7 +89,7 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
-            using(var db = new Model.PhysicManagementEntities())
+            using (var db = new Model.PhysicManagementEntities())
             {
                 db.PhysicTreatmentPlan.Add(entity);
                 return db.SaveChanges() == 1;
@@ -100,8 +100,8 @@ namespace PhysicManagement.Logic.Services
             var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
-            
-            using(var db = new Model.PhysicManagementEntities())
+
+            using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicTreatmentPlan.Find(entity.Id);
                 Entity.HadContour = entity.HadContour;
@@ -124,7 +124,7 @@ namespace PhysicManagement.Logic.Services
         }
         public bool DeletePhysicTreatmentPlan(int entityId)
         {
-            using(var db = new Model.PhysicManagementEntities())
+            using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicTreatmentPlan.Find(entityId);
                 if (Entity == null)
@@ -135,7 +135,67 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
-        // PhysicTreatmentPlanHostory CRUD needed
+        #region PhysicTreatmentPlanHostory
+        public List<Model.PhysicTreatmentPlanHostory> GetPhysicTreatmentPlanHostoryList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.PhysicTreatmentPlanHostory.OrderBy(x => x.PhysicTreatmentPlan).ToList();
+            }
+        }
+        public Model.PhysicTreatmentPlanHostory GetPhysicTreatmentPlanHostoryById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlanHostory.Find(entityId);
+                return Entity;
+            }
+        }
+        public bool AddPhysicTreatmentPlanHostory(Model.PhysicTreatmentPlanHostory entity)
+        {
+            var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanHostoryEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                db.PhysicTreatmentPlanHostory.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool UpdatePhysicTreatmentPlanHostory(Model.PhysicTreatmentPlanHostory entity)
+        {
+            var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanHostoryEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlanHostory.Find(entity.Id);
+                Entity.HasAlarm = entity.HasAlarm;
+                Entity.IsDoctor = entity.IsDoctor;
+                Entity.Note = entity.Note;
+                Entity.PhysicTreatmentPlan = entity.PhysicTreatmentPlan;
+                Entity.PhysicTreatmentPlanId = entity.PhysicTreatmentPlanId;
+                Entity.ActionUser = entity.ActionUser;
+                Entity.ChangeDate = entity.ChangeDate;
+
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool DeletePhysicTreatmentPlanHostory(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlanHostory.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.PhysicTreatmentPlanHostory.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        #endregion
 
     }
 }
