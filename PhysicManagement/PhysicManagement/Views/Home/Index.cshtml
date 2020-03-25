@@ -1,31 +1,358 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">پذیرش بیمار</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام پزشک</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد CT</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد MRI</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>توضیحات</label>
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">لطفا توضیحات مربوط به این پرونده را وارد نمایید</label>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label label-checkbox">برای تست</label>
+                        <div class="col-sm-10 checkbox-radios">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> دکتر تستی اول
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> دکتر تستی دوم
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" value="option2" checked=""> دکتر اول
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" value="option1"> دکتر دوم
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label label-checkbox">Inline checkboxes</label>
+                        <div class="col-sm-10 checkbox-radios">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> a
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> b
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> c
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form id="RegisterValidation" action="" method="">
+            <div class="card ">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">فرم ثبت نام</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="form-group bmd-form-group">
+                        <label for="exampleEmail" class="bmd-label-floating"> آدرس ایمیل *</label>
+                        <input type="email" class="form-control" id="exampleEmail" required="true" aria-required="true">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label for="examplePassword" class="bmd-label-floating"> پسورد *</label>
+                        <input type="password" class="form-control" id="examplePassword" required="true" name="password" aria-required="true">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label for="examplePassword1" class="bmd-label-floating"> تکرار پسورد *</label>
+                        <input type="password" class="form-control" id="examplePassword1" required="true" equalto="#examplePassword" name="password_confirmation" aria-required="true">
+                    </div>
+                    <div class="category form-category">* فیلد های اجباری</div>
+                </div>
+                <div class="card-footer text-right">
+                    <div class="form-check mr-auto">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" required="" aria-required="true"> عضویت در خبرنامه
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-rose">ثبت نام</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-6">
+        <form id="LoginValidation" action="" method="">
+            <div class="card ">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">contacts</i>
+                    </div>
+                    <h4 class="card-title">ورود به سیستم</h4>
+                </div>
+                <div class="card-body ">
+                    <div class="form-group bmd-form-group">
+                        <label for="exampleEmails" class="bmd-label-floating"> آدرس ایمیل *</label>
+                        <input type="email" class="form-control" id="exampleEmails" required="true" name="emailadress" aria-required="true">
+                    </div>
+                    <div class="form-group bmd-form-group">
+                        <label for="examplePasswords" class="bmd-label-floating"> پسورد *</label>
+                        <input type="password" class="form-control" id="examplePasswords" required="true" name="password" aria-required="true">
+                    </div>
+                    <div class="category form-category">* فیلد های اجباری</div>
+                </div>
+                <div class="card-footer mr-auto">
+                    <button type="submit" class="btn btn-rose">ورود</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
+        <div class="card ">
+            <div class="card-header card-header-rose card-header-text">
+                <div class="card-text">
+                    <h4 class="card-title">Input Variants</h4>
+                </div>
+            </div>
+            <div class="card-body ">
+                <form method="get" action="/" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-3">
+                            <div class="dropdown">
+                                <button class="dropdown-toggle btn btn-primary btn-round btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <h6 class="dropdown-header">Dropdown header</h6>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-3 mx-auto">
+                            <div class="dropup">
+                                <button type="button" class="dropdown-toggle btn btn-primary btn-round btn-block" data-toggle="dropdown">
+                                    Dropup
+                                </button>
+                                <div class="dropdown-menu">
+                                    <h6 class="dropdown-header">Dropdown header</h6>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label label-checkbox">Custom Checkboxes &amp; radios</label>
+                        <div class="col-sm-4 col-sm-offset-1 checkbox-radios">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" checked=""> Checked
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value=""> Unchecked
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check disabled">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" disabled="" checked=""> Disabled Checked
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check disabled">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" value="" disabled=""> Disabled Unchecked
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 checkbox-radios">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" value="option1" checked=""> Radio is on
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" value="option2"> Radio is off
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check disabled">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios2" value="option1" checked="" disabled=""> Disabled Radio is on
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check disabled">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="radio" name="exampleRadios2" value="option2" disabled=""> Disabled Radio is off
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Input with success</label>
+                        <div class="col-sm-10">
+                            <div class="form-group has-success bmd-form-group">
+                                <label for="exampleInput2" class="bmd-label-floating">Success input</label>
+                                <input type="text" class="form-control" id="exampleInput2">
+                                <span class="form-control-feedback">
+                                    <i class="material-icons">done</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Input with error</label>
+                        <div class="col-sm-10">
+                            <div class="form-group has-danger bmd-form-group">
+                                <label for="exampleInput3" class="bmd-label-floating">Error input</label>
+                                <input type="email" class="form-control" id="exampleInput3">
+                                <span class="form-control-feedback">
+                                    <i class="material-icons">clear</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label">Column sizing</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group bmd-form-group">
+                                        <input type="text" class="form-control" placeholder=".col-md-3">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <input type="text" class="form-control" placeholder=".col-md-4">
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group bmd-form-group">
+                                        <input type="text" class="form-control" placeholder=".col-md-5">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
