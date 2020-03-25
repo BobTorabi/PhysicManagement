@@ -66,7 +66,75 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
-        // PhysicTreatmentPlan CRUD needed
+        #region PhysicTreatmentPlan Section
+        public List<Model.PhysicTreatmentPlan> GetPhysicTreatmentPlanList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.PhysicTreatmentPlan.OrderBy(x => x.PhysicTreatment).ToList();
+            }
+                
+        }
+        public Model.PhysicTreatmentPlan GetPhysicTreatmentPlanById(int entityId)
+        {
+            using(var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlan.Find(entityId);
+                return Entity;
+            }
+        }
+        public bool AddPhysicTreatmentPlan(Model.PhysicTreatmentPlan entity)
+        {
+            var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using(var db = new Model.PhysicManagementEntities())
+            {
+                db.PhysicTreatmentPlan.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool UpdatePhysicTreatmentPlan(Model.PhysicTreatmentPlan entity)
+        {
+            var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+            
+            using(var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlan.Find(entity.Id);
+                Entity.HadContour = entity.HadContour;
+                Entity.IsAcceptedByDoctor = entity.IsAcceptedByDoctor;
+                Entity.IsAcceptedByPhysic = entity.IsAcceptedByPhysic;
+                Entity.PhysicTreatment = entity.PhysicTreatment;
+                Entity.PhysicTreatmentId = entity.PhysicTreatmentId;
+                Entity.PhysicTreatmentPlanHostory = entity.PhysicTreatmentPlanHostory;
+                Entity.PlannedDose = entity.PlannedDose;
+                Entity.Reserve1 = entity.Reserve1;
+                Entity.Reserve2 = entity.Reserve2;
+                Entity.AcceptedDoctorUser = entity.AcceptedDoctorUser;
+                Entity.ActionDate = entity.ActionDate;
+                Entity.ActionUser = entity.ActionUser;
+                Entity.CancerOARId = entity.CancerOARId;
+                Entity.Evaluation = entity.Evaluation;
+
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool DeletePhysicTreatmentPlan(int entityId)
+        {
+            using(var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlan.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.PhysicTreatmentPlan.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        #endregion
         // PhysicTreatmentPlanHostory CRUD needed
 
     }
