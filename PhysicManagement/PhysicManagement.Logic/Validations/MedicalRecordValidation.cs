@@ -28,8 +28,10 @@ namespace PhysicManagement.Logic.Validations
                 RuleFor(e => e.MRICode).NotNull().NotEmpty().WithMessage("کد MRI نباید مقدار خالی داشته باشد");
                 RuleFor(e => e.CTDescription).NotNull().NotEmpty().WithMessage("توضیحات نباید مقدار خالی داشته باشد");
                 RuleFor(e => e.CTDescription).Must(Common.Validate.IsPersianText).WithMessage("توضیحات را به زبان فارسی وارد کنید");
+                RuleFor(e => e.CTDescription).MaximumLength(200).WithMessage("متن نمی تواند بیشتر از 200 حرف داشته باشد");
                 RuleFor(e => e.TPCode).NotNull().NotEmpty().WithMessage("کد TPنباید مقدار خالی داشته باشد");
                 RuleFor(e => e.TPDescription).Must(Common.Validate.IsPersianText).WithMessage("توضیحات را به زبان فارسی وارد کنید");
+                RuleFor(e => e.TPDescription).MaximumLength(200).WithMessage("متن نمی تواند بیشتر از 200 حرف داشته باشد");
 
             }
         }
