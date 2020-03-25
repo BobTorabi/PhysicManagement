@@ -60,7 +60,7 @@ namespace PhysicManagement.Logic.Services
         }
         public bool DeletePhysicUser(Model.PhysicUser entityId)
         {
-            using (var db = new Model.PhysicManagementEntities)
+            using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicUser.Find(entityId);
                 if (Entity == null)
