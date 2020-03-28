@@ -130,7 +130,65 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
+        #region TreatmentDevice Section
+        public List<Model.TreatmentDevice> GetTreatmentDeviceList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.TreatmentDevice.OrderBy(x => x.Title).ToList();
+            }
+        }
+        public Model.TreatmentDevice GetTreatmentDeviceById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.TreatmentDevice.Find(entityId);
+                return Entity;
+            }
+        }
+        public bool AddTreatmentDevice(Model.TreatmentDevice entity)
+        {
+            var validation = new TreatmentValidation.TreatmentDeviceEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
 
-        // Add TreatmentDevice CRUD section 
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                db.TreatmentDevice.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool UpdateTreatmentDevice(Model.TreatmentDevice entity)
+        {
+            var validation = new TreatmentValidation.TreatmentDeviceEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.TreatmentDevice.Find(entity.Id);
+                Entity.Title = entity.Title;
+                Entity.Code = entity.Code;
+                Entity.Description = entity.Description;
+                Entity.EnglishTitle = entity.EnglishTitle;
+
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteTreatmentDevice(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.TreatmentDevice.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.TreatmentDevice.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        #endregion
+
+
     }
 }
