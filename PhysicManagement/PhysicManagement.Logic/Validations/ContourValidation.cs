@@ -15,6 +15,7 @@ namespace PhysicManagement.Logic.Validations
             {
                 RuleFor(e => e.Id).NotNull().NotEmpty().WithMessage("شناسه نباید مقدار خالی داشته باشد");
                 RuleFor(e => e.Description).NotNull().NotEmpty().WithMessage("توضیحات نباید خالی باشد");
+                RuleFor(e => e.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف داشته باشد");
             }
         }
 

@@ -36,7 +36,7 @@ namespace PhysicManagement.Logic.Validations
                 RuleFor(x => x.EnglishTitle).Must(Common.Validate.IsText).WithMessage("اطلاعات وارد شده صحیح نمی باشد");
                 RuleFor(x => x.Description).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
                 RuleFor(x => x.Description).Must(Common.Validate.IsText).WithMessage("اطلاعات وارد شده صحیح نمی باشد");
-                RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد")
+                RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد");
             }
         }
         #endregion
