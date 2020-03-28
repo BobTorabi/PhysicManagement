@@ -71,7 +71,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Doctor.Where(x=>x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
+                return db.Doctor.Where(x => x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
         }
 
@@ -91,38 +91,36 @@ namespace PhysicManagement.Logic.Services
             }
 
         }
-        public static Doctor GetUserByUserNameAndMobileOrEmail(string userName, string mobile, string email)
-        {
-            var UserEntity =
-                UserRepository
-                .GetQuery(x => x.UserName.ToLower() == userName.ToLower() && (x.Email == mobile || x.Email == email) && x.IsActive)
-                .FirstOrDefault();
-
-            return UserEntity;
-        }
 
         public static bool IsUserValidByUserName(string userName)
         {
-            var UserExists = UserRepository.GetQuery(x => x.UserName.ToLower() == userName.ToLower() && x.IsActive).Count();
-            return UserExists == 1;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).Count();
+                return UserExists == 1;
+            }
         }
 
         public static bool IsUserValidByUserId(long userId)
         {
-            var UserExists = UserRepository.GetQuery(x => x.Id == userId && x.IsActive).Count();
-            return UserExists == 1;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.Doctor.Where(x => x.Id == userId && x.IsActive == true).Count();
+                return UserExists == 1;
+            }
+
         }
+
 
         public static bool IsUserDataValid(string userName, string passWord)
         {
             string EncryptedPassword = EncryptPassword(userName, passWord);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptPassword && x.IsActive == true).Count();
+                return UserExists == 1;
+            }
 
-            var UserExists =
-                UserRepository
-                .GetQuery(x => x.UserName.ToLower() == userName.ToLower() && x.PasswordHash == EncryptedPassword && x.IsActive)
-                .Count();
-
-            return UserExists == 1;
         }
 
         public static Doctor GetUserData(string userName, string password)
@@ -131,93 +129,77 @@ namespace PhysicManagement.Logic.Services
                 return null;
 
             string EncryptedPassword = EncryptPassword(userName, password);
-
-            var UserExists =
-                UserRepository
-                .GetQuery(x => x.UserName.ToLower() == userName.ToLower() && x.PasswordHash == EncryptedPassword && x.IsActive)
-                .FirstOrDefault();
-            return UserExists;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptPassword && x.IsActive == true).FirstOrDefault();
+                return UserExists == 1;
+            }
         }
 
-        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string email, Enums.Sex sex)
+        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string code, string degree, string description, string expertiseMajor, string gender, ICollection<MedicalRecord> medicalRecords)
         {
             Doctor UserEntity = new Doctor()
             {
-                CreatedBy = 1,
-                CreatedDate = DateTime.Now,
+
                 FirstName = firstName,
                 IsActive = true,
-                Guid = Guid.NewGuid().ToString(),
-                IsLocked = false,
-                UserMobile = mobileNo,
-                ModifiedBy = 1,
+                Mobile = mobileNo,
                 LastName = lastName,
-                ModifiedDate = DateTime.Now,
-                Reserve1 = true,
-                Reserve2 = true,
-                Email = email,
-                PasswordHash = EncryptPassword(userName, passWord),
-                LastLoginDate = DateTime.Now,
-                UserName = userName,
-                UserCode = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 15),
-                UserTypeId = 1,
-                ClientId = 1 // Speedy
+                Password = EncryptPassword(userName, passWord),
+                Username = userName,
+                Code = code,
+                Gender = gender,
+                Degree =degree,
+                Description = description,
+                ExpertiseMajor = expertiseMajor,
+                MedicalRecord = medicalRecords,
+
+
             };
 
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(UserEntity);
             if (validation.IsValid)
             {
-                _ = UserRepository.Add(UserEntity);
-                return true;
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    db.Doctor.Add(UserEntity);
+                    return db.SaveChanges() == 1;
+                }
             }
             throw new ValidationException(validation.Errors);
 
         }
 
-        public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo, string email, Enums.Sex sex)
+        public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
         {
-            var currentUser = GetUserById(id);
+            var currentUser = GetUserByUserId(id);
             if (currentUser == null)
                 throw MegaException.ThrowException("چنین کاربری در سامانه پیدا نشد.");
 
-            if (currentUser.IsLocked)
-                throw MegaException.ThrowException("حساب کاربری این کاربر قفل است برای ویرایش ابتدا کاربر را فعال کنید.");
-
             currentUser.FirstName = firstName;
             currentUser.LastName = lastName;
-            currentUser.Email = email;
-            currentUser.UserMobile = mobileNo;
+            currentUser.Mobile = mobileNo;
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(currentUser);
             if (validation.IsValid)
             {
-                _ = UserRepository.Update(currentUser);
-                return true;
+                using(var db = new Model.PhysicManagementEntities())
+                {
+                    db.Doctor.Add(currentUser);
+                    return db.SaveChanges() == 1;
+                }
             }
             throw new ValidationException(validation.Errors);
         }
 
         public static bool LockUser(int id)
         {
-            var userEntity = GetUserById(id);
+            var userEntity = GetUserByUserId(id);
             if (userEntity == null)
                 throw MegaException.ThrowException("کاربری با این شناسه در پایگاه داده وجود ندارد");
 
-            userEntity.IsLocked = true;
-            UserService.UpdateUser(userEntity);
+           DoctorService.UpdateDoctor(userEntity);
             return true;
         }
-
-        public static bool UnlockUser(int id)
-        {
-            var userEntity = GetUserById(id);
-            if (userEntity == null)
-                throw MegaException.ThrowException("کاربری با این شناسه در پایگاه داده وجود ندارد");
-
-            userEntity.IsLocked = false;
-            UserService.UpdateUser(userEntity);
-            return true;
-        }
-
         public static bool Logout()
         {
             Cookie.ExpireCookie(AuthenticationCookieName);
@@ -233,23 +215,25 @@ namespace PhysicManagement.Logic.Services
 
             string encryptedNewPassword = EncryptPassword(userName, newPassword);
             userData.Password = encryptedNewPassword;
-            UserRepository.Update(userData);
-            return true;
+            using(var db = new Model.PhysicManagementEntities())
+            {
+               var Entity = db.Doctor.Find(userData.Id);
+                Entity.Password = userData.Password;
+                return db.SaveChanges() == 1;
+            }
         }
 
-        public static string GetUserPasswordByMobileOrEmail(string userName, string mobile, string email)
+        public static string GetUserPasswordByMobileOrEmail(string userName, string mobile)
         {
-            var userPassword =
-                UserRepository
-                .GetQuery(x => x.UserName.ToLower() == userName.ToLower() && (x.Email == mobile || x.Email == email) && x.IsActive)
-                .Select(x => x.PasswordHash)
-                .FirstOrDefault();
-
-            if (string.IsNullOrEmpty(userPassword))
-                throw Common.MegaException.ThrowException("چنین کاربری پیدا نشد.");
-
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var userPassword = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).Select(x => x.Password).FirstOrDefault();
+                if (string.IsNullOrEmpty(userPassword))
+                    throw Common.MegaException.ThrowException("چنین کاربری پیدا نشد.");
             string decryptedPassword = DecryptPassword(userName, userPassword);
             return decryptedPassword;
+            }
+
         }
 
         public static string EncryptPassword(string userName, string passWord)
@@ -294,7 +278,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public bool UpdateDoctor(Model.Doctor entity)
+        public  bool UpdateDoctor(Model.Doctor entity)
         {
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(entity);
             if (!validation.IsValid)
