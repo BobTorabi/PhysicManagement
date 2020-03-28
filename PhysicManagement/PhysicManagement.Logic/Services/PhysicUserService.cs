@@ -167,7 +167,14 @@ namespace PhysicManagement.Logic.Services
             throw new ValidationException(validation.Errors);
         }
         public static bool LockUser(int id)
-        { }
+        {
+            var userEntity = GetUserByUserId(id);
+            if (userEntity == null)
+                throw MegaException.ThrowException("کاربرب با این شناسه در پایگاه داده وجود ندارد");
+
+            PhysicUserService.UpdateProfile(userEntity.Id, userEntity.Username, userEntity.FirstName, userEntity.LastName, userEntity.Mobile);
+            return true;
+        }
         public static bool Logout()
         { }
         public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
