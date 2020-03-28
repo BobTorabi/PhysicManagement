@@ -117,7 +117,7 @@ namespace PhysicManagement.Logic.Services
             string EncryptedPassword = EncryptPassword(userName, passWord);
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptPassword && x.IsActive == true).Count();
+                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).Count();
                 return UserExists == 1;
             }
 
@@ -131,8 +131,8 @@ namespace PhysicManagement.Logic.Services
             string EncryptedPassword = EncryptPassword(userName, password);
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptPassword && x.IsActive == true).FirstOrDefault();
-                return UserExists == 1;
+                var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).FirstOrDefault();
+                return UserExists;
             }
         }
 
@@ -197,7 +197,7 @@ namespace PhysicManagement.Logic.Services
             if (userEntity == null)
                 throw MegaException.ThrowException("کاربری با این شناسه در پایگاه داده وجود ندارد");
 
-           DoctorService.UpdateDoctor(userEntity);
+           DoctorService.UpdateProfile(userEntity.Id,userEntity.Username,userEntity.FirstName,userEntity.LastName,userEntity.Mobile);
             return true;
         }
         public static bool Logout()
