@@ -181,7 +181,21 @@ namespace PhysicManagement.Logic.Services
             return true;
         }
         public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
-        { }
+        {
+            string encryptedOldPassword = EncryptPassword(userName, oldPassword);
+            var userData = GetUserDate(userName, encryptedOldPassword);
+            if (userData == null)
+                throw MegaException.ThrowException("چنین کاربری پیدا نشد.");
+
+            string encryptedNewPassword = EncryptPassword(userName, newPassword);
+            userData.Password = encryptedNewPassword;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicUser.Find(userData.Id);
+                Entity.Password = userData.Password;
+                return db.SaveChanges() == 1;
+            }
+        }
         public static string GetUserPasswordByMobile(string userName, string passWord)
         { }
         public static string EncryptPassword(string userName, string passWord)
