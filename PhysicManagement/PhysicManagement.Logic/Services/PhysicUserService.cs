@@ -176,7 +176,10 @@ namespace PhysicManagement.Logic.Services
             return true;
         }
         public static bool Logout()
-        { }
+        {
+            Cookie.ExpireCookie(AuthenticationCookieName);
+            return true;
+        }
         public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
         { }
         public static string GetUserPasswordByMobile(string userName, string passWord)
