@@ -112,7 +112,15 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public static bool IsUserDateValid(string userName, string passWord)
-        { }
+        {
+            string EncryptedPassword = EncryptPassword(userName, passWord);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).Count();
+                return UserExists == 1;
+            }
+
+        }
         public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string degree, string description)
         { }
         public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
