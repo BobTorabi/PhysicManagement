@@ -26,10 +26,15 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public static PhysicUser IsAuthenticated()
-        { 
-                    
+        {
+            var cookieValue = ReadAuthCookies();
+            if (cookieValue.HasValue)
+            {
+                return GetUserDate(cookieValue.Value.userName, cookieValue.Value.PassWord);
+            }
+            return null;
         }
-        public static(string userName,string Password)? ReadAuthCookies()
+        public static(string userName,string PassWord)? ReadAuthCookies()
         { }
         public static void SetAuthenticationCookie(string userName,string Password, bool rememberMe)
         { }
