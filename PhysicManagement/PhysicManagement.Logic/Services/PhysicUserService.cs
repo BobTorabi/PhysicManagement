@@ -63,7 +63,12 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public static PhysicUser GetUserByUserId(long userId)
-        { }
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.PhysicUser.Where(x => x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
+            }
+        }
         public static PhysicUser GetUserByUserName(string userName)
         { }
         public static PhysicUser GetUserByUserNameAndMobile(string userName,string mobile)
