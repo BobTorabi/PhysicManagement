@@ -104,7 +104,13 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public static bool IsUserValidByUserId(long userId)
-        { }
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.PhysicUser.Where(x => x.Id == userId && x.IsActive == true).Count();
+                return UserExists == 1;
+            }
+        }
         public static bool IsUserDateValid(string userName, string passWord)
         { }
         public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string degree, string description)
