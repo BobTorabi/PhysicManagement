@@ -147,7 +147,25 @@ namespace PhysicManagement.Logic.Services
             throw new ValidationException(Validation.Errors);
         }
         public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
-        { }
+        {
+            var currentUser = GetUserByUserId(id);
+            if (currentUser == null)
+                throw MegaException.ThrowException("چنین کاربری در سامانه پیدا نشد.");
+
+            currentUser.FirstName = firstName;
+            currentUser.LastName = lastName;
+            currentUser.Mobile = mobileNo;
+            var validation = new PhysicUserValidation.PhysicUserEntityValidation().Validate(currentUser);
+            if (validation.IsValid)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    db.PhysicUser.Add(currentUser);
+                    return db.SaveChanges() == 1;
+                }
+            }
+            throw new ValidationException(validation.Errors);
+        }
         public static bool LockUser(int id)
         { }
         public static bool Logout()
