@@ -5,11 +5,66 @@ using System.Text;
 using System.Threading.Tasks;
 using PhysicManagement.Logic.Validations;
 using FluentValidation;
+using PhysicManagement.Common;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
     public class PhysicUserService
     {
+        #region PhysicUser Authorization
+
+        protected const string AuthenticationCookieName = "Apa_Co_Auth";
+        protected const string Delimeter = "___";
+        protected static string SecretKey
+        {
+            get
+            {
+                string browserName = Network.BrowserName();
+                string IP = Network.GetIP();
+                return Cryptography.Encrypt(string.Join(".", IP, browserName));
+            }
+        }
+        public static PhysicUser IsAuthenticated()
+        { 
+                    
+        }
+        public static(string userName,string Password)? ReadAuthCookies()
+        { }
+        public static void SetAuthenticationCookie(string userName,string Password, bool rememberMe)
+        { }
+        public static PhysicUser GetUserByUserId(long userId)
+        { }
+        public static PhysicUser GetUserByUserName(string userName)
+        { }
+        public static PhysicUser GetUserByUserNameAndMobile(string userName,string mobile)
+        { }
+        public static PhysicUser GetUserDate(string userName,string passWord)
+        { }
+        public static bool IsUserValidByUserName(string userName)
+        { }
+        public static bool IsUserValidByUserId(long userId)
+        { }
+        public static bool IsUserDateValid(string userName,string passWord)
+        { }
+        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string degree, string description)
+        { }
+        public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
+        { }
+        public static bool LockUser(int id)
+        { }
+        public static bool Logout()
+        { }
+        public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
+        { }
+        public static bool GetUserPasswordByMobile(string userName, string passWord)
+        { }
+        public static bool EncryptPassword(string userName, string passWord)
+        { }
+        internal static string DecryptPassword(string userName, string encryptedPassword)
+        { }
+
+        #endregion
         #region PhysicUser section
 
         public List<Model.PhysicUser> GetPhysicUserList()
