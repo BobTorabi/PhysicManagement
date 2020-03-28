@@ -35,7 +35,22 @@ namespace PhysicManagement.Logic.Services
             return null;
         }
         public static(string userName,string PassWord)? ReadAuthCookies()
-        { }
+        {
+            string cookievalue = Cookie.ReadCookie(AuthenticationCookieName);
+            if (string.IsNullOrEmpty(cookievalue))
+                return null;
+
+            if (Cryptography.TryDecrypt(cookievalue,SecretKey,out string decryptedCookie))
+            {
+                string[] decryptedArray = System.Text.RegularExpressions.Regex.Split(decryptedCookie, Delimeter);
+                string userName = decryptedArray[0];
+                string passWord = decryptedArray[1];
+            }
+            else 
+            {
+                return null;            
+            }
+        }
         public static void SetAuthenticationCookie(string userName,string Password, bool rememberMe)
         { }
         public static PhysicUser GetUserByUserId(long userId)
