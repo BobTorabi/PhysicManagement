@@ -34,24 +34,24 @@ namespace PhysicManagement.Logic.Services
             }
             return null;
         }
-        public static(string userName,string PassWord)? ReadAuthCookies()
+        public static (string userName, string PassWord)? ReadAuthCookies()
         {
             string cookievalue = Cookie.ReadCookie(AuthenticationCookieName);
             if (string.IsNullOrEmpty(cookievalue))
                 return null;
 
-            if (Cryptography.TryDecrypt(cookievalue,SecretKey,out string decryptedCookie))
+            if (Cryptography.TryDecrypt(cookievalue, SecretKey, out string decryptedCookie))
             {
                 string[] decryptedArray = System.Text.RegularExpressions.Regex.Split(decryptedCookie, Delimeter);
                 string userName = decryptedArray[0];
                 string passWord = decryptedArray[1];
             }
-            else 
+            else
             {
-                return null;            
+                return null;
             }
         }
-        public static void SetAuthenticationCookie(string userName,string passWord, bool rememberMe)
+        public static void SetAuthenticationCookie(string userName, string passWord, bool rememberMe)
         {
             if (IsUserDateValid(userName, passWord))
             {
@@ -76,20 +76,30 @@ namespace PhysicManagement.Logic.Services
                 return db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
         }
-        public static PhysicUser GetUserByUserNameAndMobile(string userName,string mobile)
+        public static PhysicUser GetUserByUserNameAndMobile(string userName, string mobile)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
         }
-        public static PhysicUser GetUserDate(string userName,string passWord)
-        { }
+        public static PhysicUser GetUserDate(string userName, string passWord)
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(passWord))
+                return null;
+
+            string EncryptedPassword = EncryptPassword(userName, passWord);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).FirstOrDefault();
+                return UserExists;
+            }
+        }
         public static bool IsUserValidByUserName(string userName)
         { }
         public static bool IsUserValidByUserId(long userId)
         { }
-        public static bool IsUserDateValid(string userName,string passWord)
+        public static bool IsUserDateValid(string userName, string passWord)
         { }
         public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string degree, string description)
         { }
@@ -101,9 +111,9 @@ namespace PhysicManagement.Logic.Services
         { }
         public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
         { }
-        public static bool GetUserPasswordByMobile(string userName, string passWord)
+        public static string GetUserPasswordByMobile(string userName, string passWord)
         { }
-        public static bool EncryptPassword(string userName, string passWord)
+        public static string EncryptPassword(string userName, string passWord)
         { }
         internal static string DecryptPassword(string userName, string encryptedPassword)
         { }
@@ -112,8 +122,8 @@ namespace PhysicManagement.Logic.Services
         #region PhysicUser section
 
         public List<Model.PhysicUser> GetPhysicUserList()
-        { 
-            using(var db = new Model.PhysicManagementEntities())
+        {
+            using (var db = new Model.PhysicManagementEntities())
             {
                 return db.PhysicUser.OrderBy(x => x.FirstName).ToList();
             }
@@ -131,7 +141,7 @@ namespace PhysicManagement.Logic.Services
             var vallidtion = new PhysicUserValidation.PhysicUserEntityValidation().Validate(entity);
             if (!vallidtion.IsValid)
                 throw new ValidationException(vallidtion.Errors);
-            
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.PhysicUser.Add(entity);
