@@ -70,7 +70,12 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public static PhysicUser GetUserByUserName(string userName)
-        { }
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
+            }
+        }
         public static PhysicUser GetUserByUserNameAndMobile(string userName,string mobile)
         { }
         public static PhysicUser GetUserDate(string userName,string passWord)
