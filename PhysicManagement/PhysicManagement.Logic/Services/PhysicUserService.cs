@@ -196,8 +196,17 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public static string GetUserPasswordByMobile(string userName, string passWord)
-        { }
+        public static string GetUserPasswordByMobile(string userName, string mobile)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var userPassword = db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).Select(x => x.Password).FirstOrDefault();
+                if (string.IsNullOrEmpty(userPassword))
+                    throw Common.MegaException.ThrowException("چنین کاربری پیدا نشد.");
+                string decryptedPassword = DecryptPassword(userName, userPassword);
+                return decryptedPassword;
+            }
+        }
         public static string EncryptPassword(string userName, string passWord)
         { }
         internal static string DecryptPassword(string userName, string encryptedPassword)
