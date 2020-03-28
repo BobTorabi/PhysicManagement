@@ -213,7 +213,10 @@ namespace PhysicManagement.Logic.Services
             return Cryptography.EncryptByUV(userNamekey, passWord);
         }
         internal static string DecryptPassword(string userName, string encryptedPassword)
-        { }
+        {
+            string userNameKey = userName.GetTypeCode().ToString();
+            return Cryptography.Decrypt(encryptedPassword, userNameKey);
+        }
 
         #endregion
         #region PhysicUser section
