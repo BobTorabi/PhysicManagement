@@ -122,7 +122,30 @@ namespace PhysicManagement.Logic.Services
 
         }
         public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string degree, string description)
-        { }
+        {
+            PhysicUser UserEntity = new PhysicUser()
+            {
+                FirstName = firstName,
+                IsActive = true,
+                Mobile = mobileNo,
+                LastName = lastName,
+                Password = EncryptPassword(userName, passWord),
+                Username = userName,
+                Degree = degree,
+                Description = description,
+            };
+
+            var Validation = new PhysicUserValidation.PhysicUserEntityValidation().Validate(UserEntity);
+            if (Validation.IsValid)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    db.PhysicUser.Add(UserEntity);
+                    return db.SaveChanges() == 1;
+                }
+            }
+            throw new ValidationException(Validation.Errors);
+        }
         public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
         { }
         public static bool LockUser(int id)
