@@ -1,12 +1,10 @@
-﻿using System;
+﻿using FluentValidation;
+using PhysicManagement.Common;
+using PhysicManagement.Logic.Validations;
+using PhysicManagement.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PhysicManagement.Logic.Validations;
-using FluentValidation;
-using PhysicManagement.Common;
-using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -45,6 +43,8 @@ namespace PhysicManagement.Logic.Services
                 string[] decryptedArray = System.Text.RegularExpressions.Regex.Split(decryptedCookie, Delimeter);
                 string userName = decryptedArray[0];
                 string passWord = decryptedArray[1];
+                return (userName, passWord);
+
             }
             else
             {

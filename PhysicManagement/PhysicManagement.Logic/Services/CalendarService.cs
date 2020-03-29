@@ -1,10 +1,7 @@
-﻿using System;
+﻿using FluentValidation;
+using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PhysicManagement.Logic.Validations;
-using FluentValidation;
 
 namespace PhysicManagement.Logic.Services
 {

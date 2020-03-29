@@ -1,12 +1,10 @@
-﻿using System;
+﻿using FluentValidation;
+using PhysicManagement.Common;
+using PhysicManagement.Logic.Validations;
+using PhysicManagement.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PhysicManagement.Logic.Validations;
-using FluentValidation;
-using PhysicManagement.Common;
-using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -132,7 +130,8 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).FirstOrDefault();
-                return UserExists;
+                return UserExists
+                    ;
             }
         }
 
