@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PhysicManagement.Model.Alarm>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>List</h2>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست ساعت ها</h4>                
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>عنوان نوع زمان </th>
+                            <th>تولید کاربر</th>
+                            <th>تولید عنوان فاز درمان</th>
+                            <th>باز بینی نام کاربری</th>
+                            <th>باز بینی متن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var alarm in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@alarm.AlarmTypeTitle</td>
+                                    <td>@alarm.GenerateUser</td>
+                                    <td>@alarm.GenerateTreatmentPhaseTitle</td>
+                                    <td>@alarm.ReviewUserName</td>
+                                    <td>@alarm.ReviewText</td>
+                                </tr>
+                                Index++;
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
