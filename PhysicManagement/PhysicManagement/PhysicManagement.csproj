@@ -235,6 +235,7 @@
     <Content Include="Views\Doctor\List.cshtml" />
     <Content Include="Views\Doctor\Modify.cshtml" />
     <Content Include="Views\Alarm\List.cshtml" />
+    <Content Include="Views\Alarm\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
