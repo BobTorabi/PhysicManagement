@@ -1,0 +1,59 @@
+﻿@model PhysicManagement.Model.TreatmentProcess
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت پیشروی درمان جدید";
+    }
+    else {
+        ViewBag.Title = "ویرایش اطلاعات پیشروی درمان ";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">اطلاعات نمایشی پیشروی درمان</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="UserName" class="bmd-label-floating">شماره مرحله</label>
+                                    <input type="text" id="UserName" name="UserName" value="@Model.StepNumber" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Password" class="bmd-label-floating">عنوان</label>
+                                    <input type="text" id="Password" name="Password" value="@Model.Title" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="FirstName" class="bmd-label-floating">عنوان انگلیسی</label>
+                                    <input type="text" id="FirstName" name="FirstName" value="@Model.EnglishTitle" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="LastName" class="bmd-label-floating">توضیحات</label>
+                                    <input type="text" id="LastName" name="LastName" value="@Model.Description" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
