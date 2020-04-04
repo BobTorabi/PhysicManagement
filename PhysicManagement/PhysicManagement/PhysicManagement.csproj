@@ -135,6 +135,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PhysicTreatmentController.cs" />
+    <Compile Include="Controllers\PhysicTreatmentPlanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -245,6 +246,8 @@
     <Content Include="Views\Patient\Modify.cshtml" />
     <Content Include="Views\PhysicTreatment\List.cshtml" />
     <Content Include="Views\PhysicTreatment\Modify.cshtml" />
+    <Content Include="Views\PhysicTreatmentPlan\List.cshtml" />
+    <Content Include="Views\PhysicTreatmentPlan\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
