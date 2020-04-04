@@ -131,6 +131,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,6 +234,8 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Doctor\List.cshtml" />
     <Content Include="Views\Doctor\Modify.cshtml" />
+    <Content Include="Views\PhysicTreatmentHostory\List.cshtml" />
+    <Content Include="Views\PhysicTreatmentHostory\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
