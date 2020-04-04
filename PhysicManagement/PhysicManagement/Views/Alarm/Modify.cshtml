@@ -3,11 +3,11 @@
 @{
     if(Model.Id == 0)
     {
-        ViewBag.Title = "ثبت ساعت جدید";
+        ViewBag.Title = "ثبت هشدار جدید";
     }
     else
     {
-        ViewBag.Title = "ویرایش اطلاعات ساعت";
+        ViewBag.Title = "ویرایش اطلاعات هشدار";
     }
 
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +20,7 @@
                     <div class="card-icon">
                         <i class="material-icons">mail_outline</i>
                     </div>
-                    <h4 class="card-title">اطلاعات نمایشی ساعت</h4>
+                    <h4 class="card-title">اطلاعات نمایشی هشدار</h4>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -28,32 +28,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating">عنوان نوع زمان</label>
+                                    <label for="UserName" class="bmd-label-floating">نوع هشدار</label>
                                     <input type="text" id="UserName" name="UserName" value="@Model.AlarmTypeTitle" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">تولید عنوان فاز درمان</label>
+                                    <label for="Password" class="bmd-label-floating">عنوان فاز درمان</label>
                                     <input type="text" id="Password" name="Password" value="@Model.GenerateTreatmentPhaseTitle" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">تولید کاربر</label>
+                                    <label for="FirstName" class="bmd-label-floating">کاربر ایجاد کننده</label>
                                     <input type="text" id="FirstName" name="FirstName" value="@Model.GenerateUser" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">بازبینی نام کاربری</label>
+                                    <label for="LastName" class="bmd-label-floating">کاربر تایید کننده </label>
                                     <input type="text" id="LastName" name="LastName" value="@Model.ReviewUserName" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">بازبینی متن</label>
+                                    <label for="Mobile" class="bmd-label-floating">متن نظر</label>
                                     <input type="text" id="Mobile" name="Mobile" value="@Model.ReviewText" class="form-control">
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Gender" class="bmd-label-floating">بازبینی تاریخ</label>
+                                    <label for="Gender" class="bmd-label-floating">نظر تاریخ</label>
                                     <input type="text" id="Gender" name="Gender" value="@Model.ReviewDate" class="form-control">
                                 </div>
                             </div>                                                        
