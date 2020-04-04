@@ -62,6 +62,20 @@ namespace PhysicManagement.Logic.Services
                     Cookie.SetCookie(AuthenticationCookieName, cookieValue);
             }
         }
+
+     
+        public static PhysicUser GetUserData(string userName, string password)
+        {
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+                return null;
+
+            string EncryptedPassword = EncryptPassword(userName, password);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var UserExists = db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).FirstOrDefault();
+                return UserExists;
+            }
+        }
         public static PhysicUser GetUserByUserId(long userId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -100,7 +114,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var UserExists = db.PhysicUser.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).Count();
-                return UserExists == 1;
+                return UserExists != 0;
             }
         }
         public static bool IsUserValidByUserId(long userId)
@@ -132,6 +146,7 @@ namespace PhysicManagement.Logic.Services
                 Password = EncryptPassword(userName, passWord),
                 Username = userName,
                 Degree = degree,
+               
                 Description = description,
             };
 
@@ -140,8 +155,15 @@ namespace PhysicManagement.Logic.Services
             {
                 using (var db = new Model.PhysicManagementEntities())
                 {
-                    db.PhysicUser.Add(UserEntity);
-                    return db.SaveChanges() == 1;
+                    if (!IsUserValidByUserName(userName))
+                    {
+                        throw new ValidationException("این نام کاربری تکراری است");
+                    }
+                    else
+                    {
+                        db.PhysicUser.Add(UserEntity);
+                        return db.SaveChanges() == 1;
+                    }
                 }
             }
             throw new ValidationException(Validation.Errors);

@@ -14,12 +14,6 @@ namespace PhysicManagement.Model
     
     public partial class Patient
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Patient()
-        {
-            this.MedicalRecord = new HashSet<MedicalRecord>();
-        }
-    
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -31,8 +25,5 @@ namespace PhysicManagement.Model
         public string City { get; set; }
         public string Address { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MedicalRecord> MedicalRecord { get; set; }
     }
 }

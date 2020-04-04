@@ -95,7 +95,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var UserExists = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).Count();
-                return UserExists == 1;
+                return UserExists != 0;
             }
         }
 
@@ -148,12 +148,9 @@ namespace PhysicManagement.Logic.Services
                 Username = userName,
                 Code = code,
                 Gender = gender,
-                Degree =degree,
+                Degree = degree,
                 Description = description,
-                ExpertiseMajor = expertiseMajor,
-                MedicalRecord = medicalRecords,
-
-
+                ExpertiseMajor = expertiseMajor
             };
 
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(UserEntity);
@@ -161,8 +158,15 @@ namespace PhysicManagement.Logic.Services
             {
                 using (var db = new Model.PhysicManagementEntities())
                 {
-                    db.Doctor.Add(UserEntity);
-                    return db.SaveChanges() == 1;
+                    if (IsUserValidByUserName(userName))
+                    {
+                        throw new ValidationException("این نام کاربری تکراری است");
+                    }
+                    else
+                    {
+                        db.Doctor.Add(UserEntity);
+                        return db.SaveChanges() == 1;
+                    }
                 }
             }
             throw new ValidationException(validation.Errors);
@@ -181,7 +185,7 @@ namespace PhysicManagement.Logic.Services
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(currentUser);
             if (validation.IsValid)
             {
-                using(var db = new Model.PhysicManagementEntities())
+                using (var db = new Model.PhysicManagementEntities())
                 {
                     db.Doctor.Add(currentUser);
                     return db.SaveChanges() == 1;
@@ -196,7 +200,7 @@ namespace PhysicManagement.Logic.Services
             if (userEntity == null)
                 throw MegaException.ThrowException("کاربری با این شناسه در پایگاه داده وجود ندارد");
 
-           DoctorService.UpdateProfile(userEntity.Id,userEntity.Username,userEntity.FirstName,userEntity.LastName,userEntity.Mobile);
+            DoctorService.UpdateProfile(userEntity.Id, userEntity.Username, userEntity.FirstName, userEntity.LastName, userEntity.Mobile);
             return true;
         }
         public static bool Logout()
@@ -214,9 +218,9 @@ namespace PhysicManagement.Logic.Services
 
             string encryptedNewPassword = EncryptPassword(userName, newPassword);
             userData.Password = encryptedNewPassword;
-            using(var db = new Model.PhysicManagementEntities())
+            using (var db = new Model.PhysicManagementEntities())
             {
-               var Entity = db.Doctor.Find(userData.Id);
+                var Entity = db.Doctor.Find(userData.Id);
                 Entity.Password = userData.Password;
                 return db.SaveChanges() == 1;
             }
@@ -229,21 +233,21 @@ namespace PhysicManagement.Logic.Services
                 var userPassword = db.Doctor.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).Select(x => x.Password).FirstOrDefault();
                 if (string.IsNullOrEmpty(userPassword))
                     throw Common.MegaException.ThrowException("چنین کاربری پیدا نشد.");
-            string decryptedPassword = DecryptPassword(userName, userPassword);
-            return decryptedPassword;
+                string decryptedPassword = DecryptPassword(userName, userPassword);
+                return decryptedPassword;
             }
 
         }
 
         public static string EncryptPassword(string userName, string passWord)
         {
-            string userNameKey = userName.GetTypeCode().ToString();
+            string userNameKey = userName.GetHashCode().ToString();
             return Cryptography.EncryptByUV(userNameKey, passWord);
         }
 
-        internal static string DecryptPassword(string userName, string encryptedPassword)
+        public static string DecryptPassword(string userName, string encryptedPassword)
         {
-            string userNameKey = userName.GetTypeCode().ToString();
+            string userNameKey = userName.GetHashCode().ToString();
             return Cryptography.Decrypt(encryptedPassword, userNameKey);
         }
 
@@ -277,7 +281,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public  bool UpdateDoctor(Model.Doctor entity)
+        public bool UpdateDoctor(Model.Doctor entity)
         {
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(entity);
             if (!validation.IsValid)

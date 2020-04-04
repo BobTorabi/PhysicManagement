@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -45,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -120,6 +127,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -127,6 +137,39 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\buttons.js" />
+    <Content Include="assets\css\dashboard-rtl.css" />
+    <Content Include="assets\css\dashboard.css" />
+    <Content Include="assets\css\dashboard.min.css" />
+    <Content Include="assets\css\fonts.css" />
+    <Content Include="assets\img\apple-icon.png" />
+    <Content Include="assets\img\favicon.png" />
+    <Content Include="assets\img\login_01.jpg" />
+    <Content Include="assets\img\login_02.jpg" />
+    <Content Include="assets\img\logo.png" />
+    <Content Include="assets\img\mask.png" />
+    <Content Include="assets\js\core\bootstrap-material-design.min.js" />
+    <Content Include="assets\js\core\jquery.min.js" />
+    <Content Include="assets\js\core\popper.min.js" />
+    <Content Include="assets\js\material-dashboard.js" />
+    <Content Include="assets\js\material-dashboard.min.js" />
+    <Content Include="assets\js\plugins\arrive.min.js" />
+    <Content Include="assets\js\plugins\bootstrap-datetimepicker.min.js" />
+    <Content Include="assets\js\plugins\bootstrap-notify.js" />
+    <Content Include="assets\js\plugins\bootstrap-selectpicker.js" />
+    <Content Include="assets\js\plugins\bootstrap-tagsinput.js" />
+    <Content Include="assets\js\plugins\chartist.min.js" />
+    <Content Include="assets\js\plugins\fullcalendar.min.js" />
+    <Content Include="assets\js\plugins\jasny-bootstrap.min.js" />
+    <Content Include="assets\js\plugins\jquery-jvectormap.js" />
+    <Content Include="assets\js\plugins\jquery.bootstrap-wizard.js" />
+    <Content Include="assets\js\plugins\jquery.dataTables.min.js" />
+    <Content Include="assets\js\plugins\jquery.tagsinput.js" />
+    <Content Include="assets\js\plugins\jquery.validate.min.js" />
+    <Content Include="assets\js\plugins\moment.min.js" />
+    <Content Include="assets\js\plugins\nouislider.min.js" />
+    <Content Include="assets\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <Content Include="assets\js\plugins\sweetalert2.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -147,13 +190,49 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Base\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="assets\fonts\arabic.woff2" />
+    <Content Include="assets\fonts\latin-ext.woff2" />
+    <Content Include="assets\fonts\latin.woff2" />
+    <Content Include="assets\fonts\Material.woff2" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Bold-FD.eot" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Bold-FD.ttf" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Bold-FD.woff" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Bold-FD.woff2" />
+    <Content Include="assets\fonts\shabnam\Shabnam-FD.eot" />
+    <Content Include="assets\fonts\shabnam\Shabnam-FD.ttf" />
+    <Content Include="assets\fonts\shabnam\Shabnam-FD.woff" />
+    <Content Include="assets\fonts\shabnam\Shabnam-FD.woff2" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Light-FD.eot" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Light-FD.ttf" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Light-FD.woff" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Light-FD.woff2" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Medium-FD.eot" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Medium-FD.ttf" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Medium-FD.woff" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Medium-FD.woff2" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Thin-FD.eot" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Thin-FD.ttf" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Thin-FD.woff" />
+    <Content Include="assets\fonts\shabnam\Shabnam-Thin-FD.woff2" />
     <None Include="packages.config" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_DefaultScripts.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Account\ProfileData.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Doctor\List.cshtml" />
+    <Content Include="Views\Doctor\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
@@ -163,6 +242,10 @@
     <ProjectReference Include="..\PhysicManagement.Logic\PhysicManagement.Logic.csproj">
       <Project>{b655445f-5ca4-4987-8687-0f2cdcdccc21}</Project>
       <Name>PhysicManagement.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PhysicManagement.Model\PhysicManagement.Model.csproj">
+      <Project>{BD8409D4-77E5-450E-9F4A-0B5C5689D9AB}</Project>
+      <Name>PhysicManagement.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -198,7 +281,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
   </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

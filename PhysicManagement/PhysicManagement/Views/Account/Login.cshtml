@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="~/assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        فرم ها
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!-- Fonts and icons -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/fonts.css" />
+
+    <!-- CSS Files -->
+    <link href="~/assets/css/dashboard.css?v=1" rel="stylesheet" />
+    <link href="~/assets/css/dashboard-rtl.css?v=1" rel="stylesheet" />
+</head>
+
+<body class="off-canvas-sidebar">
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top text-white">
+        <div class="container">
+            <div class="navbar-wrapper">
+                <a class="navbar-brand" href="#">
+                    <img class="img" src="~/assets/img/logo.png" />
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="wrapper wrapper-full-page">
+        <div class="page-header login-page header-filter" style="background-image: url('../../assets/img/login_02.jpg'); background-size: cover; background-position: top center;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+                        <form class="form" method="post">
+                            <div class="card card-login card-hidden">
+                                <div class="card-header card-header-info text-center">
+                                    <h4 class="card-title">ورود به سامانه</h4>
+                                </div>
+                                <div class="card-body ">
+                                    <p class="card-description text-center">
+                                        لطفا نام کاربری و رمز عبور خود را وارد نمایید:
+                                    </p>
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="material-icons">person</i></span>
+                                            </div>
+                                            <input type="text" name="username" class="form-control" required placeholder="نام کاربری">
+                                        </div>
+                                    </span>
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">lock_outline</i>
+                                                </span>
+                                            </div>
+                                            <input type="password" name="password" class="form-control" required placeholder="رمز عبور">
+                                        </div>
+                                    </span>
+                                    <span class="bmd-form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="material-icons">picture_in_picture</i>
+                                                </span>
+                                            </div>
+                                            <select name="roleType" class="form-control" required>
+                                                <option value="1">دکتر</option>
+                                                <option value="2">رزیدنت</option>
+                                                <option value="3">کاربر</option>
+                                            </select>
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="card-footer justify-content-end">
+                                    <button type="submit" class="btn btn-rose">ورود</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container">
+                    <nav class="float-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    صفحه نخست
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    بیماران
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    خدمات
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    درباره ما
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    تماس با ما
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright float-right">
+                        &copy;
+                        کلیه حقوق مادی و معنوی این پنل محفوظ می باشد.
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="~/assets/js/core/jquery.min.js"></script>
+    <script src="~/assets/js/core/popper.min.js"></script>
+    <script src="~/assets/js/core/bootstrap-material-design.min.js"></script>
+    <script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
+    <script src="~/assets/js/plugins/jquery.validate.min.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="~/assets/css/buttons.js"></script>
+    <!-- Chartist JS -->
+    <script src="~/assets/js/plugins/chartist.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="~/assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/assets/js/material-dashboard.min.js?v=2.1.2" type="text/javascript"></script>
+
+</body>
+
+</html>

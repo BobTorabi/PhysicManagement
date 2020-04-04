@@ -38,11 +38,11 @@ namespace PhysicManagement.Model
         public virtual DbSet<TreatmentProcess> TreatmentProcess { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<ContourDetails> ContourDetails { get; set; }
-        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
         public virtual DbSet<Alarm> Alarm { get; set; }
         public virtual DbSet<AlarmType> AlarmType { get; set; }
         public virtual DbSet<PhysicUser> PhysicUser { get; set; }
         public virtual DbSet<Resident> Resident { get; set; }
         public virtual DbSet<TreatmentDevice> TreatmentDevice { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
     }
 }

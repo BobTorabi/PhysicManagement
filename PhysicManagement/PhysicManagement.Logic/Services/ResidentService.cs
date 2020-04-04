@@ -94,7 +94,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var UserExists = db.Resident.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).Count();
-                return UserExists == 1;
+                return UserExists != 0;
             }
         }
 
@@ -155,8 +155,15 @@ namespace PhysicManagement.Logic.Services
             {
                 using (var db = new Model.PhysicManagementEntities())
                 {
-                    db.Resident.Add(UserEntity);
-                    return db.SaveChanges() == 1;
+                    if (IsUserValidByUserName(userName))
+                    {
+                        throw new ValidationException("این نام کاربری تکراری است");
+                    }
+                    else
+                    {
+                        db.Resident.Add(UserEntity);
+                        return db.SaveChanges() == 1;
+                    }
                 }
             }
             throw new ValidationException(validation.Errors);

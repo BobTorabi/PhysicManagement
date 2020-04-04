@@ -13,7 +13,6 @@ namespace PhysicManagement.Logic.Validations
         {
             public ResidentEntityValidation()
             {
-                RuleFor(e => e.Id).NotNull().NotEmpty().WithMessage("شناسه نباید خالی باشد");
                 RuleFor(e => e.FirstName).NotNull().NotEmpty().WithMessage("نام نباید خالی باشد");
                 RuleFor(e => e.FirstName).Must(Common.Validate.IsPersianName).WithMessage("نام را به زبان فارسی وارد کنید");
                 RuleFor(e => e.LastName).NotNull().NotEmpty().WithMessage("نام خانوادگی نباید خالی باشد");

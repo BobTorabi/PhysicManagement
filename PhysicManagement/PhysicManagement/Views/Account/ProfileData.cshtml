@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">ویرایش اطلاعات پروفایل شخصی</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" action="ProfileUpdateFor@(ViewBag.RoleName)">
+                    @if (ViewBag.RoleName == "doctor")
+                    {
+                        var Data = PhysicManagement.Logic.Services.DoctorService.IsAuthenticated();
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام کاربری </label>
+                                    <input type="text" disabled name="UserName" value="@Data.Username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام </label>
+                                    <input type="text" name="FirstName" value="@Data.FirstName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام خانوادگی </label>
+                                    <input type="text" name="LastName" value="@Data.LastName" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">موبایل </label>
+                                    <input type="text" name="Mobile" value="@Data.Mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">جنسیت </label>
+                                    <input type="text" name="Gender" value="@Data.Gender" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">تخصص </label>
+                                    <input type="text" name="Degree" value="@Data.Degree" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">ExpertiseMajor </label>
+                                    <input type="text" name="ExpertiseMajor" value="@Data.ExpertiseMajor" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>توضیحات</label>
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">لطفا توضیحات مربوط به این پرونده را وارد نمایید</label>
+                                        <textarea name="Description" class="form-control" rows="5">@Html.Raw(Data.Description)</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.RoleName == "resident")
+                    {
+                        var Data = PhysicManagement.Logic.Services.ResidentService.IsAuthenticated();
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام کاربری </label>
+                                    <input type="text" disabled name="UserName" value="@Data.Username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام </label>
+                                    <input type="text" name="FirstName" value="@Data.FirstName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام خانوادگی </label>
+                                    <input type="text" name="LastName" value="@Data.LastName" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.RoleName == "physicuser")
+                    {
+                        var Data = PhysicManagement.Logic.Services.PhysicUserService.IsAuthenticated();
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام کاربری </label>
+                                    <input type="text" disabled name="UserName" value="@Data.Username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام </label>
+                                    <input type="text" name="FirstName" value="@Data.FirstName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">نام خانوادگی </label>
+                                    <input type="text" name="LastName" value="@Data.LastName" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

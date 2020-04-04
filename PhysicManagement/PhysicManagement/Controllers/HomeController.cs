@@ -6,9 +6,13 @@ using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
+        {
+            return RedirectPermanent("~/Home/Dashboard");
+        }
+        public ActionResult Dashboard()
         {
             return View();
         }

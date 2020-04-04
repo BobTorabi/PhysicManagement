@@ -1,0 +1,42 @@
+﻿<script src="~/assets/js/core/jquery.min.js"></script>
+<script src="~/assets/js/core/popper.min.js"></script>
+<script src="~/assets/js/core/bootstrap-material-design.min.js"></script>
+<script src="~/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
+<script src="~/assets/js/plugins/jquery.validate.min.js"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="~/assets/css/buttons.js"></script>
+<!-- Chartist JS -->
+<script src="~/assets/js/plugins/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="~/assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="~/assets/js/material-dashboard.min.js?v=2.1.2" type="text/javascript"></script>
+
+<script>
+        function setFormValidation(id) {
+            $(id).validate({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+                    $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+                },
+                success: function (element) {
+                    $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+                    $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+                },
+                errorPlacement: function (error, element) {
+                    $(element).closest('.form-group').append(error);
+                },
+            });
+        }
+
+        $(document).ready(function () {
+            setFormValidation('#RegisterValidation');
+            setFormValidation('#TypeValidation');
+            setFormValidation('#LoginValidation');
+            setFormValidation('#RangeValidation');
+
+            var url = window.location.pathname;
+            $('.nav-link[href*="' + url + '"]').parent().addClass('active')
+        });
+</script>

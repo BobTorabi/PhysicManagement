@@ -14,7 +14,13 @@ namespace PhysicManagement.Common
         }
         public static string EncryptByUV(string input, string uv)
         {
-            return Encrypt(input, uv);
+            try
+            {
+                return Encrypt(input, uv);
+            }
+            catch {
+                return "";
+            }
         }
         public static string Decrypt(string input)
         {

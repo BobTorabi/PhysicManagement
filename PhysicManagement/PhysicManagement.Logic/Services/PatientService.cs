@@ -53,7 +53,6 @@ namespace PhysicManagement.Logic.Services
                 Entity.City = entity.City;
                 Entity.Address = entity.Address;
                 Entity.RegisterDate = entity.RegisterDate;
-                Entity.MedicalRecord = entity.MedicalRecord;
                 Entity.GenderIsMale = entity.GenderIsMale;
 
                 return db.SaveChanges() == 1;
