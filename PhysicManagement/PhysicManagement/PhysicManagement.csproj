@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
+    <Compile Include="Controllers\AlarmTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -236,6 +237,8 @@
     <Content Include="Views\Doctor\Modify.cshtml" />
     <Content Include="Views\Alarm\List.cshtml" />
     <Content Include="Views\Alarm\Modify.cshtml" />
+    <Content Include="Views\AlarmType\List.cshtml" />
+    <Content Include="Views\AlarmType\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
