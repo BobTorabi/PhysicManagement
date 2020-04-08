@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-    public class TreatmentProcessController : Controller
+    public class TreatmentProcessController : BaseController
     {
         Logic.Services.TreatmentService Service;
         public TreatmentProcessController()
@@ -34,7 +34,20 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.TreatmentProcess entity)
         {
-            return View();
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdateTreatmentProcess(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddTreatmentProcess(entity);
+            }
+            if (IsAffected)
+                return Redirect("Index");
+            else {
+                return View();
+            }
         }
     }
 }

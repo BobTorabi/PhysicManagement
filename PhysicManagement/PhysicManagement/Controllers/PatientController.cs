@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-    public class PatientController : Controller
+    public class PatientController : BaseController
     {
         Logic.Services.PatientService Service;
         public PatientController()

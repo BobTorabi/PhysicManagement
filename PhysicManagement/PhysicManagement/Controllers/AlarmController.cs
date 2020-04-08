@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-    public class AlarmController : Controller
+    public class AlarmController : BaseController
     {
         Logic.Services.AlarmService Service;
         public AlarmController()

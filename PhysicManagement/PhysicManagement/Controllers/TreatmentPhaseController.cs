@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-    public class TreatmentPhaseController : Controller
+    public class TreatmentPhaseController : BaseController
     {
         Logic.Services.TreatmentService Service;
         public TreatmentPhaseController()

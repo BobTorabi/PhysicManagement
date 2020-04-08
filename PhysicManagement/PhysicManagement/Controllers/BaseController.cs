@@ -1,4 +1,6 @@
-﻿using PhysicManagement.Logic.Services;
+﻿using FluentValidation;
+using PhysicManagement.Logic.Services;
+using PhysicManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,30 @@ namespace PhysicManagement.Controllers
     [Authorization()]
     public class BaseController : Controller
     {
-        
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (filterContext.Exception != null)
+            {
+                List<string> Result = new List<string>();
+                filterContext.HttpContext.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                if (filterContext.Exception is ValidationException)
+                {
+                    ((ValidationException)filterContext.Exception).Errors.ToList().ForEach(error => { Result.Add(error.ErrorMessage); });
+                }
+                filterContext.Result = new JsonResult()
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new MegaViewModel<int>()
+                    {
+                        Messages = Result,
+                        Status = MegaStatus.Failed
+                    }
+                };
+                filterContext.ExceptionHandled = true;
+            }
+        }
     }
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizationAttribute : AuthorizeAttribute
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -86,5 +109,6 @@ namespace PhysicManagement.Controllers
           
 
         }
+
     }
 }

@@ -30,6 +30,89 @@
         </div>
     </div>
     @Html.Partial("_DefaultScripts")
+    <script type="text/javascript">
+           function formValidate(ths, e) {
+            e.preventDefault();
+            doSubmit(ths);
+            return false;
+        }
+        function doSubmit(ths) {
+            var $form = $(ths);
+            var $url = $form.attr('action');
+            var $enctype = $form.attr('enctype');
+            var formData = new FormData();
+            $(ths).find('input,select,textarea').each(function () {
+                if ($(this).is('[name]')) {
+                    if ($(this).prop("tagName") == 'INPUT' && ($(this).is('[type]') && $(this).attr('type').toLowerCase() == 'file')) {
+                        formData.append($(this).attr('name'), $(this)[0].files[0]);
+                    }
+                    else {
+                        formData.append($(this).attr('name'), $(this).val());
+                    }
+                }
+            });
+
+            $.ajax(
+                {
+                    url: $url,
+                    method: "POST",
+                    enctype: $enctype,
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    error: function (res) {
+                        var $errors = JSON.parse(res.responseText).Messages;
+                        var errorBox = $('.errorList');
+                        if (errorBox.length == 0)
+                            errorBox = $('.card-body').prepend('<div class="errorList alert alert-warning" role="alert"><ul style="margin-bottom:0;"></ul></div>');
+
+                        $('.errorList>ul').empty();
+                        for (var i = 0; i < $errors.length; i++) {
+                            $('.errorList>ul').append('<li style="color:#444;">' + $errors[i] + '</i>');
+                        }
+                    },
+                    success: function () {
+                        $(ths).find('button,input[type=button]').attr("disabled", true);
+                        window.location.reload();
+                    },
+                    always: function () {
+                    }
+
+                });
+        }
+        function QS(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        };
+        function getAllQS() {
+            var matches = window.location.search.match(/([\\?&][a-zA-Z0-9]*=([^&#]*))/g);
+            if (matches) {
+                for (var i = 0; i < matches.length; i++) {
+                    var m = matches[i].slice(1);
+                    var mKey = m.split('=');
+                    if ($('[name=' + mKey[0] + ']').length != 0) {
+                        if ($('[name=' + mKey[0] + ']').prop('tagName') == "SELECT") {
+                            $('[name=' + mKey[0] + ']').val(decodeURIComponent(mKey[1])).trigger('change');
+                        }
+                        else {
+                            $('[name=' + mKey[0] + ']').val(decodeURIComponent(mKey[1]));
+                        }
+                    }
+                }
+            }
+        }
+        $('.box-body button[type=reset]').click(function () {
+            window.location = window.location.origin + window.location.pathname;
+        })
+    $(document).ready(function () {
+        getAllQS();
+        $('form').attr('onsubmit', 'formValidate(this,event)');
+
+    });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
