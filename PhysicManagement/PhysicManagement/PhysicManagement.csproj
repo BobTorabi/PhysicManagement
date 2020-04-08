@@ -209,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Resident\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -269,6 +268,7 @@
     <Content Include="Views\TreatmentPhase\Modify.cshtml" />
     <Content Include="Views\TreatmentProcess\List.cshtml" />
     <Content Include="Views\TreatmentProcess\Modify.cshtml" />
+    <Content Include="Views\Resident\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
