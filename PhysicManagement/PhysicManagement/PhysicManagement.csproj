@@ -137,6 +137,7 @@
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\AlarmTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CancerController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
@@ -210,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Cancer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
