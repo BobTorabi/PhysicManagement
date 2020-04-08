@@ -211,7 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Cancer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -275,6 +274,7 @@
     <Content Include="Views\Resident\Modify.cshtml" />
     <Content Include="Views\PhysicUser\List.cshtml" />
     <Content Include="Views\PhysicUser\Modify.cshtml" />
+    <Content Include="Views\Cancer\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
