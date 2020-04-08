@@ -16,7 +16,7 @@ namespace PhysicManagement.Controllers
         {
             Service = new Logic.Services.PhysicUserService();
         }
-        // GET: Doctor
+        // GET: PhysicUser
         public ActionResult List()
         {
 
