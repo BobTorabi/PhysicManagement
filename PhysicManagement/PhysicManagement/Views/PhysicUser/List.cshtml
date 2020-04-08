@@ -1,0 +1,55 @@
+﻿@model PhysicManagement.Model.PhysicUser
+
+@{
+    ViewBag.Title = "List";
+}
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست فیزیست ها</h4>
+                <p class="card-category">
+                    فقط فیزیست های فعال در لیست نمایش داده شده است
+                </p>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>نام کاربری </th>
+                            <th>نام</th>
+                            <th>نام خانوادگی</th>
+                            <th>تخصص</th>
+                            <th>اقدام مورد نیاز</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var physicUser in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@physicUser.Username</td>
+                                    <td>@physicUser.FirstName</td>
+                                    <td>@physicUser.LastName</td>
+                                    <td>@physicUser.Degree</td>
+                                    <td>در حال تصویر برداری می باشد</td>
+                                </tr>
+                                Index++;
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
