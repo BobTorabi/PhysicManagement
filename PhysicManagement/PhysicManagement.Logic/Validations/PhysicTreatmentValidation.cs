@@ -10,12 +10,10 @@ namespace PhysicManagement.Logic.Validations
 
             public PhysicTreatmentEntityValidate()
             {
-                RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد ");
-                RuleFor(x => x.MedicalRecordId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhaseNumber).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentPlan).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
+                RuleFor(x => x.PhaseNumber).NotNull().WithMessage("شماره فاز نمی تواند نال باشد ")
+                    .NotEmpty().WithMessage("پر کردن شماره فاز اجباری است ");
+                RuleFor(x => x.ActionUser).Null().WithMessage("کاربر نمی تواند نا باشد")
+                    .Empty().WithMessage("پر کردن کاربر اجباری است ");
             }
         }
         #endregion
