@@ -140,6 +140,7 @@
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
+    <Compile Include="Controllers\ResidentController.cs" />
     <Compile Include="Controllers\TreatmentDeviceController.cs" />
     <Compile Include="Controllers\TreatmentPhaseController.cs" />
     <Compile Include="Controllers\TreatmentProcessController.cs" />
@@ -208,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Resident\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
