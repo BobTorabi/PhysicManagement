@@ -34,7 +34,21 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.TreatmentPhase entity)
         {
-            return View();
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdateTreatmentPhase(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddTreatmentPhase(entity);
+            }
+            if (IsAffected)
+                return Redirect("Index");
+            else
+            {
+                return View();
+            }
         }
     }
 }
