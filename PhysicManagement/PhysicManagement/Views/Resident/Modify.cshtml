@@ -1,0 +1,83 @@
+﻿@model PhysicManagement.Model.Resident
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت رزیدنت جدید";
+    }
+    else
+    {
+        ViewBag.Title = "ویرایش اطلاعات رزیدنت ";
+    }
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">اطلاعات نمایشی رزیدنت</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="UserName" class="bmd-label-floating">نام کاربری</label>
+                                <input type="text" id="UserName" name="UserName" value="@Model.Username" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Password" class="bmd-label-floating">رمز عبور</label>
+                                <input type="text" id="Password" name="Password" value="@Model.Password" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="FirstName" class="bmd-label-floating">نام</label>
+                                <input type="text" id="FirstName" name="FirstName" value="@Model.FirstName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="LastName" class="bmd-label-floating">نام خانوادگی</label>
+                                <input type="text" id="LastName" name="LastName" value="@Model.LastName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Mobile" class="bmd-label-floating">موبایل</label>
+                                <input type="text" id="Mobile" name="Mobile" value="@Model.Mobile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Code" class="bmd-label-floating">کد یکتا</label>
+                                <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Gender" class="bmd-label-floating">جنسیت</label>
+                                <input type="text" id="Gender" name="Gender" value="@Model.Gender" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ExpertiseMajor" class="bmd-label-floating">توضیحات</label>
+                                <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.Description" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

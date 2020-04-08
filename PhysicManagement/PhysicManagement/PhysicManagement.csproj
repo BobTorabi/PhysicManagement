@@ -269,6 +269,7 @@
     <Content Include="Views\TreatmentProcess\List.cshtml" />
     <Content Include="Views\TreatmentProcess\Modify.cshtml" />
     <Content Include="Views\Resident\List.cshtml" />
+    <Content Include="Views\Resident\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
