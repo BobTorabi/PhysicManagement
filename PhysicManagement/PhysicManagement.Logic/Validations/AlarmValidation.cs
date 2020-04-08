@@ -27,19 +27,13 @@ namespace PhysicManagement.Logic.Validations
         {
             public AlarmEntityValidate()
             {
-                RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد ");
-                RuleFor(x => x.AlarmTypeId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.AlarmTypeTitle).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.GenerateDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.GenerateTreatmentPhaseId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.GenerateTreatmentPhaseTitle).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.GenerateUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.IsActive).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.IsOnBoard).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ReviewDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ReviewText).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
+                RuleFor(x => x.ReviewDate).Null().WithMessage("نظر تاریخ نمی تواند نال باشد")
+                    .Empty().WithMessage("پر کردن نظر تاریخ اجباری است ");
+                RuleFor(x => x.ReviewText).NotNull().WithMessage("متن نظر نمی تواند نال باشد")
+                    .NotEmpty().WithMessage("پر کردن متن نظر اجباری است ");
                 RuleFor(x => x.ReviewText).Must(Common.Validate.IsText).WithMessage("اطلاعات وارد شده صحیح نمی باشد");
-                RuleFor(x => x.ReviewUserName).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
+                RuleFor(x => x.ReviewUserName).Null().WithMessage("کاربر تایید کننده نمی تواند نال باشد")
+                    .Empty().WithMessage("پر کردن کاربر تایید کننده اجباری است ");
             }
         }
         #endregion
