@@ -140,7 +140,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.PhysicTreatmentPlanHostory.OrderBy(x => x.PhysicTreatmentPlan).ToList();
+                return db.PhysicTreatmentPlanHostory.OrderBy(x => x.PhysicTreatmentPlanId).ToList();
             }
         }
         public Model.PhysicTreatmentPlanHostory GetPhysicTreatmentPlanHostoryById(int entityId)

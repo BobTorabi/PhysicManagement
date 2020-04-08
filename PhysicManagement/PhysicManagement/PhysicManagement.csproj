@@ -133,6 +133,10 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
+    <Compile Include="Controllers\TreatmentDeviceController.cs" />
+    <Compile Include="Controllers\TreatmentPhaseController.cs" />
+    <Compile Include="Controllers\TreatmentProcessController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PhysicTreatmentController.cs" />
     <Compile Include="Controllers\PhysicTreatmentPlanController.cs" />
@@ -248,6 +252,14 @@
     <Content Include="Views\PhysicTreatment\Modify.cshtml" />
     <Content Include="Views\PhysicTreatmentPlan\List.cshtml" />
     <Content Include="Views\PhysicTreatmentPlan\Modify.cshtml" />
+    <Content Include="Views\PhysicTreatmentHostory\List.cshtml" />
+    <Content Include="Views\PhysicTreatmentHostory\Modify.cshtml" />
+    <Content Include="Views\TreatmentDevice\List.cshtml" />
+    <Content Include="Views\TreatmentDevice\Modify.cshtml" />
+    <Content Include="Views\TreatmentPhase\List.cshtml" />
+    <Content Include="Views\TreatmentPhase\Modify.cshtml" />
+    <Content Include="Views\TreatmentProcess\List.cshtml" />
+    <Content Include="Views\TreatmentProcess\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
