@@ -242,7 +242,7 @@ namespace PhysicManagement.Logic.Services
             return Cryptography.EncryptByUV(userNameKey, passWord);
         }
 
-        internal static string DecryptPassword(string userName, string encryptedPassword)
+        public static string DecryptPassword(string userName, string encryptedPassword)
         {
             string userNameKey = userName.GetTypeCode().ToString();
             return Cryptography.Decrypt(encryptedPassword, userNameKey);
