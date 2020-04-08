@@ -5,10 +5,10 @@ namespace PhysicManagement.Controllers
 {
     public class PhysicTreatmentPlanController : BaseController
     {
-        Logic.Services.PhysicTreatmentPlanService Service;
+        Logic.Services.PhysicTreatmentService Service;
         public PhysicTreatmentPlanController()
         {
-            Service = new Logic.Services.PhysicTreatmentPlanService();
+            Service = new Logic.Services.PhysicTreatmentService();
         }
         // GET: PhysicTreatmentPlan
         public ActionResult List()
@@ -34,7 +34,21 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.PhysicTreatmentPlan entity)
         {
-            return View();
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdatePhysicTreatmentPlan(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddPhysicTreatmentPlan(entity);
+            }
+            if (IsAffected)
+                return Redirect("Index");
+            else
+            {
+                return View();
+            }
         }
 
     }
