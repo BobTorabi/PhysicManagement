@@ -36,10 +36,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ActionDate" class="bmd-label-floating">روز ثبت</label>
-                                    <input type="text" id="ActionDate" name="ActionDate" value="@Model.ActionDate" class="form-control date-picker">
-                                </div>
+                                @Html.EditorPersianDatePicker(model => model.ActionDate, " روز ثبت")
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
