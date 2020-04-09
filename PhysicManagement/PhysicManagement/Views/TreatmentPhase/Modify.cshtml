@@ -55,10 +55,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="PrescribeDate" class="bmd-label-floating">تاریخ</label>
-                                    <input type="text" id="PrescribeDate" name="PrescribeDate" value="@Model.PrescribeDate" class="form-control date-picker">
-                                </div>
+                                @Html.EditorPersianDatePicker(model => model.PrescribeDate, "تاریخ")
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

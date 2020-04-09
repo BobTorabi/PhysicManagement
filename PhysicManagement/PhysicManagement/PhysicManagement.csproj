@@ -276,11 +276,9 @@
     <Content Include="Views\TreatmentProcess\Modify.cshtml" />
     <Content Include="Views\Resident\Modify.cshtml" />
     <Content Include="Views\PhysicUser\Modify.cshtml" />
-    <Content Include="Views\Cancer\Modify.cshtml" />
     <Content Include="Views\Resident\List.cshtml" />
     <Content Include="Views\PhysicUser\List.cshtml" />
     <Content Include="Views\Cancer\List.cshtml" />
-    <Content Include="Views\Cancer\Modify.cshtml" />
     <Content Include="Views\Home\BaseInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>

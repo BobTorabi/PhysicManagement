@@ -31,10 +31,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ActionDate" class="bmd-label-floating">روز ثبت</label>
-                                    <input type="text" id="ActionDate" name="ActionDate" value="@Model.ActionDate" class="form-control date-picker">
-                                </div>
+                                @Html.EditorPersianDatePicker(model => model.ActionDate, "تاریخ ثبت")
                             </div>                                                                                    
                         </div>
                         <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
