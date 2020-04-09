@@ -48,7 +48,7 @@ namespace PhysicManagement.Controllers
                 IsAffected = Service.AddAlarmType(entity);
             }
             if (IsAffected)
-                return Redirect("Index");
+                return RedirectToAction("List");
             else
             {
                 return View();

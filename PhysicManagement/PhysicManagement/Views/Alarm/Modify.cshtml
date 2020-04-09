@@ -26,47 +26,37 @@
                     <form method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <div class="row">
+                           
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating">نوع هشدار</label>
-                                    <input type="text" id="UserName" name="UserName" value="@Model.AlarmTypeTitle" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">عنوان فاز درمان</label>
-                                    <input type="text" id="Password" name="Password" value="@Model.GenerateTreatmentPhaseTitle" class="form-control">
+                                    <label for="GenerateTreatmentPhaseTitle" class="bmd-label-floating">عنوان فاز درمان</label>
+                                    <input type="text" id="GenerateTreatmentPhaseTitle" name="GenerateTreatmentPhaseTitle" value="@Model.GenerateTreatmentPhaseTitle" class="form-control">
                                 </div>
                             </div>
 
+                          
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">کاربر ایجاد کننده</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.GenerateUser" class="form-control">
+                                    <label for="ReviewUserName" class="bmd-label-floating">کاربر تایید کننده </label>
+                                    <input type="text" id="ReviewUserName" name="ReviewUserName" value="@Model.ReviewUserName" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">کاربر تایید کننده </label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.ReviewUserName" class="form-control">
+                                    <label for="ReviewText" class="bmd-label-floating">متن نظر</label>
+                                    <input type="text" id="ReviewText" name="ReviewText" value="@Model.ReviewText" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">متن نظر</label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.ReviewText" class="form-control">
+                                    <label for="GenerateDate" class="bmd-label-floating">تولید تاریخ</label>
+                                    <input type="text" id="GenerateDate" name="GenerateDate" value="@Model.GenerateDate" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">تولید تاریخ</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.GenerateDate" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Gender" class="bmd-label-floating">نظر تاریخ</label>
-                                    <input type="text" id="Gender" name="Gender" value="@Model.ReviewDate" class="form-control">
+                                    <label for="ReviewDate" class="bmd-label-floating">نظر تاریخ</label>
+                                    <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">
                                 </div>
                             </div>                                                        
                         </div>

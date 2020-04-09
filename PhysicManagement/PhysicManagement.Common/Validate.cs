@@ -17,7 +17,7 @@ namespace PhysicManagement.Common
         
         public static bool IsText(string name)
         {
-            return Regex.IsMatch(name??"", @"^[a-zA-Z0-9_.-]*$", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(name??"", @"^[a-zA-Z0-9_.-\\s]*$", RegexOptions.IgnoreCase);
         }
 
         public static bool IsEmail(string email)

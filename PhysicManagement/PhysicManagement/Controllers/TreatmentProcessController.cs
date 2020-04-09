@@ -44,7 +44,7 @@ namespace PhysicManagement.Controllers
                 IsAffected = Service.AddTreatmentProcess(entity);
             }
             if (IsAffected)
-                return Redirect("Index");
+                return RedirectToAction("Index");
             else {
                 return View();
             }

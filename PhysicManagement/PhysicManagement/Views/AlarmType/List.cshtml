@@ -18,6 +18,7 @@
                                 <th>عنوان</th>
                                 <th>عنوان انگلیسی</th>
                                 <th>توضیحات</th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,6 +31,18 @@
                                         <td>@alarmType.Title</td>
                                         <td>@alarmType.EnglishTitle</td>
                                         <td>@alarmType.Description</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    امکانات
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <a class="dropdown-item" href="Modify/@alarmType.Id">ویرایش</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="#">Separated link</a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     Index++;
                                 }

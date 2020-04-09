@@ -9,13 +9,9 @@ namespace PhysicManagement.Logic.Validations
         {
             public AlarmTypeEntityValidate()
             {
-                RuleFor(x => x.Title).NotEmpty().WithMessage("پر کردن عنوان اجباری است ");
-                RuleFor(x => x.Title).Must(Common.Validate.IsPersianText).WithMessage("عنوان وارد شده صحیح نمی باشد");
-                RuleFor(x => x.Description).NotEmpty().WithMessage("پر کردن توضیحات اجباری است ");
-                RuleFor(x => x.Description).Must(Common.Validate.IsText).WithMessage("اطلاعات وارد شده صحیح نمی باشد");
-                RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد");
-                RuleFor(x => x.EnglishTitle).NotEmpty().WithMessage("پر کردن عنوان انگلیسی اجباری است ");
-                RuleFor(x => x.EnglishTitle).Must(Common.Validate.IsText).WithMessage("عنوان انگلیسی وارد شده صحیح نمی باشد");
+                RuleFor(x => x.Title).Length(1,150).WithMessage("عنوان باید بین 1 تا 150 حرف باشد.");
+                RuleFor(x => x.EnglishTitle).Length(1, 150).WithMessage("عنوان انگلیسی باید بین 1 تا 150 حرف باشد.");
+
             }
         }
         #endregion

@@ -28,6 +28,13 @@ namespace PhysicManagement.Logic.Services
             var validation = new AlarmValidation.AlarmEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
+
+            var AlaramTypeObject = GetAlarmTypeById(entity.AlarmTypeId.GetValueOrDefault());
+            if (AlaramTypeObject ==null)
+                throw Common.MegaException.ThrowException("نوع هشدار وارد شده در پایگاه داده وجود ندارد.");
+
+            entity.AlarmTypeTitle = AlaramTypeObject.Title;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.Alarm.Add(entity);
@@ -39,16 +46,27 @@ namespace PhysicManagement.Logic.Services
             var validation = new AlarmValidation.AlarmEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.Alarm.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+
+                var AlaramTypeObject = GetAlarmTypeById(entity.AlarmTypeId.GetValueOrDefault());
+                if (AlaramTypeObject == null)
+                    throw Common.MegaException.ThrowException("نوع هشدار وارد شده در پایگاه داده وجود ندارد.");
+
+                entity.AlarmTypeTitle = AlaramTypeObject.Title;
+
                 Entity.IsActive = entity.IsActive;
                 Entity.IsOnBoard = entity.IsOnBoard;
                 Entity.ReviewDate = entity.ReviewDate;
                 Entity.ReviewText = entity.ReviewText;
                 Entity.ReviewUserName = entity.ReviewUserName;
                 Entity.AlarmTypeId = entity.AlarmTypeId;
-                Entity.AlarmTypeTitle = entity.AlarmTypeTitle;
+                
                 Entity.GenerateDate = entity.GenerateDate;
                 Entity.GenerateTreatmentPhaseId = entity.GenerateTreatmentPhaseId;
                 Entity.GenerateTreatmentPhaseTitle = entity.GenerateTreatmentPhaseTitle;
