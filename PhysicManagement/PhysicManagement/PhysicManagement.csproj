@@ -270,12 +270,12 @@
     <Content Include="Views\TreatmentPhase\Modify.cshtml" />
     <Content Include="Views\TreatmentProcess\List.cshtml" />
     <Content Include="Views\TreatmentProcess\Modify.cshtml" />
-    <Content Include="Views\Resident\List.cshtml" />
     <Content Include="Views\Resident\Modify.cshtml" />
-    <Content Include="Views\PhysicUser\List.cshtml" />
     <Content Include="Views\PhysicUser\Modify.cshtml" />
-    <Content Include="Views\Cancer\List.cshtml" />
     <Content Include="Views\Cancer\Modify.cshtml" />
+    <Content Include="Views\Resident\List.cshtml" />
+    <Content Include="Views\PhysicUser\List.cshtml" />
+    <Content Include="Views\Cancer\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
