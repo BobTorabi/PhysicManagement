@@ -26,33 +26,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating"> شناسه پرونده پزشکی</label>
-                                    <input type="text" id="UserName" name="UserName" value="@Model.MedicalRecordId" class="form-control">
+                                    <label for="PhaseNumber" class="bmd-label-floating">شماره فاز</label>
+                                    <input type="number" id="PhaseNumber" name="PhaseNumber" value="@Model.PhaseNumber" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">شماره فاز</label>
-                                    <input type="text" id="Password" name="Password" value="@Model.PhaseNumber" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">نقشه درمان فیزیکی</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.PhysicTreatmentPlan" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">روز ثبت</label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.ActionDate" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">کاربر</label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.ActionUser" class="form-control">
+                                    <label for="ActionDate" class="bmd-label-floating">روز ثبت</label>
+                                    <input type="text" id="ActionDate" name="ActionDate" value="@Model.ActionDate" class="form-control date-picker">
                                 </div>
                             </div>                                                                                    
                         </div>

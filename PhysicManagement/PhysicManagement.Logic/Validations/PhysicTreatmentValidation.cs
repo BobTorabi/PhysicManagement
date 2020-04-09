@@ -11,7 +11,6 @@ namespace PhysicManagement.Logic.Validations
             public PhysicTreatmentEntityValidate()
             {
                 RuleFor(x => x.PhaseNumber).NotEmpty().WithMessage("پر کردن شماره فاز اجباری است ");
-                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
             }
         }
         #endregion
