@@ -3,10 +3,10 @@
 @{
     if (Model.Id == 0)
     {
-        ViewBag.Title = "ثبت نقشه درمان فیزیکی جدید ";
+        ViewBag.Title = "ثبت برنامه درمان فیزیکی جدید ";
     }
     else {
-        ViewBag.Title = "ویرایش اطلاعات نقشه درمان فیزیکی ";
+        ViewBag.Title = "ویرایش اطلاعات برنامه درمان فیزیکی ";
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,7 +17,7 @@
                     <div class="card-icon">
                         <i class="material-icons">mail_outline</i>
                     </div>
-                    <h4 class="card-title">اطلاعات نمایشی نقشه درمان فیزیکی</h4>
+                    <h4 class="card-title">اطلاعات نمایشی برنامه درمان فیزیکی</h4>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -25,79 +25,54 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating">شناسه درمان فیزیکی</label>
-                                    <input type="text" id="UserName" name="UserName" value="@Model.PhysicTreatmentId" class="form-control">
+                                    <label for="PlannedDose" class="bmd-label-floating">دز برنامه ریزی شده</label>
+                                    <textarea id="PlannedDose" name="PlannedDose" rows="3" value="@Model.PlannedDose" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">شناسه ارگان</label>
-                                    <input type="text" id="Password" name="Password" value="@Model.CancerOARId" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">دز برنامه ریزی شده</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.PlannedDose" class="form-control">
+                                    <label for="Evaluation" class="bmd-label-floating">ارزیابی</label>
+                                    <textarea type="text" id="Evaluation" name="Evaluation" rows="5" value="@Model.Evaluation" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">ارزیابی</label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.Evaluation" class="form-control">
+                                    <label for="ActionDate" class="bmd-label-floating">روز ثبت</label>
+                                    <input type="text" id="ActionDate" name="ActionDate" value="@Model.ActionDate" class="form-control date-picker">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">HadContour</label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.HadContour" class="form-control">
+                                    <label for="Reserve1" class="bmd-label-floating">فیلد رزرو 1</label>
+                                    <input type="text" id="Reserve1" name="Reserve1" value="@Model.Reserve1" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">روز ثبت</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.ActionDate" class="form-control">
+                                    <label for="Reserve2" class="bmd-label-floating">فیلد رزرو 2</label>
+                                    <input type="text" id="Reserve2" name="Reserve2" value="@Model.Reserve2" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Gender" class="bmd-label-floating">کاربر</label>
-                                    <input type="text" id="Gender" name="Gender" value="@Model.ActionUser" class="form-control">
+                                    <label for="HadContour" class="bmd-label-floating">HadContour</label>
+                                    <input type="checkbox" id="HadContour" name="HadContour" value="@Model.HadContour" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Degree" class="bmd-label-floating">فیلد رزرو 1</label>
-                                    <input type="text" id="Degree" name="Degree" value="@Model.Reserve1" class="form-control">
+                                    <label for="IsAcceptedByDoctor" class="bmd-label-floating">IsAcceptedByDoctor</label>
+                                    <input type="checkbox" id="IsAcceptedByDoctor" name="IsAcceptedByDoctor" value="@Model.IsAcceptedByDoctor" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="ExpertiseMajor" class="bmd-label-floating">فیلد رزرو 2</label>
-                                    <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.Reserve2" class="form-control">
+                                    <label for="IsAcceptedByDoctor" class="bmd-label-floating">IsAcceptedByPhysic</label>
+                                    <input type="checkbox" id="IsAcceptedByPhysic" name="IsAcceptedByPhysic" value="@Model.IsAcceptedByPhysic" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ExpertiseMajor" class="bmd-label-floating">IsAcceptedByPhysic</label>
-                                    <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.IsAcceptedByPhysic" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ExpertiseMajor" class="bmd-label-floating">توسط دکتر پذیرفته شده</label>
-                                    <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.IsAcceptedByDoctor" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ExpertiseMajor" class="bmd-label-floating">دکتر معالج کاربر</label>
-                                    <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.AcceptedDoctorUser" class="form-control">
-                                </div>
-                            </div>
-
                         </div>
+
                         <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                         <div class="clearfix"></div>
                     </form>

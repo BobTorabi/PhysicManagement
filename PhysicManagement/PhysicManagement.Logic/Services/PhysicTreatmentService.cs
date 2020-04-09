@@ -94,7 +94,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.PhysicTreatmentPlan.OrderBy(x => x.PhysicTreatment).ToList();
+                return db.PhysicTreatmentPlan.OrderBy(x => x.PhysicTreatmentId).ToList();
             }
 
         }
@@ -111,6 +111,22 @@ namespace PhysicManagement.Logic.Services
             var validation = new PhysicTreatmentValidation.PhysicTreatmentPlanEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
+            Logic.Services.CancerService cr = new CancerService();
+            var PhysicTreatmentPlanObject = cr.GetCancerOARById(entity.CancerOARId.GetValueOrDefault());
+            if (PhysicTreatmentPlanObject == null)
+                throw Common.MegaException.ThrowException("ارگان وارد شده در پایگاه داده وجود ندارد.");
+           entity.CancerOARId = PhysicTreatmentPlanObject.Id;
+
+            var PhysicTreatmentPlanObject2 = GetPhysicTreatmentById(entity.PhysicTreatmentId.GetValueOrDefault());
+            if (PhysicTreatmentPlanObject2 == null)
+                throw Common.MegaException.ThrowException("شناسه درمان فیزیکی وارد شده در پایگاه داده وجود ندارد");
+            entity.PhysicTreatmentId = PhysicTreatmentPlanObject2.Id;
+
+            PatientService pa = new PatientService();
+            var PhysicTreatmenPlantObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+            if (PhysicTreatmenPlantObject3 == null)
+                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+            entity.ActionUser = PhysicTreatmenPlantObject3.LastName;
 
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -127,19 +143,34 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicTreatmentPlan.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                Logic.Services.CancerService cr = new CancerService();
+                var PhysicTreatmentPlanObject = cr.GetCancerOARById(entity.CancerOARId.GetValueOrDefault());
+                if (PhysicTreatmentPlanObject == null)
+                    throw Common.MegaException.ThrowException("ارگان وارد شده در پایگاه داده وجود ندارد.");
+                entity.CancerOARId = PhysicTreatmentPlanObject.Id;
+
+                var PhysicTreatmentPlanObject2 = GetPhysicTreatmentById(entity.PhysicTreatmentId.GetValueOrDefault());
+                if (PhysicTreatmentPlanObject2 == null)
+                    throw Common.MegaException.ThrowException("شناسه درمان فیزیکی وارد شده در پایگاه داده وجود ندارد");
+                entity.PhysicTreatmentId = PhysicTreatmentPlanObject2.Id;
+
+                PatientService pa = new PatientService();
+                var PhysicTreatmenPlantObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+                if (PhysicTreatmenPlantObject3 == null)
+                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+                entity.ActionUser = PhysicTreatmenPlantObject3.LastName;
+
                 Entity.HadContour = entity.HadContour;
                 Entity.IsAcceptedByDoctor = entity.IsAcceptedByDoctor;
                 Entity.IsAcceptedByPhysic = entity.IsAcceptedByPhysic;
-                Entity.PhysicTreatment = entity.PhysicTreatment;
-                Entity.PhysicTreatmentId = entity.PhysicTreatmentId;
-                Entity.PhysicTreatmentPlanHostory = entity.PhysicTreatmentPlanHostory;
                 Entity.PlannedDose = entity.PlannedDose;
                 Entity.Reserve1 = entity.Reserve1;
                 Entity.Reserve2 = entity.Reserve2;
                 Entity.AcceptedDoctorUser = entity.AcceptedDoctorUser;
                 Entity.ActionDate = entity.ActionDate;
-                Entity.ActionUser = entity.ActionUser;
-                Entity.CancerOARId = entity.CancerOARId;
                 Entity.Evaluation = entity.Evaluation;
 
                 return db.SaveChanges() == 1;

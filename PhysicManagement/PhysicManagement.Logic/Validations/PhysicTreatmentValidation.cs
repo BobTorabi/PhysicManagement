@@ -20,11 +20,9 @@ namespace PhysicManagement.Logic.Validations
 
             public PhysicTreatmentPlanEntityValidate()
             {
-                RuleFor(x => x.PhysicTreatmentPlanHostory).NotEmpty().WithMessage("پر کردن تاریخ نقشه درمان فیزیکی اجباری است ");
-                RuleFor(x => x.PlannedDose).NotEmpty().WithMessage("پر کردن دز برنامه ریزی شده اجباری است ");
-                RuleFor(x => x.Reserve1).NotEmpty().WithMessage("پر کردن فیلد رزرو 1 اجباری است ");
-                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
-                RuleFor(x => x.Evaluation).NotEmpty().WithMessage("پر کردن ارزیابی اجباری است ");
+                RuleFor(x => x.PlannedDose).Length(1,500).WithMessage("پر کردن دز برنامه ریزی شده اجباری است ");
+                RuleFor(x => x.Reserve1).Length(1,50).WithMessage("پر کردن فیلد رزرو 1 اجباری است ");
+                RuleFor(x => x.Evaluation).Length(1,500).WithMessage("پر کردن ارزیابی اجباری است ");
 
             }
         }
