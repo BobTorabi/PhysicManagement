@@ -1,7 +1,6 @@
 ﻿@model List<PhysicManagement.Model.Patient>
 
 @{
-    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,6 +19,7 @@
                                 <th>نام خانوادگی</th>
                                 <th>موبایل</th>
                                 <th>کد ملی</th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,13 +27,24 @@
                                 int Index = 1;
                                 foreach (var patient in Model)
                                 {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@patient.FirstName</td>
-                                        <td>@patient.LastName</td>
-                                        <td>@patient.Mobile</td>
-                                        <td>@patient.NationalCode</td>
-                                    </tr>
+                                                        <tr>
+                                                            <td>@Index</td>
+                                                            <td>@patient.FirstName</td>
+                                                            <td>@patient.LastName</td>
+                                                            <td>@patient.Mobile</td>
+                                                            <td>@patient.NationalCode</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        امکانات
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-left">
+                                                                        <a class="dropdown-item" href="Modify/@patient.Id">ویرایش</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                     Index++;
                                 }
 
