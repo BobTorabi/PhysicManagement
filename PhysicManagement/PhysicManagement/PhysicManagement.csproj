@@ -152,6 +152,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelperExtention.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <Content Include="assets\css\dashboard.css" />
     <Content Include="assets\css\dashboard.min.css" />
     <Content Include="assets\css\fonts.css" />
+    <Content Include="assets\css\persian-datepicker.css" />
     <Content Include="assets\img\apple-icon.png" />
     <Content Include="assets\img\favicon.png" />
     <Content Include="assets\img\login_01.jpg" />
@@ -172,6 +174,8 @@
     <Content Include="assets\js\core\popper.min.js" />
     <Content Include="assets\js\material-dashboard.js" />
     <Content Include="assets\js\material-dashboard.min.js" />
+    <Content Include="assets\js\persian-date.js" />
+    <Content Include="assets\js\persian-datepicker.js" />
     <Content Include="assets\js\plugins\arrive.min.js" />
     <Content Include="assets\js\plugins\bootstrap-datetimepicker.min.js" />
     <Content Include="assets\js\plugins\bootstrap-notify.js" />
@@ -276,6 +280,7 @@
     <Content Include="Views\PhysicUser\Modify.cshtml" />
     <Content Include="Views\Cancer\List.cshtml" />
     <Content Include="Views\Cancer\Modify.cshtml" />
+    <Content Include="Views\Home\BaseInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

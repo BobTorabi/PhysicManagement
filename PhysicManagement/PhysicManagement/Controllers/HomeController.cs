@@ -12,6 +12,10 @@ namespace PhysicManagement.Controllers
         {
             return RedirectPermanent("~/Home/Dashboard");
         }
+        public ActionResult BaseInfo()
+        {
+            return View();
+        }
         public ActionResult Dashboard()
         {
             return View();

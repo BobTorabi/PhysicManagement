@@ -40,14 +40,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="GenerateDate" class="bmd-label-floating">تولید تاریخ</label>
-                                    <input type="text" id="GenerateDate" name="GenerateDate" value="@Model.GenerateDate" class="form-control date-picker">
+                                    @Html.EditorPersianDatePicker(model => model.GenerateDate, "تولید تاریخ")
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="ReviewDate" class="bmd-label-floating">نظر تاریخ</label>
-                                    <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">
+                                    @*<label for="ReviewDate" class="bmd-label-floating">نظر تاریخ</label>
+                                      <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">*@
+                                    @Html.EditorPersianDatePicker(model => model.ReviewDate, "تاریخ نظر")
                                 </div>
                             </div>                                                        
                         </div>
