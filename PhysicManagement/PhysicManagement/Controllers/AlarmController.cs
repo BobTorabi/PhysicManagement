@@ -34,7 +34,21 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.Alarm entity)
         {
-            return View();
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdateAlarm(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddAlarm(entity);
+            }
+            if (IsAffected)
+                return Redirect("Index");
+            else
+            {
+                return View();
+            }
         }
     }
 }
