@@ -2,6 +2,7 @@
 using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -29,6 +30,18 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
+            Logic.Services.MedicalRecordService md = new MedicalRecordService();
+            var TreatmentPhaseObject = md.GetMedicalRecordById(Convert.ToInt64(entity.MedicalRecordId.GetValueOrDefault()));
+            if (TreatmentPhaseObject == null)
+                throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
+            entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
+
+            PatientService pa = new PatientService();
+            var TreatmentPhaseObject2 = pa.GetPatientById(Convert.ToInt32(entity.PrescribesdUser));
+            if (TreatmentPhaseObject2 == null)
+                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+            entity.PrescribesdUser = TreatmentPhaseObject2.LastName;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.TreatmentPhase.Add(entity);
@@ -44,11 +57,24 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.TreatmentPhase.Find(entity.Id);
-                Entity.MedicalRecordId = entity.MedicalRecordId;
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                Logic.Services.MedicalRecordService md = new MedicalRecordService();
+                var TreatmentPhaseObject = md.GetMedicalRecordById(Convert.ToInt64(entity.MedicalRecordId.GetValueOrDefault()));
+                if (TreatmentPhaseObject == null)
+                    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
+                entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
+
+                PatientService pa = new PatientService();
+                var TreatmentPhaseObject2 = pa.GetPatientById(Convert.ToInt32(entity.PrescribesdUser));
+                if (TreatmentPhaseObject2 == null)
+                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+                entity.PrescribesdUser = TreatmentPhaseObject2.LastName;
+
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.PhaseText = entity.PhaseText;
                 Entity.PrescribeDate = entity.PrescribeDate;
-                Entity.PrescribesdUser = entity.PrescribesdUser;
                 Entity.Target = entity.Target;
                 Entity.Description = entity.Description;
                 Entity.Dose = entity.Dose;

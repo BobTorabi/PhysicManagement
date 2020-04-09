@@ -37,10 +37,10 @@ namespace PhysicManagement.Logic.Services
             entity.MedicalRecordId = Convert.ToInt32(PhysicTreatmentObject.MRICode);
 
             PatientService pa = new PatientService();
-            var PhysicTreatmentObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-            if (PhysicTreatmentObject3 == null)
+            var PhysicTreatmentObject2 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+            if (PhysicTreatmentObject2 == null)
                 throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-            entity.ActionUser = PhysicTreatmentObject3.LastName;
+            entity.ActionUser = PhysicTreatmentObject2.LastName;
 
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -66,10 +66,10 @@ namespace PhysicManagement.Logic.Services
                     throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
 
                 PatientService pa = new PatientService();
-                var PhysicTreatmentObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-                if (PhysicTreatmentObject3 == null)
+                var PhysicTreatmentObject2 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+                if (PhysicTreatmentObject2 == null)
                     throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-                entity.ActionUser = PhysicTreatmentObject3.LastName;
+                entity.ActionUser = PhysicTreatmentObject2.LastName;
 
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.PhysicTreatmentPlan = entity.PhysicTreatmentPlan;

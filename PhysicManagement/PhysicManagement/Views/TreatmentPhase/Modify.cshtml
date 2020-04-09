@@ -25,60 +25,47 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating">شناشه پرونده پزشکی</label>
-                                    <input type="text" id="UserName" name="UserName" value="@Model.MedicalRecordId" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">فار</label>
-                                    <input type="text" id="Password" name="Password" value="@Model.PhaseNumber" class="form-control">
+                                    <label for="PhaseNumber" class="bmd-label-floating">فار</label>
+                                    <input type="number" id="PhaseNumber" name="PhaseNumber" value="@Model.PhaseNumber" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">عنوان فاز</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.PhaseText" class="form-control">
+                                    <label for="PhaseText" class="bmd-label-floating">عنوان فاز</label>
+                                    <input type="text" id="PhaseText" name="PhaseText" value="@Model.PhaseText" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">دز</label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.Dose" class="form-control">
+                                    <label for="Dose" class="bmd-label-floating">دز</label>
+                                    <input type="text" id="Dose" name="Dose" value="@Model.Dose" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">فرکشن/Fraction</label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.Fraction" class="form-control">
+                                    <label for="Fraction" class="bmd-label-floating">فرکشن/Fraction</label>
+                                    <input type="number" id="Fraction" name="Fraction" value="@Model.Fraction" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">هدف/Target</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.Target" class="form-control">
+                                    <label for="Target" class="bmd-label-floating">هدف/Target</label>
+                                    <input type="text" id="Target" name="Target" value="@Model.Target" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Gender" class="bmd-label-floating">توضیحات</label>
-                                    <input type="text" id="Gender" name="Gender" value="@Model.Description" class="form-control">
+                                    <label for="PrescribeDate" class="bmd-label-floating">تاریخ</label>
+                                    <input type="text" id="PrescribeDate" name="PrescribeDate" value="@Model.PrescribeDate" class="form-control date-picker">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Degree" class="bmd-label-floating">تاریخ</label>
-                                    <input type="text" id="Degree" name="Degree" value="@Model.PrescribeDate" class="form-control">
+                                    <label for="Description" class="bmd-label-floating">توضیحات</label>
+                                    <textarea id="Description" name="Description" rows="5" value="@Model.Description" class="form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="ExpertiseMajor" class="bmd-label-floating">کاربر</label>
-                                    <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.PrescribesdUser" class="form-control">
-                                </div>
-                            </div>
-
                         </div>
                         <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                         <div class="clearfix"></div>

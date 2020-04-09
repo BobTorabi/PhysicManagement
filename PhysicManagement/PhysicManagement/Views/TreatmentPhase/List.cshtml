@@ -1,7 +1,6 @@
 ﻿@model List<PhysicManagement.Model.TreatmentPhase>
 
 @{
-    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
     <div class="row">
@@ -24,6 +23,7 @@
                                 <th>توضیحات</th>
                                 <th>تاریخ</th>
                                 <th>کاربر</th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,18 +31,29 @@
                                 int Index = 1;
                                 foreach (var treatmentPhase in Model)
                                 {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@treatmentPhase.MedicalRecordId</td>
-                                        <td>@treatmentPhase.PhaseNumber</td>
-                                        <td>@treatmentPhase.PhaseText</td>
-                                        <td>@treatmentPhase.Dose</td>
-                                        <td>@treatmentPhase.Fraction</td>
-                                        <td>@treatmentPhase.Target</td>
-                                        <td>@treatmentPhase.Description</td>
-                                        <td>@treatmentPhase.PrescribeDate</td>
-                                        <td>@treatmentPhase.PrescribesdUser</td>
-                                    </tr>
+                                                        <tr>
+                                                            <td>@Index</td>
+                                                            <td>@treatmentPhase.MedicalRecordId</td>
+                                                            <td>@treatmentPhase.PhaseNumber</td>
+                                                            <td>@treatmentPhase.PhaseText</td>
+                                                            <td>@treatmentPhase.Dose</td>
+                                                            <td>@treatmentPhase.Fraction</td>
+                                                            <td>@treatmentPhase.Target</td>
+                                                            <td>@treatmentPhase.Description</td>
+                                                            <td>@treatmentPhase.PrescribeDate</td>
+                                                            <td>@treatmentPhase.PrescribesdUser</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        امکانات
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-left">
+                                                                        <a class="dropdown-item" href="Modify/@treatmentPhase.Id">ویرایش</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                     Index++;
                                 }
 

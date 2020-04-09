@@ -10,9 +10,8 @@ namespace PhysicManagement.Logic.Validations
             public TreatmentPhaseEntityValidate()
             {
                 RuleFor(x => x.PhaseNumber).NotEmpty().WithMessage("پر کردن فازاجباری است ");
-                RuleFor(x => x.PhaseText).NotEmpty().WithMessage("پر کردن عنوان فازاجباری است ");
-                RuleFor(x => x.Target).NotEmpty().WithMessage("پر کردن هدف اجباری است ");
-                RuleFor(x => x.Description).NotEmpty().WithMessage("پر کردن توضیحات اجباری است ");
+                RuleFor(x => x.PhaseText).Length(1,50).WithMessage("پر کردن عنوان فازاجباری است ");
+                RuleFor(x => x.Target).Length(1,50).WithMessage("پر کردن هدف اجباری است ");
                 RuleFor(x => x.Dose).NotEmpty().WithMessage("پر کردن دزاجباری است ");
                 RuleFor(x => x.Fraction).NotEmpty().WithMessage("پر کردن فرکشن اجباری است ");
 
