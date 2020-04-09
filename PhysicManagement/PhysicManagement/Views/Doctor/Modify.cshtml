@@ -70,24 +70,13 @@
                                 <input type="text" id="Degree" name="Degree" value="@Model.Degree" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="ExpertiseMajor" class="bmd-label-floating">ExpertiseMajor</label>
                                 <input type="text" id="ExpertiseMajor" name="ExpertiseMajor" value="@Model.ExpertiseMajor" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.EditorPersianDatePicker(model => model.GenerateDate, "تولید تاریخ")
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @*<label for="ReviewDate" class="bmd-label-floating">نظر تاریخ</label>
-                             <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">*@
-                                @Html.EditorPersianDatePicker(model => model.ReviewDate, "تاریخ نظر")
-                            </div>
-                        </div>
+                        
                     </div>
                     <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                     <div class="clearfix"></div>
