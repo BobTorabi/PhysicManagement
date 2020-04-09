@@ -13,16 +13,14 @@ namespace PhysicManagement.Logic.Validations
         {
             public ResidentEntityValidation()
             {
-                RuleFor(e => e.FirstName).NotNull().NotEmpty().WithMessage("نام نباید خالی باشد");
+                RuleFor(e => e.FirstName).Length(1,150).WithMessage("نام باید 1 تا 150 حرف داشته باشد");
                 RuleFor(e => e.FirstName).Must(Common.Validate.IsPersianName).WithMessage("نام را به زبان فارسی وارد کنید");
-                RuleFor(e => e.LastName).NotNull().NotEmpty().WithMessage("نام خانوادگی نباید خالی باشد");
+                RuleFor(e => e.LastName).Length(1,150).WithMessage("نام خانوادگی 1 تا 150 حرف داشته باشد");
                 RuleFor(e => e.LastName).Must(Common.Validate.IsPersianName).WithMessage("نام خانوادگی را به زبان فارسی وارد کنید");
                 RuleFor(e => e.Username).NotNull().NotEmpty().WithMessage("نام کاربری نباید خالی باشد");
                 RuleFor(e => e.Password).NotNull().NotEmpty().WithMessage("کلمه عبور نباید خالی باشد");
-                RuleFor(e => e.Mobile).NotNull().NotEmpty().WithMessage("شماره تلفن نباید خالی باشد");
                 RuleFor(e => e.Mobile).Must(Common.Validate.IsMobile).WithMessage("شماره تلفن را به درستی وارد کنید");
                 RuleFor(e => e.Description).Must(Common.Validate.IsPersianText).WithMessage("توضیحات را به زبان فارسی وارد کنید");
-                RuleFor(e => e.Description).MaximumLength(200).WithMessage("متن نباید بیشتر از 200 حرف باشد");
             }
         }
     }
