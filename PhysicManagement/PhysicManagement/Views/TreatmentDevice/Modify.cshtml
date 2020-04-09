@@ -24,30 +24,30 @@
                 <form method="post">
                     <input type="hidden" name="Id" value="@Model.Id" />
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Title" class="bmd-label-floating">عنوان</label>
                                 <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="EnglishTitle" class="bmd-label-floating">عنوان انگلیسی</label>
                                 <input type="text" id="EnglishTitle" name="EnglishTitle" value="@Model.EnglishTitle" class="form-control">
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="Description" class="bmd-label-floating">توضیحات</label>
-                                <textarea id="Description" name="Description" rows="5" value="@Model.Description" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Code" class="bmd-label-floating">کد</label>
                                 <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="Description" class="bmd-label-floating">توضیحات</label>
+                                    <textarea id="Description" name="Description" rows="5" value="@Model.Description" class="form-control"></textarea>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
