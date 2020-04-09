@@ -1,7 +1,6 @@
 ﻿@model List<PhysicManagement.Model.PhysicTreatmentPlanHostory>
 
 @{
-    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,19 +8,20 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-header card-header-info">
-                    <h4 class="card-title">لیست اطلاعات نقشه درمان فیزیکی</h4>                    
+                    <h4 class="card-title">لیست اطلاعات تاریخ درمان فیزیکی</h4>                    
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
                         <thead class="text-warning">
                             <tr>
                                 <th>ردیف</th>
-                                <th>شناسه نقشه درمان فیزیکی</th>
+                                <th>شناسه برنامه درمان فیزیکی</th>
                                 <th>یادداشت</th>
                                 <th>تغییر تاریخ</th>
                                 <th>کاربر</th>
                                 <th>دارای هشدار است</th>
                                 <th>دکتر است</th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,15 +29,26 @@
                                 int Index = 1;
                                 foreach (var physicTreatmentPlanHostory in Model)
                                 {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@physicTreatmentPlanHostory.PhysicTreatmentPlanId</td>
-                                        <td>@physicTreatmentPlanHostory.Note</td>
-                                        <td>@physicTreatmentPlanHostory.ChangeDate</td>
-                                        <td>@physicTreatmentPlanHostory.ActionUser</td>
-                                        <td>@physicTreatmentPlanHostory.HasAlarm</td>
-                                        <td>@physicTreatmentPlanHostory.IsDoctor</td>
-                                    </tr>
+                                                        <tr>
+                                                            <td>@Index</td>
+                                                            <td>@physicTreatmentPlanHostory.PhysicTreatmentPlanId</td>
+                                                            <td>@physicTreatmentPlanHostory.Note</td>
+                                                            <td>@physicTreatmentPlanHostory.ChangeDate</td>
+                                                            <td>@physicTreatmentPlanHostory.ActionUser</td>
+                                                            <td>@physicTreatmentPlanHostory.HasAlarm</td>
+                                                            <td>@physicTreatmentPlanHostory.IsDoctor</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        امکانات
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-left">
+                                                                        <a class="dropdown-item" href="Modify/@physicTreatmentPlanHostory.Id">ویرایش</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                     Index++;
                                 }
 

@@ -29,11 +29,13 @@ namespace PhysicManagement.Logic.Services
             var validation = new PhysicTreatmentValidation.PhysicTreatmentEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
+
             Logic.Services.MedicalRecordService md = new MedicalRecordService();
             var PhysicTreatmentObject =md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
             if (PhysicTreatmentObject == null)
                 throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
             entity.MedicalRecordId = Convert.ToInt32(PhysicTreatmentObject.MRICode);
+
             PatientService pa = new PatientService();
             var PhysicTreatmentObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
             if (PhysicTreatmentObject3 == null)
@@ -211,6 +213,17 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
+            PatientService pa = new PatientService();
+            var PhysicTreatmentHostoryObject = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+            if (PhysicTreatmentHostoryObject == null)
+                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+            entity.ActionUser = PhysicTreatmentHostoryObject.LastName;
+
+            var PhysicTreatmentHostoryObject2 = GetPhysicTreatmentPlanById(entity.PhysicTreatmentPlanId.GetValueOrDefault());
+            if (PhysicTreatmentHostoryObject2 == null)
+                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+            entity.PhysicTreatmentPlanId = PhysicTreatmentHostoryObject2.Id;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.PhysicTreatmentPlanHostory.Add(entity);
@@ -226,12 +239,23 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.PhysicTreatmentPlanHostory.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                PatientService pa = new PatientService();
+                var PhysicTreatmentHostoryObject = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+                if (PhysicTreatmentHostoryObject == null)
+                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+                entity.ActionUser = PhysicTreatmentHostoryObject.LastName;
+
+                var PhysicTreatmentHostoryObject2 = GetPhysicTreatmentPlanById(entity.PhysicTreatmentPlanId.GetValueOrDefault());
+                if (PhysicTreatmentHostoryObject2 == null)
+                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+                entity.PhysicTreatmentPlanId = PhysicTreatmentHostoryObject2.Id;
+
                 Entity.HasAlarm = entity.HasAlarm;
                 Entity.IsDoctor = entity.IsDoctor;
                 Entity.Note = entity.Note;
-                Entity.PhysicTreatmentPlan = entity.PhysicTreatmentPlan;
-                Entity.PhysicTreatmentPlanId = entity.PhysicTreatmentPlanId;
-                Entity.ActionUser = entity.ActionUser;
                 Entity.ChangeDate = entity.ChangeDate;
 
                 return db.SaveChanges() == 1;

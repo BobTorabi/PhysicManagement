@@ -3,10 +3,10 @@
 @{
     if (Model.Id == 0)
     {
-        ViewBag.Title = "ثبت اطلاعات نقشه درمان فیزیکی جدید";
+        ViewBag.Title = "ثبت اطلاعات تاریخ درمان فیزیکی جدید";
     }
     else {
-        ViewBag.Title = "ویرایش اطلاعات درمان فیزیکی ";
+        ViewBag.Title = "ویرایش اطلاعات تاریغ درمان فیزیکی ";
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,7 +18,7 @@
                     <div class="card-icon">
                         <i class="material-icons">mail_outline</i>
                     </div>
-                    <h4 class="card-title">اطلاعات نمایشی اطلاعات  نقشه درمان فیزیکی </h4>
+                    <h4 class="card-title">اطلاعات نمایشی اطلاعات  تاریخ درمان فیزیکی </h4>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -26,39 +26,27 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="UserName" class="bmd-label-floating">شناسه نقشه درمان فیزیکی</label>
-                                    <input type="text" id="UserName" name="UserName" value="@Model.PhysicTreatmentPlanId" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Password" class="bmd-label-floating">یادداشت</label>
-                                    <input type="text" id="Password" name="Password" value="@Model.Note" class="form-control">
+                                    <label for="Note" class="bmd-label-floating">یادداشت</label>
+                                    <textarea id="Note" name="Note" rows="2" value="@Model.Note" class="form-control"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">تغییر تاریخ</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.ChangeDate" class="form-control">
+                                    <label for="ChangeDate" class="bmd-label-floating">تغییر تاریخ</label>
+                                    <input type="text" id="ChangeDate" name="ChangeDate" value="@Model.ChangeDate" class="form-control" date-picker>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">کاربر</label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.ActionUser" class="form-control">
+                                    <label for="HasAlarm" class="bmd-label-floating">دارای هشدار است</label>
+                                    <input type="checkbox" id="HasAlarm" name="HasAlarm" value="@Model.HasAlarm" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">دارای هشدار است</label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.HasAlarm" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">دکتر است</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.IsDoctor" class="form-control">
+                                    <label for="IsDoctor" class="bmd-label-floating">دکتر است</label>
+                                    <input type="checkbox" id="IsDoctor" name="IsDoctor" value="@Model.IsDoctor" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -32,9 +32,7 @@ namespace PhysicManagement.Logic.Validations
         {
             public PhysicTreatmentPlanHostoryEntityValidate()
             {
-                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
-                RuleFor(x => x.ChangeDate).NotEmpty().WithMessage("پر کردن تغییر تاریخ اجباری است ");
-                RuleFor(x => x.Note).NotEmpty().WithMessage("پر کردن یادداشت اجباری است ");
+                RuleFor(x => x.Note).Length(1,500).WithMessage("پر کردن یادداشت اجباری است ");
 
             }
         }
