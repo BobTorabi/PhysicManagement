@@ -24,12 +24,8 @@ namespace PhysicManagement.Logic.Validations
             public TreatmentProcessEntityValidate()
             {
                 RuleFor(x => x.StepNumber).NotEmpty().WithMessage("پر کردن شماره مرحله اجباری است ");
-                RuleFor(x => x.Title).NotEmpty().WithMessage("پر کردن عنوان اجباری است ");
-                RuleFor(x => x.Title).Must(Common.Validate.IsPersianText).WithMessage("عنوان وارد شده صحیح نمی باشد");
-                RuleFor(x => x.EnglishTitle).NotEmpty().WithMessage("پر کردن عنوان انگلیسی اجباری است ");
-                RuleFor(x => x.EnglishTitle).Must(Common.Validate.IsText).WithMessage("عنوان انگلیسی وارد شده صحیح نمی باشد");
-                RuleFor(x => x.Description).NotEmpty().WithMessage("پر کردن توضیحات اجباری است ");
-                RuleFor(x => x.Description).Must(Common.Validate.IsText).WithMessage("توضیحات وارد شده صحیح نمی باشد");
+                RuleFor(x => x.Title).Length(1,50).WithMessage("پر کردن عنوان اجباری است ");
+                RuleFor(x => x.EnglishTitle).Length(1,50).WithMessage("پر کردن عنوان انگلیسی اجباری است ");
                 RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد");
             }
         }
