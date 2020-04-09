@@ -47,7 +47,7 @@ namespace PhysicManagement.Controllers
                 IsAffected = Service.AddCancer(entity);
             }
             if (IsAffected)
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             else
             {
                 return View();

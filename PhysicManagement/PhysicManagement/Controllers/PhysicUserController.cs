@@ -51,7 +51,7 @@ namespace PhysicManagement.Controllers
                 IsAffected = Service.AddPhysicUser(entity);
             }
             if (IsAffected)
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             else
             {
                 return View();

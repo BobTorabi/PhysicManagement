@@ -48,7 +48,7 @@ namespace PhysicManagement.Controllers
                 IsAffected = Service.AddResident(entity);
             }
             if (IsAffected)
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             else
             {
                 return View();
