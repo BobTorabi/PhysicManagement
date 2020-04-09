@@ -27,7 +27,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="Note" class="bmd-label-floating">یادداشت</label>
-                                    <textarea id="Note" name="Note" rows="2" value="@Model.Note" class="form-control"></textarea>
+                                    <textarea id="Note" name="Note" rows="1" value="@Model.Note" class="form-control"></textarea>
                                 </div>
                             </div>
 
@@ -36,13 +36,13 @@
                                     @Html.EditorPersianDatePicker(model => model.ChangeDate, "تغییر تاریخ")
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="HasAlarm" class="bmd-label-floating">دارای هشدار است</label>
                                     <input type="checkbox" id="HasAlarm" name="HasAlarm" value="@Model.HasAlarm" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="IsDoctor" class="bmd-label-floating">دکتر است</label>
                                     <input type="checkbox" id="IsDoctor" name="IsDoctor" value="@Model.IsDoctor" class="form-control">
