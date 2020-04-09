@@ -1,7 +1,7 @@
 ﻿@model PhysicManagement.Model.Cancer
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "لیست";
 }
 
     <div class="row">
@@ -21,18 +21,31 @@
                                 <th>نام  </th>
                                 <th>نام انگلیسی</th>
                                 <th>توضیحات </th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
                                 int Index = 1;
-                                foreach (var cancer in Model)
+                                foreach (var Cancer in Model)
                                 {
                                     <tr>
                                         <td>@Index</td>
-                                        <td>@cancer.Title</td>
-                                        <td>@cancer.EnglishTitle</td>
-                                        <td>@cancer.Description</td>
+                                        <td>@Cancer.Title</td>
+                                        <td>@Cancer.EnglishTitle</td>
+                                        <td>@Cancer.Description</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    امکانات
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <a class="dropdown-item" href="Modify/@Cancer.Id">ویرایش</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="Modify/@Cancer.Id"> حذف</a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     Index++;
                                 }
