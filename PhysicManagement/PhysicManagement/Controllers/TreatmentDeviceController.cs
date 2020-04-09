@@ -10,6 +10,10 @@ namespace PhysicManagement.Controllers
         {
             Service = new Logic.Services.TreatmentService();
         }
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("List");
+        }
         // GET: TreatmentDevice
         public ActionResult List()
         {

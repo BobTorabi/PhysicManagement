@@ -25,7 +25,13 @@
                 <div class="card-body">
                     <form method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
-                        <div class="row">                         
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="AlarmTypeId" class="bmd-label-floating">نوع هشدار </label>
+                                    @Html.DropDownList("AlarmTypeId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ReviewUserName" class="bmd-label-floating">کاربر تایید کننده </label>
@@ -46,10 +52,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     @*<label for="ReviewDate" class="bmd-label-floating">نظر تاریخ</label>
-                                      <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">*@
+                <input type="text" id="ReviewDate" name="ReviewDate" value="@Model.ReviewDate" class="form-control date-picker">*@
                                     @Html.EditorPersianDatePicker(model => model.ReviewDate, "تاریخ نظر")
                                 </div>
-                            </div>                                                        
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                         <div class="clearfix"></div>

@@ -13,6 +13,10 @@ namespace PhysicManagement.Controllers
         {
             Service = new Logic.Services.ResidentService();
         }
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("List");
+        }
         // GET: Resident
         public ActionResult List()
         {

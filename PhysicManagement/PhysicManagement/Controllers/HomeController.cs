@@ -10,7 +10,7 @@ namespace PhysicManagement.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectPermanent("~/Home/Dashboard");
+            return RedirectToActionPermanent("Dashboard");
         }
         public ActionResult BaseInfo()
         {
