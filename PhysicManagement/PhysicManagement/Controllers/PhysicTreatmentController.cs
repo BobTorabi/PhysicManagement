@@ -33,7 +33,21 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.PhysicTreatment entity)
         {
-            return View();
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdatePhysicTreatment(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddPhysicTreatment(entity);
+            }
+            if (IsAffected)
+                return Redirect("Index");
+            else
+            {
+                return View();
+            }
         }
 
     }

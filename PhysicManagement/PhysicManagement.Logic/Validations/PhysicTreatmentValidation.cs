@@ -10,12 +10,8 @@ namespace PhysicManagement.Logic.Validations
 
             public PhysicTreatmentEntityValidate()
             {
-                RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد ");
-                RuleFor(x => x.MedicalRecordId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhaseNumber).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentPlan).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
+                RuleFor(x => x.PhaseNumber).NotEmpty().WithMessage("پر کردن شماره فاز اجباری است ");
+                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
             }
         }
         #endregion
@@ -25,21 +21,12 @@ namespace PhysicManagement.Logic.Validations
 
             public PhysicTreatmentPlanEntityValidate()
             {
-                RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد ");
-                RuleFor(x => x.IsAcceptedByDoctor).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.IsAcceptedByPhysic).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatment).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentPlanHostory).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PlannedDose).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.Reserve1).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.Reserve2).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.AcceptedDoctorUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ActionUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.CancerOARId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.Evaluation).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.HadContour).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
+                RuleFor(x => x.PhysicTreatmentPlanHostory).NotEmpty().WithMessage("پر کردن تاریخ نقشه درمان فیزیکی اجباری است ");
+                RuleFor(x => x.PlannedDose).NotEmpty().WithMessage("پر کردن دز برنامه ریزی شده اجباری است ");
+                RuleFor(x => x.Reserve1).NotEmpty().WithMessage("پر کردن فیلد رزرو 1 اجباری است ");
+                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
+                RuleFor(x => x.Evaluation).NotEmpty().WithMessage("پر کردن ارزیابی اجباری است ");
+
             }
         }
         #endregion
@@ -48,15 +35,9 @@ namespace PhysicManagement.Logic.Validations
         {
             public PhysicTreatmentPlanHostoryEntityValidate()
             {
-                RuleFor(x => x.Id).NotNull().NotEmpty().WithMessage("شناسه نمی تواند مقدار خالی داشته باشد ");
-                RuleFor(x => x.ActionUser).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.ChangeDate).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.HasAlarm).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.IsDoctor).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.Note).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentPlan).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-                RuleFor(x => x.PhysicTreatmentPlanId).NotNull().NotEmpty().WithMessage("پر کردن این فیلد اجباری است ");
-
+                RuleFor(x => x.ActionUser).NotEmpty().WithMessage("پر کردن کاربر اجباری است ");
+                RuleFor(x => x.ChangeDate).NotEmpty().WithMessage("پر کردن تغییر تاریخ اجباری است ");
+                RuleFor(x => x.Note).NotEmpty().WithMessage("پر کردن یادداشت اجباری است ");
 
             }
         }
