@@ -1,7 +1,6 @@
 ﻿@model List<PhysicManagement.Model.TreatmentDevice>
 
 @{
-    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
     <div class="row">
@@ -19,6 +18,7 @@
                                 <th>عنوان انگلیسی</th>
                                 <th>توضیحات </th>
                                 <th>کد</th>
+                                <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,13 +26,24 @@
                                 int Index = 1;
                                 foreach (var treatmentDevice in Model)
                                 {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@treatmentDevice.Title</td>
-                                        <td>@treatmentDevice.EnglishTitle</td>
-                                        <td>@treatmentDevice.Description</td>
-                                        <td>@treatmentDevice.Code</td>
-                                    </tr>
+                                                        <tr>
+                                                            <td>@Index</td>
+                                                            <td>@treatmentDevice.Title</td>
+                                                            <td>@treatmentDevice.EnglishTitle</td>
+                                                            <td>@treatmentDevice.Description</td>
+                                                            <td>@treatmentDevice.Code</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        امکانات
+                                                                    </button>
+                                                                    <div class="dropdown-menu dropdown-menu-left">
+                                                                        <a class="dropdown-item" href="Modify/@treatmentDevice.Id">ویرایش</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                     Index++;
                                 }
 

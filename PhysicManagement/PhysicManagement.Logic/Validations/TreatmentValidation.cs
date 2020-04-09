@@ -40,13 +40,9 @@ namespace PhysicManagement.Logic.Validations
         {
             public TreatmentDeviceEntityValidate()
             {
-                RuleFor(x => x.Title).NotEmpty().WithMessage("پر کردن عنوان اجباری است ");
-                RuleFor(x => x.Title).Must(Common.Validate.IsPersianText).WithMessage("عنوان باید به زبان فارسی پر شود");
-                RuleFor(x => x.Code).NotEmpty().WithMessage("پر کردن کد اجباری است ");
-                RuleFor(x => x.EnglishTitle).NotEmpty().WithMessage("پر کردن عنوان انگلیسی اجباری است ");
-                RuleFor(x => x.EnglishTitle).Must(Common.Validate.IsText).WithMessage("عنوان انگلیسی وارد شده صحیح نمی باشد");
-                RuleFor(x => x.Description).NotEmpty().WithMessage("پر کردن توضیحات اجباری است ");
-                RuleFor(x => x.Description).Must(Common.Validate.IsText).WithMessage("توضیحات وارد شده صحیح نمی باشد");
+                RuleFor(x => x.Title).Length(1,150).WithMessage("پر کردن عنوان اجباری است ");
+                RuleFor(x => x.Code).Length(1,50).WithMessage("پر کردن کد اجباری است ");
+                RuleFor(x => x.EnglishTitle).Length(1,150).WithMessage("پر کردن عنوان انگلیسی اجباری است ");
                 RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید بیشتر از 200 حرف نمی تواند باشد");
             }
         }
