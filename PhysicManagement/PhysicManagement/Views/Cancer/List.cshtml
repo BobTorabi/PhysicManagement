@@ -1,62 +1,62 @@
-﻿@model PhysicManagement.Model.Cancer
+﻿@model IEnumerable<PhysicManagement.Model.Cancer>
 
 @{
     ViewBag.Title = "لیست";
 }
 
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title">لیست سرطان</h4>
-                    <p class="card-category">
-                        سرطان ها در لیست نمایش داده شده است
-                    </p>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-warning">
-                            <tr>
-                                <th>ردیف</th>
-                                <th>نام  </th>
-                                <th>نام انگلیسی</th>
-                                <th>توضیحات </th>
-                                <th style="width:50px;">امکانات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                int Index = 1;
-                                foreach (var Cancer in Model)
-                                {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@Cancer.Title</td>
-                                        <td>@Cancer.EnglishTitle</td>
-                                        <td>@Cancer.Description</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    امکانات
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-left">
-                                                    <a class="dropdown-item" href="Modify/@Cancer.Id">ویرایش</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" href="Modify/@Cancer.Id"> حذف</a>
-                                                </div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست سرطان</h4>
+                <p class="card-category">
+                    سرطان ها در لیست نمایش داده شده است
+                </p>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>نام  </th>
+                            <th>نام انگلیسی</th>
+                            <th>توضیحات </th>
+                            <th style="width:50px;">امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var Cancer in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@Cancer.Title</td>
+                                    <td>@Cancer.EnglishTitle</td>
+                                    <td>@Cancer.Description</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                امکانات
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" href="Modify/@Cancer.Id">ویرایش</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="Modify/@Cancer.Id"> حذف</a>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    Index++;
-                                }
-
+                                        </div>
+                                    </td>
+                                </tr>
+                                Index++;
                             }
 
+                        }
 
-                        </tbody>
-                    </table>
-                </div>
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 
