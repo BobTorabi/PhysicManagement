@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,14 @@ namespace PhysicManagement.Controllers
     public class AlarmController : BaseController
     {
         Logic.Services.AlarmService Service;
+        
         public AlarmController()
         {
             Service = new Logic.Services.AlarmService();
+        }
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("List");
         }
         // GET: Alarm
         public ActionResult List()
@@ -23,11 +29,13 @@ namespace PhysicManagement.Controllers
         {
             if(id == null)
             {
+                ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title");
                 return View(new Model.Alarm());
             }
             else
             {
                 var Entity = Service.GetAlarmById(id.GetValueOrDefault());
+                ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title",Entity.AlarmTypeId);
                 return View(Entity);
             }
         }

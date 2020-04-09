@@ -13,6 +13,10 @@ namespace PhysicManagement.Controllers
         {
             Service = new Logic.Services.AlarmService();
         }
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("List");
+        }
         // GET: AlarmType
         public ActionResult List()
         {
