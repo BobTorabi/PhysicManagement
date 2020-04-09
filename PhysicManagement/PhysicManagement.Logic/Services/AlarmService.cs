@@ -2,6 +2,7 @@
 using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -35,6 +36,22 @@ namespace PhysicManagement.Logic.Services
 
             entity.AlarmTypeTitle = AlaramTypeObject.Title;
 
+            TreatmentService td = new TreatmentService();
+
+            var AlaramObject = td.GetTreatmentPhaseById(entity.GenerateTreatmentPhaseId.GetValueOrDefault());
+            if (AlaramObject == null)
+                throw Common.MegaException.ThrowException("عنوان برنامه درمان وارد شده در پایگاه داده وجود ندارد.");
+
+            entity.GenerateTreatmentPhaseTitle = AlaramObject.PhaseText;
+
+            PatientService pa = new PatientService();
+
+            var AlaramObject2 = pa.GetPatientById(Convert.ToInt32(entity.GenerateUser));
+            if (AlaramObject2 == null)
+                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+
+            entity.GenerateUser = AlaramObject2.LastName;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.Alarm.Add(entity);
@@ -60,16 +77,29 @@ namespace PhysicManagement.Logic.Services
 
                 entity.AlarmTypeTitle = AlaramTypeObject.Title;
 
+                TreatmentService td = new TreatmentService();
+
+                var AlaramObject = td.GetTreatmentPhaseById(entity.GenerateTreatmentPhaseId.GetValueOrDefault());
+                if (AlaramObject == null)
+                    throw Common.MegaException.ThrowException("عنوان برنامه درمان وارد شده در پایگاه داده وجود ندارد.");
+
+                entity.GenerateTreatmentPhaseTitle = AlaramObject.PhaseText;
+
+                PatientService pa = new PatientService();
+
+                var AlaramObject2 = pa.GetPatientById(Convert.ToInt32(entity.GenerateUser));
+                if (AlaramObject2 == null)
+                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+
+                entity.GenerateUser = AlaramObject2.LastName;
+
                 Entity.IsActive = entity.IsActive;
                 Entity.IsOnBoard = entity.IsOnBoard;
                 Entity.ReviewDate = entity.ReviewDate;
                 Entity.ReviewText = entity.ReviewText;
                 Entity.ReviewUserName = entity.ReviewUserName;
-                Entity.AlarmTypeId = entity.AlarmTypeId;
-                
+                Entity.AlarmTypeId = entity.AlarmTypeId;               
                 Entity.GenerateDate = entity.GenerateDate;
-                Entity.GenerateTreatmentPhaseId = entity.GenerateTreatmentPhaseId;
-                Entity.GenerateTreatmentPhaseTitle = entity.GenerateTreatmentPhaseTitle;
                 Entity.GenerateUser = entity.GenerateUser;
 
                 return db.SaveChanges() == 1;
