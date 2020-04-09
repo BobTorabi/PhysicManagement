@@ -32,7 +32,9 @@
                             </div>
 
                             <div class="col-md-6">
-                                @Html.EditorPersianDatePicker(model => model.ChangeDate, "تغییر تاریخ")
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.ChangeDate, "تغییر تاریخ")
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

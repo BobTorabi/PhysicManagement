@@ -5,90 +5,93 @@
     {
         ViewBag.Title = "ثبت بیمار جدید";
     }
-    else {
+    else
+    {
         ViewBag.Title = "ویرایش اطلاعات بیمار ";
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-rose card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">mail_outline</i>
-                    </div>
-                    <h4 class="card-title">اطلاعات نمایشی بیمار</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
                 </div>
-                <div class="card-body">
-                    <form method="post">
-                        <input type="hidden" name="Id" value="@Model.Id" />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">نام </label>
-                                    <input type="text" id="FirstName" name="FirstName" value="@Model.FirstName" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">نام خانوادگی</label>
-                                    <input type="text" id="LastName" name="LastName" value="@Model.LastName" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
-                                    <input type="text" id="NationalCode" name="NationalCode" value="@Model.NationalCode" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">موبایل </label>
-                                    <input type="text" id="Mobile" name="Mobile" value="@Model.Mobile" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">کد یکتا</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="GenderIsMale" class="bmd-label-floating">جنسیت</label>
-                                    <input type="checkbox" id="GenderIsMale" name="GenderIsMale" value="@Model.GenderIsMale" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Province" class="bmd-label-floating">استان</label>
-                                    <input type="text" id="Province" name="Province" value="@Model.Province" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="City" class="bmd-label-floating">شهر</label>
-                                    <input type="text" id="City" name="City" value="@Model.City" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "تولید تاریخ")
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="Address" class="bmd-label-floating">ادرس</label>
-                                    <textarea id="Address" name="Address" rows="3" value="@Model.Address" class="form-control"></textarea>
-                                </div>
-                            </div>
-
-                        </div>
-                        <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
-                        <div class="clearfix"></div>
-                    </form>
-                </div>
+                <h4 class="card-title">اطلاعات نمایشی بیمار</h4>
             </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="FirstName" class="bmd-label-floating">نام </label>
+                                <input type="text" id="FirstName" name="FirstName" value="@Model.FirstName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="LastName" class="bmd-label-floating">نام خانوادگی</label>
+                                <input type="text" id="LastName" name="LastName" value="@Model.LastName" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                <input type="text" id="NationalCode" name="NationalCode" value="@Model.NationalCode" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                <input type="text" id="Mobile" name="Mobile" value="@Model.Mobile" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Code" class="bmd-label-floating">کد یکتا</label>
+                                <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="GenderIsMale" class="bmd-label-floating">جنسیت</label>
+                                <input type="checkbox" id="GenderIsMale" name="GenderIsMale" value="@Model.GenderIsMale" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Province" class="bmd-label-floating">استان</label>
+                                <input type="text" id="Province" name="Province" value="@Model.Province" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="City" class="bmd-label-floating">شهر</label>
+                                <input type="text" id="City" name="City" value="@Model.City" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Address" class="bmd-label-floating">ادرس</label>
+                            <textarea id="Address" name="Address" rows="3" value="@Model.Address" class="form-control"></textarea>
+                        </div>
+                    
+
+            </div>
+            <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+            <div class="clearfix"></div>
+            </form>
         </div>
+    </div>
+</div>
     </div>
 

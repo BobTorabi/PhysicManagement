@@ -55,9 +55,11 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                @Html.EditorPersianDatePicker(model => model.PrescribeDate, "تاریخ")
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.PrescribeDate, "تاریخ")
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="Description" class="bmd-label-floating">توضیحات</label>
                                     <textarea id="Description" name="Description" rows="5" value="@Model.Description" class="form-control"></textarea>
