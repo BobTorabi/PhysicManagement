@@ -25,16 +25,7 @@
                 <div class="card-body">
                     <form method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
-                        <div class="row">
-                           
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="GenerateTreatmentPhaseTitle" class="bmd-label-floating">عنوان فاز درمان</label>
-                                    <input type="text" id="GenerateTreatmentPhaseTitle" name="GenerateTreatmentPhaseTitle" value="@Model.GenerateTreatmentPhaseTitle" class="form-control">
-                                </div>
-                            </div>
-
-                          
+                        <div class="row">                         
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ReviewUserName" class="bmd-label-floating">کاربر تایید کننده </label>
@@ -50,7 +41,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="GenerateDate" class="bmd-label-floating">تولید تاریخ</label>
-                                    <input type="text" id="GenerateDate" name="GenerateDate" value="@Model.GenerateDate" class="form-control">
+                                    <input type="text" id="GenerateDate" name="GenerateDate" value="@Model.GenerateDate" class="form-control date-picker">
                                 </div>
                             </div>
                             <div class="col-md-6">

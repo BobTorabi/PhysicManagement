@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<PhysicManagement.Model.Alarm>
 
 @{
-    ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,6 +22,7 @@
                             <th>عنوان فاز درمان</th>
                             <th>کاربر تایید کننده</th>
                             <th>متن نظر</th>
+                            <th style="width:50px;">امکانات</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,14 +30,25 @@
                             int Index = 1;
                             foreach (var alarm in Model)
                             {
-                                <tr>
-                                    <td>@Index</td>
-                                    <td>@alarm.AlarmTypeTitle</td>
-                                    <td>@alarm.GenerateUser</td>
-                                    <td>@alarm.GenerateTreatmentPhaseTitle</td>
-                                    <td>@alarm.ReviewUserName</td>
-                                    <td>@alarm.ReviewText</td>
-                                </tr>
+                                                <tr>
+                                                    <td>@Index</td>
+                                                    <td>@alarm.AlarmTypeTitle</td>
+                                                    <td>@alarm.GenerateUser</td>
+                                                    <td>@alarm.GenerateTreatmentPhaseTitle</td>
+                                                    <td>@alarm.ReviewUserName</td>
+                                                    <td>@alarm.ReviewText</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                امکانات
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-left">
+                                                                <a class="dropdown-item" href="Modify/@alarm.Id">ویرایش</a>
+                                                                <div class="dropdown-divider"></div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                 Index++;
                             }
 
