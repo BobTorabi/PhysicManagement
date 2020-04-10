@@ -1,0 +1,54 @@
+﻿@model PhysicManagement.Model.ContourDetails
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت جزییات کنتور جدید";
+    }
+    else
+    {
+        ViewBag.Title = " ویرایش جزییات کنتور";
+    }
+
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">اطلاعات نمایشی جزییات</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="CancerOARId" class="bmd-label-floating">نوع هشدار </label>
+                                @Html.DropDownList("CancerOARId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.EditorPersianDatePicker(model => model.SelectDate, "تولید تاریخ")
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Description" class="bmd-label-floating">کاربر ایجاد کننده </label>
+                                <textarea id="Description" name="Description" class="form-control" rows="3">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

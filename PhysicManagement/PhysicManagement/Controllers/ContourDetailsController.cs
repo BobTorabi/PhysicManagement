@@ -27,14 +27,16 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult Modify(int? id)
         {
-            
+            Logic.Services.CancerService ts = new CancerService();
             if (id == null)
             {
+                ViewBag.ConcerOARId = new SelectList(ts.GetCancerOARList(),"Id","OrganTitle");
                 return View(new Model.ContourDetails());
             }
             else
             {
                 var Entity = Service.GetContourDetailsById(id.GetValueOrDefault());
+                ViewBag.ConcerOARId = new SelectList(ts.GetCancerOARList(), "Id", "OrganTitle", Entity.CancerOARId);
                 return View(Entity);
             }
 
