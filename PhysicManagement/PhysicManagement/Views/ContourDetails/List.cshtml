@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PhysicManagement.Model.ContourDetails>
+
+@{
+    ViewBag.Title = "";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست جزییات کنتور ها</h4>
+                <h3>
+                    <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
+                </h3>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>زمان تعیین شده</th>
+                            <th>توضیحات</th>
+                            <th style="width:50px;">امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var contourDetails in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@contourDetails.SelectDate</td>
+                                    <td>@contourDetails.Description</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                امکانات
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" href="Modify/@contourDetails.Id">ویرایش</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="Modify/@contourDetails.Id"> حذف</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                Index++;
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

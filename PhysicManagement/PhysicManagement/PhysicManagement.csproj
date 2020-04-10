@@ -138,7 +138,7 @@
     <Compile Include="Controllers\AlarmTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CancerController.cs" />
-    <Compile Include="Controllers\ContourController.cs" />
+    <Compile Include="Controllers\ContourDetailsController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
@@ -283,6 +283,7 @@
     <Content Include="Views\Cancer\List.cshtml" />
     <Content Include="Views\Home\BaseInfo.cshtml" />
     <Content Include="Views\Cancer\Modify.cshtml" />
+    <Content Include="Views\ContourDetails\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
