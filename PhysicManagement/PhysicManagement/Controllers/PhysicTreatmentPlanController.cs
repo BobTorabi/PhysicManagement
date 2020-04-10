@@ -28,7 +28,7 @@ namespace PhysicManagement.Controllers
             if (id == null)
             {
                 ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber");
-                ViewBag.PhysicTreatmentId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle");
+                ViewBag.CanserOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle");
                 return View(new Model.PhysicTreatmentPlan());
             }
             else

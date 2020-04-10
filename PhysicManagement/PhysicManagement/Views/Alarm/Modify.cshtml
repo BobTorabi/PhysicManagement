@@ -32,13 +32,25 @@
                                     @Html.DropDownList("AlarmTypeId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="GenerateTreatmentPhaseId" class="bmd-label-floating">تولید فاز درمانی </label>
+                                    @Html.DropDownList("GenerateTreatmentPhaseId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ReviewUserName" class="bmd-label-floating">کاربر تایید کننده </label>
                                     <input type="text" id="ReviewUserName" name="ReviewUserName" value="@Model.ReviewUserName" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="GenerateUser" class="bmd-label-floating">کاربر ایجاد کننده </label>
+                                    <input type="text" id="GenerateUser" name="GenerateUser" value="@Model.GenerateUser" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ReviewText" class="bmd-label-floating">متن نظر</label>
                                     <input type="text" id="ReviewText" name="ReviewText" value="@Model.ReviewText" class="form-control">

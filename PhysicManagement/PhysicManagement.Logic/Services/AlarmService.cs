@@ -36,22 +36,6 @@ namespace PhysicManagement.Logic.Services
 
             entity.AlarmTypeTitle = AlaramTypeObject.Title;
 
-            TreatmentService td = new TreatmentService();
-
-            var AlaramObject = td.GetTreatmentPhaseById(entity.GenerateTreatmentPhaseId.GetValueOrDefault());
-            if (AlaramObject == null)
-                throw Common.MegaException.ThrowException("عنوان برنامه درمان وارد شده در پایگاه داده وجود ندارد.");
-
-            entity.GenerateTreatmentPhaseTitle = AlaramObject.PhaseText;
-
-            PatientService pa = new PatientService();
-
-            var AlaramObject2 = pa.GetPatientById(Convert.ToInt32(entity.GenerateUser));
-            if (AlaramObject2 == null)
-                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-
-            entity.GenerateUser = AlaramObject2.LastName;
-
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.Alarm.Add(entity);
