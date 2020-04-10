@@ -80,7 +80,13 @@
                     },
                     success: function () {
                         $(ths).find('button,input[type=button]').attr("disabled", true);
-                        window.location = 'index';
+                        debugger;
+                        if (window.location.href.toLowerCase().indexOf('/modify/')>-1) {
+                            window.location = '../Index';
+                        }
+                        else {
+                            window.location = 'Index';
+                        }
                     },
                     always: function () {
                     }
@@ -116,7 +122,11 @@
     $(document).ready(function () {
         getAllQS();
         $('form').attr('onsubmit', 'formValidate(this,event)');
-
+        $('input[type=checkbox]').each(function () {
+            $(this).change(function () {
+                $(this).val(($(this).is(":checked")?'true':'false'));
+            });
+        });
     });
     </script>
     @RenderSection("scripts", required: false)

@@ -25,8 +25,8 @@
                                 <th>ارزیابی</th>
                                 <th>کاربر</th>
                                 <th>روز ثبت</th>
-                                <th>فیلد رزرم 1</th>
-                                <th>فیلد رزرو 2</th>
+                                @*<th>فیلد رزرم 1</th>
+                                <th>فیلد رزرو 2</th>*@
                                 <th>دکتر معالج کاربر</th>
                                 <th style="width:50px;">امکانات</th>
                             </tr>
@@ -42,10 +42,10 @@
                                                             <td>@physicTreatmentPlan.CancerOARId</td>
                                                             <td>@physicTreatmentPlan.PlannedDose</td>
                                                             <td>@physicTreatmentPlan.Evaluation</td>
-                                                            <td>@physicTreatmentPlan.ActionDate</td>
+                                                            <td>@Html.DisplayForDateTime(physicTreatmentPlan.ActionDate)</td>
                                                             <td>@physicTreatmentPlan.ActionUser</td>
-                                                            <td>@physicTreatmentPlan.Reserve1</td>
-                                                            <td>@physicTreatmentPlan.Reserve2</td>
+                                                            @*<td>@physicTreatmentPlan.Reserve1</td>
+                                                            <td>@physicTreatmentPlan.Reserve2</td>*@
                                                             <td>@physicTreatmentPlan.AcceptedDoctorUser</td>
                                                             <td>
                                                                 <div class="btn-group">

@@ -28,15 +28,14 @@ namespace PhysicManagement.Controllers
             if (id == null)
             {
                 ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber");
-                ViewBag.CanserOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle");
+                ViewBag.CancerOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle");
                 return View(new Model.PhysicTreatmentPlan());
             }
             else
             {
                 var Entity = Service.GetPhysicTreatmentPlanById(id.GetValueOrDefault());
                 ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber", Entity.PhysicTreatmentId);
-                    ViewBag.CanserOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle",Entity.CancerOARId);
-
+                ViewBag.CancerOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle", Entity.CancerOARId);
                 return View(Entity);
             }
 
@@ -57,7 +56,7 @@ namespace PhysicManagement.Controllers
                 return RedirectToAction("Index");
             else
             {
-                return View();
+                return View(entity);
             }
         }
 
