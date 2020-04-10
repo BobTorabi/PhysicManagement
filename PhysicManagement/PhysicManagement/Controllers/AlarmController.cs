@@ -38,6 +38,7 @@ namespace PhysicManagement.Controllers
                 ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title",Entity.AlarmTypeId);
                 return View(Entity);
             }
+            
         }
         [HttpPost]
         public ActionResult Modify(Model.Alarm entity)
