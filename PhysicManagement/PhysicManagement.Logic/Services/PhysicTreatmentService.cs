@@ -124,12 +124,6 @@ namespace PhysicManagement.Logic.Services
                 throw Common.MegaException.ThrowException("شناسه درمان فیزیکی وارد شده در پایگاه داده وجود ندارد");
             entity.PhysicTreatmentId = PhysicTreatmentPlanObject2.Id;
 
-            PatientService pa = new PatientService();
-            var PhysicTreatmenPlantObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-            if (PhysicTreatmenPlantObject3 == null)
-                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-            entity.ActionUser = PhysicTreatmenPlantObject3.LastName;
-
             using (var db = new Model.PhysicManagementEntities())
             {
                 db.PhysicTreatmentPlan.Add(entity);
@@ -158,12 +152,6 @@ namespace PhysicManagement.Logic.Services
                 if (PhysicTreatmentPlanObject2 == null)
                     throw Common.MegaException.ThrowException("شناسه درمان فیزیکی وارد شده در پایگاه داده وجود ندارد");
                 entity.PhysicTreatmentId = PhysicTreatmentPlanObject2.Id;
-
-                PatientService pa = new PatientService();
-                var PhysicTreatmenPlantObject3 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-                if (PhysicTreatmenPlantObject3 == null)
-                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-                entity.ActionUser = PhysicTreatmenPlantObject3.LastName;
 
                 Entity.HadContour = entity.HadContour;
                 Entity.IsAcceptedByDoctor = entity.IsAcceptedByDoctor;
