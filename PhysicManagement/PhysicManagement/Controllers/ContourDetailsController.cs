@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using PhysicManagement.Logic.Services;
+
+namespace PhysicManagement.Controllers
+{
+    public class ContourDetailsController : BaseController
+    {
+        Logic.Services.ContourService Service;
+
+        public ContourDetailsController()
+        {
+            Service = new Logic.Services.ContourService();
+        }
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("List");
+        }
+        // GET: ContourDetails
+        public ActionResult List()
+        {
+            List<Model.ContourDetails> ContourDetails = Service.GetContourDetailsList();
+            return View(ContourDetails);
+        }
+        public ActionResult Modify(int? id)
+        {
+            
+            if (id == null)
+            {
+                return View(new Model.ContourDetails());
+            }
+            else
+            {
+                var Entity = Service.GetContourDetailsById(id.GetValueOrDefault());
+                return View(Entity);
+            }
+
+        }
+        [HttpPost]
+        public ActionResult Modify(Model.ContourDetails entity)
+        {
+            bool IsAffected;
+            if (entity.Id > 0)
+            {
+                IsAffected = Service.UpdateContourDetails(entity);
+            }
+            else
+            {
+                IsAffected = Service.AddContourDetails(entity);
+            }
+            if (IsAffected)
+                return RedirectToAction("Index");
+            else
+            {
+                return View();
+            }
+        }
+    }
+}
