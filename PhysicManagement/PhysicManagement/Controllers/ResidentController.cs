@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -45,11 +46,11 @@ namespace PhysicManagement.Controllers
             bool IsAffected;
             if (entity.Id > 0)
             {
-                IsAffected = Service.UpdateResident(entity);
+                IsAffected = ResidentService.UpdateProfile(entity.Id,entity.Username, entity.FirstName, entity.Password, entity.Mobile);
             }
             else
             {
-                IsAffected = Service.AddResident(entity);
+                IsAffected = ResidentService.Register(entity.Username, entity.FirstName,entity.LastName, entity.Password, entity.Mobile, entity.Code, entity.Description, entity.Gender);
             }
             if (IsAffected)
                 return RedirectToAction("List");

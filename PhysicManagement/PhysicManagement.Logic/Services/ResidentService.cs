@@ -52,6 +52,8 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
+     
+
         public static void SetAuthenticationCookie(string userName, string passWord, bool rememberMe)
         {
             if (IsUserDataValid(userName, passWord))
@@ -132,8 +134,8 @@ namespace PhysicManagement.Logic.Services
                 return UserExists;
             }
         }
-
-        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string code, string description, string gender, int doctorId)
+     
+        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string code, string description, string gender)
         {
             Resident UserEntity = new Resident()
             {
@@ -147,7 +149,7 @@ namespace PhysicManagement.Logic.Services
                 Code = code,
                 Gender = gender,
                 Description = description,
-                DoctorId = doctorId
+                DoctorId = 1
             };
 
             var validation = new ResidentValidation.ResidentEntityValidation().Validate(UserEntity);
@@ -238,13 +240,13 @@ namespace PhysicManagement.Logic.Services
 
         public static string EncryptPassword(string userName, string passWord)
         {
-            string userNameKey = userName.GetTypeCode().ToString();
-            return Cryptography.EncryptByUV(userNameKey, passWord);
+            string userNameKey = userName.GetHashCode().ToString();
+            return Cryptography.EncryptByUV(passWord , userNameKey);
         }
 
         public static string DecryptPassword(string userName, string encryptedPassword)
         {
-            string userNameKey = userName.GetTypeCode().ToString();
+            string userNameKey = userName.GetHashCode().ToString();
             return Cryptography.Decrypt(encryptedPassword, userNameKey);
         }
 
