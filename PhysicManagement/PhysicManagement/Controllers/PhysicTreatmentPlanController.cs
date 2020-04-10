@@ -24,13 +24,19 @@ namespace PhysicManagement.Controllers
 
         public ActionResult Modify(int? id)
         {
+            Logic.Services.CancerService cancer = new Logic.Services.CancerService();
             if (id == null)
             {
+                ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber");
+                ViewBag.PhysicTreatmentId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle");
                 return View(new Model.PhysicTreatmentPlan());
             }
             else
             {
                 var Entity = Service.GetPhysicTreatmentPlanById(id.GetValueOrDefault());
+                ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber", Entity.PhysicTreatmentId);
+                    ViewBag.CanserOARId = new SelectList(cancer.GetCancerOARList(), "Id", "OrganTitle",Entity.CancerOARId);
+
                 return View(Entity);
             }
 

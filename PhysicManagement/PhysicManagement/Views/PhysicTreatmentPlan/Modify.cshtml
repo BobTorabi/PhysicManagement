@@ -23,22 +23,30 @@
                     <form method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="PlannedDose" class="bmd-label-floating">دز برنامه ریزی شده</label>
-                                    <textarea id="PlannedDose" name="PlannedDose" rows="2" value="@Model.PlannedDose" class="form-control"></textarea>
+                                    <label for="PhysicTreatmentId" class="bmd-label-floating">درمان فیزیکی </label>
+                                    @Html.DropDownList("PhysicTreatmentId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="Evaluation" class="bmd-label-floating">ارزیابی</label>
-                                    <textarea type="text" id="Evaluation" name="Evaluation" rows="2" value="@Model.Evaluation" class="form-control"></textarea>
+                                    <label for="CanserOARId" class="bmd-label-floating">ارگان </label>
+                                    @Html.DropDownList("CanserOARId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                @Html.EditorPersianDatePicker(model => model.ActionDate, " روز ثبت")
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="ActionUser" class="bmd-label-floating">کاربر</label>
+                                    <input type="text" id="ActionUser" name="ActionUser" value="@Model.ActionUser" class="form-control">
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.ActionDate, "روز ثبت")
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Reserve1" class="bmd-label-floating">فیلد رزرو 1</label>
                                     <input type="text" id="Reserve1" name="Reserve1" value="@Model.Reserve1" class="form-control">
@@ -52,27 +60,52 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="HadContour" class="bmd-label-floating">HadContour</label>
-                                    <input type="checkbox" id="HadContour" name="HadContour" value="@Model.HadContour" class="form-control">
+                                    <label for="AcceptedDoctorUser" class="bmd-label-floating">پزشک معالج بیمار</label>
+                                    <input type="text" id="AcceptedDoctorUser" name="AcceptedDoctorUser" value="@Model.AcceptedDoctorUser" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="IsAcceptedByDoctor" class="bmd-label-floating">IsAcceptedByDoctor</label>
-                                    <input type="checkbox" id="IsAcceptedByDoctor" name="IsAcceptedByDoctor" value="@Model.IsAcceptedByDoctor" class="form-control">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@Model.HadContour"> HadConter
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="IsAcceptedByDoctor" class="bmd-label-floating">IsAcceptedByPhysic</label>
-                                    <input type="checkbox" id="IsAcceptedByPhysic" name="IsAcceptedByPhysic" value="@Model.IsAcceptedByPhysic" class="form-control">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@Model.IsAcceptedByDoctor"> IsAcceptedByDoctor
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
                                 </div>
-                            </div>
-                        </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="@Model.IsAcceptedByPhysic"> IsAcceptedByPhysic
+                                        <span class="form-check-sign">
+                                            <span class="check"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="PlannedDose" class="bmd-label-floating">دز برنامه ریزی شده</label>
+                                        <textarea id="PlannedDose" name="PlannedDose" rows="5" class="form-control">@Model.PlannedDose</textarea>
+                                    </div>
+                                </div>
 
-                        <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
-                        <div class="clearfix"></div>
-                    </form>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="Evaluation" class="bmd-label-floating">ارزیابی</label>
+                                        <textarea id="Evaluation" name="Evaluation" rows="5" class="form-control">@Model.Evaluation</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                            <div class="clearfix"></div>
+</form>
                 </div>
             </div>
         </div>
