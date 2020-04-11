@@ -22,6 +22,12 @@
                                 <th>نام خانوادگی</th>
                                 <th>موبایل</th>
                                 <th>کد ملی</th>
+                                <th>کد یکتا</th>
+                                <th>تاریخ ثبت</th>
+                                <th>جنسیت</th>
+                                <th>استان</th>
+                                <th>شهر</th>
+                                <th>ادرس</th>
                                 <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
@@ -36,6 +42,12 @@
                                                             <td>@patient.LastName</td>
                                                             <td>@patient.Mobile</td>
                                                             <td>@patient.NationalCode</td>
+                                                            <td>@patient.Code</td>
+                                                            <td>@Html.DisplayForDateTime(patient.RegisterDate)</td>
+                                                            <td>@patient.GenderIsMale</td>
+                                                            <td>@patient.Province</td>
+                                                            <td>@patient.City</td>
+                                                            <td>@patient.Address</td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,6 +55,7 @@
                                                                     </button>
                                                                     <div class="dropdown-menu dropdown-menu-left">
                                                                         <a class="dropdown-item" href="Modify/@patient.Id">ویرایش</a>
+                                                                        <a class="dropdown-item" href="Modify/@patient.Id">حذف</a>
                                                                         <div class="dropdown-divider"></div>
                                                                     </div>
                                                                 </div>

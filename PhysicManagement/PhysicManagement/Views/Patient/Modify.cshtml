@@ -55,12 +55,13 @@
                                 <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="GenderIsMale" class="bmd-label-floating">جنسیت</label>
-                                <input type="checkbox" id="GenderIsMale" name="GenderIsMale" value="@Model.GenderIsMale" class="form-control">
+                                @Html.DropDownList("GenderIsMale", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
+
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="Province" class="bmd-label-floating">استان</label>
