@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PhysicManagement.Model.CancerOAR>
+
+@{
+    ViewBag.Title = "";
+}
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست جزییات ارگان های سرطان </h4>
+                <h3>
+                    <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
+                </h3>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>نام ارگان</th>
+                            <th>Tolerance</th>
+                            <th>رزرو 1</th>
+                            <th>رزرو 2</th>
+                            <th>توضیحات</th>
+                            <th style="width:50px;">امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var CancerOAR in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@CancerOAR.OrganTitle</td>
+                                    <td>@CancerOAR.Tolerance</td>
+                                    <td>@CancerOAR.Reserve1</td>
+                                    <td>@CancerOAR.Reserve2</td>
+                                    <td>@CancerOAR.Description</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                امکانات
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" href="Modify/@CancerOAR.Id">ویرایش</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="Modify/@CancerOAR.Id"> حذف</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                Index++;
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

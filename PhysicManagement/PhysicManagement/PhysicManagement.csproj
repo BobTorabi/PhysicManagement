@@ -217,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\CancerOAR\" />
     <Folder Include="Views\Contour\" />
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +286,7 @@
     <Content Include="Views\Cancer\Modify.cshtml" />
     <Content Include="Views\ContourDetails\List.cshtml" />
     <Content Include="Views\ContourDetails\Modify.cshtml" />
+    <Content Include="Views\CancerOAR\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
