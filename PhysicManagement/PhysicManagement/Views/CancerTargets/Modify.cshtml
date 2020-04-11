@@ -1,0 +1,55 @@
+﻿@model PhysicManagement.Model.CancerTargets
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت ارگان مورد هدف جدید";
+    }
+    else
+    {
+        ViewBag.Title = " ویرایش ارگان مورد هدف";
+    }
+
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">اطلاعات نمایشی ارگان مورد هدف سرطان</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="CancerOARId" class="bmd-label-floating">سرطان </label>
+                                @Html.DropDownList("CancerId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Title" class="bmd-label-floating">نام ارگان مورد هدف</label>
+                                <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Optimum" class="bmd-label-floating">حالت مطلوب</label>
+                                <input type="text" id="Optimum" name="Optimum" value="@Model.Optimum" class="form-control">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
