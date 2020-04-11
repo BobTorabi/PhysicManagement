@@ -70,6 +70,7 @@
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />
     <Compile Include="Services\TreatmentService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Validations\AlarmValidation.cs" />
     <Compile Include="Validations\CalendarValidation.cs" />
     <Compile Include="Validations\CancerValidation.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Validations\PhysicUserValidation.cs" />
     <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />
+    <Compile Include="Validations\UserValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

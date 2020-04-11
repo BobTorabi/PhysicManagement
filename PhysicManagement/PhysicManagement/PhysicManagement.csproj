@@ -152,6 +152,7 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PhysicTreatmentController.cs" />
     <Compile Include="Controllers\PhysicTreatmentPlanController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -292,6 +293,8 @@
     <Content Include="Views\CancerTargets\List.cshtml" />
     <Content Include="Views\CancerTargets\Modify.cshtml" />
     <Content Include="Views\Patient\RegisterPatient.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

@@ -59,14 +59,15 @@ namespace PhysicManagement.Controllers
             }
         }
 
-        public ActionResult RegisterPatient() {
+        public ActionResult RegisterPatient()
+        {
 
             ViewBag.DoctorId = new SelectList(new Logic.Services.DoctorService().GetDoctorList(), "Id", "LastName");
             return View();
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName,string patientLastName,string nationalCode,int doctorId)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId)
         {
             Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId);
             return View();

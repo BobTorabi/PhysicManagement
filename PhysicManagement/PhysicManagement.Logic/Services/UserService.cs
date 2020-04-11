@@ -70,7 +70,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.User.Where(x => x.Id == userId).OrderBy(x => x.FirstName).FirstOrDefault();
+                return db.User.Where(x => x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName ).FirstOrDefault();
             }
         }
 
@@ -78,7 +78,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.User.Where(x => x.Username.ToLower() == userName.ToLower()).OrderBy(x => x.FirstName).FirstOrDefault();
+                return db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
         }
 
@@ -86,7 +86,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile).OrderBy(x => x.FirstName).FirstOrDefault();
+                return db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
 
         }
@@ -95,7 +95,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower()).Count();
+                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.IsActive == true).Count();
                 return UserExists != 0;
             }
         }
@@ -104,7 +104,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.User.Where(x => x.Id == userId).Count();
+                var UserExists = db.User.Where(x => x.Id == userId && x.IsActive == true).Count();
                 return UserExists == 1;
             }
 
@@ -116,7 +116,7 @@ namespace PhysicManagement.Logic.Services
             string EncryptedPassword = EncryptPassword(userName, passWord);
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword).Count();
+                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).Count();
                 return UserExists == 1;
             }
 
@@ -130,7 +130,7 @@ namespace PhysicManagement.Logic.Services
             string EncryptedPassword = EncryptPassword(userName, password);
             using (var db = new Model.PhysicManagementEntities())
             {
-                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword).FirstOrDefault();
+                var UserExists = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Password == EncryptedPassword && x.IsActive == true).FirstOrDefault();
                 return UserExists
                     ;
             }
@@ -146,7 +146,8 @@ namespace PhysicManagement.Logic.Services
                 LastName = lastName,
                 Password = EncryptPassword(userName, passWord),
                 Username = userName,
-                IsSupervisor = true
+                IsSupervisor = true,
+                IsActive = true
             };
 
             var validation = new UserValidation.UserEntityValidate().Validate(UserEntity);
@@ -226,7 +227,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var userPassword = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile).Select(x => x.Password).FirstOrDefault();
+                var userPassword = db.User.Where(x => x.Username.ToLower() == userName.ToLower() && x.Mobile == mobile && x.IsActive == true).Select(x => x.Password).FirstOrDefault();
                 if (string.IsNullOrEmpty(userPassword))
                     throw Common.MegaException.ThrowException("چنین کاربری پیدا نشد.");
                 string decryptedPassword = DecryptPassword(userName, userPassword);
