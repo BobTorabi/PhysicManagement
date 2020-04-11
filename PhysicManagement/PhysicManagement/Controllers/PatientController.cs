@@ -28,10 +28,12 @@ namespace PhysicManagement.Controllers
         {
             if (id == null)
             {
+                ViewBag.GenderIsMale = new SelectList(Service.GetPatientList());
                 return View(new Model.Patient());
             }
             else
             {
+                ViewBag.GenderIsMale = new SelectList(Service.GetPatientList());
                 var Entity = Service.GetPatientById(id.GetValueOrDefault());
                 return View(Entity);
             }
