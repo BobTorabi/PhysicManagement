@@ -126,6 +126,9 @@
     <Compile Include="TreatmentProcess.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Model.edmx">

@@ -280,6 +280,20 @@
           <Property Name="EnglishTitle" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsSupervisor" Type="bit" />
+          <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="IsActive" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_Calendar_MedicalRecord">
           <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
           <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
@@ -372,6 +386,7 @@
           <EntitySet Name="TreatmentDevice" EntityType="Self.TreatmentDevice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentProcess" EntityType="Self.TreatmentProcess" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Calendar_MedicalRecord" Association="Self.FK_Calendar_MedicalRecord">
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
             <End Role="Calendar" EntitySet="Calendar" />
@@ -648,6 +663,7 @@
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
             <End Role="Contour" EntitySet="Contour" />
           </AssociationSet>
+          <EntitySet Name="User" EntityType="PhysicManagementModel.User" />
         </EntityContainer>
         <EntityType Name="Patient">
           <Key>
@@ -823,6 +839,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsSupervisor" Type="Boolean" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1119,6 +1149,21 @@
                 <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
                 <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="PhysicManagementModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="IsSupervisor" ColumnName="IsSupervisor" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -31,6 +31,7 @@
         <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="5.75" PointY="3.625" />
         <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
         <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
+        <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

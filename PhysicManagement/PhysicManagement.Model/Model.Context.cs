@@ -44,5 +44,6 @@ namespace PhysicManagement.Model
         public virtual DbSet<Resident> Resident { get; set; }
         public virtual DbSet<TreatmentDevice> TreatmentDevice { get; set; }
         public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }
