@@ -287,6 +287,7 @@
     <Content Include="Views\ContourDetails\List.cshtml" />
     <Content Include="Views\ContourDetails\Modify.cshtml" />
     <Content Include="Views\CancerOAR\List.cshtml" />
+    <Content Include="Views\CancerOAR\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

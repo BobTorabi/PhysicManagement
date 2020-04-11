@@ -1,0 +1,70 @@
+﻿@model PhysicManagement.Model.CancerOAR
+
+@{ 
+ if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت ارگان سرطان جدید";
+    }
+    else
+    {
+        ViewBag.Title = " ویرایش ارگان سرطان";
+    }
+
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">اطلاعات نمایشی ارگان سرطان</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="CancerOARId" class="bmd-label-floating">سرطان </label>
+                                @Html.DropDownList("CancerId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="OrganTitle" class="bmd-label-floating">نام ارگان</label>
+                                <input type="text" id="OrganTitle" name="OrganTitle" value="@Model.OrganTitle" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Tolerance" class="bmd-label-floating">Tolerance</label>
+                                <input type="text" id="Tolerance" name="Tolerance" value="@Model.Tolerance" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Reserve1" class="bmd-label-floating">رزرو 1</label>
+                                <input type="text" id="Reserve1" name="Reserve1" value="@Model.Reserve1" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Reserve2" class="bmd-label-floating">رزرو 2</label>
+                                <input type="text" id="Reserve2" name="Reserve2" value="@Model.Reserve2" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="Description" class="bmd-label-floating">توضیحات </label>
+                            <textarea id="Description" name="Description" class="form-control" rows="5">@Model.Description</textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -29,11 +29,13 @@ namespace PhysicManagement.Controllers
             
             if (id == null)
             {
+                ViewBag.CancerId = new SelectList(Service.GetCancerList(), "Id", "Title");
                 return View(new Model.CancerOAR());
             }
             else
             {
                 var Entity = Service.GetCancerOARById(id.GetValueOrDefault());
+                ViewBag.CancerId = new SelectList(Service.GetCancerList(), "Id", "Title",Entity.CancerId);
                 return View(Entity);
             }
 
