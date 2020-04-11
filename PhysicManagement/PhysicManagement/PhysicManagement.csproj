@@ -140,6 +140,7 @@
     <Compile Include="Controllers\CancerController.cs" />
     <Compile Include="Controllers\CancerOARController.cs" />
     <Compile Include="Controllers\CancerTargetsController.cs" />
+    <Compile Include="Controllers\ContourController.cs" />
     <Compile Include="Controllers\ContourDetailsController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
