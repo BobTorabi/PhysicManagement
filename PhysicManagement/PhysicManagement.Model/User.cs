@@ -22,6 +22,6 @@ namespace PhysicManagement.Model
         public string Mobile { get; set; }
         public Nullable<bool> IsSupervisor { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-        public string IsActive { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     }
 }

@@ -292,7 +292,7 @@
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="IsSupervisor" Type="bit" />
           <Property Name="RegisterDate" Type="datetime" />
-          <Property Name="IsActive" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Calendar_MedicalRecord">
           <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="0..1" />
@@ -851,7 +851,7 @@
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsSupervisor" Type="Boolean" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
