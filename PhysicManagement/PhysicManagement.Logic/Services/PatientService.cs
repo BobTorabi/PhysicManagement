@@ -2,6 +2,7 @@
 using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -81,7 +82,7 @@ namespace PhysicManagement.Logic.Services
         }
 
 
-        public string RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description)
+        public string RegisterPatient( string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -100,27 +101,32 @@ namespace PhysicManagement.Logic.Services
                     NationalCode = nationalCode,
                     Province = "",
                     RegisterDate = System.DateTime.Now
+                    
                 });
-                PatientObject = GetPatientByNationalCode(nationalCode);
+                
                 if (!IsAffected)
                     throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
             }
+            PatientObject = GetPatientByNationalCode(nationalCode);
             Model.Doctor DoctorObject = new DoctorService().GetDoctorById(doctorId);
-
+            string cod = Common.FileID.GetUniqueNumber(5, 10000, 99999).ToString();
             MedicalRecordService medicalRecordService = new MedicalRecordService();
             var IsMedicalRecordInserted =  medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
             {
+                SystemCode = cod,
                 DoctorId = doctorId,
                 DoctorFirstName = DoctorObject.FirstName,
                 DoctorLastName = DoctorObject.LastName,
-
+                PatientFirstName = PatientObject.FirstName,
+                PatientLastName = PatientObject.LastName,
+                PatientId = Convert.ToInt32(PatientObject.Id),
+                ReceptionDate = PatientObject.RegisterDate
             });
             if (!IsMedicalRecordInserted)
                 throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
+
+            return cod;
             
-
-
-            return "{UniqueCode}";
         }
         #endregion
         // MediacalRecord CRUD needed

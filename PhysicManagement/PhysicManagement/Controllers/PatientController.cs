@@ -32,9 +32,9 @@ namespace PhysicManagement.Controllers
                 return View(new Model.Patient());
             }
             else
-            {
-                ViewBag.GenderIsMale = new SelectList(Service.GetPatientList());
+            {  
                 var Entity = Service.GetPatientById(id.GetValueOrDefault());
+                ViewBag.GenderIsMale = new SelectList(Service.GetPatientList(), "Id", "GenderIsMale", Entity.GenderIsMale);
                 return View(Entity);
             }
 
@@ -61,15 +61,14 @@ namespace PhysicManagement.Controllers
 
         public ActionResult RegisterPatient()
         {
-
-            ViewBag.DoctorId = new SelectList(new Logic.Services.DoctorService().GetDoctorList(), "Id", "LastName");
+            ViewBag.Id = new SelectList(new Logic.Services.DoctorService().GetDoctorList(), "Id", "LastName");
             return View();
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
-            Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId);
+            Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
             return View();
         }
     }

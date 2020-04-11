@@ -55,43 +55,49 @@
                                 <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @*<select name="Gender">
+                    <option>مرد</option>
+                    <option>زن</option>
+                </select>*@
+                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="GenderIsMale" class="bmd-label-floating">جنسیت</label>
-                                @Html.DropDownList("GenderIsMale", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                                <select name="GenderIsMale">
+                                    <option>مرد</option>
+                                    <option>زن</option>
+                                    @Html.DropDownList("GenderIsMale", null, null, htmlAttributes: new { @class = "form-control" })
+
+                                </select>
+
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="Province" class="bmd-label-floating">استان</label>
-                                <input type="text" id="Province" name="Province" value="@Model.Province" class="form-control">
+                                @*<label for="Province" class="bmd-label-floating">استان</label>*@
+                                <input type="hidden" id="Province" name="Province" value="@Model.Province" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="City" class="bmd-label-floating">شهر</label>
-                                <input type="text" id="City" name="City" value="@Model.City" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                @*<select name="Gender">
-                                    <option>مرد</option>
-                                    <option>زن</option>
-                                </select>*@
-                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
+                                @*<label for="City" class="bmd-label-floating">شهر</label>*@
+                                <input type="hidden" id="City" name="City" value="@Model.City" class="form-control">
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    @*<div class="col-md-6">
                         <div class="form-group">
                             <label for="Address" class="bmd-label-floating">ادرس</label>
                             <textarea id="Address" name="Address" rows="3" class="form-control">@Model.Address</textarea>
                         </div>
                     
 
-            </div>
+            </div>*@
             <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
             <div class="clearfix"></div>
             </form>

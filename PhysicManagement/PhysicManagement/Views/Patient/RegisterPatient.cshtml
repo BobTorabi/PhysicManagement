@@ -18,21 +18,21 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="patientFirstName" class="bmd-label-floating">نام بیمار</label>
-                                <input type="text" id="patientFirstName" name="patientFirstName" value="" class="form-control">
+                                <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="patientLastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
-                                <input type="text" id="patientLastName" name="patientLastName" value="" class="form-control">
+                                <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                <input type="text" id="LastName" name="LastName" value="" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="NationalCode" class="bmd-label-floating">انتخاب پزشک</label>
-                                @Html.DropDownList("DoctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                                <label for="Id" class="bmd-label-floating">انتخاب پزشک</label>
+                                @Html.DropDownList("Id", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
 
                             </div>
                         </div>
