@@ -74,6 +74,25 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
+        public bool UpdateMedicalRecordForDoctorChange(long medicalRecordId,int doctorId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Find(medicalRecordId);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("");
+
+                Model.Doctor DoctorObject = new DoctorService().GetDoctorById(doctorId);
+                if (DoctorObject == null)
+                    throw Common.MegaException.ThrowException("");
+
+                Entity.DoctorFirstName = DoctorObject.FirstName;
+                Entity.DoctorLastName = DoctorObject.LastName;
+                Entity.DoctorId = DoctorObject.Id;
+                return db.SaveChanges() == 1;
+            }
+        }
+
         #endregion
     }
 }

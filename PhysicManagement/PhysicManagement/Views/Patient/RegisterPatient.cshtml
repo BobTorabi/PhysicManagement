@@ -1,0 +1,60 @@
+﻿
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">اطلاعات نمایشی بیمار</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="patientFirstName" class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" id="patientFirstName" name="patientFirstName" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="patientLastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                <input type="text" id="patientLastName" name="patientLastName" value="" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="NationalCode" class="bmd-label-floating">انتخاب پزشک</label>
+                                @Html.DropDownList("DoctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                            </div>
+                        </div>
+                        @*<div class="col-md-4">
+            <div class="form-group">
+                <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                <input type="text" id="Mobile" name="Mobile" value="@Model.Mobile" class="form-control">
+            </div>
+        </div>*@
+
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

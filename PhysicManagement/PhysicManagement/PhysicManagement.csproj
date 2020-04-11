@@ -291,6 +291,7 @@
     <Content Include="Views\CancerOAR\Modify.cshtml" />
     <Content Include="Views\CancerTargets\List.cshtml" />
     <Content Include="Views\CancerTargets\Modify.cshtml" />
+    <Content Include="Views\Patient\RegisterPatient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
