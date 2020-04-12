@@ -71,5 +71,16 @@ namespace PhysicManagement.Controllers
             Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile,code);
             return View();
         }
+
+        public ActionResult PatientSearch()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PatientSearch(string info)
+        {
+            Service.PatientSearch(info);
+            return View();
+        }
     }
 }

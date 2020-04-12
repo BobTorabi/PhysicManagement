@@ -295,8 +295,12 @@
     <Content Include="Views\Patient\RegisterPatient.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Modify.cshtml" />
+<<<<<<< Updated upstream
     <Content Include="Views\Contour\List.cshtml" />
     <Content Include="Views\Contour\Modify.cshtml" />
+=======
+    <Content Include="Views\Patient\PatientSearch.cshtml" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

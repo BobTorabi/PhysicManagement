@@ -32,11 +32,11 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
-        public Model.Patient GetPatientByName(string lastName, string firstName)
+        public Model.Patient GetPatientByName(string lastName)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Patient.Where(x => x.LastName == lastName && x.FirstName == firstName).FirstOrDefault();
+                var Entity = db.Patient.Where(x => x.LastName == lastName).FirstOrDefault();
                 return Entity;
             }
         }
@@ -49,7 +49,17 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public Model.Patient GetPatientByDoctorName(string lastname)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+              var entity = db.MedicalRecord.Where(x => x.DoctorLastName == lastname).FirstOrDefault();
 
+                var Entity =Convert.ToInt32(entity.PatientId);
+                var patient = GetPatientById(Entity);
+                return patient;
+            }
+        }
 
         public bool AddPatient(Model.Patient entity)
         {
@@ -146,6 +156,32 @@ namespace PhysicManagement.Logic.Services
 
             return cod;
             
+        }
+        public bool PatientSearch(string info)
+        {
+            if (info == null)
+            {
+                throw Common.MegaException.ThrowException("هیچ اطلاعاتی وارد نشده");
+            }
+            else
+            {
+                var entity = GetPatientByName(info);
+                if (entity == null)
+                {
+                    var Entity = GetPatientByDoctorName(info);
+                    if (Entity == null)
+                    {
+                        GetPatientByCode(info);
+                        
+
+                    }
+                    else
+                        throw Common.MegaException.ThrowException("اطلاعات وارد شذه صحیح نمی باشد");
+                   
+
+                }
+            }
+            return true;
         }
         #endregion
         // MediacalRecord CRUD needed
