@@ -66,9 +66,9 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string code)
         {
-            Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
+            Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile,code);
             return View();
         }
     }

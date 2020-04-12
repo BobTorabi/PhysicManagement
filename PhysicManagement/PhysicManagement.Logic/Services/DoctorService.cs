@@ -269,6 +269,14 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public Model.Doctor GetDoctorByName(string firstname, string lastname)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Doctor.Where(x => x.FirstName == firstname && x.LastName == lastname).FirstOrDefault();
+                return Entity;
+            }
+        }
         public bool AddDoctor(Model.Doctor entity)
         {
             var validation = new DoctorValidation.DoctorEntityValidate().Validate(entity);

@@ -32,6 +32,25 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public Model.Patient GetPatientByName(string lastName, string firstName)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Patient.Where(x => x.LastName == lastName && x.FirstName == firstName).FirstOrDefault();
+                return Entity;
+            }
+        }
+
+        public Model.Patient GetPatientByCode(string code)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Patient.Where(x => x.Code == code).FirstOrDefault();
+                return Entity;
+            }
+        }
+
+
         public bool AddPatient(Model.Patient entity)
         {
             var validation = new PatientValidation.PatientEntityValidate().Validate(entity);
@@ -82,7 +101,7 @@ namespace PhysicManagement.Logic.Services
         }
 
 
-        public string RegisterPatient( string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
+        public string RegisterPatient( string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string code)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -92,7 +111,7 @@ namespace PhysicManagement.Logic.Services
                 bool IsAffected = AddPatient(new Model.Patient
                 {
                     Address = "",
-                    Code = "",
+                    Code = code,
                     City = "",
                     FirstName = patientFirstName,
                     GenderIsMale = null,
