@@ -61,17 +61,17 @@
                     <option>مرد</option>
                     <option>زن</option>
                 </select>*@
-                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
+                                @Html.EditorPersianDatePicker(model => model.RegisterDate, "تاریخ ثبت")
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="GenderIsMale" class="bmd-label-floating">جنسیت</label>
-                                <select name="GenderIsMale">
-                                    <option>مرد</option>
-                                    <option>زن</option>
-                                    @Html.DropDownList("GenderIsMale", null, null, htmlAttributes: new { @class = "form-control" })
-
+                                <select id="GenderIsMale" name="GenderIsMale" value="@Model.GenderIsMale" class="form-control">
+                                    <option value="Null">انتخاب کنید</option>
+                                    <option value="Male">مرد</option>
+                                    <option value="Female">زن</option>
+                                   @*@Html.DropDownList("GenderIsMale", null, null, htmlAttributes: new { @class = "form-control" }) *@
                                 </select>
 
                             </div>

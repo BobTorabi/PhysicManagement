@@ -220,7 +220,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Contour\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -296,6 +295,8 @@
     <Content Include="Views\Patient\RegisterPatient.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Modify.cshtml" />
+    <Content Include="Views\Contour\List.cshtml" />
+    <Content Include="Views\Contour\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
