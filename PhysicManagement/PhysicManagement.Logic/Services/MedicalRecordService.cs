@@ -128,6 +128,24 @@ namespace PhysicManagement.Logic.Services
                 }
             }
         }
+        public string GetSystemCodeToCTCode()
+        {
+            lock (thisLock)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    var SystemCode = db.MedicalRecord.Max(x => x.CTCode);
+                    if (string.IsNullOrEmpty(SystemCode))
+                    {
+                        return "1000";
+                    }
+                    else
+                    {
+                        return (int.Parse(SystemCode) + 1).ToString();
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

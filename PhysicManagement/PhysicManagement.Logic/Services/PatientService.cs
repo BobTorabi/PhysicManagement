@@ -247,13 +247,13 @@ namespace PhysicManagement.Logic.Services
             }
             return true;
         }
-        public bool AddPatientCTCode(string ctcode, string mricode,string ctdescription, int patientid)
+        public string AddPatientCTCode(string mricode,string ctdescription, int patientid)
         { 
             MedicalRecordService medicalRecordService = new MedicalRecordService();
             var PatientObject = medicalRecordService.GetMedicalRecordByPatientId(patientid);
             var IsMedicalrecoedInsert = medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
             {
-                CTCode = PatientObject.CTCode = ctcode,
+                CTCode =PatientObject.CTCode = medicalRecordService.GetSystemCodeToCTCode(),
                 MRICode = PatientObject.MRICode = mricode,
                 CTDescription = PatientObject.CTDescription = ctdescription,
                 IsOnGoing = PatientObject.IsOnGoing = true,
@@ -263,7 +263,7 @@ namespace PhysicManagement.Logic.Services
             });
             if (!IsMedicalrecoedInsert)
                 throw Common.MegaException.ThrowException("امکان ثبت این اطلاعات وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
-            return true;
+            return PatientObject.Id.ToString();
         }
         #endregion
         // MediacalRecord CRUD needed
