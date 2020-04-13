@@ -60,7 +60,7 @@ namespace PhysicManagement.Controllers
         public ActionResult ConfirmContour()
         {
             Logic.Services.CancerService cancer = new CancerService();
-            ViewBag.cancerId = new SelectList(cancer.GetCancerById(), "Id", "Title");
+            ViewBag.cancerId = new SelectList(cancer.GetCancerList(), "Id", "Title");
             return View();
         }
 
