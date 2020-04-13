@@ -78,10 +78,13 @@
                             $('.errorList>ul').append('<li style="color:#444;">' + $errors[i] + '</i>');
                         }
                     },
-                    success: function () {
-                        $(ths).find('button,input[type=button]').attr("disabled", true);
+                    success: function (data, textStatus, xhr) {
                         debugger;
-                        if (window.location.href.toLowerCase().indexOf('/modify/')>-1) {
+                        $(ths).find('button,input[type=button]').attr("disabled", true);
+                        if (data["location"] || data["Location"]) {
+                            window.location = data["location"] || data["Location"];
+                        }
+                        else if (window.location.href.toLowerCase().indexOf('/modify/')>-1) {
                             window.location = '../Index';
                         }
                         else {
@@ -121,7 +124,13 @@
         })
     $(document).ready(function () {
         getAllQS();
-        $('form').attr('onsubmit', 'formValidate(this,event)');
+        $('form[method=post]').attr('onsubmit', 'formValidate(this,event)');
+        $('button[type=reset]').click(function () {
+            $('form').find('input,select,textarea').each(function () {
+                $(this).val('');
+                window.location = window.location.href.replace(window.location.search,'');
+            });
+        });
         $('input[type=checkbox]').each(function () {
             $(this).change(function () {
                 $(this).val(($(this).is(":checked")?'true':'false'));

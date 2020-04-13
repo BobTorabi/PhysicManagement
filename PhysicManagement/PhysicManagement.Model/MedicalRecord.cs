@@ -22,7 +22,7 @@ namespace PhysicManagement.Model
         }
     
         public long Id { get; set; }
-        public Nullable<int> PatientId { get; set; }
+        public long PatientId { get; set; }
         public string PatientFirstName { get; set; }
         public string PatientLastName { get; set; }
         public Nullable<int> DoctorId { get; set; }
@@ -61,5 +61,6 @@ namespace PhysicManagement.Model
         public virtual ICollection<Calendar> Calendar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contour> Contour { get; set; }
+        public virtual Patient Patient { get; set; }
     }
 }

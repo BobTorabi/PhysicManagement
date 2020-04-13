@@ -261,6 +261,14 @@ namespace PhysicManagement.Logic.Services
                 return db.Doctor.OrderBy(x => x.FirstName).ToList();
             }
         }
+        public List<ViewModels.IdName> GetIdNameFromDoctorList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Doctor.Select(x => new ViewModels.IdName { Id = x.Id, Name = x.FirstName + " " + x.LastName }).OrderBy(x => x.Name).ToList();
+            }
+        }
+
         public Model.Doctor GetDoctorById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())

@@ -15,13 +15,21 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult Index()
         {
-            return RedirectToActionPermanent("List");
+            return View();
         }
         // GET: Patient
         public ActionResult List()
         {
 
             List<Model.Patient> Patient = Service.GetPatientList();
+            return View(Patient);
+        }
+        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
+        {
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            Logic.ViewModels.PagedList<Model.Patient> Patient = Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
         public ActionResult Modify(int? id)
@@ -32,7 +40,7 @@ namespace PhysicManagement.Controllers
                 return View(new Model.Patient());
             }
             else
-            {  
+            {
                 var Entity = Service.GetPatientById(id.GetValueOrDefault());
                 ViewBag.GenderIsMale = new SelectList(Service.GetPatientList(), "Id", "GenderIsMale", Entity.GenderIsMale);
                 return View(Entity);
@@ -61,26 +69,20 @@ namespace PhysicManagement.Controllers
 
         public ActionResult RegisterPatient()
         {
-            ViewBag.Id = new SelectList(new Logic.Services.DoctorService().GetDoctorList(), "Id", "LastName");
+            ViewBag.doctorId = new SelectList(new Logic.Services.DoctorService().GetIdNameFromDoctorList(), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string code)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
-            Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile,code);
-            return View();
+            string PatientId = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
+            return Json(new { location = "PatientInfo?patientId=" + PatientId }, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult PatientSearch()
+        public ActionResult PatientInfo(long patientId)
         {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult PatientSearch(string info)
-        {
-            Service.PatientSearch(info);
-            return View();
+            var PatientData = Service.GetPatientById(patientId);
+            return View(PatientData);
         }
     }
 }

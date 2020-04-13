@@ -33,8 +33,11 @@ namespace PhysicManagement.Logic.Services
             if (!valition.IsValid)
                 throw new ValidationException(valition.Errors);
 
+
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.SystemCode = GetSystemCodeToRegister();
+                entity.ReceptionDate = DateTime.Now;
                 db.MedicalRecord.Add(entity);
                 return db.SaveChanges() == 1;
             }
@@ -93,6 +96,30 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
+        private Object thisLock = new Object();
+
+        /// <summary>
+        /// این متد برای به دست آوردن شماره ی بعدی شناسه سیستمی پرونده استفاده می گردد
+        /// </summary>
+        /// <returns></returns>
+        public string GetSystemCodeToRegister()
+        {
+            lock (thisLock)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    var SystemCode = db.MedicalRecord.Max(x => x.SystemCode);
+                    if (string.IsNullOrEmpty(SystemCode))
+                    {
+                        return "1000";
+                    }
+                    else
+                    {
+                        return (int.Parse(SystemCode) + 1).ToString();
+                    }
+                }
+            }
+        }
         #endregion
     }
 }

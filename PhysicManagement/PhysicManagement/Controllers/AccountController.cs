@@ -15,7 +15,7 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Login(string userName, string password, short roleType)
         {
-            //Logic.Services.DoctorService.Register("doctor", "دکتر", "تستی", "1", "09123399113", "1", "نامشخص", "", "", "مرد", null);
+           // Logic.Services.DoctorService.Register("doctor", "محمد", "یافتیان", "1", "09123399113", "1", "نامشخص", "", "", "مرد", null);
             //Logic.Services.PhysicUserService.Register("puser", "کاربر", "تستی", "1", "09123399113", "نامشخص", "نامشخص");
             //Logic.Services.ResidentService.Register("resident", "رزیدنت", "تستی", "1", "09123399113", "1", "نامشخص", "مرد", 1);
 

@@ -20,7 +20,6 @@
         <AssociationConnector Association="PhysicManagementModel.FK_CancerTargets_Cancer" ManuallyRouted="false" />
         <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" ManuallyRouted="false" />
         <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.625" PointY="7.875" />
         <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="10.375" PointY="8.25" />
         <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
         <EntityTypeShape EntityType="PhysicManagementModel.Alarm" Width="1.5" PointX="6.375" PointY="17.75" />
@@ -28,10 +27,12 @@
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicUser" Width="1.5" PointX="12.75" PointY="0.5" />
         <EntityTypeShape EntityType="PhysicManagementModel.Resident" Width="1.5" PointX="10.875" PointY="0.5" />
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentDevice" Width="1.5" PointX="6.5" PointY="0.625" />
-        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="5.75" PointY="3.625" />
+        <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="4.5" PointY="4.5" />
         <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
         <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
-        <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
+        <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,0 +1,103 @@
+﻿@model PhysicManagement.Model.Patient
+
+@{
+    ViewBag.Title = "اطلاعات پرونده بیمار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">@ViewBag.Title</h4>
+            </div>
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام </label>
+                                <div class="form-control">@Model.FirstName</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام خانوادگی</label>
+                                <div class="form-control">@Model.LastName</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد ملی</label>
+                                <div class="form-control">@Model.NationalCode</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">موبایل </label>
+                                <div class="form-control">@Model.Mobile</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد یکتا</label>
+                                <div class="form-control">@Model.Code</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">تاریخ ثبت</label>
+                                <div class="form-control">@Html.DisplayForDate(Model.RegisterDate)</div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>عنوان سرطان</th>
+                                <th>شماره پرونده</th>
+                                <th>تاریخ تشکیل پرونده</th>
+                                <th style="width:50px;">امکانات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int Index = 1;
+                                foreach (var patient in Model.MedicalRecord)
+                                {
+                                    <tr>
+                                        <td>@Index</td>
+                                        <td>@patient.CancerTitle</td>
+                                        <td>@patient.SystemCode</td>
+                                        <td>@Html.DisplayForDateTime(patient.ReceptionDate)</td>
+                                       
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    امکانات
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <a class="dropdown-item" href="#Modify/@patient.Id">جزئیات پرونده پزشکی</a>
+                                                    <div class="dropdown-divider"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    Index++;
+                                }
+
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

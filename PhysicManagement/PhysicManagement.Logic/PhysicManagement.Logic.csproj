@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\SortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlarmService.cs" />
     <Compile Include="Services\CalendarService.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />
     <Compile Include="Validations\UserValidation.cs" />
+    <Compile Include="ViewModels\IdName.cs" />
+    <Compile Include="ViewModels\PagedList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
@@ -94,9 +97,7 @@
       <Name>PhysicManagement.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

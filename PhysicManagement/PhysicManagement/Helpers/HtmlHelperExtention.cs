@@ -91,7 +91,7 @@ namespace PhysicManagement.Helpers
 
             if (item is null)
             {
-                throw new ArgumentNullException(nameof(item));
+                return "";
             }
 
             return DateUtility.GetPersianDateTime(item);

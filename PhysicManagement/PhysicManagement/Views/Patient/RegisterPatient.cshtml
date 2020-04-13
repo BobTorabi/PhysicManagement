@@ -18,28 +18,20 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
-                                <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                <label for="patientFirstName" class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" id="patientFirstName" name="patientFirstName" value="" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
-                                <input type="text" id="LastName" name="LastName" value="" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="Id" class="bmd-label-floating">انتخاب پزشک</label>
-                                @Html.DropDownList("Id", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
-
+                                <label for="patientLastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                <input type="text" id="patientLastName" name="patientLastName" value="" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
-                                <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                                <label for="nationalCode" class="bmd-label-floating">کد ملی</label>
+                                <input type="text" id="nationalCode" name="nationalCode" value="" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -54,7 +46,13 @@
                                 <input type="text" id="Code" name="Code" value="" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Id" class="bmd-label-floating">انتخاب پزشک</label>
+                                @Html.DropDownList("doctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
 
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                     <div class="clearfix"></div>

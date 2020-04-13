@@ -3,6 +3,7 @@ using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Data.Entity;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -16,11 +17,52 @@ namespace PhysicManagement.Logic.Services
                 return db.Patient.OrderBy(x => x.FirstName).ToList();
             }
         }
-        public Model.Patient GetPatientById(int entityId)
+        public ViewModels.PagedList<Model.Patient> GetPatientListWithFilters(string firstName, string lastName, string mobile, string nationalCode, string systemCode, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Patient.Find(entityId);
+                IQueryable<Model.Patient> QueryablePatient = db.Patient.Include("MedicalRecord");
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.NationalCode.Contains(nationalCode));
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(z => z.SystemCode == systemCode));
+                }
+                QueryablePatient = QueryablePatient.OrderBy(x => x.RegisterDate);
+
+                return new ViewModels.PagedList<Model.Patient>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryablePatient.Count(),
+                    Records = QueryablePatient.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList(),
+                };
+            }
+        }
+        public Model.Patient GetPatientById(long entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Patient.Where(x=>x.Id == entityId).Include(x=>x.MedicalRecord).FirstOrDefault();
                 return Entity;
             }
         }
@@ -53,9 +95,9 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-              var entity = db.MedicalRecord.Where(x => x.DoctorLastName == lastname).FirstOrDefault();
+                var entity = db.MedicalRecord.Where(x => x.DoctorLastName == lastname).FirstOrDefault();
 
-                var Entity =Convert.ToInt32(entity.PatientId);
+                var Entity = Convert.ToInt32(entity.PatientId);
                 var patient = GetPatientById(Entity);
                 return patient;
             }
@@ -109,9 +151,31 @@ namespace PhysicManagement.Logic.Services
 
             }
         }
+        private Object thisLock = new Object();
 
+        /// <summary>
+        /// این متد برای به دست آوردن شماره ی بعدی شناسه یکتای بیمار استفاده می گردد
+        /// </summary>
+        /// <returns></returns>
+        public string GetNewPatientCodeToRegister()
+        {
+            lock (thisLock)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    var PatientNo = db.Patient.Max(x => x.Code);
+                    if (string.IsNullOrEmpty(PatientNo))
+                    {
+                        return "1000";
+                    }
+                    else {
+                        return (int.Parse(PatientNo) + 1).ToString();
+                    }
+                }
+            }
+        }
 
-        public string RegisterPatient( string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string code)
+        public string RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -121,7 +185,7 @@ namespace PhysicManagement.Logic.Services
                 bool IsAffected = AddPatient(new Model.Patient
                 {
                     Address = "",
-                    Code = code,
+                    Code = GetNewPatientCodeToRegister(),
                     City = "",
                     FirstName = patientFirstName,
                     GenderIsMale = null,
@@ -130,9 +194,9 @@ namespace PhysicManagement.Logic.Services
                     NationalCode = nationalCode,
                     Province = "",
                     RegisterDate = System.DateTime.Now
-                    
+
                 });
-                
+
                 if (!IsAffected)
                     throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
             }
@@ -140,7 +204,7 @@ namespace PhysicManagement.Logic.Services
             Model.Doctor DoctorObject = new DoctorService().GetDoctorById(doctorId);
             string cod = Common.FileID.GetUniqueNumber(5, 10000, 99999).ToString();
             MedicalRecordService medicalRecordService = new MedicalRecordService();
-            var IsMedicalRecordInserted =  medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
+            var IsMedicalRecordInserted = medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
             {
                 SystemCode = cod,
                 DoctorId = doctorId,
@@ -154,8 +218,8 @@ namespace PhysicManagement.Logic.Services
             if (!IsMedicalRecordInserted)
                 throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
 
-            return cod;
-            
+            return PatientObject.Id.ToString();
+
         }
         public bool PatientSearch(string info)
         {
@@ -172,12 +236,12 @@ namespace PhysicManagement.Logic.Services
                     if (Entity == null)
                     {
                         GetPatientByCode(info);
-                        
+
 
                     }
                     else
                         throw Common.MegaException.ThrowException("اطلاعات وارد شذه صحیح نمی باشد");
-                   
+
 
                 }
             }
