@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PhysicManagement.Logic.Services;
 
 namespace PhysicManagement.Controllers
 {
@@ -56,5 +57,17 @@ namespace PhysicManagement.Controllers
             }
         }
 
+        public ActionResult ConfirmContour()
+        {
+            Logic.Services.CancerService cancer = new CancerService();
+            ViewBag.cancerId = new SelectList(cancer.GetCancerById(), "Id", "Title");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmContour(string actionDate,string acceptDate,string acceptUser,int cancerId,string description)
+        {
+            return View();
+        }
     }
 }
