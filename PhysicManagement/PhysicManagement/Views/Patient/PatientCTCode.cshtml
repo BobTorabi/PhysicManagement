@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">ثبت کد سی تی اسکن بیمار</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ctcode" class="bmd-label-floating">کد سی تی اسکن</label>
+                                    <input type="text" id="ctcode" name="ctcode" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="mricode" class="bmd-label-floating">کد MRI</label>
+                                    <input type="text" id="mricode" name="mricode" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="ctdescription" class="bmd-label-floating">توضیحات سی تی اسکن</label>
+                                    <textarea id="ctdescription" name="ctdescription" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>                           
+                        </div>
+                        <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+

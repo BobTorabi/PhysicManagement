@@ -301,6 +301,7 @@
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Patient\PatientInfo.cshtml" />
     <Content Include="Views\Contour\ConfirmContour.cshtml" />
+    <Content Include="Views\Patient\PatientCTCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

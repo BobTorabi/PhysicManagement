@@ -27,6 +27,14 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public Model.MedicalRecord GetMedicalRecordByPatientId(int patientId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Where(x => x.PatientId == patientId).FirstOrDefault();
+                return Entity;
+            }
+        }
         public bool AddMedicalRecord(Model.MedicalRecord entity)
         {
             var valition = new MedicalRecordValidation.MedicalRecordEntityValidation().Validate(entity);
