@@ -57,5 +57,11 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+
+        public ActionResult DeleteCancer(int id)
+        {
+            var cancer = Service.DeleteCancer(id);
+            return RedirectToAction("List");
+        }
     }
 }

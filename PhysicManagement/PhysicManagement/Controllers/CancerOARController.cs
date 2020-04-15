@@ -59,5 +59,11 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+
+        public ActionResult DeleteCancerOAR(int id)
+        {
+            var cancerOAR = Service.DeleteCancerOAR(id);
+            return RedirectToAction("List");
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace PhysicManagement.Logic.Validations
 
             public CancerOAREntityValidate()
             {
-                RuleFor(e => e.OrganTitle).NotEmpty().WithMessage("");
+                RuleFor(e => e.OrganTitle).NotEmpty().WithMessage("عنوان اجباری است");
             }
         }
         public class CancerTargetEntityValidate : AbstractValidator<Model.CancerTargets>
