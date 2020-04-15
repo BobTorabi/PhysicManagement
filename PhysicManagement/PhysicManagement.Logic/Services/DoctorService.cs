@@ -241,14 +241,12 @@ namespace PhysicManagement.Logic.Services
 
         public static string EncryptPassword(string userName, string passWord)
         {
-            string userNameKey = userName.GetHashCode().ToString();
-            return Cryptography.EncryptByUV(userNameKey, passWord);
+            return Cryptography.Encrypt( passWord);
         }
 
         public static string DecryptPassword(string userName, string encryptedPassword)
         {
-            string userNameKey = userName.GetHashCode().ToString();
-            return Cryptography.Decrypt(encryptedPassword, userNameKey);
+            return Cryptography.Decrypt(encryptedPassword);
         }
 
         #endregion

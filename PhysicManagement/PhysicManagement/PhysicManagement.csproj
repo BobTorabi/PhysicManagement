@@ -167,6 +167,9 @@
     <Content Include="assets\css\dashboard.css" />
     <Content Include="assets\css\dashboard.min.css" />
     <Content Include="assets\css\fonts.css" />
+    <Content Include="assets\css\material-dashboard-rtl.css" />
+    <Content Include="assets\css\material-dashboard.css" />
+    <Content Include="assets\css\material-dashboard.min.css" />
     <Content Include="assets\css\persian-datepicker.css" />
     <Content Include="assets\img\apple-icon.png" />
     <Content Include="assets\img\favicon.png" />
@@ -300,6 +303,7 @@
     <Content Include="Views\Patient\PatientSearch.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Patient\PatientInfo.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

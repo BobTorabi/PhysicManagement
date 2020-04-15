@@ -12,6 +12,10 @@ namespace PhysicManagement.Controllers
         {
             return View();
         }
+        public ActionResult TestData(string a, string b) {
+            return Json(new { a = a, aEnc = Logic.Services.DoctorService.EncryptPassword(a, b) }, JsonRequestBehavior.AllowGet);
+
+        }
         [HttpPost]
         public ActionResult Login(string userName, string password, short roleType)
         {
