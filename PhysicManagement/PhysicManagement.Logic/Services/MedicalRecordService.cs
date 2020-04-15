@@ -148,14 +148,14 @@ namespace PhysicManagement.Logic.Services
         }
         #endregion
 
-        public Model.MedicalRecord AddMedicalRecordCTCode(string mricode, string ctdescription, long medicalRecordId)
+        public Model.MedicalRecord AddMedicalRecordCTCode(string mriCode, string ctDescription, long medicalRecordId)
         {
             MedicalRecordService medicalRecordService = new MedicalRecordService();
             var medicalRecordEntity = medicalRecordService.GetMedicalRecordById(medicalRecordId);
             medicalRecordEntity.CTCode = GetSystemCodeToCTCode();
-            medicalRecordEntity.CTDescription = ctdescription;
+            medicalRecordEntity.CTDescription = ctDescription;
             medicalRecordEntity.CTEnterDate = DateTime.Now;
-            medicalRecordEntity.MRICode = mricode;
+            medicalRecordEntity.MRICode = mriCode;
             medicalRecordEntity.MRIEnterDate = DateTime.Now;
             medicalRecordEntity.IsOnGoing = true;
             medicalRecordEntity.IsOnCalendar = false;            

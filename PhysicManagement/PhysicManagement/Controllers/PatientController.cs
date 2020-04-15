@@ -90,10 +90,10 @@ namespace PhysicManagement.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult PatientCTCode(string mricode, string ctdescription,long medicalrecordid)
+        public ActionResult PatientCTCode(string mriCode, string ctDescription,long medicalRecordId)
         {
             Logic.Services.MedicalRecordService medicalRecordService = new Logic.Services.MedicalRecordService();
-            var PatientCTCode = medicalRecordService.AddMedicalRecordCTCode(mricode, ctdescription,medicalrecordid);
+            var PatientCTCode = medicalRecordService.AddMedicalRecordCTCode(mriCode, ctDescription,medicalRecordId);
             return Json(new { location = "PatientInfo?patientId=" + PatientCTCode.Id }, JsonRequestBehavior.AllowGet);
         }
     }
