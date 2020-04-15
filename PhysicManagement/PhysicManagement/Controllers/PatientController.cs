@@ -28,7 +28,8 @@ namespace PhysicManagement.Controllers
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
-            Logic.ViewModels.PagedList<Model.Patient> Patient = Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, CurrentPage, ViewBag.PageSize);
+            Logic.ViewModels.PagedList<Model.Patient> Patient = 
+                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
@@ -76,8 +77,8 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
-            string PatientId = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
-            return Json(new { location = "PatientInfo?patientId=" + PatientId }, JsonRequestBehavior.AllowGet);
+            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
+            return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)
         {

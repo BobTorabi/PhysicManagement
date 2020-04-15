@@ -27,11 +27,11 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
-        public Model.MedicalRecord GetMedicalRecordByPatientId(int patientId)
+        public List<Model.MedicalRecord> GetMedicalRecordByPatientId(int patientId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.MedicalRecord.Where(x => x.PatientId == patientId).FirstOrDefault();
+                var Entity = db.MedicalRecord.Where(x => x.PatientId == patientId).ToList();
                 return Entity;
             }
         }

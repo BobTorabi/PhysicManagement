@@ -22,6 +22,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 IQueryable<Model.Patient> QueryablePatient = db.Patient.Include("MedicalRecord");
+
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim();
@@ -47,14 +48,14 @@ namespace PhysicManagement.Logic.Services
                     systemCode = systemCode.Trim();
                     QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(z => z.SystemCode == systemCode));
                 }
-                QueryablePatient = QueryablePatient.OrderBy(x => x.RegisterDate);
+                QueryablePatient = QueryablePatient.OrderBy(x => x.LastName);
 
                 return new ViewModels.PagedList<Model.Patient>()
                 {
                     CurrentPage = CurrentPage,
                     PageSize = pageSize,
                     TotalRecords = QueryablePatient.Count(),
-                    Records = QueryablePatient.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList(),
+                    Records = QueryablePatient.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
                 };
             }
         }
@@ -62,7 +63,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Patient.Where(x=>x.Id == entityId).Include(x=>x.MedicalRecord).FirstOrDefault();
+                var Entity = db.Patient.Where(x => x.Id == entityId).Include(x => x.MedicalRecord).FirstOrDefault();
                 return Entity;
             }
         }
@@ -168,14 +169,15 @@ namespace PhysicManagement.Logic.Services
                     {
                         return "1000";
                     }
-                    else {
+                    else
+                    {
                         return (int.Parse(PatientNo) + 1).ToString();
                     }
                 }
             }
         }
 
-        public string RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
+        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -201,12 +203,11 @@ namespace PhysicManagement.Logic.Services
                     throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
             }
             PatientObject = GetPatientByNationalCode(nationalCode);
+
             Model.Doctor DoctorObject = new DoctorService().GetDoctorById(doctorId);
-            string cod = Common.FileID.GetUniqueNumber(5, 10000, 99999).ToString();
             MedicalRecordService medicalRecordService = new MedicalRecordService();
             var IsMedicalRecordInserted = medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
             {
-                SystemCode = cod,
                 DoctorId = doctorId,
                 DoctorFirstName = DoctorObject.FirstName,
                 DoctorLastName = DoctorObject.LastName,
@@ -218,7 +219,7 @@ namespace PhysicManagement.Logic.Services
             if (!IsMedicalRecordInserted)
                 throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
 
-            return PatientObject.Id.ToString();
+            return PatientObject;
 
         }
         public bool PatientSearch(string info)
@@ -247,23 +248,17 @@ namespace PhysicManagement.Logic.Services
             }
             return true;
         }
-        public string AddPatientCTCode(string mricode,string ctdescription, int patientid)
-        { 
+        public string AddPatientCTCode(string mricode, string ctdescription, int medicalRecordId)
+        {
             MedicalRecordService medicalRecordService = new MedicalRecordService();
-            var PatientObject = medicalRecordService.GetMedicalRecordByPatientId(patientid);
-            var IsMedicalrecoedInsert = medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
-            {
-                CTCode =PatientObject.CTCode = medicalRecordService.GetSystemCodeToCTCode(),
-                MRICode = PatientObject.MRICode = mricode,
-                CTDescription = PatientObject.CTDescription = ctdescription,
-                IsOnGoing = PatientObject.IsOnGoing = true,
-                IsOnCalendar = PatientObject.IsOnCalendar = false,
-                CTEnterDate = PatientObject.CTEnterDate = DateTime.Now,
-               MRIEnterDate= PatientObject.MRIEnterDate = DateTime.Now
-            });
+            var medicalRecordEntity = medicalRecordService.GetMedicalRecordById(medicalRecordId);
+            medicalRecordEntity.CTCode = "";
+
+            var IsMedicalrecoedInsert = medicalRecordService.UpdateMedicalRecord(medicalRecordEntity);
             if (!IsMedicalrecoedInsert)
                 throw Common.MegaException.ThrowException("امکان ثبت این اطلاعات وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
-            return PatientObject.Id.ToString();
+
+            return medicalRecordEntity.Id.ToString();
         }
         #endregion
         // MediacalRecord CRUD needed
