@@ -247,19 +247,7 @@ namespace PhysicManagement.Logic.Services
                 }
             }
             return true;
-        }
-        public string AddPatientCTCode(string mricode, string ctdescription, int medicalRecordId)
-        {
-            MedicalRecordService medicalRecordService = new MedicalRecordService();
-            var medicalRecordEntity = medicalRecordService.GetMedicalRecordById(medicalRecordId);
-            medicalRecordEntity.CTCode = "";
-
-            var IsMedicalrecoedInsert = medicalRecordService.UpdateMedicalRecord(medicalRecordEntity);
-            if (!IsMedicalrecoedInsert)
-                throw Common.MegaException.ThrowException("امکان ثبت این اطلاعات وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
-
-            return medicalRecordEntity.Id.ToString();
-        }
+        }        
         #endregion
         // MediacalRecord CRUD needed
 

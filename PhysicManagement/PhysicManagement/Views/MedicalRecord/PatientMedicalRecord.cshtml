@@ -1,0 +1,156 @@
+﻿@model PhysicManagement.Model.MedicalRecord
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام </label>
+                                <div class="form-control">@Model.PatientFirstName</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام خانوادگی</label>
+                                <div class="form-control">@Model.PatientLastName</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام پزشک</label>
+                                <div class="form-control">@Model.DoctorFirstName</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">نام خانوادگی پزشک</label>
+                                <div class="form-control">@Model.DoctorLastName</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">عنوان سرطان</label>
+                                <div class="form-control">@Model.CancerTitle</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">شماره پرونده</label>
+                                <div class="form-control">@Model.SystemCode</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">تاریخ ثبت</label>
+                                <div class="form-control">@Html.DisplayForDate(Model.ReceptionDate)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد سی تی</label>
+                                <div class="form-control">@Model.CTCode</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">تاریخ سی تی</label>
+                                <div class="form-control">@Html.DisplayForDate(Model.CTEnterDate)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کد تی پی</label>
+                                <div class="form-control">@Model.TPCode</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">تاریخ تی پی</label>
+                                <div class="form-control">@Html.DisplayForDate(Model.TPEnterDate)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">تاریخ تایید کانتور</label>
+                                <div class="form-control">@Html.DisplayForDate(Model.ContourAcceptDate)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">کاربر تایید کننده کانتور</label>
+                                <div class="form-control">@Model.ContourAcceptUser</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">شماره فاز</label>
+                                    <div class="form-control">@Model.PhasesCount</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="bmd-label-floating">تاریخ فاز تایید شده</label>
+                                        <div class="form-control">@Html.DisplayForDate(Model.PhasesPrescribedDate)</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">تاریخ تایید بخش فیزیک</label>
+                                            <div class="form-control">@Html.DisplayForDate(Model.PhysicTreatementAcceptDate)</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="bmd-label-floating">کاربر تایید کننده بخش فیزیک</label>
+                                                <div class="form-control">@Model.PhysicTreatementAcceptUser</div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">تاریخ شروع</label>
+                                                    <div class="form-control">@Html.DisplayForDate(Model.CalendarStartDate)</div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">تاریخ پایان</label>
+                                                        <div class="form-control">@Html.DisplayForDate(Model.CalendarEndDate)</div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="bmd-label-floating">عنوان دستگاه درمان</label>
+                                                            <div class="form-control">@Model.TreatmentDeviceTitle</div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="bmd-label-floating">توضیحات سی تی</label>
+                                                                <div class="form-control">@Model.TPCode</div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="bmd-label-floating">توضیحات تی پی</label>
+                                                                    <div class="form-control">@Model.TPDescription</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+   
+
+

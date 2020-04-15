@@ -19,7 +19,7 @@ namespace PhysicManagement.Logic.Services
                 return db.MedicalRecord.OrderBy(x => x.Id).ToList();
             }
         }
-        public Model.MedicalRecord GetMedicalRecordById(int entityId)
+        public Model.MedicalRecord GetMedicalRecordById(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -147,5 +147,23 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
+
+        public Model.MedicalRecord AddMedicalRecordCTCode(string mricode, string ctdescription, long medicalRecordId)
+        {
+            MedicalRecordService medicalRecordService = new MedicalRecordService();
+            var medicalRecordEntity = medicalRecordService.GetMedicalRecordById(medicalRecordId);
+            medicalRecordEntity.CTCode = GetSystemCodeToCTCode();
+            medicalRecordEntity.CTDescription = ctdescription;
+            medicalRecordEntity.CTEnterDate = DateTime.Now;
+            medicalRecordEntity.MRICode = mricode;
+            medicalRecordEntity.MRIEnterDate = DateTime.Now;
+            medicalRecordEntity.IsOnGoing = true;
+            medicalRecordEntity.IsOnCalendar = false;            
+            var IsMedicalrecoedInsert = medicalRecordService.UpdateMedicalRecord(medicalRecordEntity);
+            if (!IsMedicalrecoedInsert)
+                throw Common.MegaException.ThrowException("امکان ثبت این اطلاعات وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
+
+            return medicalRecordEntity;
+        }
     }
 }
