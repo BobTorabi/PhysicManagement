@@ -144,6 +144,7 @@
     <Compile Include="Controllers\ContourDetailsController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MedicalRecordController.cs" />
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
     <Compile Include="Controllers\PhysicUserController.cs" />
     <Compile Include="Controllers\ResidentController.cs" />
@@ -306,6 +307,7 @@
     <Content Include="Views\Contour\ConfirmContour.cshtml" />
     <Content Include="Views\Patient\PatientCTCode.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <Content Include="Views\MedicalRecord\PatientMedicalRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
