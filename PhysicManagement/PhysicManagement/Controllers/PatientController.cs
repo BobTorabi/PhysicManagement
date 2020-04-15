@@ -84,5 +84,15 @@ namespace PhysicManagement.Controllers
             var PatientData = Service.GetPatientById(patientId);
             return View(PatientData);
         }
+        public ActionResult PatientCTCode()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PatientCTCode(string mricode, string ctdescription,int patientid)
+        {
+            var PatientCTCode = Service.AddPatientCTCode(mricode, ctdescription,patientid);
+            return Json(new { location = "PatientInfo?patientId=" + PatientCTCode }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

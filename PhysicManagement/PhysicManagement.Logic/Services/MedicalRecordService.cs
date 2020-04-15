@@ -27,6 +27,14 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public Model.MedicalRecord GetMedicalRecordByPatientId(int patientId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Where(x => x.PatientId == patientId).FirstOrDefault();
+                return Entity;
+            }
+        }
         public bool AddMedicalRecord(Model.MedicalRecord entity)
         {
             var valition = new MedicalRecordValidation.MedicalRecordEntityValidation().Validate(entity);
@@ -109,6 +117,24 @@ namespace PhysicManagement.Logic.Services
                 using (var db = new Model.PhysicManagementEntities())
                 {
                     var SystemCode = db.MedicalRecord.Max(x => x.SystemCode);
+                    if (string.IsNullOrEmpty(SystemCode))
+                    {
+                        return "1000";
+                    }
+                    else
+                    {
+                        return (int.Parse(SystemCode) + 1).ToString();
+                    }
+                }
+            }
+        }
+        public string GetSystemCodeToCTCode()
+        {
+            lock (thisLock)
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    var SystemCode = db.MedicalRecord.Max(x => x.CTCode);
                     if (string.IsNullOrEmpty(SystemCode))
                     {
                         return "1000";
