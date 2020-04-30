@@ -70,7 +70,7 @@ namespace PhysicManagement.Controllers
 
         public ActionResult RegisterPatient()
         {
-            ViewBag.doctorId = new SelectList(new Logic.Services.DoctorService().GetIdNameFromDoctorList(), "Id", "Name");
+            ViewBag.doctorId = new Logic.Services.DoctorService().GetIdNameFromDoctorList();
             return View();
         }
 

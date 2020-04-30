@@ -1,6 +1,6 @@
 ﻿
 @{
-    
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,47 +14,67 @@
                 <h4 class="card-title">اطلاعات نمایشی بیمار</h4>
             </div>
             <div class="card-body">
-                <form method="post">
+                <form id="FormValidation" method="post">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="patientFirstName" class="bmd-label-floating">نام بیمار</label>
-                                <input type="text" id="patientFirstName" name="patientFirstName" value="" class="form-control">
+                                <label for="patientFirstName" class="bmd-label-floating"> * نام بیمار</label>
+                                <input type="text" id="patientFirstName" required="true" aria-required="true" name="patientFirstName" value="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="patientLastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
-                                <input type="text" id="patientLastName" name="patientLastName" value="" class="form-control">
+                                <label for="patientLastName" class="bmd-label-floating"> * نام خانوادگی بیمار</label>
+                                <input type="text" id="patientLastName" required="true" aria-required="true" name="patientLastName" value="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nationalCode" class="bmd-label-floating">کد ملی</label>
                                 <input type="text" id="nationalCode" name="nationalCode" value="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <div class="form-group dropdown-toggle">
+                                @{
+                                    var DoctorList = ViewBag.doctorId;
+
+                                }
+                                <select name="doctorId" id="doctorId" class="selectpicker" data-style="btn btn-primary btn-round" title="" required="true" aria-required="true">
+                                    <option disabled="" selected="">* نام پزشک معالج</option>
+                                    @foreach (var item in DoctorList)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                <label for="Mobile" class="bmd-label-floating">شماره همراه بیمار </label>
                                 <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="Code" class="bmd-label-floating">کد رادیو تراپی </label>
-                                <input type="text" id="Code" name="Code" value="" class="form-control">
-                            </div>
-                        </div>
+
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="Id" class="bmd-label-floating">انتخاب پزشک</label>
-                                @Html.DropDownList("doctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
-
+                                <label>توضیحات</label>
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">لطفا توضیحات مربوط به این پرونده را وارد نمایید</label>
+                                    <textarea class="form-control" rows="5"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="category form-category">* پرکردن بخش های ستاره دار اجباری می باشد.</div>
+                    <button type="submit" class="btn btn-rose pull-right">ثبت </button>
                     <div class="clearfix"></div>
                 </form>
             </div>
@@ -62,3 +82,24 @@
     </div>
 </div>
 
+<script>
+    function setFormValidation(id) {
+      $(id).validate({
+        highlight: function(element) {
+          $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
+          $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
+        },
+        success: function(element) {
+          $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
+          $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
+        },
+        errorPlacement: function(error, element) {
+          $(element).closest('.form-group').append(error);
+        },
+      });
+    }
+
+    $(document).ready(function() {
+      setFormValidation('#FormValidation');
+    });
+</script>

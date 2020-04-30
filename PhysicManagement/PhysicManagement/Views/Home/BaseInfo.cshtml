@@ -2,24 +2,53 @@
 @{
     ViewBag.Title = "اطلاعات پایه";
 }
-
+<style type="text/css">
+    .btn{padding:12px 15px;}
+</style>
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
                     <div class="card-icon"><i class="material-icons">content_copy</i></div>
                     <h3 class="card-title">@ViewBag.Title</h3>
+                </div>
+                <div class="card-body">
                     <p class="card-category">ویرایش اطلاعات پایه برنامه از این بخش انجام می شود.</p>
-                    <div class="row pt-2">
-                        <div class="col-12">
-                            <p class="card-category"><a href="~/Alarm/List">هشدارها</a></p>
-                            <p class="card-category"><a href="~/Doctor/List">پزشکان</a></p>
-                            <p class="card-category"><a href="~/Resident/List">رزیدنت ها</a></p>
-                            <p class="card-category"><a href="~/User/List">پرسنل سی تی اسکن ها</a></p>
-                            <p class="card-category"><a href="~/PhysicUser/List">فیزیست</a></p>
-                            <p class="card-category"><a href="~/Cancer/List">سرطان ها</a></p>
-                            <p class="card-category"><a href="~/treatmentDevice/List">دستگاه های درمان</a></p>
-                            <p class="card-category"><a href="~/PhysicTreatmentPlan/List">برنامه درمان فیزیکی</a></p>
+
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 ml-auto mr-auto mb-3">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/Alarm/List">هشدارها</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/Doctor/List">پزشکان</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/Resident/List">رزیدنت ها</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/User/List">پرسنل سی تی اسکن ها</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-10 ml-auto mr-auto">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/PhysicUser/List">فیزیست</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/Cancer/List">سرطان ها</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/treatmentDevice/List">دستگاه های درمان</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="btn btn-primary btn-block" href="~/PhysicTreatmentPlan/List">برنامه درمان فیزیکی</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
