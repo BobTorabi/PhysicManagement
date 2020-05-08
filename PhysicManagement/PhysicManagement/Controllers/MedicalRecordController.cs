@@ -19,5 +19,14 @@ namespace PhysicManagement.Controllers
             var medicalRecordData = service.GetMedicalRecordById(id);
             return View(medicalRecordData);
         }
+
+        [HttpPost]
+        public JsonResult SetCancerForMR(int medicalRecordId, int cancerId)
+        {
+            var medicalRecordData = service.SetCancerForMR(medicalRecordId, cancerId, "");
+            return Json(
+                new MegaViewModel<bool> { Status = MegaStatus.Successfull }, 
+                JsonRequestBehavior.AllowGet);
+        }
     }
 }

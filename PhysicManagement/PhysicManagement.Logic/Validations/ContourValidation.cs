@@ -18,8 +18,7 @@ namespace PhysicManagement.Logic.Validations
         {
             public ContourDetailsEntityValidate()
             {
-                RuleFor(e => e.Id).NotNull().NotEmpty().WithMessage("شناسه نباید مقدار خالی داشته باشد");
-                RuleFor(e => e.Description).NotNull().NotEmpty().WithMessage("توضیحات نباید خالی باشد");
+              
             }
         }
     }

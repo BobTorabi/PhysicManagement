@@ -79,7 +79,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.CancerOAR.OrderBy(x => x.OrganTitle).ToList();
+                return db.CancerOAR.Include("Cancer").OrderBy(x => x.Cancer.Title).ToList();
             }
         }
         public Model.CancerOAR GetCancerOARById(int entityId)
@@ -118,6 +118,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.CancerOAR.Find(entity.Id);
+                Entity.CancerId = entity.CancerId;
                 Entity.Description = entity.Description;
                 Entity.OrganTitle = entity.OrganTitle;
                 Entity.Reserve1 = entity.Reserve1;

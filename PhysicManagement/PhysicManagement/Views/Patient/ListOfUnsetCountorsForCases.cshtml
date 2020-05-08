@@ -1,0 +1,177 @@
+﻿@model List<PhysicManagement.Model.Patient>
+@{
+    ViewBag.Title = "ثبت کانتور";
+    int Index = 1;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="row">
+                        <form method="get" style="width:100%;padding:10px 30px;">
+                            <div class="row gray-bg">
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                        <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                        <input type="text" id="LastName" name="LastName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                        <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                        <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="SystemCode" class="bmd-label-floating">شماره پرونده </label>
+                                        <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
+                                        <input type="text" id="Code" name="Code" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <select name="hasContour" class="form-control">
+                                            <option value="" disabled selected>انتخاب وضعیت کانتور پرونده</option>
+                                            <option value="">مهم نیست</option>
+                                            <option value="true">اطلاعات کانتور دارد</option>
+                                            <option value="false">اطلاعات کانتور ندارد</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                                    <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>نام بیمار</th>
+                                <th>نام پزشک</th>
+                                <th>کد ملی</th>
+                                <th>شناسه بیمار</th>
+                                <th>اطلاعات کانتور</th>
+                                <th>شماره پرونده</th>
+                                <th>تاریخ ثبت</th>
+                                <th class="text-center">نوع سرطان</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var patient in Model)
+                            {
+                                foreach (var mr in patient.MedicalRecord)
+                                {
+                                    <tr>
+                                        <td>@Index</td>
+                                        <td>@patient.FirstName @patient.LastName</td>
+                                        <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
+                                        <td>@patient.NationalCode</td>
+                                        <td>@patient.Code</td>
+                                        <td>@(mr.Contour.Count==0?"ندارد":"دارد")</td>
+                                        <td>@mr.SystemCode</td>
+                                        <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
+                                        <td class="text-center">
+                                            @if (mr.CancerId != null)
+                                            {
+                                                <button type="button" class="btn btn-block btn-sm" onclick="SetCancer(@mr.CancerId,@mr.Id)">@mr.CancerTitle</button>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group dropdown-toggle">
+                                                    <select class="selectpicker" onchange="SetCancer(this.value,@mr.Id)" data-style="btn btn-primary btn-round" title="">
+                                                        <option disabled="" selected="">نوع سرطان</option>
+                                                        @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
+                                                        {
+                                                            <option @((mr.CancerId != null && mr.CancerId == item.Id) ? "selected=selected disabled" : "") value="@item.Id">@item.Title</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                    Index++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card CancerOAR">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon"><i class="material-icons">add_box</i></div>
+                    <h4 class="card-title">لیست ارگان ها</h4>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr><th style="width:50px;"></th><th>هدف</th></tr>
+                        </thead>
+                        <tbody id="COAR_Data">
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.CancerOAR').hide();
+    function SetCancer(cancerId, mId) {
+        $('#COAR_Data').empty();
+        $.post('../MedicalRecord/SetCancerForMR', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
+            $.getJSON('../CancerOAR/GetCancerOARDataByCancerId', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
+                for (var i = 0; i < d.length; i++) {
+                    $(`<tr data-conourType="` + d[i].Id +`">
+                        <td>
+                            <div class="togglebutton">
+                                <label>
+                                    <input `+ (d[i].IsSelected ?`checked="checked"`:``)+` onchange="setContourDetail(`+ d[i].Id + `,`+ mId+`)" type="checkbox">
+                                    <span class="toggle"></span>
+                                </label>
+                            </div>
+                        </td>
+                        <td>`+ d[i].OrganTitle +`</td>
+                    </tr>`).appendTo('#COAR_Data');
+                }
+              
+                $('.CancerOAR').show();
+            });
+        });
+    }
+    function setContourDetail(cancerOARId, mId) {
+        $.post('../Contour/SetCancerDetailForContour', { medicalRecordId: mId, cancerOARId: cancerOARId }, function (d) {
+        });
+    }
+</script>

@@ -18,7 +18,7 @@ namespace PhysicManagement.Common
         /// </summary>
         /// <param name="dateTime">ورودی تاریخ میلادی مورد نظر</param>
         /// <returns>تاریخ و ساعت کنار با فرمت استاندارد</returns>
-        public static string GetPersianDateTime(DateTime dateTime, string delimiter = " ")
+        public static string GetPersianDateTime(DateTime dateTime, string delimiter = "-")
         {
             PersianCalendar Calendar = new PersianCalendar();
             string Year = Calendar.GetYear(dateTime).ToString();

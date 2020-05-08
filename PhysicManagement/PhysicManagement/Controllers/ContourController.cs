@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PhysicManagement.Logic.Services;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Controllers
 {
@@ -14,60 +15,48 @@ namespace PhysicManagement.Controllers
         {
             Service = new Logic.Services.ContourService();
         }
-        public ActionResult Index()
-        {
-            return RedirectToActionPermanent("List");
-        }
-        // GET: Contour
-        public ActionResult List()
-        {
-            List<Model.Contour> Contour = Service.GetContourList();
-            return View(Contour);
-        }
-        public ActionResult Modify(int? id)
-        {
-            if (id == null)
-            {
-                return View(new Model.Contour());
-            }
-            else
-            {
-                var Entity = Service.GetContourById(id.GetValueOrDefault());
-                return View(Entity);
-            }
 
+        public ActionResult ContourApprove() {
+            List<Patient> Patients = Service.GetContoursToApprove();
+            return View(Patients);
         }
+
+      
+
         [HttpPost]
-        public ActionResult Modify(Model.Contour entity)
+        public ActionResult ConfirmContour(string actionDate, string acceptDate, string acceptUser, int cancerId, string description)
         {
-            bool IsAffected;
-            if (entity.Id > 0)
-            {
-                IsAffected = Service.UpdateContour(entity);
-            }
-            else
-            {
-                IsAffected = Service.AddContour(entity);
-            }
-            if (IsAffected)
-                return RedirectToAction("Index");
-            else
-            {
-                return View();
-            }
-        }
-
-        public ActionResult ConfirmContour()
-        {
-            Logic.Services.CancerService cancer = new CancerService();
-            ViewBag.cancerId = new SelectList(cancer.GetCancerList(), "Id", "Title");
             return View();
         }
 
         [HttpPost]
-        public ActionResult ConfirmContour(string actionDate,string acceptDate,string acceptUser,int cancerId,string description)
+        public JsonResult SetCancerDetailForContour(long medicalRecordId, int cancerOARId)
         {
-            return View();
+            var ContourData = Service.GetContourByMedicalRecordId(medicalRecordId);
+            var ContourDetail = Service.GetContourDetailByMedicalRecordIdAndCancerOARId(medicalRecordId, cancerOARId, ContourData.Id);
+            if (ContourDetail == null)
+            {
+                Service.AddContourDetails(new Model.ContourDetails
+                {
+                    CancerOARId = cancerOARId,
+                    SelectDate = DateTime.Now,
+                    MediacalRecordId = medicalRecordId,
+                    ContourId = ContourData.Id,
+                    Description = ""
+                });
+            }
+            else {
+                Service.DeleteContourDetails(ContourDetail.Id);
+            }
+
+
+            return Json(new MegaViewModel<bool>() { Status = MegaStatus.Successfull }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SetApproveContourByDoctor(long countorId,long medicalRecordId) { 
+            var ContourData = Service.SetContourAsAcceptedByDoctor(countorId);
+            return Json(new { location = "../Patient/SetMedicalRecordPhases?medicalRecordId=" + medicalRecordId },JsonRequestBehavior.AllowGet);
         }
     }
 }

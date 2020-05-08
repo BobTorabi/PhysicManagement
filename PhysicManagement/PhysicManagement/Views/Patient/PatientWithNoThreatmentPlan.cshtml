@@ -1,0 +1,173 @@
+﻿@model List<PhysicManagement.Model.Patient>
+@{
+    ViewBag.Title = "PatientWithNoThreatmentPlan";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title">فرم ارجاع و انتخاب نرم افزار Treatment Planning</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="row">
+                        <form method="get" style="width:100%;padding:10px 30px;">
+                            <div class="row gray-bg">
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                        <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                        <input type="text" id="LastName" name="LastName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                        <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                        <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="SystemCode" class="bmd-label-floating">شماره پرونده </label>
+                                        <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
+                                        <input type="text" id="Code" name="Code" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                                    <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>نام بیمار</th>
+                                <th>نام پزشک</th>
+                                <th>کد ملی</th>
+                                <th>شناسه بیمار</th>
+                                <th>تاریخ ثبت</th>
+                                <th>Fusion</th>
+                                <th class="text-center">ارجاع</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int Index = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                foreach (var mr in item.MedicalRecord)
+                                {
+                            <tr data-id="@mr.Id">
+                                <td>@Index</td>
+                                <td>@item.FirstName @item.LastName</td>
+                                <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
+                                <td>@item.Mobile</td>
+                                <td>@item.Code</td>
+                                <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
+                                <td>
+                                    <div class="togglebutton">
+                                        <label>
+                                            <input type="checkbox" disabled @(mr.NeedsFusion.GetValueOrDefault() ? "checked=checked" : "")>
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ارجاع شود<div class="ripple-container"></div></button>
+                                </td>
+                            </tr>
+                                }
+                                Index++;
+                            }
+
+
+                        </tbody>
+                    </table>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">انتخاب نرم افزار</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group dropdown-toggle">
+                                        <select class="selectpicker" name="TPDescription" data-style="btn btn-primary btn-round">
+                                            <option disabled selected>نرم افزار مورد نظر را انتخاب نمایید</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group dropdown-toggle">
+                                        <select class="selectpicker" name="NeedFusion" data-style="btn btn-primary btn-round">
+                                            <option disabled selected>Fusion</option>
+                                            <option value="true">دارد</option>
+                                            <option value="false">ندارد</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                                    <button type="button" onclick="setData()" class="btn btn-primary">ارسال</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    var mId = null;
+    function setData() {
+        debugger;
+        var TPDescription = $('[name="TPDescription"]').val();
+        var needFusion = $('[name="NeedFusion"]').val();
+        if (TPDescription == '' || TPDescription == null ) {
+            $('[name="TPDescription"]').focus();
+            return;
+        }
+        if (needFusion == '' || needFusion == null) {
+            $('[name="NeedFusion"]').focus();
+            return;
+        }
+       
+        $.post('SetPatientMediacalRecordCPAndFusion', { medicalRecordId: mId, TPDescription: TPDescription, needFusion: needFusion }, function (d) {
+            $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
+            $('.dataEntry').hide();
+            $('#exampleModal').modal('hide');
+        });
+    }
+</script>

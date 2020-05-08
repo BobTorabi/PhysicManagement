@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "انتخاب تعداد فازهای درمان";
+}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">mail_outline</i>
+                        </div>
+                        <h4 class="card-title">@ViewBag.Title</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <form id="FormValidation" action="" method="" novalidate="novalidate">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">بابک</label>
+                                        <input type="text" class="form-control" name="FistName" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">بوترابی</label>
+                                        <input type="text" class="form-control" name="LastName" disabled="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group dropdown-toggle">
+                                        <select class="selectpicker valid" data-style="btn btn-primary btn-round" title="" aria-invalid="false">
+                                            <option disabled="" selected="">تعداد فاز های درمان</option>
+                                            <option value="1">1 فاز</option>
+                                            <option value="2">2 فاز</option>
+                                            <option value="3">3 فاز</option>
+                                            <option value="4">4 فاز</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-rose pull-right">ثبت</button>
+                            <div class="clearfix"></div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

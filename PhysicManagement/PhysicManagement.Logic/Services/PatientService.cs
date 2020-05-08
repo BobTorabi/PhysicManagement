@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using System.Data.Entity;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -17,11 +18,150 @@ namespace PhysicManagement.Logic.Services
                 return db.Patient.OrderBy(x => x.FirstName).ToList();
             }
         }
-        public ViewModels.PagedList<Model.Patient> GetPatientListWithFilters(string firstName, string lastName, string mobile, string nationalCode, string systemCode, int CurrentPage = 1, int pageSize = 30)
+        public List<Model.Patient> GetPatientListDontHaveMriOrCTScan()
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.Patient> QueryablePatient = db.Patient.Include("MedicalRecord");
+                return db.Patient.Where(x => x.MedicalRecord.Any(t => t.CTEnterDate == null || t.MRIEnterDate == null)).Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
+            }
+        }
+        public List<Model.Patient> GetPatientListWithUnsetFusion(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                IQueryable<Patient> Queryable = db.Patient.Where(x => x.MedicalRecord.Any(t => t.NeedsFusion == null));
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim();
+                    Queryable = Queryable.Where(x => x.FirstName == firstName);
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim();
+                    Queryable = Queryable.Where(x => x.LastName == lastName);
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim();
+                    Queryable = Queryable.Where(x => x.NationalCode == nationalCode);
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim();
+                    Queryable = Queryable.Where(x => x.Mobile == mobile);
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim();
+                    Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.SystemCode == systemCode));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    code = code.Trim();
+                    Queryable = Queryable.Where(x => x.Code == code);
+                }
+                return Queryable.Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
+            }
+        }
+        public List<Model.Patient> GetPatientListWithUnsetCountor(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,bool? hasContour)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                IQueryable<Patient> Queryable = db.Patient;
+                if (hasContour.HasValue)
+                {
+                    bool HasContour = hasContour.Value;
+                    if (HasContour)
+                    {
+                        Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.Contour.Count > 0));
+                    }
+                    else {
+                        Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.Contour.Count == 0));
+                    }
+                }
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim();
+                    Queryable = Queryable.Where(x => x.FirstName == firstName);
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim();
+                    Queryable = Queryable.Where(x => x.LastName == lastName);
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim();
+                    Queryable = Queryable.Where(x => x.NationalCode == nationalCode);
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim();
+                    Queryable = Queryable.Where(x => x.Mobile == mobile);
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim();
+                    Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.SystemCode == systemCode));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    code = code.Trim();
+                    Queryable = Queryable.Where(x => x.Code == code);
+                }
+                return Queryable.Include("MedicalRecord").Include("MedicalRecord.Contour").OrderByDescending(x => x.RegisterDate).ToList();
+            }
+        }
+
+
+        public bool SetPatientMediacalRecordCTScanData(int medicalRecordId, string CTScanCode, string CTScanDescription, string MRICode)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                try
+                {
+                    var MedicalRecordData = db.MedicalRecord.FirstOrDefault(x => x.Id == medicalRecordId);
+                    MedicalRecordData.MRIEnterDate = DateTime.Now;
+                    MedicalRecordData.CTEnterDate = DateTime.Now;
+                    MedicalRecordData.CTCode = CTScanCode;
+                    MedicalRecordData.CTDescription = CTScanDescription;
+                    MedicalRecordData.MRICode = MRICode;
+                    db.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+        }
+        public bool SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                try
+                {
+                    var MedicalRecordData = db.MedicalRecord.FirstOrDefault(x => x.Id == medicalRecordId);
+                    MedicalRecordData.NeedsFusion = needFusion;
+                    MedicalRecordData.TPDescription = TPDescription;
+                    MedicalRecordData.TPEnterDate = DateTime.Now;
+                    db.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+
+        }
+        public ViewModels.PagedList<Model.Patient> GetPatientListWithFilters(string firstName, string lastName, string mobile,
+            string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                IQueryable<Model.Patient> QueryablePatient = db.Patient.Include(x => x.MedicalRecord);
 
                 if (!string.IsNullOrEmpty(firstName))
                 {
@@ -37,6 +177,11 @@ namespace PhysicManagement.Logic.Services
                 {
                     mobile = mobile.Trim();
                     QueryablePatient = QueryablePatient.Where(x => x.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    code = code.Trim();
+                    QueryablePatient = QueryablePatient.Where(x => x.Code.Contains(code));
                 }
                 if (!string.IsNullOrEmpty(nationalCode))
                 {
@@ -90,6 +235,26 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.Patient.Where(x => x.Code == code).FirstOrDefault();
                 return Entity;
+            }
+        }
+        public ViewModels.PatientVMs.MedicalRecordDataWithPatientData GetPatientByMedicalRecordId(int medicalRecordId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Patient.Where(x => x.MedicalRecord.Any(t => t.Id == medicalRecordId)).Include(x => x.MedicalRecord).FirstOrDefault();
+                var MedicalData = Entity.MedicalRecord.FirstOrDefault();
+                return new ViewModels.PatientVMs.MedicalRecordDataWithPatientData()
+                {
+                    CTDescription = MedicalData.CTDescription,
+                    Code = Entity.Code,
+                    CTCode = MedicalData.CTCode,
+                    SystemCode = MedicalData.SystemCode,
+                    FirstName = Entity.FirstName,
+                    LastName = Entity.LastName,
+                    MedicalRecordId = MedicalData.Id,
+                    MRICode = MedicalData.MRICode,
+                    PatientId = Entity.Id
+                };
             }
         }
         public Model.Patient GetPatientByDoctorName(string lastname)
@@ -247,7 +412,7 @@ namespace PhysicManagement.Logic.Services
                 }
             }
             return true;
-        }        
+        }
         #endregion
         // MediacalRecord CRUD needed
 

@@ -356,15 +356,17 @@
     <Content Include="Views\Patient\RegisterPatient.cshtml" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Modify.cshtml" />
-    <Content Include="Views\Contour\List.cshtml" />
-    <Content Include="Views\Contour\Modify.cshtml" />
     <Content Include="Views\Patient\PatientSearch.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Patient\PatientInfo.cshtml" />
-    <Content Include="Views\Contour\ConfirmContour.cshtml" />
     <Content Include="Views\Patient\PatientCTCode.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Views\MedicalRecord\PatientMedicalRecord.cshtml" />
+    <Content Include="Views\Patient\PatientWithNoCTScanOrMRI.cshtml" />
+    <Content Include="Views\Patient\PatientWithNoThreatmentPlan.cshtml" />
+    <Content Include="Views\Patient\ListOfUnsetCountorsForCases.cshtml" />
+    <Content Include="Views\Contour\ContourApprove.cshtml" />
+    <Content Include="Views\Patient\SetMedicalRecordPhases.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

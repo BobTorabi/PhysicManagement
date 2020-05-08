@@ -86,6 +86,7 @@
     <Compile Include="Validations\UserValidation.cs" />
     <Compile Include="ViewModels\IdName.cs" />
     <Compile Include="ViewModels\PagedList.cs" />
+    <Compile Include="ViewModels\PatientVMs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

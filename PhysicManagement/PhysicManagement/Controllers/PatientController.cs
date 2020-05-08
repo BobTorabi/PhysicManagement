@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhysicManagement.Logic.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,16 +21,18 @@ namespace PhysicManagement.Controllers
         // GET: Patient
         public ActionResult List()
         {
-
             List<Model.Patient> Patient = Service.GetPatientList();
             return View(Patient);
+        }
+        public ActionResult SetMedicalRecordPhases(long medicalRecordId) {
+            return View();
         }
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
-            Logic.ViewModels.PagedList<Model.Patient> Patient = 
-                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, CurrentPage, ViewBag.PageSize);
+            Logic.ViewModels.PagedList<Model.Patient> Patient =
+                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, null, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
@@ -89,12 +92,50 @@ namespace PhysicManagement.Controllers
         {
             return View();
         }
+        public JsonResult PatientInfoByMedicalRecordId(int medicalRecordId)
+        {
+            var Data = new Logic.Services.PatientService().GetPatientByMedicalRecordId(medicalRecordId);
+            return Json(new MegaViewModel<PatientVMs.MedicalRecordDataWithPatientData>() { Data = Data }, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
-        public ActionResult PatientCTCode(string mriCode, string ctDescription,long medicalRecordId)
+        public ActionResult PatientCTCode(string mriCode, string ctDescription, long medicalRecordId)
         {
             Logic.Services.MedicalRecordService medicalRecordService = new Logic.Services.MedicalRecordService();
-            var PatientCTCode = medicalRecordService.AddMedicalRecordCTCode(mriCode, ctDescription,medicalRecordId);
+            var PatientCTCode = medicalRecordService.AddMedicalRecordCTCode(mriCode, ctDescription, medicalRecordId);
             return Json(new { location = "PatientInfo?patientId=" + PatientCTCode.Id }, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// لیست بیمارانی که اطلاعات ام ار ای یا سی تی اسکن آنها در سیستم ثبت نشده اشت.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PatientWithNoCTScanOrMRI()
+        {
+            List<Model.Patient> Patient = Service.GetPatientListDontHaveMriOrCTScan();
+            return View(Patient);
+        }
+        [HttpPost]
+        public ActionResult SetCTAndMIRDataForMedicalRecord(int medicalRecordId, string cTScanCode, string cTScanDescription, string mRICode)
+        {
+            var Data = Service.SetPatientMediacalRecordCTScanData(medicalRecordId, cTScanCode, cTScanDescription, mRICode);
+            return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
+        {
+            List<Model.Patient> Patient = Service.GetPatientListWithUnsetFusion(firstName, lastName, mobile, nationalCode, systemCode, code);
+            return View(Patient);
+        }
+        public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,bool? hasContour) {
+            ViewBag.CancerList = new Logic.Services.CancerService().GetCancerList();
+
+            List<Model.Patient> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName, mobile, nationalCode, systemCode, code, hasContour);
+            return View(Patient);
+        }
+         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
+        {
+            var Data = Service.SetPatientMediacalRecordCPAndFusion(medicalRecordId,TPDescription,needFusion);
+            return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
+        }
+        
     }
 }

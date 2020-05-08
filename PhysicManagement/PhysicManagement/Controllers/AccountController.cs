@@ -10,11 +10,48 @@ namespace PhysicManagement.Controllers
     {
         public ActionResult Login()
         {
+            if (Common.Cookie.IsCookieSet("RoleType"))
+            {
+                string RoleValue = (Common.Cookie.ReadCookie("RoleType") ?? "").ToString();
+                switch (RoleValue)
+                {
+                    default:
+                        return View();
+                    case "doctor":
+                        { 
+                        var UserData = Logic.Services.DoctorService.IsAuthenticated();
+                            if (UserData == null)
+                                return View();
+                            else { 
+                                return Redirect("~/Home/Dashboard");
+                            }
+                        }
+                    case "resident":
+                        {
+                            var UserData = Logic.Services.ResidentService.IsAuthenticated();
+                            if (UserData == null)
+                                return View();
+                            else
+                            {
+                                return Redirect("~/Home/Dashboard");
+                            }
+                        }
+                    case "physicuser":
+                        {
+                            var UserData = Logic.Services.PhysicUserService.IsAuthenticated();
+                            if (UserData == null)
+                                return View();
+                            else
+                            {
+                                return Redirect("~/Home/Dashboard");
+                            }
+                        }
+                }
+            }
             return View();
         }
         public ActionResult TestData(string a, string b) {
             return Json(new { a = a, aEnc = Logic.Services.DoctorService.EncryptPassword(a, b) }, JsonRequestBehavior.AllowGet);
-
         }
         [HttpPost]
         public ActionResult Login(string userName, string password, short roleType)
@@ -37,8 +74,15 @@ namespace PhysicManagement.Controllers
                         else
                         {
                             Logic.Services.DoctorService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "doctor");
-                            return Redirect("~/Home/Dashboard");
+                            Common.Cookie.SetCookie("RoleType", "doctor",DateTime.Now.AddMonths(1));
+                            if (Request["data"] != null)
+                            {
+                                return Redirect(Request["data"]);
+                            }
+                            else {
+                                return Redirect("~/Home/Dashboard");
+                            }
+                            
                         }
 
                     }
@@ -54,7 +98,7 @@ namespace PhysicManagement.Controllers
                         else
                         {
                             Logic.Services.ResidentService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "resident");
+                            Common.Cookie.SetCookie("RoleType", "resident", DateTime.Now.AddMonths(1));
                             return Redirect("~/Home/Dashboard");
                         }
                     }
@@ -70,7 +114,7 @@ namespace PhysicManagement.Controllers
                         else
                         {
                             Logic.Services.PhysicUserService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "PhysicUser");
+                            Common.Cookie.SetCookie("RoleType", "PhysicUser", DateTime.Now.AddMonths(1));
                             return Redirect("~/Home/Dashboard");
                         }
                     }

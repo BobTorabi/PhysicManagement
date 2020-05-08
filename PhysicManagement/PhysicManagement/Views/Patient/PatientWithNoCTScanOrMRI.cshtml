@@ -1,0 +1,165 @@
+﻿@model List<PhysicManagement.Model.Patient>
+@{
+    ViewBag.Title = "لیست بیماران پذیرش شده بدون اطلاعات تصویربرداری";
+}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">@ViewBag.Title</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th>نام بیمار</th>
+                                    <th>نام پزشک</th>
+                                    <th>شناسه بیمار</th>
+                                    <th>شماره پرونده</th>
+                                    <th>تاریخ پذیرش</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int Index = 1;
+                                }
+                                @foreach (var patient in Model)
+                                {
+                                    foreach (var medicalRecord in patient.MedicalRecord)
+                                    {
+                                        <tr data-id="@medicalRecord.Id">
+                                            <td>@Index</td>
+                                            <td>@patient.FirstName @patient.LastName</td>
+                                            <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
+                                            <td>@patient.Code</td>
+                                            <td>@medicalRecord.SystemCode</td>
+                                            <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
+                                            <td class="text-center">
+                                                <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
+                                            </td>
+                                        </tr>
+                                        Index++;
+                                    }
+
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+                        $('.dataEntry').hide();
+                    })
+                    function LoadPatientData(id) {
+                       
+                        $.getJSON('PatientInfoByMedicalRecordId', { medicalRecordId: id }, function (d) {
+                            $('[name="FirstName"]').val(d.Data.FirstName);
+                            $('[name="LastName"]').val(d.Data.LastName);
+                            $('[name="SystemCode"]').val(d.Data.SystemCode);
+                            $('[name="CTCode"]').val(d.Data.CTCode);
+                            $('[name="MRICode"]').val(d.Data.MRICode);
+                            $('[name="CTDescription"]').val(d.Data.CTDescription);
+                            $('[name="medicalRecordId"]').val(d.Data.MedicalRecordId);
+                            $('[name="PatientId"]').val(d.Data.PatientId);
+                            $('.dataEntry').fadeIn(300);
+                        });
+                    }
+                    function setData() {
+                       
+                        var cTScanCode = $('[name="CTCode"]').val();
+                        var cTScanDescription = $('[name="CTDescription"]').val();
+                        var mRICode = $('[name="MRICode"]').val();
+                        if (cTScanCode == '') {
+                            $('[name="CTCode"]').focus();
+                            return;
+                        }
+                        if (mRICode == '') {
+                            $('[name="MRICode"]').focus();
+                            return;
+                        }
+                        if (cTScanDescription == '') {
+                            $('[name="CTDescription"]').focus();
+                            return;
+                        }
+                        var mId = $('[name="medicalRecordId"]').val();
+                        $.post('SetCTAndMIRDataForMedicalRecord', { medicalRecordId: mId, cTScanCode: cTScanCode, cTScanDescription: cTScanDescription, mRICode: mRICode }, function (d) {
+                            $('tr[data-id="' + mId+'"]').fadeOut(500, function () { $(this).remove() });
+                            $('.dataEntry').hide();
+                        });
+                    }
+                </script>
+                <div class="card dataEntry">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">add_box</i>
+                        </div>
+                        <h4 class="card-title">ثبت اطلاعات تصویربرداری بیمار</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <form id="FormValidation">
+                            <input type="hidden" name="medicalRecordId" />
+                            <input type="hidden" name="PatientId" />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">نام</label>
+                                        <input type="text" class="form-control" name="FirstName" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">نام خانوادگی</label>
+                                        <input type="text" class="form-control" name="LastName" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">شماره پرونده</label>
+                                        <input type="text" class="form-control" name="SystemCode" disabled="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating"> * کد CT</label>
+                                        <input type="text" class="form-control" name="CTCode" required="true" aria-required="true">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating"> * کد MRI</label>
+                                        <input type="text" class="form-control" name="MRICode" required aria-required="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>توضیحات</label>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating">لطفا توضیحات مربوط به تصویربرداری را وارد نمایید</label>
+                                            <textarea class="form-control" name="CTDescription" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category form-category">* پرکردن بخش های ستاره دار اجباری می باشد.</div>
+                            <button type="button" onclick="setData()" class="btn btn-rose pull-right">ثبت</button>
+                            <div class="clearfix"></div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PhysicManagement.Logic.Validations;
 using FluentValidation;
+using System.Data.Entity;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -17,6 +19,23 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.Contour.OrderBy(x => x.Id).ToList();
+            }
+        }
+
+        public List<Patient> GetContoursToApprove()
+        {
+            using (var db = new PhysicManagementEntities())
+            {
+                return db.Patient.Where(x => x.MedicalRecord.Any(t => t.Contour.Any(e=>e.AcceptDate == null && e.AcceptUser == null))).Include("MedicalRecord").Include("MedicalRecord.Contour").ToList();
+            }
+        }
+
+        public Model.Contour GetContourByMedicalRecordId(long medicalRecordId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Contour.Where(e=>e.MedicalRecordId == medicalRecordId).Include(x=>x.ContourDetails).FirstOrDefault();
+                return Entity;
             }
         }
         public Model.Contour GetContourById(int entityId)
@@ -39,6 +58,20 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+
+        public object SetContourAsAcceptedByDoctor(long countorId)
+        {
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Contour.Find(countorId);
+                Entity.AcceptDate = DateTime.Now;
+                Entity.AcceptUser = "";
+
+                return db.SaveChanges() == 1;
+            }
+        }
+
         public bool UpdateContour(Model.Contour entity)
         {
             var validtion = new ContourValidation.ContourEntityValidate().Validate(entity);
@@ -98,6 +131,13 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+        public Model.ContourDetails GetContourDetailByMedicalRecordIdAndCancerOARId(long medicalRecordId,int cancerOARId, long contourId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+               return db.ContourDetails.FirstOrDefault(e=>e.CancerOARId == cancerOARId && e.ContourId == contourId && e.MediacalRecordId == medicalRecordId);
+            }
+        }
         public bool UpdateContourDetails(Model.ContourDetails entity)
         {
             var validtion = new ContourValidation.ContourDetailsEntityValidate().Validate(entity);
@@ -112,7 +152,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public bool DeleteContourDetails(Model.ContourDetails entityId)
+        public bool DeleteContourDetails(long entityId)
         {
             using(var db = new Model.PhysicManagementEntities())
             {

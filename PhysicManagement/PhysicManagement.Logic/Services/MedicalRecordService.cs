@@ -85,7 +85,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public bool UpdateMedicalRecordForDoctorChange(long medicalRecordId,int doctorId)
+        public bool UpdateMedicalRecordForDoctorChange(long medicalRecordId, int doctorId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -101,6 +101,48 @@ namespace PhysicManagement.Logic.Services
                 Entity.DoctorLastName = DoctorObject.LastName;
                 Entity.DoctorId = DoctorObject.Id;
                 return db.SaveChanges() == 1;
+            }
+        }
+
+        public bool SetCancerForMR(long medicalRecordId, int cancerId, string UserId)
+        {
+            try
+            {
+                using (var db = new Model.PhysicManagementEntities())
+                {
+                    var Entity = db.MedicalRecord.Find(medicalRecordId);
+                    if (Entity == null)
+                        throw Common.MegaException.ThrowException("");
+
+                    Model.Cancer CancerObject = new CancerService().GetCancerById(cancerId);
+                    if (CancerObject == null)
+                        throw Common.MegaException.ThrowException("");
+
+                    Entity.CancerTitle = CancerObject.Title;
+                    Entity.CancerId = CancerObject.Id;
+                    Entity.ContourAcceptDate = DateTime.Now;
+                    Entity.ContourAcceptUser = UserId;
+                    var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
+                    if (MedicalRecordContourObject == null)
+                    {
+                        Entity.Contour.Add(new Model.Contour()
+                        {
+                            AcceptDate = null,
+                            AcceptUser = null,
+                            ActionDate = DateTime.Now,
+                            Description = "",
+                            ExtraInfo1 = "",
+                            ExtraInfo2 = "",
+                            MedicalRecordId = medicalRecordId
+                        });
+                    }
+                    
+                    int RowsAffected = db.SaveChanges();
+                    return true;
+                }
+            }
+            catch {
+                return false;
             }
         }
 
@@ -158,7 +200,7 @@ namespace PhysicManagement.Logic.Services
             medicalRecordEntity.MRICode = mriCode;
             medicalRecordEntity.MRIEnterDate = DateTime.Now;
             medicalRecordEntity.IsOnGoing = true;
-            medicalRecordEntity.IsOnCalendar = false;            
+            medicalRecordEntity.IsOnCalendar = false;
             var IsMedicalrecoedInsert = medicalRecordService.UpdateMedicalRecord(medicalRecordEntity);
             if (!IsMedicalrecoedInsert)
                 throw Common.MegaException.ThrowException("امکان ثبت این اطلاعات وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
