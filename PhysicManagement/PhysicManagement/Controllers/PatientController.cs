@@ -10,9 +10,13 @@ namespace PhysicManagement.Controllers
     public class PatientController : BaseController
     {
         Logic.Services.PatientService Service;
+        Logic.Services.MedicalRecordService MedicalService;
+        Logic.Services.PhysicTreatmentService PhysicTreatmentService;
         public PatientController()
         {
             Service = new Logic.Services.PatientService();
+            MedicalService = new Logic.Services.MedicalRecordService();
+            PhysicTreatmentService = new Logic.Services.PhysicTreatmentService();
         }
         public ActionResult Index()
         {
@@ -24,8 +28,30 @@ namespace PhysicManagement.Controllers
             List<Model.Patient> Patient = Service.GetPatientList();
             return View(Patient);
         }
-        public ActionResult SetMedicalRecordPhases(long medicalRecordId) {
-            return View();
+        public ActionResult SetMedicalRecordPhases(long medicalRecordId)
+        {
+            var ModelData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var Data = Service.GetPatientById(ModelData.PatientId);
+            ViewBag.PatientData = Data;
+
+            return View(ModelData);
+        }
+        [HttpPost]
+        public ActionResult SetMedicalRecordPhases(long medicalRecordId, int Phases)
+        {
+            MedicalService.UpdateMedicalRecordForPhaseCount(medicalRecordId, Phases);
+            for (int i = 0; i < Phases; i++)
+            {
+                PhysicTreatmentService.AddPhysicTreatment(new Model.PhysicTreatment
+                {
+                    ActionDate = null,
+                    ActionUser = "",
+                    MedicalRecordId = medicalRecordId,
+                    PhaseNumber = i
+                });
+
+            }
+            return Json(new { location = "../PhysicTreatment/" },JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
         {
@@ -125,17 +151,18 @@ namespace PhysicManagement.Controllers
             List<Model.Patient> Patient = Service.GetPatientListWithUnsetFusion(firstName, lastName, mobile, nationalCode, systemCode, code);
             return View(Patient);
         }
-        public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,bool? hasContour) {
+        public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, bool? hasContour)
+        {
             ViewBag.CancerList = new Logic.Services.CancerService().GetCancerList();
 
             List<Model.Patient> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName, mobile, nationalCode, systemCode, code, hasContour);
             return View(Patient);
         }
-         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
+        public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
         {
-            var Data = Service.SetPatientMediacalRecordCPAndFusion(medicalRecordId,TPDescription,needFusion);
+            var Data = Service.SetPatientMediacalRecordCPAndFusion(medicalRecordId, TPDescription, needFusion);
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
-        
+
     }
 }

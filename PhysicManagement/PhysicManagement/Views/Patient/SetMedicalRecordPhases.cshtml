@@ -1,6 +1,7 @@
-﻿
+﻿@model PhysicManagement.Model.MedicalRecord
 @{
     ViewBag.Title = "انتخاب تعداد فازهای درمان";
+    PhysicManagement.Model.Patient PatientData = ViewBag.PatientData;
 }
 
     <div class="container-fluid">
@@ -15,25 +16,51 @@
                     </div>
                     <div class="card-body">
 
-                        <form id="FormValidation" action="" method="" novalidate="novalidate">
+                        <form id="FormValidation" method="post" novalidate="novalidate">
+                            <input type="hidden" value="@Request["medicalRecordId"]" name="medicalRecordId" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">بابک</label>
-                                        <input type="text" class="form-control" name="FistName" disabled="">
+                                        <label class="bmd-label-floating">نام بیمار</label>
+                                        <input type="text" class="form-control" value="@PatientData.FirstName @PatientData.LastName" name="FistName" disabled="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating">بوترابی</label>
-                                        <input type="text" class="form-control" name="LastName" disabled="">
+                                        <label class="bmd-label-floating">نام پزشک</label>
+                                        <input type="text" class="form-control" value="@Model.DoctorFirstName @Model.DoctorLastName" name="SystemCode" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">شناسه بیمار</label>
+                                        <input type="text" class="form-control" value="@PatientData.Code" name="Code" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">شناسه پرونده</label>
+                                        <input type="text" class="form-control" value="@Model.SystemCode" name="SystemCode" disabled="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">نوع سرطان</label>
+                                        <input type="text" class="form-control" value="@Model.CancerTitle" name="SystemCode" disabled="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating">تاریخ تائید کانتور</label>
+                                        <input type="text" class="form-control" value="@Html.DisplayForDateTime(Model.ContourAcceptDate)" name="SystemCode" disabled="">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group dropdown-toggle">
-                                        <select class="selectpicker valid" data-style="btn btn-primary btn-round" title="" aria-invalid="false">
+                                        <select class="selectpicker valid" name="Phases" data-style="btn btn-primary btn-round" title="" required aria-invalid="false">
                                             <option disabled="" selected="">تعداد فاز های درمان</option>
                                             <option value="1">1 فاز</option>
                                             <option value="2">2 فاز</option>

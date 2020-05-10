@@ -31,7 +31,7 @@ namespace PhysicManagement.Logic.Services
                 throw new ValidationException(validation.Errors);
 
             Logic.Services.MedicalRecordService md = new MedicalRecordService();
-            var PhysicTreatmentObject =md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
+            var PhysicTreatmentObject =md.GetMedicalRecordById(entity.MedicalRecordId);
             if (PhysicTreatmentObject == null)
                 throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
             entity.MedicalRecordId = Convert.ToInt32(PhysicTreatmentObject.MRICode);
@@ -61,7 +61,7 @@ namespace PhysicManagement.Logic.Services
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
                 Logic.Services.MedicalRecordService md = new MedicalRecordService();
-                var PhysicTreatmentObject = md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
+                var PhysicTreatmentObject = md.GetMedicalRecordById(entity.MedicalRecordId);
                 if (PhysicTreatmentObject == null)
                     throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
 

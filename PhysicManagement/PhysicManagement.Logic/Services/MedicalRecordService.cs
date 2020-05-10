@@ -104,6 +104,20 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
+        public bool UpdateMedicalRecordForPhaseCount(long medicalRecordId, int phaseNo)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Find(medicalRecordId);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("");
+
+                Entity.PhasesCount = phaseNo;
+                Entity.PhasesPrescribedDate = DateTime.Now;
+                return db.SaveChanges() == 1;
+            }
+        }
+
         public bool SetCancerForMR(long medicalRecordId, int cancerId, string UserId)
         {
             try

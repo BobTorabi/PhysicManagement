@@ -21,7 +21,7 @@ namespace PhysicManagement.Model
         }
     
         public int Id { get; set; }
-        public Nullable<int> MedicalRecordId { get; set; }
+        public long MedicalRecordId { get; set; }
         public Nullable<int> PhaseNumber { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
         public string ActionUser { get; set; }

@@ -34,8 +34,8 @@ namespace PhysicManagement.Model
         public Nullable<bool> IsAcceptedByDoctor { get; set; }
         public string AcceptedDoctorUser { get; set; }
     
-        public virtual PhysicTreatment PhysicTreatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
+        public virtual PhysicTreatment PhysicTreatment { get; set; }
     }
 }

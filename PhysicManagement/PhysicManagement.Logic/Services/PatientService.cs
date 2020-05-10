@@ -237,7 +237,7 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
-        public ViewModels.PatientVMs.MedicalRecordDataWithPatientData GetPatientByMedicalRecordId(int medicalRecordId)
+        public ViewModels.PatientVMs.MedicalRecordDataWithPatientData GetPatientByMedicalRecordId(long medicalRecordId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {

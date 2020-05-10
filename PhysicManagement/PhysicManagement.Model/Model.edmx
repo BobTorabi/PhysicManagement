@@ -179,7 +179,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MedicalRecordId" Type="int" />
+          <Property Name="MedicalRecordId" Type="bigint" Nullable="false" />
           <Property Name="PhaseNumber" Type="int" />
           <Property Name="ActionDate" Type="datetime" />
           <Property Name="ActionUser" Type="nvarchar" MaxLength="50" />
@@ -514,17 +514,6 @@
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
-        <EntityType Name="PhysicTreatment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MedicalRecordId" Type="Int32" />
-          <Property Name="PhaseNumber" Type="Int32" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="Self.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatment" ToRole="PhysicTreatmentPlan" />
-        </EntityType>
         <EntityType Name="PhysicTreatmentPlan">
           <Key>
             <PropertyRef Name="Id" />
@@ -542,8 +531,8 @@
           <Property Name="IsAcceptedByPhysic" Type="Boolean" />
           <Property Name="IsAcceptedByDoctor" Type="Boolean" />
           <Property Name="AcceptedDoctorUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PhysicTreatment" Relationship="Self.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatment" />
           <NavigationProperty Name="PhysicTreatmentPlanHostory" Relationship="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatmentPlanHostory" />
+          <NavigationProperty Name="PhysicTreatment" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatment" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanHostory">
           <Key>
@@ -607,18 +596,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
-          <End Role="PhysicTreatment" Type="Self.PhysicTreatment" Multiplicity="0..1" />
-          <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PhysicTreatment">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PhysicTreatmentPlan">
-              <PropertyRef Name="PhysicTreatmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
           <End Role="PhysicTreatmentPlan" Type="Self.PhysicTreatmentPlan" Multiplicity="0..1" />
           <End Role="PhysicTreatmentPlanHostory" Type="Self.PhysicTreatmentPlanHostory" Multiplicity="*" />
@@ -638,7 +615,6 @@
           <EntitySet Name="CancerTargets" EntityType="Self.CancerTargets" />
           <EntitySet Name="Contour" EntityType="Self.Contour" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" />
-          <EntitySet Name="PhysicTreatment" EntityType="Self.PhysicTreatment" />
           <EntitySet Name="PhysicTreatmentPlan" EntityType="Self.PhysicTreatmentPlan" />
           <EntitySet Name="PhysicTreatmentPlanHostory" EntityType="Self.PhysicTreatmentPlanHostory" />
           <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" />
@@ -650,10 +626,6 @@
           <AssociationSet Name="FK_CancerTargets_Cancer" Association="Self.FK_CancerTargets_Cancer">
             <End Role="Cancer" EntitySet="Cancer" />
             <End Role="CancerTargets" EntitySet="CancerTargets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="Self.FK_PhysicTreatmentPlan_PhysicTreatment">
-            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
-            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" Association="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
             <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
@@ -683,6 +655,11 @@
           <AssociationSet Name="FK_MedicalRecord_MedicalRecord" Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <EntitySet Name="PhysicTreatment" EntityType="PhysicManagementModel.PhysicTreatment" />
+          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment">
+            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ContourDetails">
@@ -887,6 +864,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PhysicTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
+          <Property Name="PhaseNumber" Type="Int32" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatment" ToRole="PhysicTreatmentPlan" />
+        </EntityType>
+        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
+          <End Type="PhysicManagementModel.PhysicTreatment" Role="PhysicTreatment" Multiplicity="0..1" />
+          <End Type="PhysicManagementModel.PhysicTreatmentPlan" Role="PhysicTreatmentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlan">
+              <PropertyRef Name="PhysicTreatmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -971,17 +971,6 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Degree" ColumnName="Degree" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PhysicTreatment">
-            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatment">
-              <MappingFragment StoreEntitySet="PhysicTreatment">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
-                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1198,6 +1187,17 @@
                 <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
                 <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatment">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatment">
+              <MappingFragment StoreEntitySet="PhysicTreatment">
+                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

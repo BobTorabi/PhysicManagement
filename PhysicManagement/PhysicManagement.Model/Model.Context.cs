@@ -31,7 +31,6 @@ namespace PhysicManagement.Model
         public virtual DbSet<CancerTargets> CancerTargets { get; set; }
         public virtual DbSet<Contour> Contour { get; set; }
         public virtual DbSet<Doctor> Doctor { get; set; }
-        public virtual DbSet<PhysicTreatment> PhysicTreatment { get; set; }
         public virtual DbSet<PhysicTreatmentPlan> PhysicTreatmentPlan { get; set; }
         public virtual DbSet<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
         public virtual DbSet<TreatmentPhase> TreatmentPhase { get; set; }
@@ -45,5 +44,6 @@ namespace PhysicManagement.Model
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
+        public virtual DbSet<PhysicTreatment> PhysicTreatment { get; set; }
     }
 }
