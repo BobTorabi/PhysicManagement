@@ -114,6 +114,8 @@ namespace PhysicManagement.Logic.Services
 
                 Entity.PhasesCount = phaseNo;
                 Entity.PhasesPrescribedDate = DateTime.Now;
+                Entity.TreatmentProcessId = 3; // تجویز درمان
+                Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                 return db.SaveChanges() == 1;
             }
         }
@@ -136,6 +138,8 @@ namespace PhysicManagement.Logic.Services
                     Entity.CancerId = CancerObject.Id;
                     Entity.ContourAcceptDate = DateTime.Now;
                     Entity.ContourAcceptUser = UserId;
+                    Entity.TreatmentProcessId = 2; //کانتورینگ
+                    Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                     var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
                     if (MedicalRecordContourObject == null)
                     {

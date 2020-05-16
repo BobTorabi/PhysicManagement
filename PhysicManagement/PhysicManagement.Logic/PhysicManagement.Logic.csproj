@@ -60,6 +60,7 @@
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlarmService.cs" />
+    <Compile Include="Services\AuthenticatedUserService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\CancerService.cs" />
     <Compile Include="Services\ContourService.cs" />

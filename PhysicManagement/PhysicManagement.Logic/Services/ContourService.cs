@@ -61,12 +61,13 @@ namespace PhysicManagement.Logic.Services
 
         public object SetContourAsAcceptedByDoctor(long countorId)
         {
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
 
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.Contour.Find(countorId);
                 Entity.AcceptDate = DateTime.Now;
-                Entity.AcceptUser = "";
+                Entity.AcceptUser = UserData.UserId.ToString();
 
                 return db.SaveChanges() == 1;
             }

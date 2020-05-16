@@ -23,7 +23,8 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public JsonResult SetCancerForMR(int medicalRecordId, int cancerId)
         {
-            var medicalRecordData = service.SetCancerForMR(medicalRecordId, cancerId, "");
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var medicalRecordData = service.SetCancerForMR(medicalRecordId, cancerId, UserData.UserId.ToString());
             return Json(
                 new MegaViewModel<bool> { Status = MegaStatus.Successfull }, 
                 JsonRequestBehavior.AllowGet);

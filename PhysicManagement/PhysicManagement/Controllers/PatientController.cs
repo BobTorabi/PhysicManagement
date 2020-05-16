@@ -12,6 +12,7 @@ namespace PhysicManagement.Controllers
         Logic.Services.PatientService Service;
         Logic.Services.MedicalRecordService MedicalService;
         Logic.Services.PhysicTreatmentService PhysicTreatmentService;
+
         public PatientController()
         {
             Service = new Logic.Services.PatientService();
@@ -36,22 +37,51 @@ namespace PhysicManagement.Controllers
 
             return View(ModelData);
         }
+        /// <summary>
+        /// فرم شماره 6 - ثبات
+        /// ثبت اطلاعات تعداد فازهای یک پرونده پزشکی
+        /// </summary>
+        /// <param name="medicalRecordId"></param>
+        /// <param name="Phases"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult SetMedicalRecordPhases(long medicalRecordId, int Phases)
         {
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+
             MedicalService.UpdateMedicalRecordForPhaseCount(medicalRecordId, Phases);
-            for (int i = 0; i < Phases; i++)
+            for (int i = 1; i <= Phases; i++)
             {
                 PhysicTreatmentService.AddPhysicTreatment(new Model.PhysicTreatment
                 {
                     ActionDate = null,
-                    ActionUser = "",
+                    ActionUser = UserData.UserId.ToString(),
                     MedicalRecordId = medicalRecordId,
                     PhaseNumber = i
                 });
 
             }
             return Json(new { location = "../PhysicTreatment/" },JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// فرم شماره 7
+        /// تجویز درمان بر روی تعداد فازهای تعیین شده ی درمان
+        /// </summary>
+        /// <param name="medicalRecordId">شناسه پرونده پزشکی یک بیمار</param>
+        /// <returns></returns>
+        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId) {
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var PatientData = Service.GetPatientById(MedicalRecordData.PatientId);
+            var ViewData = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(medicalRecordId);
+            ViewBag.MedicalRecordData = MedicalRecordData;
+            ViewBag.PatientData = PatientData;
+            return View(ViewData);
+        }
+
+        [HttpPost]
+        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId,string Data) {
+
+            return View();
         }
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
         {
@@ -104,9 +134,9 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string description)
         {
-            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile);
+            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile,description);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)

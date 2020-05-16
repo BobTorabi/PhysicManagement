@@ -126,6 +126,8 @@ namespace PhysicManagement.Logic.Services
                     MedicalRecordData.CTCode = CTScanCode;
                     MedicalRecordData.CTDescription = CTScanDescription;
                     MedicalRecordData.MRICode = MRICode;
+                    MedicalRecordData.IsOnGoing = true;
+                    MedicalRecordData.IsOnCalendar = false;
                     db.SaveChanges();
                     return true;
                 }
@@ -145,6 +147,7 @@ namespace PhysicManagement.Logic.Services
                     var MedicalRecordData = db.MedicalRecord.FirstOrDefault(x => x.Id == medicalRecordId);
                     MedicalRecordData.NeedsFusion = needFusion;
                     MedicalRecordData.TPDescription = TPDescription;
+                    MedicalRecordData.TPCode = TPDescription;
                     MedicalRecordData.TPEnterDate = DateTime.Now;
                     db.SaveChanges();
                     return true;
@@ -342,7 +345,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile)
+        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string description)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -360,7 +363,8 @@ namespace PhysicManagement.Logic.Services
                     Mobile = mobile,
                     NationalCode = nationalCode,
                     Province = "",
-                    RegisterDate = System.DateTime.Now
+                    RegisterDate = System.DateTime.Now,
+                    
 
                 });
 
@@ -379,7 +383,9 @@ namespace PhysicManagement.Logic.Services
                 PatientFirstName = PatientObject.FirstName,
                 PatientLastName = PatientObject.LastName,
                 PatientId = Convert.ToInt32(PatientObject.Id),
-                ReceptionDate = PatientObject.RegisterDate
+                ReceptionDate = PatientObject.RegisterDate,
+                TreatmentProcessId = 1, // پذیرش شده
+                LastTreatmentProcessChangeDate = DateTime.Now,
             });
             if (!IsMedicalRecordInserted)
                 throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");

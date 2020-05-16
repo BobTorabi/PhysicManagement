@@ -1,0 +1,114 @@
+﻿@model List<PhysicManagement.Model.PhysicTreatment>
+@{
+    ViewBag.Title = "تجویز درمان برای بیمار";
+    PhysicManagement.Model.Patient PatientData = ViewBag.PatientData;
+    PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecordData;
+    int Index = 1;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-body">
+                    <form id="FormValidation" method="post" novalidate="novalidate">
+                        <input type="hidden" value="@Request["medicalRecordId"]" name="medicalRecordId" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">نام بیمار</label>
+                                    <input type="text" class="form-control" value="@PatientData.FirstName @PatientData.LastName" name="FistName" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">نام پزشک</label>
+                                    <input type="text" class="form-control" value="@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName" name="SystemCode" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">شناسه بیمار</label>
+                                    <input type="text" class="form-control" value="@PatientData.Code" name="Code" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">شناسه پرونده</label>
+                                    <input type="text" class="form-control" value="@medicalRecord.SystemCode" name="SystemCode" disabled="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">نوع سرطان</label>
+                                    <input type="text" class="form-control" value="@medicalRecord.CancerTitle" name="SystemCode" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">تاریخ تائید کانتور</label>
+                                    <input type="text" class="form-control" value="@Html.DisplayForDateTime(medicalRecord.ContourAcceptDate)" name="SystemCode" disabled="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating">تعداد فازهای درمان</label>
+                                    <input type="text" class="form-control" value="@medicalRecord.PhasesCount فاز" name="PhasesCount" disabled="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @foreach (var Phase in Model)
+                            {
+                                <div class="card">
+                                    <div class="card-header card-header-rose card-header-icon">
+                                        <h4 class="card-title">فاز شماره - @Index</h4>
+                                    </div>
+                                    <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group bmd-form-group">
+                                                        <label class="bmd-label-floating">دز (Dose)</label>
+                                                        <input type="text" class="form-control" name="Dose-@Phase.Id">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group bmd-form-group">
+                                                        <label class="bmd-label-floating">فرکشن (Fraction)</label>
+                                                        <input type="text" class="form-control" name="Fraction-@Phase.Id">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group bmd-form-group">
+                                                        <label class="bmd-label-floating">هدف (Target)</label>
+                                                        <textarea class="form-control" name="Target-@Phase.Id" rows="5"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                    </div>
+                                </div>
+                                Index++;
+                            }
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn btn-rose pull-right">ثبت</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+          
+        </div>
+    </div>
+</div>

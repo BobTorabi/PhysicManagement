@@ -16,6 +16,14 @@ namespace PhysicManagement.Logic.Services
                 return db.PhysicTreatment.OrderBy(x => x.ActionDate).ToList();
             }
         }
+        public List<Model.PhysicTreatment> GetPhysicTreatmentByMedicalRecordId(long medicalRecordId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entities = db.PhysicTreatment.Where(e=>e.MedicalRecordId == medicalRecordId).ToList();
+                return Entities;
+            }
+        }
         public Model.PhysicTreatment GetPhysicTreatmentById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -30,17 +38,17 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
-            Logic.Services.MedicalRecordService md = new MedicalRecordService();
-            var PhysicTreatmentObject =md.GetMedicalRecordById(entity.MedicalRecordId);
-            if (PhysicTreatmentObject == null)
-                throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
-            entity.MedicalRecordId = Convert.ToInt32(PhysicTreatmentObject.MRICode);
+            //Logic.Services.MedicalRecordService md = new MedicalRecordService();
+            //var PhysicTreatmentObject =md.GetMedicalRecordById(entity.MedicalRecordId);
+            //if (PhysicTreatmentObject == null)
+            //    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
+            //entity.MedicalRecordId = Convert.ToInt32(PhysicTreatmentObject.MRICode);
 
             PatientService pa = new PatientService();
-            var PhysicTreatmentObject2 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-            if (PhysicTreatmentObject2 == null)
-                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-            entity.ActionUser = PhysicTreatmentObject2.LastName;
+            //var PhysicTreatmentObject2 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
+            //if (PhysicTreatmentObject2 == null)
+            //    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
+           // entity.ActionUser = PhysicTreatmentObject2.LastName;
 
             using (var db = new Model.PhysicManagementEntities())
             {
