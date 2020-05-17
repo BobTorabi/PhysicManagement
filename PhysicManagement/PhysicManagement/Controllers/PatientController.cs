@@ -86,7 +86,7 @@ namespace PhysicManagement.Controllers
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize = 50;
             Logic.ViewModels.PagedList<Model.Patient> Patient =
                 Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, null, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
@@ -166,7 +166,7 @@ namespace PhysicManagement.Controllers
         /// <returns></returns>
         public ActionResult PatientWithNoCTScanOrMRI()
         {
-            List<Model.Patient> Patient = Service.GetPatientListDontHaveMriOrCTScan();
+            List<Model.MedicalRecord> Patient = Service.GetPatientListDontHaveMriOrCTScan();
             return View(Patient);
         }
         [HttpPost]

@@ -9,9 +9,11 @@ namespace PhysicManagement.Controllers
     public class DoctorController : BaseController
     {
         Logic.Services.DoctorService Service;
+        Logic.Services.MedicalRecordService MedicalRecordService;
         public DoctorController()
         {
             Service = new Logic.Services.DoctorService();
+            MedicalRecordService = new Logic.Services.MedicalRecordService();
         }
         public ActionResult Index()
         {
@@ -20,7 +22,7 @@ namespace PhysicManagement.Controllers
         // GET: Doctor
         public ActionResult List()
         {
-            
+
             List<Model.Doctor> Doctors = Service.GetDoctorList();
             return View(Doctors);
         }
@@ -31,12 +33,13 @@ namespace PhysicManagement.Controllers
             {
                 return View(new Model.Doctor());
             }
-            else {
+            else
+            {
                 var Entity = Service.GetDoctorById(id.GetValueOrDefault());
                 Entity.Password = Logic.Services.DoctorService.DecryptPassword(Entity.Username, Entity.Password);
                 return View(Entity);
             }
-            
+
         }
         [HttpPost]
         public ActionResult Modify(Model.Doctor entity)
@@ -50,8 +53,8 @@ namespace PhysicManagement.Controllers
             {
                 IsAffected = Service.AddDoctor(entity);
             }
-                return RedirectToAction("List");
-          
+            return RedirectToAction("List");
+
         }
 
 
@@ -61,12 +64,16 @@ namespace PhysicManagement.Controllers
         public ActionResult DeleteForm(int id)
         {
             var DoctorData = Service.GetDoctorById(id);
-            bool IsAffected = Service.DeleteDoctor(DoctorData.Id);
-            if (IsAffected)
+            int IsDoctorUsedBefore = MedicalRecordService.GetTotalMedicalRecordsByDoctorId(DoctorData.Id);
+            if (IsDoctorUsedBefore > 0)
+            {
+                TempData["Error"] = "این دکتر در سیستم بیمار دارد و غیرقابل حذف است.";
                 return RedirectToAction("List");
+            }
             else
             {
-                return View();
+                 Service.DeleteDoctor(DoctorData.Id);
+                return RedirectToAction("List");
             }
         }
     }

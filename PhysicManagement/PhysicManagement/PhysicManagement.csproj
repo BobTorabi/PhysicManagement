@@ -216,6 +216,7 @@
     <Content Include="assets\js\core\popper.min.js" />
     <Content Include="assets\js\material-dashboard.js" />
     <Content Include="assets\js\material-dashboard.min.js" />
+    <Content Include="assets\js\notify.js" />
     <Content Include="assets\js\persian-date.js" />
     <Content Include="assets\js\persian-datepicker.js" />
     <Content Include="assets\js\plugins\arrive.min.js" />

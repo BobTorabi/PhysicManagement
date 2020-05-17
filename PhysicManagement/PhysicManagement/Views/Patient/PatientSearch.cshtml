@@ -97,8 +97,8 @@
                                                     امکانات
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-left">
-                                                    <a class="dropdown-item" target="_blank" href="PatientInfo?PatientId=@patient.Id">مشاهده پرونده</a>
-                                                    <a class="dropdown-item" href="Modify/@patient.Id">ویرایش اطلاعات بیمار</a>                                                    
+                                                    <a class="dropdown-item" target="_blank" href="@Url.Action("PatientInfo","Patient",new { PatientId = @patient.Id })">مشاهده پرونده</a>
+                                                    <a class="dropdown-item" href="@Url.Action("Modify","Patient",new { @id = @patient.Id })">ویرایش اطلاعات بیمار</a>                                                    
                                                     <div class="dropdown-divider"></div>
                                                 </div>
                                             </div>

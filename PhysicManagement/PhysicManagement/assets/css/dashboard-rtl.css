@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 html[dir="rtl"] {
   text-align: right;
   direction: rtl;

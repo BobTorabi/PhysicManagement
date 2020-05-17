@@ -1,4 +1,4 @@
-﻿@model List<PhysicManagement.Model.Patient>
+﻿@model List<PhysicManagement.Model.MedicalRecord>
 @{
     ViewBag.Title = "لیست بیماران پذیرش شده بدون اطلاعات تصویربرداری";
 }
@@ -28,24 +28,19 @@
                                 @{
                                     int Index = 1;
                                 }
-                                @foreach (var patient in Model)
+                                @foreach (var medicalRecord in Model)
                                 {
-                                    foreach (var medicalRecord in patient.MedicalRecord)
-                                    {
-                                        <tr data-id="@medicalRecord.Id">
-                                            <td>@Index</td>
-                                            <td>@patient.FirstName @patient.LastName</td>
-                                            <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
-                                            <td>@patient.Code</td>
-                                            <td>@medicalRecord.SystemCode</td>
-                                            <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
-                                            <td class="text-center">
-                                                <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
-                                            </td>
-                                        </tr>
-                                        Index++;
-                                    }
-
+                                    <tr data-id="@medicalRecord.Id">
+                                        <td>@Index</td>
+                                        <td>@medicalRecord.Patient.FirstName @medicalRecord.Patient.LastName</td>
+                                        <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
+                                        <td>@medicalRecord.Patient.Code</td>
+                                        <td>@medicalRecord.SystemCode</td>
+                                        <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
+                                        <td class="text-center">
+                                            <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
+                                        </td>
+                                    </tr>
                                 }
 
 
@@ -60,14 +55,14 @@
                     function LoadPatientData(id) {
                        
                         $.getJSON('PatientInfoByMedicalRecordId', { medicalRecordId: id }, function (d) {
-                            $('[name="FirstName"]').val(d.Data.FirstName);
-                            $('[name="LastName"]').val(d.Data.LastName);
-                            $('[name="SystemCode"]').val(d.Data.SystemCode);
-                            $('[name="CTCode"]').val(d.Data.CTCode);
-                            $('[name="MRICode"]').val(d.Data.MRICode);
-                            $('[name="CTDescription"]').val(d.Data.CTDescription);
-                            $('[name="medicalRecordId"]').val(d.Data.MedicalRecordId);
-                            $('[name="PatientId"]').val(d.Data.PatientId);
+                            $('[name="FirstName"]').val(d.Data.FirstName).focus();
+                            $('[name="LastName"]').val(d.Data.LastName).focus();
+                            $('[name="SystemCode"]').val(d.Data.SystemCode).focus();
+                            $('[name="CTCode"]').val(d.Data.CTCode).focus();
+                            $('[name="MRICode"]').val(d.Data.MRICode).focus();
+                            $('[name="CTDescription"]').val(d.Data.CTDescription).focus();
+                            $('[name="medicalRecordId"]').val(d.Data.MedicalRecordId).focus();
+                            $('[name="PatientId"]').val(d.Data.PatientId).focus();
                             $('.dataEntry').fadeIn(300);
                         });
                     }
@@ -92,6 +87,8 @@
                         $.post('SetCTAndMIRDataForMedicalRecord', { medicalRecordId: mId, cTScanCode: cTScanCode, cTScanDescription: cTScanDescription, mRICode: mRICode }, function (d) {
                             $('tr[data-id="' + mId+'"]').fadeOut(500, function () { $(this).remove() });
                             $('.dataEntry').hide();
+                            scrollTop();
+                            alert('ثبت اطلاعات با موفقیت انجام شد.');
                         });
                     }
                 </script>

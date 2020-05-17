@@ -18,11 +18,15 @@ namespace PhysicManagement.Logic.Services
                 return db.Patient.OrderBy(x => x.FirstName).ToList();
             }
         }
-        public List<Model.Patient> GetPatientListDontHaveMriOrCTScan()
+        public List<Model.MedicalRecord> GetPatientListDontHaveMriOrCTScan()
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Patient.Where(x => x.MedicalRecord.Any(t => t.CTEnterDate == null || t.MRIEnterDate == null)).Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
+                //var medicalIds = db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Select(x=>x.Id).ToList();
+                return db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Include(x => x.Patient).ToList();
+                //return db.Patient
+                //    .Where(x => x.MedicalRecord.Any(t => medicalIds.Contains(t.Id) ))
+                //    .Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
             }
         }
         public List<Model.Patient> GetPatientListWithUnsetFusion(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
@@ -244,19 +248,18 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Patient.Where(x => x.MedicalRecord.Any(t => t.Id == medicalRecordId)).Include(x => x.MedicalRecord).FirstOrDefault();
-                var MedicalData = Entity.MedicalRecord.FirstOrDefault();
+                var Entity = db.MedicalRecord.Where(x => x.Id == medicalRecordId).Include(x => x.Patient).FirstOrDefault();
                 return new ViewModels.PatientVMs.MedicalRecordDataWithPatientData()
                 {
-                    CTDescription = MedicalData.CTDescription,
-                    Code = Entity.Code,
-                    CTCode = MedicalData.CTCode,
-                    SystemCode = MedicalData.SystemCode,
-                    FirstName = Entity.FirstName,
-                    LastName = Entity.LastName,
-                    MedicalRecordId = MedicalData.Id,
-                    MRICode = MedicalData.MRICode,
-                    PatientId = Entity.Id
+                    CTDescription = Entity.CTDescription,
+                    Code = Entity.Patient.Code,
+                    CTCode = Entity.CTCode,
+                    SystemCode = Entity.SystemCode,
+                    FirstName = Entity.Patient.FirstName,
+                    LastName = Entity.Patient.LastName,
+                    MedicalRecordId = Entity.Id,
+                    MRICode = Entity.MRICode,
+                    PatientId = Entity.PatientId
                 };
             }
         }
