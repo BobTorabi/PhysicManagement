@@ -44,9 +44,8 @@
                                                     امکانات
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-left">
-                                                    <a class="dropdown-item" href="Modify/@user.Id">ویرایش</a>
-                                                    <a class="dropdown-item" href="Modify/@user.Id">حذف</a>
-                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="@Url.Action("Modify","User",new { @id = @user.Id})">ویرایش</a>
+                                                    
                                                 </div>
                                             </div>
                                         </td>

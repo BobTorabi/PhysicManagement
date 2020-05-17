@@ -41,9 +41,9 @@
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="~/CancerOAR/Modify/@CancerOAR.Id">ویرایش</a>
-                                                <a class="dropdown-item" href="~/CancerOAR/DeleteCancerOAR/@CancerOAR.Id"> حذف</a>
-                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","CancerOAR",new { @id = @CancerOAR.Id})">ویرایش</a>
+                                                @*<div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="~/CancerOAR/DeleteCancerOAR/@CancerOAR.Id"> حذف</a>*@
                                             </div>
                                         </div>
                                     </td>

@@ -50,6 +50,18 @@ namespace PhysicManagement.Controllers
             {
                 IsAffected = Service.AddDoctor(entity);
             }
+                return RedirectToAction("List");
+          
+        }
+
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken()]
+        public ActionResult DeleteForm(int id)
+        {
+            var DoctorData = Service.GetDoctorById(id);
+            bool IsAffected = Service.DeleteDoctor(DoctorData.Id);
             if (IsAffected)
                 return RedirectToAction("List");
             else

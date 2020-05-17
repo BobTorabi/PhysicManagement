@@ -40,9 +40,9 @@
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="Modify/@resident.Id">ویرایش</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="Modify/@resident.Id"> حذف</a>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","Resident",new { @id = @resident.Id})">ویرایش</a>
+                                                @*<div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="Modify/@resident.Id"> حذف</a>*@
                                             </div>
                                         </div>
                                     </td>

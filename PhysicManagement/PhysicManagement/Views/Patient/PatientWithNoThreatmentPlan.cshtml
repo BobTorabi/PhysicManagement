@@ -67,7 +67,7 @@
                                 <th>کد ملی</th>
                                 <th>شناسه بیمار</th>
                                 <th>تاریخ ثبت</th>
-                                <th>Fusion</th>
+                                @*<th>Fusion</th>*@
                                 <th class="text-center">ارجاع</th>
                             </tr>
                         </thead>
@@ -86,16 +86,16 @@
                                 <td>@item.Mobile</td>
                                 <td>@item.Code</td>
                                 <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
-                                <td>
+                                @*<td>
                                     <div class="togglebutton">
                                         <label>
                                             <input type="checkbox" disabled @(mr.NeedsFusion.GetValueOrDefault() ? "checked=checked" : "")>
                                             <span class="toggle"></span>
                                         </label>
                                     </div>
-                                </td>
+                                </td>*@
                                 <td class="text-center">
-                                    <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ارجاع شود<div class="ripple-container"></div></button>
+                                    <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ثبت اطلاعات نرم افزار<div class="ripple-container"></div></button>
                                 </td>
                             </tr>
                                 }

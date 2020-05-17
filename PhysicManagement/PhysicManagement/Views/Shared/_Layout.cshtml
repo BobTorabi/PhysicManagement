@@ -11,6 +11,11 @@
     <link rel="stylesheet" type="text/css" href="~/assets/css/fonts.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
+    <style type="text/css">
+        .modal-footer form {
+            margin-bottom: 0 !important;
+        }
+    </style>
     <link href="~/assets/css/css/dashboard.css" rel="stylesheet" />
     <link href="~/assets/css/css/dashboard-rtl.css" rel="stylesheet" />
     <link href="~/assets/css/css/fonts.css" rel="stylesheet" />
@@ -34,8 +39,41 @@
         </div>
     </div>
     @Html.Partial("_DefaultScripts")
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header header-wrapper">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/template" id="DeleteTemplate">
+        <div class="form-group submit sub-rem">
+            <div><p>آیا از حذف این مورد اطمینان دارید؟</p></div>
+        </div>
+        <div class="modal-footer btn-wrapper" style="padding:0;">
+            
+            @using (Html.BeginForm(new { @id = "DeleteForm"}))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-primary">بلی</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+            }
+
+        </div>
+    </script>
+
     <script type="text/javascript">
-           function formValidate(ths, e) {
+        function DeleteEntity(modalTitle, url) {
+            $(".modal-body").remove();
+            $('.modal-title').html(modalTitle);
+            $('.modal-content').append("<div class='modal-body'>" + $('#DeleteTemplate').html() + "</div>");
+            $('.modal-content form:eq(0)').attr('action', url);
+        }
+        function formValidate(ths, e) {
             e.preventDefault();
             doSubmit(ths);
             return false;
@@ -85,7 +123,7 @@
                         if (data["location"] || data["Location"]) {
                             window.location = data["location"] || data["Location"];
                         }
-                        else if (window.location.href.toLowerCase().indexOf('/modify/')>-1) {
+                        else if (window.location.href.toLowerCase().indexOf('/modify/') > -1) {
                             window.location = '../Index';
                         }
                         else {
@@ -123,21 +161,21 @@
         $('.box-body button[type=reset]').click(function () {
             window.location = window.location.origin + window.location.pathname;
         })
-    $(document).ready(function () {
-        getAllQS();
-        $('form[method=post]').attr('onsubmit', 'formValidate(this,event)');
-        $('button[type=reset]').click(function () {
-            $('form').find('input,select,textarea').each(function () {
-                $(this).val('');
-                window.location = window.location.href.replace(window.location.search,'');
+        $(document).ready(function () {
+            getAllQS();
+            $('form[method=post]').attr('onsubmit', 'formValidate(this,event)');
+            $('button[type=reset]').click(function () {
+                $('form').find('input,select,textarea').each(function () {
+                    $(this).val('');
+                    window.location = window.location.href.replace(window.location.search, '');
+                });
+            });
+            $('input[type=checkbox]').each(function () {
+                $(this).change(function () {
+                    $(this).val(($(this).is(":checked") ? 'true' : 'false'));
+                });
             });
         });
-        $('input[type=checkbox]').each(function () {
-            $(this).change(function () {
-                $(this).val(($(this).is(":checked")?'true':'false'));
-            });
-        });
-    });
     </script>
     @RenderSection("scripts", required: false)
 </body>

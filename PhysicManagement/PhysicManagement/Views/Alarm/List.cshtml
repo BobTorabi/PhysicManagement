@@ -23,7 +23,6 @@
                             <th> کاربر ایجاد کننده</th>
                             <th>عنوان فاز درمان</th>
                             <th>کاربر تایید کننده</th>
-                            <th>متن نظر</th>
                             <th>تاریخ نظر</th>
                             <th>تولید تاریخ</th>
                             <th style="width:50px;">امکانات</th>
@@ -40,18 +39,18 @@
                                                     <td>@alarm.GenerateUser</td>
                                                     <td>@alarm.GenerateTreatmentPhaseTitle</td>
                                                     <td>@alarm.ReviewUserName</td>
-                                                    <td>@alarm.ReviewText</td>
-                                                    <td>@alarm.ReviewDate</td>
-                                                    <td>@alarm.GenerateDate</td>
+                                                    <td>@Html.DisplayForDate(alarm.ReviewDate)</td>
+                                                    <td>@Html.DisplayForDate(alarm.GenerateDate)</td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                 امکانات
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-left">
-                                                                <a class="dropdown-item" href="Modify/@alarm.Id">ویرایش</a>
-                                                                <a class="dropdown-item" href="Modify/@alarm.Id">حذف</a>
-                                                                <div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item" href="@Url.Action("Modify","Alarm",new { @id = @alarm.Id})">ویرایش</a>
+                                                                @*<div class="dropdown-divider"></div>
+                                                                <a class="dropdown-item"  data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Alarm", new { id = @alarm.Id })')">حذف</a>
+                                                                    *@
                                                             </div>
                                                         </div>
                                                     </td>

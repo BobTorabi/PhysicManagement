@@ -38,9 +38,9 @@
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="Modify/@contourDetails.Id">ویرایش</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="Modify/@contourDetails.Id"> حذف</a>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","ContourDetails",new { @id = contourDetails.Id })">ویرایش</a>
+                                                @*<div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","ContourDetails", new { id = contourDetails.Id })')">حذف</a>*@
                                             </div>
                                         </div>
                                     </td>

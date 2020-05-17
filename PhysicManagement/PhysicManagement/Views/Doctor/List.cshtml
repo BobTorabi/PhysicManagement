@@ -41,9 +41,9 @@
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="Modify/@doctor.Id">ویرایش</a>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","Doctor",new { @id = doctor.Id })">ویرایش</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="Modify/@doctor.Id"> حذف</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Doctor", new { id = doctor.Id })')">حذف</a>
                                             </div>
                                         </div>
                                     </td>
