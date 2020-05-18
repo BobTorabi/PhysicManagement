@@ -16,7 +16,7 @@ namespace PhysicManagement.Logic.Services
                 return db.Alarm.OrderBy(x => x.ReviewUserName).ToList();
             }
         }
-        public Model.Alarm GetAlarmById(int entityId)
+        public Model.Alarm GetAlarmById(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -89,7 +89,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public bool DeleteAlarm(int entityId)
+        public bool DeleteAlarm(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {

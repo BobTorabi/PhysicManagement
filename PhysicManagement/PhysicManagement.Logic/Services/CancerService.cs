@@ -140,6 +140,14 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+        public int GetCancerOARByCancerId(int cancerId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.CancerOAR.Count(e => e.CancerId == cancerId);
+                return Entity;
+            }
+        }
         #endregion
         #region Cancer Targets section
         public List<Model.CancerTargets> GetCancerTargetList()
@@ -202,6 +210,14 @@ namespace PhysicManagement.Logic.Services
 
                 db.CancerTargets.Remove(Entity);
                 return db.SaveChanges() == 1;
+            }
+        }
+        public int GetCancerTargetsByCancerId(int cancerId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.CancerTargets.Count(e => e.CancerId == cancerId);
+                return Entity;
             }
         }
         #endregion

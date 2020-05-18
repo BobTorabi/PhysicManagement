@@ -44,8 +44,10 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
                                                 <a class="dropdown-item" href="@Url.Action("Modify","PhysicUser",new { @id = @physicUser.Id})">ویرایش</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","PhysicUser", new { id = physicUser.Id })')">حذف</a>
                                                 @*<div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="Modify/@physicUser.Id"> حذف</a>*@
+        <a class="dropdown-item" href="Modify/@physicUser.Id"> حذف</a>*@
                                             </div>
                                         </div>
                                     </td>

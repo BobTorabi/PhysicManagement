@@ -62,5 +62,16 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken()]
+
+        public ActionResult DeleteForm(long id)
+        {
+            var AlarmData = Service.GetAlarmById(id);
+            Service.DeleteAlarm(AlarmData.Id);
+            return RedirectToAction("List");
+        }
     }
 }

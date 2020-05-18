@@ -169,6 +169,14 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+        public int GetTotalPhysicTreatmentPlanHistoryByPhysicTreatmentPlanId(int PhysicTreatmentPlanId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.PhysicTreatmentPlanHostory.Count(e => e.PhysicTreatmentPlanId == PhysicTreatmentPlanId);
+                return Entity;
+            }
+        }
         #endregion
     }
 }

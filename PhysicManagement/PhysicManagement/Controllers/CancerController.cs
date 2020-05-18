@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,11 @@ namespace PhysicManagement.Controllers
     public class CancerController : BaseController
     {
         Logic.Services.CancerService Service;
+        Logic.Services.MedicalRecordService MedicalService;
         public CancerController()
         {
             Service = new Logic.Services.CancerService();
+            MedicalService = new MedicalRecordService();
         }
         public ActionResult Index()
         {
@@ -58,10 +61,37 @@ namespace PhysicManagement.Controllers
             }
         }
 
-        public ActionResult DeleteCancer(int id)
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult DeleteForm(int id)
         {
-            var cancer = Service.DeleteCancer(id);
-            return RedirectToAction("List");
+            var CancerData = Service.GetCancerById(id);
+            int IsCancerUsedBefore = MedicalService.GetTotalMedicalRecordsByCancerId(CancerData.Id);
+            int IsCancerUsedBeforeInCancerOAR = Service.GetCancerOARByCancerId(CancerData.Id);
+            int IsCancerUsedBeforeInCancertargets = Service.GetCancerTargetsByCancerId(CancerData.Id);
+            if (IsCancerUsedBefore > 0)
+            {
+                TempData["Error"] = "این سرطان در سیستم بیمار دارد و غیرقابل حذف است.";
+                return RedirectToAction("List");
+            }
+            else if (IsCancerUsedBeforeInCancerOAR > 0)
+            {
+                TempData["Error"] = "این سرطان در سیستم ارگان های هدف وجود دارد و غیرقابل حذف است.";
+                return RedirectToAction("List");
+            }
+            else if (IsCancerUsedBeforeInCancertargets > 0)
+            {
+                TempData["Error"] = "این سرطان در سیستم ارگان های در خطر وجود دارد و غیرقابل حذف است.";
+                return RedirectToAction("List");
+            }
+            else
+            {
+                Service.DeleteCancer(CancerData.Id);
+                return RedirectToAction("List");
+            }
+
         }
     }
 }
