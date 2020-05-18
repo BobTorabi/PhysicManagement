@@ -4,6 +4,8 @@
 
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM PatientsStatistics = ViewBag.PatientsStatistics;
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM ContourStatistics = ViewBag.ContoursStatistics;
+     PhysicManagement.Logic.ViewModels.DaysStatisticsVM CTCodesStatistics = ViewBag.CTCodesStatistics;
+
 }
 
     <div class="row">
@@ -47,12 +49,12 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-twitter"></i>
-                    </div>
+                    <a style="color:#fff;" title="ثبت بیمار جدید" href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="card-icon">
+                        <i class="material-icons">content_copy</i>
+                    </a>
                     <p class="card-category">بیماران تصویربرداری شده</p>
                     <h3 class="card-title">
-                        12
+                       @CTCodesStatistics.TotalRecords
                         <small>نفر</small>
                     </h3>
                     <div class="row pt-2">
@@ -60,31 +62,31 @@
                             <p class="card-category">تعداد بیمار های امروز</p>
                         </div>
                         <div class="col-6 text-left">
-                            <p class="card-category">7 نفر</p>
+                            <p class="card-category">@CTCodesStatistics.Today نفر</p>
                         </div>
                         <div class="col-6">
                             <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
                         </div>
                         <div class="col-6 text-left">
-                            <p class="card-category">12 نفر</p>
+                            <p class="card-category">@CTCodesStatistics.LastWeek نفر</p>
                         </div>
                         <div class="col-6">
                             <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
                         </div>
                         <div class="col-6 text-left">
-                            <p class="card-category">52 نفر</p>
+                            <p class="card-category">@CTCodesStatistics.LastMonth نفر</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer ltr">
-                    <a href="#" class="btn btn-info">ثبت بیمار</a>
+                    <a href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="btn btn-info">ثبت بیمار</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
-                    <a style="color:#fff;" title="تایید کانتورینگ" href="@Url.Action("ListOfUnsetCountorsForCases","Patient")" class="card-icon">
+                    <a style="color:#fff;" title="ثبت بیمار جدید" href="@Url.Action("ListOfUnsetCountorsForCases","Patient")" class="card-icon">
                         <i class="material-icons">content_copy</i>
                     </a>
                     <p class="card-category">کانتورینگ</p>

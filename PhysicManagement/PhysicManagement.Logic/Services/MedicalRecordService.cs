@@ -233,5 +233,23 @@ namespace PhysicManagement.Logic.Services
 
             return medicalRecordEntity;
         }
+
+        public ViewModels.DaysStatisticsVM GetTotalCTCodesStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    Today = db.MedicalRecord.Count(e => e.CTEnterDate >= TodayStart && e.CTEnterDate <= TodayEnd),
+                    LastWeek = db.MedicalRecord.Count(e => e.CTEnterDate >= LastWeekStart && e.CTEnterDate <= TodayEnd),
+                    LastMonth = db.MedicalRecord.Count(e => e.CTEnterDate >= LastMonthStart && e.CTEnterDate <= TodayEnd),
+                    TotalRecords = db.MedicalRecord.Count()
+                };
+            }
+        }
     }
 }
