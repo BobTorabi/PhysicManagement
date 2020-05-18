@@ -30,6 +30,7 @@ namespace PhysicManagement.Controllers
             ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();
             ViewBag.ContoursStatistics = ContourService.GetTotalContoursStatistics();
             ViewBag.CTCodesStatistics = MedicalRecordService.GetTotalCTCodesStatistics();
+            ViewBag.TreatmentPlansStatistics = MedicalRecordService.GetTotalTreatmentPlansStatistics();
 
             return View();
         }
