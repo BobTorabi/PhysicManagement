@@ -26,9 +26,10 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new PhysicManagementEntities())
             {
+                var c = db.Contour.Where(x => x.AcceptDate == null).Select(x=>x.MedicalRecordId).ToList();
                 return db
                     .MedicalRecord
-                    .Where(x =>  x.ContourAcceptDate  == null)
+                    .Where(x => c.Contains(x.Id))
                     .Include("Contour").Include("Patient").ToList();
             }
         }

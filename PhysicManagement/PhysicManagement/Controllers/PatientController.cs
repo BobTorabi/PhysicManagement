@@ -61,7 +61,7 @@ namespace PhysicManagement.Controllers
                 });
 
             }
-            return Json(new { location = "../PhysicTreatment/" }, JsonRequestBehavior.AllowGet);
+            return Json(new { location = "../Patient/SetMedicalRecordTreatmentPhase?medicalRecordId=" + medicalRecordId }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// فرم شماره 7
