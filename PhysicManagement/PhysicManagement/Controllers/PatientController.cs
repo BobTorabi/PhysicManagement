@@ -61,7 +61,7 @@ namespace PhysicManagement.Controllers
                 });
 
             }
-            return Json(new { location = "../PhysicTreatment/" },JsonRequestBehavior.AllowGet);
+            return Json(new { location = "../PhysicTreatment/" }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// فرم شماره 7
@@ -69,7 +69,8 @@ namespace PhysicManagement.Controllers
         /// </summary>
         /// <param name="medicalRecordId">شناسه پرونده پزشکی یک بیمار</param>
         /// <returns></returns>
-        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId) {
+        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId)
+        {
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var PatientData = Service.GetPatientById(MedicalRecordData.PatientId);
             var ViewData = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(medicalRecordId);
@@ -79,7 +80,8 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId,string Data) {
+        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId, string Data)
+        {
 
             return View();
         }
@@ -134,9 +136,9 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string description)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description)
         {
-            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile,description);
+            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile, description);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)

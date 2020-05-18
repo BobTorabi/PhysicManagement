@@ -23,12 +23,31 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 //var medicalIds = db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Select(x=>x.Id).ToList();
-                return db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Include(x => x.Patient).ToList();
+                return db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Include(x => x.Patient).OrderByDescending(x => x.SystemCode).ToList();
                 //return db.Patient
                 //    .Where(x => x.MedicalRecord.Any(t => medicalIds.Contains(t.Id) ))
                 //    .Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
             }
         }
+
+        public ViewModels.DaysStatisticsVM GetTotalPatientsStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    Today = db.Patient.Count(e => e.RegisterDate >= TodayStart && e.RegisterDate <= TodayEnd),
+                    LastWeek = db.Patient.Count(e => e.RegisterDate >= LastWeekStart && e.RegisterDate <= TodayEnd),
+                    LastMonth = db.Patient.Count(e => e.RegisterDate >= LastMonthStart && e.RegisterDate <= TodayEnd),
+                    TotalRecords = db.Patient.Count()
+                };
+            }
+        }
+
         public List<Model.Patient> GetPatientListWithUnsetFusion(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -67,7 +86,7 @@ namespace PhysicManagement.Logic.Services
                 return Queryable.Include(x => x.MedicalRecord).OrderByDescending(x => x.RegisterDate).ToList();
             }
         }
-        public List<Model.Patient> GetPatientListWithUnsetCountor(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,bool? hasContour)
+        public List<Model.Patient> GetPatientListWithUnsetCountor(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, bool? hasContour)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -79,7 +98,8 @@ namespace PhysicManagement.Logic.Services
                     {
                         Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.Contour.Count > 0));
                     }
-                    else {
+                    else
+                    {
                         Queryable = Queryable.Where(x => x.MedicalRecord.Any(t => t.Contour.Count == 0));
                     }
                 }
@@ -200,7 +220,7 @@ namespace PhysicManagement.Logic.Services
                     systemCode = systemCode.Trim();
                     QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(z => z.SystemCode == systemCode));
                 }
-                QueryablePatient = QueryablePatient.OrderBy(x => x.LastName);
+                QueryablePatient = QueryablePatient.OrderByDescending(x => x.RegisterDate);
 
                 return new ViewModels.PagedList<Model.Patient>()
                 {
@@ -348,7 +368,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile,string description)
+        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
@@ -367,7 +387,7 @@ namespace PhysicManagement.Logic.Services
                     NationalCode = nationalCode,
                     Province = "",
                     RegisterDate = System.DateTime.Now,
-                    
+
 
                 });
 

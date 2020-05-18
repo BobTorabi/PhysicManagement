@@ -1,246 +1,249 @@
 ﻿
 @{
     ViewBag.Title = "Dashboard";
+
+    PhysicManagement.Logic.ViewModels.DaysStatisticsVM PatientsStatistics = ViewBag.PatientsStatistics;
 }
 
-<div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
-                </div>
-                <p class="card-category">پذیرش بیمار</p>
-                <h3 class="card-title">
-                    21
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار های امروز</p>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">content_copy</i>
                     </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">52 نفر</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i>تا تاریخ 13 فروردین ماه 1398
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">store</i>
-                </div>
-                <p class="card-category">کانتورینگ</p>
-                <h3 class="card-title">
-                    8
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار های امروز</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">52 نفر</p>
+                    <p class="card-category">پذیرش بیمار</p>
+                    <h3 class="card-title">
+                        @PatientsStatistics.TotalRecords
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">@PatientsStatistics.Today نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">@PatientsStatistics.LastWeek نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">@PatientsStatistics.LastMonth نفر</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i>۲۴ ساعت اخیر
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i>تا تاریخ @PhysicManagement.Common.DateUtility.GetPersianDate(DateTime.Now)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                </div>
-                <p class="card-category">تجویز درمان</p>
-                <h3 class="card-title">
-                    10
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار های امروز</p>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-primary card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-twitter"></i>
                     </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">52 نفر</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i>تا تاریخ 13 فروردین ماه 1398
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-primary card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                </div>
-                <p class="card-category">پلن فیزیک</p>
-                <h3 class="card-title">
-                    12
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار های امروز</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-8">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-4 text-left">
-                        <p class="card-category">52 نفر</p>
+                    <p class="card-category">پلن فیزیک</p>
+                    <h3 class="card-title">
+                        12
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">7 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">12 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">52 نفر</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i>تا تاریخ 15 فروردین ماه 1398
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i>تا تاریخ 15 فروردین ماه 1398
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">store</i>
+                    </div>
+                    <p class="card-category">کانتورینگ</p>
+                    <h3 class="card-title">
+                        8
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">7 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">12 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">52 نفر</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i>۲۴ ساعت اخیر
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">info_outline</i>
+                    </div>
+                    <p class="card-category">تجویز درمان</p>
+                    <h3 class="card-title">
+                        10
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">7 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">12 نفر</p>
+                        </div>
+                        <div class="col-8">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-4 text-left">
+                            <p class="card-category">52 نفر</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i>تا تاریخ 13 فروردین ماه 1398
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-rose card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                </div>
-                <p class="card-category">لیست انتظار</p>
-                <h3 class="card-title">
-                    3
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار های امروز</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">52 نفر</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i>تا تاریخ 15 فروردین ماه 1398
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-twitter"></i>
+                    </div>
+                    <p class="card-category">لیست انتظار</p>
+                    <h3 class="card-title">
+                        3
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">7 نفر</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">12 نفر</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">52 نفر</p>
+                        </div>
+                    </div>
                 </div>
-                <p class="card-category">بیماران تصویربرداری شده</p>
-                <h3 class="card-title">
-                    12
-                    <small>نفر</small>
-                </h3>
-                <div class="row pt-2">
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار های امروز</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">7 نفر</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">12 نفر</p>
-                    </div>
-                    <div class="col-6">
-                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                    </div>
-                    <div class="col-6 text-left">
-                        <p class="card-category">52 نفر</p>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i>تا تاریخ 15 فروردین ماه 1398
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">update</i> هم‌اکنون
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                        <i class="fa fa-twitter"></i>
+                    </div>
+                    <p class="card-category">بیماران تصویربرداری شده</p>
+                    <h3 class="card-title">
+                        12
+                        <small>نفر</small>
+                    </h3>
+                    <div class="row pt-2">
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار های امروز</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">7 نفر</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">12 نفر</p>
+                        </div>
+                        <div class="col-6">
+                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                        </div>
+                        <div class="col-6 text-left">
+                            <p class="card-category">52 نفر</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">update</i> هم‌اکنون
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <div class="row">
     <div class="col-md-4">
         <div class="card card-chart">

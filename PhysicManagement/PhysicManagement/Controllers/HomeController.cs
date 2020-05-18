@@ -8,6 +8,11 @@ namespace PhysicManagement.Controllers
 {
     public class HomeController : BaseController
     {
+        Logic.Services.PatientService PatientService;
+        public HomeController()
+        {
+            PatientService = new Logic.Services.PatientService();
+        }
         public ActionResult Index()
         {
             return RedirectToActionPermanent("Dashboard");
@@ -18,6 +23,7 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult Dashboard()
         {
+            ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();
             return View();
         }
     }
