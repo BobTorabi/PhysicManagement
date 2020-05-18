@@ -80,8 +80,33 @@
             return false;
         }
         window.alert = function (msg) {
-            $.notify(msg, "success");
+            $.notify({
+                icon: "add_alert",
+                message: msg
+
+            }, {
+                type: 'success',
+                timer: 4000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
         };
+        function showNotification(from, align) {
+            $.notify({
+                icon: "add_alert",
+                message: "فرم مورد نظر با موفقیت ثبت شد."
+
+            }, {
+                type: 'success',
+                timer: 4000,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
+        }
         function scrollTop() {
             $('html, body').animate({scrollTop: 0},1000);
         }

@@ -161,7 +161,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.TreatmentDevice.OrderBy(x => x.Title).ToList();
+                return db.TreatmentDevice.OrderBy(x => x.Title).OrderBy(e=>e.Code).ToList();
             }
         }
         public Model.TreatmentDevice GetTreatmentDeviceById(int entityId)

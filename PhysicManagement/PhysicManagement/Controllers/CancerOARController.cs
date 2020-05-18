@@ -20,9 +20,13 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: CancerOAR
-        public ActionResult List()
+        public ActionResult List(int? id)
         {
             List<Model.CancerOAR> CancerOAR = Service.GetCancerOARList();
+            if (id.HasValue)
+            {
+                CancerOAR = CancerOAR.Where(x => x.CancerId == id).ToList();
+            }
             return View(CancerOAR);
         }
         public ActionResult Modify(int? id)
@@ -53,13 +57,7 @@ namespace PhysicManagement.Controllers
             {
                 IsAffected = Service.AddCancerOAR(entity);
             }
-            return RedirectToAction("List",
-                new RouteValueDictionary(
-                    new { 
-                        controller = "CancerOAR", 
-                        action = "List", 
-                        Id = entity.CancerId }
-                    ));
+            return Json(new { location = "../../../CancerOAR/list/" + entity.CancerId },JsonRequestBehavior.AllowGet);
 
         }
 

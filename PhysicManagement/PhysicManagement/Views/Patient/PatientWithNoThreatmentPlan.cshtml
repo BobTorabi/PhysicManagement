@@ -1,4 +1,4 @@
-﻿@model List<PhysicManagement.Model.Patient>
+﻿@model List<PhysicManagement.Model.MedicalRecord>
 @{
     ViewBag.Title = "PatientWithNoThreatmentPlan";
 }
@@ -8,7 +8,7 @@
 
             <div class="card">
                 <div class="card-header card-header-info">
-                    <h4 class="card-title">فرم ارجاع و انتخاب نرم افزار Treatment Planning</h4>
+                    <h4 class="card-title"> انتخاب نرم افزار طراحی درمان</h4>
                 </div>
                 <div class="card-body table-responsive">
                     <div class="row">
@@ -64,10 +64,10 @@
                                 <th>ردیف</th>
                                 <th>نام بیمار</th>
                                 <th>نام پزشک</th>
-                                <th>کد ملی</th>
+                                <th>موبایل</th>
+                                <th>کدملی</th>
                                 <th>شناسه بیمار</th>
                                 <th>تاریخ ثبت</th>
-                                @*<th>Fusion</th>*@
                                 <th class="text-center">ارجاع</th>
                             </tr>
                         </thead>
@@ -75,34 +75,23 @@
                             @{
                                 int Index = 1;
                             }
-                            @foreach (var item in Model)
+
+                            @foreach (var mr in Model)
                             {
-                                foreach (var mr in item.MedicalRecord)
-                                {
-                            <tr data-id="@mr.Id">
-                                <td>@Index</td>
-                                <td>@item.FirstName @item.LastName</td>
-                                <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
-                                <td>@item.Mobile</td>
-                                <td>@item.Code</td>
-                                <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
-                                @*<td>
-                                    <div class="togglebutton">
-                                        <label>
-                                            <input type="checkbox" disabled @(mr.NeedsFusion.GetValueOrDefault() ? "checked=checked" : "")>
-                                            <span class="toggle"></span>
-                                        </label>
-                                    </div>
-                                </td>*@
-                                <td class="text-center">
-                                    <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ثبت اطلاعات نرم افزار<div class="ripple-container"></div></button>
-                                </td>
-                            </tr>
-                                }
+                                <tr data-id="@mr.Id">
+                                    <td>@Index</td>
+                                    <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
+                                    <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
+                                    <td>@mr.Patient.Mobile</td>
+                                    <td>@mr.Patient.NationalCode</td>
+                                    <td>@mr.Patient.Code</td>
+                                    <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
+                                    <td class="text-center">
+                                        <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ثبت اطلاعات نرم افزار<div class="ripple-container"></div></button>
+                                    </td>
+                                </tr>
                                 Index++;
                             }
-
-
                         </tbody>
                     </table>
 
@@ -121,10 +110,9 @@
                                     <div class="form-group dropdown-toggle">
                                         <select class="selectpicker" name="TPDescription" data-style="btn btn-primary btn-round">
                                             <option disabled selected>نرم افزار مورد نظر را انتخاب نمایید</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
+                                            <option value="isogray">isogray</option>
+                                            <option value="Eclips">Eclips</option>
+                                            <option value="Precision">CPrecision</option>
                                         </select>
                                     </div>
                                     <div class="form-group dropdown-toggle">
@@ -155,7 +143,7 @@
         debugger;
         var TPDescription = $('[name="TPDescription"]').val();
         var needFusion = $('[name="NeedFusion"]').val();
-        if (TPDescription == '' || TPDescription == null ) {
+        if (TPDescription == '' || TPDescription == null) {
             $('[name="TPDescription"]').focus();
             return;
         }
@@ -163,11 +151,12 @@
             $('[name="NeedFusion"]').focus();
             return;
         }
-       
+
         $.post('SetPatientMediacalRecordCPAndFusion', { medicalRecordId: mId, TPDescription: TPDescription, needFusion: needFusion }, function (d) {
             $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
             $('.dataEntry').hide();
             $('#exampleModal').modal('hide');
+            alert('ثبت با موفقیت انجام شد.');
         });
     }
 </script>

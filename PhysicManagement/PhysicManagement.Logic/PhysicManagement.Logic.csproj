@@ -85,6 +85,7 @@
     <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />
     <Compile Include="Validations\UserValidation.cs" />
+    <Compile Include="ViewModels\DaysStatisticsVM.cs" />
     <Compile Include="ViewModels\IdName.cs" />
     <Compile Include="ViewModels\PagedList.cs" />
     <Compile Include="ViewModels\PatientVMs.cs" />

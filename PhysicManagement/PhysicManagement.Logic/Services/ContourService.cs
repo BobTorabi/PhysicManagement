@@ -22,11 +22,33 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public List<Patient> GetContoursToApprove()
+        public List<MedicalRecord> GetContoursToApprove()
         {
             using (var db = new PhysicManagementEntities())
             {
-                return db.Patient.Where(x => x.MedicalRecord.Any(t => t.Contour.Any(e=>e.AcceptDate == null && e.AcceptUser == null))).Include("MedicalRecord").Include("MedicalRecord.Contour").ToList();
+                var c = db.Contour.Where(x => x.AcceptDate == null).Select(x=>x.MedicalRecordId).ToList();
+                return db
+                    .MedicalRecord
+                    .Where(x => c.Contains(x.Id))
+                    .Include("Contour").Include("Patient").ToList();
+            }
+        }
+
+        public ViewModels.DaysStatisticsVM GetTotalContoursStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    Today = db.Contour.Count(e => e.ActionDate >= TodayStart && e.ActionDate <= TodayEnd),
+                    LastWeek = db.Contour.Count(e => e.ActionDate >= LastWeekStart && e.ActionDate <= TodayEnd),
+                    LastMonth = db.Contour.Count(e => e.ActionDate >= LastMonthStart && e.ActionDate <= TodayEnd),
+                    TotalRecords = db.Contour.Count()
+                };
             }
         }
 

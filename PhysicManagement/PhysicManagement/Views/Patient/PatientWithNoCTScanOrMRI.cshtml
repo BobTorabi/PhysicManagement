@@ -55,15 +55,17 @@
                     function LoadPatientData(id) {
                        
                         $.getJSON('PatientInfoByMedicalRecordId', { medicalRecordId: id }, function (d) {
-                            $('[name="FirstName"]').val(d.Data.FirstName).focus();
-                            $('[name="LastName"]').val(d.Data.LastName).focus();
-                            $('[name="SystemCode"]').val(d.Data.SystemCode).focus();
-                            $('[name="CTCode"]').val(d.Data.CTCode).focus();
-                            $('[name="MRICode"]').val(d.Data.MRICode).focus();
-                            $('[name="CTDescription"]').val(d.Data.CTDescription).focus();
-                            $('[name="medicalRecordId"]').val(d.Data.MedicalRecordId).focus();
-                            $('[name="PatientId"]').val(d.Data.PatientId).focus();
-                            $('.dataEntry').fadeIn(300);
+                            $('[name="FirstName"]').val(d.Data.FirstName);
+                            $('[name="LastName"]').val(d.Data.LastName);
+                            $('[name="SystemCode"]').val(d.Data.SystemCode);
+                            $('[name="CTCode"]').val(d.Data.CTCode);
+                            $('[name="MRICode"]').val(d.Data.MRICode);
+                            $('[name="CTDescription"]').val(d.Data.CTDescription);
+                            $('[name="medicalRecordId"]').val(d.Data.MedicalRecordId);
+                            $('[name="PatientId"]').val(d.Data.PatientId);
+                            $('.dataEntry').fadeIn(300, function () {
+                                $('[name="CTCode"]').focus();
+                            });
                         });
                     }
                     function setData() {

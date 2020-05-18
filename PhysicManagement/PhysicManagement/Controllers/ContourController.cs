@@ -17,7 +17,7 @@ namespace PhysicManagement.Controllers
         }
 
         public ActionResult ContourApprove() {
-            List<Patient> Patients = Service.GetContoursToApprove();
+            List<MedicalRecord> Patients = Service.GetContoursToApprove();
             return View(Patients);
         }
 
