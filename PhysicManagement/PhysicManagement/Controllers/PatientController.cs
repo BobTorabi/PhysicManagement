@@ -180,14 +180,14 @@ namespace PhysicManagement.Controllers
 
         public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
         {
-            List<Model.Patient> Patient = Service.GetPatientListWithUnsetFusion(firstName, lastName, mobile, nationalCode, systemCode, code);
+            List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetFusion(firstName, lastName, nationalCode, mobile, systemCode, code);
             return View(Patient);
         }
         public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, bool? hasContour)
         {
             ViewBag.CancerList = new Logic.Services.CancerService().GetCancerList();
 
-            List<Model.Patient> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName, mobile, nationalCode, systemCode, code, hasContour);
+            List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName,  nationalCode, mobile, systemCode, code, hasContour);
             return View(Patient);
         }
         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)

@@ -369,6 +369,7 @@
     <Content Include="Views\Contour\ContourApprove.cshtml" />
     <Content Include="Views\Patient\SetMedicalRecordPhases.cshtml" />
     <Content Include="Views\Patient\SetMedicalRecordTreatmentPhase.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

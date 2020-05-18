@@ -1,4 +1,4 @@
-﻿@model List<PhysicManagement.Model.Patient>
+﻿@model List<PhysicManagement.Model.MedicalRecord>
 @{
     ViewBag.Title = "ثبت کانتور";
     int Index = 1;
@@ -85,41 +85,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var patient in Model)
+                            @foreach (var mr in Model)
                             {
-                                foreach (var mr in patient.MedicalRecord)
-                                {
-                                    <tr>
-                                        <td>@Index</td>
-                                        <td>@patient.FirstName @patient.LastName</td>
-                                        <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
-                                        <td>@patient.NationalCode</td>
-                                        <td>@patient.Code</td>
-                                        <td>@(mr.Contour.Count==0?"ندارد":"دارد")</td>
-                                        <td>@mr.SystemCode</td>
-                                        <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
-                                        <td class="text-center">
-                                            @if (mr.CancerId != null)
-                                            {
-                                                <button type="button" class="btn btn-block btn-sm" onclick="SetCancer(@mr.CancerId,@mr.Id)">@mr.CancerTitle</button>
-                                            }
-                                            else
-                                            {
-                                                <div class="form-group dropdown-toggle">
-                                                    <select class="selectpicker" onchange="SetCancer(this.value,@mr.Id)" data-style="btn btn-primary btn-round" title="">
-                                                        <option disabled="" selected="">نوع سرطان</option>
-                                                        @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
-                                                        {
-                                                            <option @((mr.CancerId != null && mr.CancerId == item.Id) ? "selected=selected disabled" : "") value="@item.Id">@item.Title</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            }
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
+                                    <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
+                                    <td>@mr.Patient.NationalCode</td>
+                                    <td>@mr.Patient.Code</td>
+                                    <td>@(mr.Contour.Count==0?"ندارد":"دارد")</td>
+                                    <td>@mr.SystemCode</td>
+                                    <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
+                                    <td class="text-center">
+                                        @if (mr.CancerId != null)
+                                        {
+                                            <button type="button" class="btn btn-block btn-sm" onclick="SetCancer(@mr.CancerId,@mr.Id)">@mr.CancerTitle</button>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group dropdown-toggle">
+                                                <select class="selectpicker" onchange="SetCancer(this.value,@mr.Id)" data-style="btn btn-primary btn-round" title="">
+                                                    <option disabled="" selected="">نوع سرطان</option>
+                                                    @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
+                                                    {
+                                                        <option @((mr.CancerId != null && mr.CancerId == item.Id) ? "selected=selected disabled" : "") value="@item.Id">@item.Title</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        }
 
-                                        </td>
-                                    </tr>
-                                    Index++;
-                                }
+                                    </td>
+                                </tr>
+                                Index++;
                             }
                         </tbody>
                     </table>
@@ -137,7 +134,6 @@
                             <tr><th style="width:50px;"></th><th>هدف</th></tr>
                         </thead>
                         <tbody id="COAR_Data">
-                            
                         </tbody>
                     </table>
 
@@ -153,19 +149,19 @@
         $.post('../MedicalRecord/SetCancerForMR', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
             $.getJSON('../CancerOAR/GetCancerOARDataByCancerId', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
                 for (var i = 0; i < d.length; i++) {
-                    $(`<tr data-conourType="` + d[i].Id +`">
+                    $(`<tr data-conourType="` + d[i].Id + `">
                         <td>
                             <div class="togglebutton">
                                 <label>
-                                    <input `+ (d[i].IsSelected ?`checked="checked"`:``)+` onchange="setContourDetail(`+ d[i].Id + `,`+ mId+`)" type="checkbox">
+                                    <input `+ (d[i].IsSelected ? `checked="checked"` : ``) + ` onchange="setContourDetail(` + d[i].Id + `,` + mId + `)" type="checkbox">
                                     <span class="toggle"></span>
                                 </label>
                             </div>
                         </td>
-                        <td>`+ d[i].OrganTitle +`</td>
+                        <td>`+ d[i].OrganTitle + `</td>
                     </tr>`).appendTo('#COAR_Data');
                 }
-              
+
                 $('.CancerOAR').show();
             });
         });

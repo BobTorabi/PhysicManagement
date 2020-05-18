@@ -22,11 +22,14 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public List<Patient> GetContoursToApprove()
+        public List<MedicalRecord> GetContoursToApprove()
         {
             using (var db = new PhysicManagementEntities())
             {
-                return db.Patient.Where(x => x.MedicalRecord.Any(t => t.Contour.Any(e=>e.AcceptDate == null && e.AcceptUser == null))).Include("MedicalRecord").Include("MedicalRecord.Contour").ToList();
+                return db
+                    .MedicalRecord
+                    .Where(x =>  x.ContourAcceptDate  == null)
+                    .Include("Contour").Include("Patient").ToList();
             }
         }
 
