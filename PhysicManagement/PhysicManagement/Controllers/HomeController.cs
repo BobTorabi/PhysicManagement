@@ -9,9 +9,11 @@ namespace PhysicManagement.Controllers
     public class HomeController : BaseController
     {
         Logic.Services.PatientService PatientService;
+        Logic.Services.ContourService ContourService;
         public HomeController()
         {
             PatientService = new Logic.Services.PatientService();
+            ContourService = new Logic.Services.ContourService();
         }
         public ActionResult Index()
         {
@@ -24,6 +26,7 @@ namespace PhysicManagement.Controllers
         public ActionResult Dashboard()
         {
             ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();
+            ViewBag.ContoursStatistics = ContourService.GetTotalContoursStatistics();
             return View();
         }
     }
