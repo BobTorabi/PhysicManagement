@@ -1,58 +1,58 @@
-﻿@model List<PhysicManagement.Model.Patient>
+﻿@model List<PhysicManagement.Model.MedicalRecord>
 @{
     ViewBag.Title = "تأیید کانتور";
     int Index = 1;
 }
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-info">
-                        <h4 class="card-title">@ViewBag.Title</h4>
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table table-hover">
-                            <thead class="text-warning">
-                                <tr>
-                                    <th>ردیف</th>
-                                    <th>نام بیمار</th>
-                                    <th>نام پزشک</th>
-                                    <th>شناسه بیمار</th>
-                                    <th>تاریخ ثبت</th>
-                                    <th>نوع سرطان</th>
-                                    <th width="100">تایید پزشک</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var patient in Model)
-                                {
-                                    foreach (var mr in patient.MedicalRecord)
-                                    {
-                                        var CountorData = new PhysicManagement.Logic.Services.ContourService().GetContourByMedicalRecordId(mr.Id);
-                                        <tr>
-                                            <td>@Index</td>
-                                            <td>@patient.FirstName @patient.LastName</td>
-                                            <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
-                                            <td>@patient.NationalCode</td>
-                                            <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
-                                            <td>@mr.CancerTitle</td>
-                                            <td>
-                                                <form action="SetApproveContourByDoctor" method="post">
-                                                    <input type="hidden" name="countorId" value="@CountorData.Id" />
-                                                    <input type="hidden" name="medicalRecordId" value="@mr.Id" />
-                                                    <button type="submit" class="btn btn-rose pull-left">تایید<div class="ripple-container"></div></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        Index++;
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title">@ViewBag.Title</h4>
                 </div>
-
+                <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>ردیف</th>
+                                <th>نام بیمار</th>
+                                <th>نام پزشک</th>
+                                <th>شناسه بیمار</th>
+                                <th>تاریخ ثبت</th>
+                                <th>نوع سرطان</th>
+                                <th width="100">تایید پزشک</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mr in Model)
+                            {
+                                var CountorData = new PhysicManagement.Logic.Services.ContourService().GetContourByMedicalRecordId(mr.Id);
+                                if (CountorData != null)
+                                {
+                                    <tr>
+                                        <td>@Index</td>
+                                        <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
+                                        <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
+                                        <td>@mr.Patient.NationalCode</td>
+                                        <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
+                                        <td>@(mr.CancerTitle == null ? "" : mr.CancerTitle)</td>
+                                        <td>
+                                            <form action="SetApproveContourByDoctor" method="post">
+                                                <input type="hidden" name="countorId" value="@CountorData.Id" />
+                                                <input type="hidden" name="medicalRecordId" value="@mr.Id" />
+                                                <button type="submit" class="btn btn-rose pull-left">تایید<div class="ripple-container"></div></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    Index++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
     </div>
+</div>
