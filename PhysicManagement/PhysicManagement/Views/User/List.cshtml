@@ -45,7 +45,8 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-left">
                                                     <a class="dropdown-item" href="@Url.Action("Modify","User",new { @id = @user.Id})">ویرایش</a>
-                                                    
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","User", new { id = user.Id })')">حذف</a>
                                                 </div>
                                             </div>
                                         </td>

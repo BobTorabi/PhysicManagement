@@ -35,6 +35,22 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public int GetTotalMedicalRecordsByCancerId(int cancerId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Count(e => e.CancerId == cancerId);
+                return Entity;
+            }
+        }
+        public int GetTotalMedicalRecordsByTreatmentDeviceId(int treatmentDeviceId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Count(e => e.TreatmentDeviceId == treatmentDeviceId);
+                return Entity;
+            }
+        }
         public List<Model.MedicalRecord> GetMedicalRecordByPatientId(int patientId)
         {
             using (var db = new Model.PhysicManagementEntities())

@@ -61,5 +61,16 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+        
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult DeleteForm(int id)
+        {
+            var PhysicUserData = Service.GetPhysicUserById(id);
+            Service.DeletePhysicUser(PhysicUserData.Id);
+            return RedirectToAction("List");
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PhysicManagement.Logic.Services;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -58,6 +59,17 @@ namespace PhysicManagement.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult DeleteForm(int id)
+        {
+            var ResidentData = Service.GetResidentById(id);
+            Service.DeleteResident(ResidentData.Id);
+            return RedirectToAction("List");
         }
     }
 }

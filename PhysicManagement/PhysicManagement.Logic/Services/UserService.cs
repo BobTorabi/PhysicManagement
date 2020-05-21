@@ -295,7 +295,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public bool DeleteUser(Model.User entityId)
+        public bool DeleteUser(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {

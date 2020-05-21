@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PhysicManagement.Logic.Services;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -6,9 +7,11 @@ namespace PhysicManagement.Controllers
     public class TreatmentDeviceController : BaseController
     {
         Logic.Services.TreatmentService Service;
+        Logic.Services.MedicalRecordService MedicalService;
         public TreatmentDeviceController()
         {
             Service = new Logic.Services.TreatmentService();
+            MedicalService = new MedicalRecordService();
         }
         public ActionResult Index()
         {
@@ -54,6 +57,25 @@ namespace PhysicManagement.Controllers
             {
                 return View();
             }
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(int id)
+        {
+            var TreatmentDeviceData = Service.GetTreatmentDeviceById(id);
+            int IsTreatmentDeviceUsedBefore = MedicalService.GetTotalMedicalRecordsByTreatmentDeviceId(TreatmentDeviceData.Id);
+            if (IsTreatmentDeviceUsedBefore > 0)
+            {
+                TempData["Error"] = "این دستگاه درمانی در سیستم بیمار دارد و غیرقابل حذف است.";
+                return RedirectToAction("List");
+            }
+            else
+            {
+                Service.DeleteTreatmentDevice(TreatmentDeviceData.Id);
+                return RedirectToAction("List");
+            }
+
         }
     }
 }

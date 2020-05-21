@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using PhysicManagement.Logic.Services;
+using PhysicManagement.Model;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -6,9 +8,11 @@ namespace PhysicManagement.Controllers
     public class PhysicTreatmentPlanController : BaseController
     {
         Logic.Services.PhysicTreatmentService Service;
+        Logic.Services.PhysicTreatmentPlanService planService;
         public PhysicTreatmentPlanController()
         {
             Service = new Logic.Services.PhysicTreatmentService();
+            planService = new PhysicTreatmentPlanService();
         }
         public ActionResult Index()
         {
@@ -57,6 +61,24 @@ namespace PhysicManagement.Controllers
             else
             {
                 return View(entity);
+            }
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteForm(int id)
+        {
+            var PhysicTreatmentPlanData = Service.GetPhysicTreatmentById(id);
+            int IsPhysicTreatmentPlanUsedBefore = planService.GetTotalPhysicTreatmentPlanHistoryByPhysicTreatmentPlanId(PhysicTreatmentPlanData.Id);
+            if (IsPhysicTreatmentPlanUsedBefore > 0)
+            {
+                TempData["Error"] = "این برنامه درمان فیزیکی در سیستم بیمار دارد و غیرقابل حذف است.";
+                return RedirectToAction("List");
+            }
+            else
+            {
+                Service.DeletePhysicTreatmentPlan(PhysicTreatmentPlanData.Id);
+                return RedirectToAction("List");
             }
         }
 
