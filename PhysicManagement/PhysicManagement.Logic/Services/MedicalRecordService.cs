@@ -162,12 +162,13 @@ namespace PhysicManagement.Logic.Services
                             MedicalRecordId = medicalRecordId
                         });
                     }
-                    
+
                     int RowsAffected = db.SaveChanges();
                     return true;
                 }
             }
-            catch {
+            catch
+            {
                 return false;
             }
         }
@@ -244,9 +245,10 @@ namespace PhysicManagement.Logic.Services
                 DateTime LastMonthStart = TodayStart.AddMonths(-1);
                 return new ViewModels.DaysStatisticsVM
                 {
-                    Today = db.MedicalRecord.Count(e => e.ReceptionDate >= TodayStart && e.ReceptionDate <= TodayEnd),
-                    LastWeek = db.MedicalRecord.Count(e => e.ReceptionDate >= LastWeekStart && e.ReceptionDate <= TodayEnd),
-                    LastMonth = db.MedicalRecord.Count(e => e.ReceptionDate >= LastMonthStart && e.ReceptionDate <= TodayEnd),
+                    UnsetRecord = db.MedicalRecord.Count(e => e.CTEnterDate == null || e.MRIEnterDate == null),
+                    Today = db.MedicalRecord.Count(e => (e.CTEnterDate != null && e.MRIEnterDate != null) && e.CTEnterDate <= TodayEnd && e.CTEnterDate >= TodayStart),
+                    LastWeek = db.MedicalRecord.Count(e => (e.CTEnterDate != null && e.MRIEnterDate != null) && e.CTEnterDate >= LastWeekStart && e.CTEnterDate <= TodayEnd),
+                    LastMonth = db.MedicalRecord.Count(e => (e.CTEnterDate != null && e.MRIEnterDate != null) && e.CTEnterDate >= LastMonthStart && e.CTEnterDate <= TodayEnd),
                     TotalRecords = db.MedicalRecord.Count()
                 };
             }
@@ -261,9 +263,28 @@ namespace PhysicManagement.Logic.Services
                 DateTime LastMonthStart = TodayStart.AddMonths(-1);
                 return new ViewModels.DaysStatisticsVM
                 {
-                    Today = db.MedicalRecord.Count(e => e.CTEnterDate >= TodayStart && e.CTEnterDate <= TodayEnd),
-                    LastWeek = db.MedicalRecord.Count(e => e.CTEnterDate >= LastWeekStart && e.CTEnterDate <= TodayEnd),
-                    LastMonth = db.MedicalRecord.Count(e => e.CTEnterDate >= LastMonthStart && e.CTEnterDate <= TodayEnd),
+                    UnsetRecord = db.MedicalRecord.Count(e => e.NeedsFusion == null || e.TPEnterDate == null),
+                    Today = db.MedicalRecord.Count(e => e.NeedsFusion != null && e.TPEnterDate >= TodayStart && e.TPEnterDate <= TodayEnd),
+                    LastWeek = db.MedicalRecord.Count(e => e.NeedsFusion != null && e.TPEnterDate >= LastWeekStart && e.TPEnterDate <= TodayEnd),
+                    LastMonth = db.MedicalRecord.Count(e => e.NeedsFusion != null && e.TPEnterDate >= LastMonthStart && e.TPEnterDate <= TodayEnd),
+                    TotalRecords = db.MedicalRecord.Count()
+                };
+            }
+        }
+        public ViewModels.DaysStatisticsVM GetTotalContoursStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    UnsetRecord = db.MedicalRecord.Count(x => x.Contour.Count == 0),
+                    Today = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= TodayStart && x.ContourAcceptDate <= TodayEnd),
+                    LastWeek = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= LastWeekStart && x.ContourAcceptDate <= TodayEnd),
+                    LastMonth = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= LastMonthStart && x.ContourAcceptDate <= TodayEnd),
                     TotalRecords = db.MedicalRecord.Count()
                 };
             }

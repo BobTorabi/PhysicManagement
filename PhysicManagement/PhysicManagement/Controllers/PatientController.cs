@@ -85,12 +85,12 @@ namespace PhysicManagement.Controllers
 
             return View();
         }
-        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode)
+        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode,string code)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 50;
+            ViewBag.PageSize = 5;
             Logic.ViewModels.PagedList<Model.Patient> Patient =
-                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, null, CurrentPage, ViewBag.PageSize);
+                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, code, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
@@ -166,10 +166,16 @@ namespace PhysicManagement.Controllers
         /// لیست بیمارانی که اطلاعات ام ار ای یا سی تی اسکن آنها در سیستم ثبت نشده اشت.
         /// </summary>
         /// <returns></returns>
-        public ActionResult PatientWithNoCTScanOrMRI()
+        public ActionResult PatientWithNoCTScanOrMRI(string firstName, string lastName, string mobile,
+            string nationalCode, string systemCode, string code)
         {
-            List<Model.MedicalRecord> Patient = Service.GetPatientListDontHaveMriOrCTScan();
-            return View(Patient);
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            PagedList<Model.MedicalRecord> MedicalRecord = Service.GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
+            nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = MedicalRecord.TotalRecords;
+
+            return View(MedicalRecord);
         }
         [HttpPost]
         public ActionResult SetCTAndMIRDataForMedicalRecord(int medicalRecordId, string cTScanCode, string cTScanDescription, string mRICode)

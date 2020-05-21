@@ -115,13 +115,20 @@
                                             <option value="Precision">CPrecision</option>
                                         </select>
                                     </div>
-                                    <div class="form-group dropdown-toggle">
+                                    <div class="togglebutton">
+                                        <span>Fusion</span>
+                                        <label>
+                                            <input type="checkbox" name="NeedFusion">
+                                            <span class="toggle"></span>
+                                        </label>
+                                    </div>
+                                    @*<div class="form-group dropdown-toggle">
                                         <select class="selectpicker" name="NeedFusion" data-style="btn btn-primary btn-round">
                                             <option disabled selected>Fusion</option>
                                             <option value="true">دارد</option>
                                             <option value="false">ندارد</option>
                                         </select>
-                                    </div>
+                                    </div>*@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
@@ -142,7 +149,7 @@
     function setData() {
         debugger;
         var TPDescription = $('[name="TPDescription"]').val();
-        var needFusion = $('[name="NeedFusion"]').val();
+        var needFusion = $('[name="NeedFusion"]').is(":checked");
         if (TPDescription == '' || TPDescription == null) {
             $('[name="TPDescription"]').focus();
             return;

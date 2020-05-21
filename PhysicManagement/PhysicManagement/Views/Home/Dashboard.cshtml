@@ -6,236 +6,236 @@
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM ContourStatistics = ViewBag.ContoursStatistics;
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM CTCodesStatistics = ViewBag.CTCodesStatistics;
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM TreatmentPlansStatistics = ViewBag.TreatmentPlansStatistics;
-
+    PhysicManagement.Logic.ViewModels.DaysStatisticsVM PatientReceptionStatistics = ViewBag.PatientReceptionStatistics;
 }
 
-    <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                    <a style="color:#fff;" title="ثبت بیمار جدید" href="@Url.Action("RegisterPatient","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>
-                    <p class="card-category">پذیرش بیمار</p>
-                    <h3 class="card-title">
-                        @PatientsStatistics.TotalRecords
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.Today نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.LastMonth نفر</p>
-                        </div>
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-warning card-header-icon">
+                <a style="color:#fff;" title="ثبت بیمار جدید" href="@Url.Action("RegisterPatient","Patient")" class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                </a>
+                <p class="card-category">پذیرش بیمار</p>
+                <h3 class="card-title">
+                    @PatientsStatistics.TotalRecords
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار های امروز</p>
                     </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="@Url.Action("RegisterPatient","Patient")" class="btn btn-info">ثبت بیمار</a>
+                    <div class="col-3 text-left">
+                        <p class="card-category"> @PatientsStatistics.Today نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category"> @PatientsStatistics.LastWeek نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category"> @PatientsStatistics.LastMonth نفر</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                    <a style="color:#fff;" title="ثبت تصویر برداری" href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>
-                    <p class="card-category">در انتظار تصویربرداری</p>
-                    <h3 class="card-title">
-                        @CTCodesStatistics.TotalRecords
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@CTCodesStatistics.Today نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@CTCodesStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@CTCodesStatistics.LastMonth نفر</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="btn btn-info">ثبت تصویر برداری </a>
-                </div>
+            <div class="card-footer ltr">
+                <a href="@Url.Action("RegisterPatient","Patient")" class="btn btn-info">ثبت بیمار</a>
             </div>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-rose card-header-icon">
-                    <a style="color:#fff;" title="ثبت انتخاب نرم افزار طراحی درمان" href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>
-                    <p class="card-category">در انتظار انتخاب نرم افزار طراحی درمان</p>
-                    <h3 class="card-title">
-                        @TreatmentPlansStatistics.TotalRecords
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.Today نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.LastMonth نفر</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">ثبت انتخاب نرم افزار طراحی درمان</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                    <a style="color:#fff;" title="ثبت کانتورینگ" href="@Url.Action("ListOfUnsetCountorsForCases","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>
-                    <p class="card-category">کانتورینگ</p>
-                    <h3 class="card-title">
-                        @ContourStatistics.TotalRecords
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.Today نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.LastMonth نفر</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="@Url.Action("ListOfUnsetCountorsForCases","Patient")" class="btn btn-info">ثبت کانتورینگ</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-danger card-header-icon">
-                    <a style="color:#fff;" title="ثبت تجویز درمان" href="@Url.Action("","")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>
-                    <p class="card-category">تجویز درمان</p>
-                    <h3 class="card-title">
-                        10
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">7 نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">12 نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">52 نفر</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="#" class="btn btn-info">ثبت تجویز درمان</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-primary card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-twitter"></i>
-                    </div>
-                    <p class="card-category">پلن فیزیک</p>
-                    <h3 class="card-title">
-                        12
-                        <small>نفر</small>
-                    </h3>
-                    <div class="row pt-2">
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار های امروز</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">7 نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">12 نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">52 نفر</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer ltr">
-                    <a href="#" class="btn btn-info">ثبت پلن فیزیک</a>
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+                <a style="color:#fff;" title="ثبت تصویر برداری" href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                </a>
+                <p class="card-category">در انتظار تصویربرداری</p>
+                <h3 class="card-title">
+                    @CTCodesStatistics.UnsetRecord
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-9">
+                        <p class="card-category">تعداد ثبت امروز</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@CTCodesStatistics.Today نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد ثبت هفته گذشته</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@CTCodesStatistics.LastWeek نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد ثبت ماه گذشته</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@CTCodesStatistics.LastMonth نفر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ltr">
+                <a href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="btn btn-info">ثبت تصویر برداری </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-rose card-header-icon">
+                <a style="color:#fff;" title="ثبت انتخاب نرم افزار طراحی درمان" href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                </a>
+                <p class="card-category">در انتظار انتخاب نرم افزار طراحی درمان</p>
+                <h3 class="card-title">
+                    @TreatmentPlansStatistics.UnsetRecord
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار های امروز</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@TreatmentPlansStatistics.Today نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@TreatmentPlansStatistics.LastWeek نفر</p>
+                    </div>
+                    <div class="col-9">
+                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                    </div>
+                    <div class="col-3 text-left">
+                        <p class="card-category">@TreatmentPlansStatistics.LastMonth نفر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ltr">
+                <a href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">ثبت انتخاب نرم افزار طراحی درمان</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <a style="color:#fff;" title="ثبت کانتورینگ" href="@Url.Action("ListOfUnsetCountorsForCases","Patient",new { hasContour=false})" class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                </a>
+                <p class="card-category">کانتورینگ</p>
+                <h3 class="card-title">
+                    @ContourStatistics.UnsetRecord
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار های امروز</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">@ContourStatistics.Today نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">@ContourStatistics.LastWeek نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">@ContourStatistics.LastMonth نفر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ltr">
+                <a href="@Url.Action("ListOfUnsetCountorsForCases","Patient",new { hasContour=false})" class="btn btn-info">ثبت کانتورینگ</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-danger card-header-icon">
+                <a style="color:#fff;" title="ثبت تجویز درمان" href="@Url.Action("","")" class="card-icon">
+                    <i class="material-icons">content_copy</i>
+                </a>
+                <p class="card-category">تجویز درمان</p>
+                <h3 class="card-title">
+                    10
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار های امروز</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">7 نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">12 نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">52 نفر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ltr">
+                <a href="#" class="btn btn-info">ثبت تجویز درمان</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                    <i class="fa fa-twitter"></i>
+                </div>
+                <p class="card-category">پلن فیزیک</p>
+                <h3 class="card-title">
+                    12
+                    <small>نفر</small>
+                </h3>
+                <div class="row pt-2">
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار های امروز</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">7 نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">12 نفر</p>
+                    </div>
+                    <div class="col-8">
+                        <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
+                    </div>
+                    <div class="col-4 text-left">
+                        <p class="card-category">52 نفر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer ltr">
+                <a href="#" class="btn btn-info">ثبت پلن فیزیک</a>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
 <div class="row">
     <div class="col-md-4">
         <div class="card card-chart">
@@ -245,9 +245,27 @@
             <div class="card-body">
                 <h4 class="card-title">پذیرش بیمار</h4>
                 <p class="card-category">
-                    <span class="text-success">
-                        <i class="fa fa-long-arrow-up"></i> 55%
-                    </span> طبق آخرین آمار بیمارستان
+                    @if (PatientReceptionStatistics.Today > 0)
+                    {
+                        <span class="text-success">
+
+                            <i class="fa fa-long-arrow-up"></i> @PatientReceptionStatistics.Today.ToString("#.#")%
+                        </span><text>آمار رشد امروز</text>
+                    }
+                    else if (PatientReceptionStatistics.Today < 0)
+                    {
+                        <span class="text-danger">
+                            <i class="fa fa-long-arrow-down"></i> @PatientReceptionStatistics.Today.ToString("#.#")%
+                        </span>
+                        <text>آمار رشد امروز</text>
+                    }
+                    else
+                    {
+                        <span class="text-warning">
+                            محسابه نشده
+                        </span>
+                        <text>آمار رشد امروز</text>
+                    }
                 </p>
             </div>
             <div class="card-footer">

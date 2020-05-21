@@ -8,9 +8,10 @@ namespace PhysicManagement.Logic.ViewModels
 {
    public class DaysStatisticsVM
     {
-        public int Today { get; set; }
-        public int LastWeek { get; set; }
-        public int LastMonth { get; set; }
-        public int TotalRecords { get; set; }
+        public decimal UnsetRecord { get; set; }
+        public decimal Today { get; set; }
+        public decimal LastWeek { get; set; }
+        public decimal LastMonth { get; set; }
+        public decimal TotalRecords { get; set; }
     }
 }

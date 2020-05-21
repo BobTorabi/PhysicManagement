@@ -34,23 +34,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public ViewModels.DaysStatisticsVM GetTotalContoursStatistics()
-        {
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                DateTime TodayStart = DateTime.Now.Date;
-                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
-                DateTime LastWeekStart = TodayStart.AddDays(-7);
-                DateTime LastMonthStart = TodayStart.AddMonths(-1);
-                return new ViewModels.DaysStatisticsVM
-                {
-                    Today = db.Contour.Count(e => e.ActionDate >= TodayStart && e.ActionDate <= TodayEnd),
-                    LastWeek = db.Contour.Count(e => e.ActionDate >= LastWeekStart && e.ActionDate <= TodayEnd),
-                    LastMonth = db.Contour.Count(e => e.ActionDate >= LastMonthStart && e.ActionDate <= TodayEnd),
-                    TotalRecords = db.Contour.Count()
-                };
-            }
-        }
+        
 
         public Model.Contour GetContourByMedicalRecordId(long medicalRecordId)
         {

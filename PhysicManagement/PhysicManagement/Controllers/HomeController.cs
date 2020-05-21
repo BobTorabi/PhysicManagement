@@ -28,10 +28,10 @@ namespace PhysicManagement.Controllers
         public ActionResult Dashboard()
         {
             ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();
-            ViewBag.ContoursStatistics = ContourService.GetTotalContoursStatistics();
+            ViewBag.ContoursStatistics = MedicalRecordService.GetTotalContoursStatistics();
             ViewBag.CTCodesStatistics = MedicalRecordService.GetTotalCTCodesStatistics();
             ViewBag.TreatmentPlansStatistics = MedicalRecordService.GetTotalTreatmentPlansStatistics();
-
+            ViewBag.PatientReceptionStatistics = PatientService.GetPatientsReceptionStatistics();
             return View();
         }
     }
