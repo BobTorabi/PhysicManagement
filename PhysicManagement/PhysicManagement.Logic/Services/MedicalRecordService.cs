@@ -315,10 +315,10 @@ namespace PhysicManagement.Logic.Services
                 DateTime LastMonthStart = TodayStart.AddMonths(-1);
                 return new ViewModels.DaysStatisticsVM
                 {
-                    UnsetRecord = db.ContourDetails.Count(x => x.SelectDate== null),
-                    Today = db.ContourDetails.Count(x => x.SelectDate!= null && x.SelectDate >= TodayStart && x.SelectDate <= TodayEnd),
-                    LastWeek = db.ContourDetails.Count(x => x.SelectDate != null && x.SelectDate >= LastWeekStart && x.SelectDate <= TodayEnd),
-                    LastMonth = db.ContourDetails.Count(x => x.SelectDate != null && x.SelectDate >= LastMonthStart && x.SelectDate <= TodayEnd),
+                    UnsetRecord = db.Contour.Count(x => x.ActionDate == null),
+                    Today = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= TodayStart && x.ActionDate <= TodayEnd),
+                    LastWeek = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= LastWeekStart && x.ActionDate <= TodayEnd),
+                    LastMonth = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= LastMonthStart && x.ActionDate <= TodayEnd),
                     TotalRecords = db.MedicalRecord.Count()
                 };
             }
