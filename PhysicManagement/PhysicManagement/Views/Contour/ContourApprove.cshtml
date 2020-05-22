@@ -1,4 +1,4 @@
-﻿@model List<PhysicManagement.Model.MedicalRecord>
+﻿@model PhysicManagement.Logic.ViewModels.PagedList<PhysicManagement.Model.MedicalRecord>
 @{
     ViewBag.Title = "تأیید کانتور";
     int Index = 1;
@@ -10,6 +10,51 @@
             <div class="card">
                 <div class="card-header card-header-info">
                     <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="row">
+                    <form method="get" style="width:100%;padding:10px 30px;" action="GetContoursToApprove">
+                        <div class="row  gray-bg">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                    <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                    <input type="text" id="LastName" name="LastName" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                    <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                    <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="SystemCode" class="bmd-label-floating">شماره پرونده </label>
+                                    <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
+                                    <input type="text" id="Code" name="Code" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                        <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                        <div class="clearfix"></div>
+                    </form>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-hover">
@@ -25,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var mr in Model)
+                            @foreach (var mr in Model.Records)
                             {
                                 var CountorData = new PhysicManagement.Logic.Services.ContourService().GetContourByMedicalRecordId(mr.Id);
                                 if (CountorData != null)
@@ -50,6 +95,14 @@
                             }
                         </tbody>
                     </table>
+                    <div class="row">
+                        @{
+                            int PageSize = (int)(ViewBag.PageSize);
+                            int TotalRecords = (int)(ViewBag.TotalRecords);
+
+                        }
+                        @Html.Pagger(TotalRecords, PageSize)
+                    </div>
                 </div>
             </div>
 
