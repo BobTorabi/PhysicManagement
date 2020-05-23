@@ -3,17 +3,60 @@ using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Common;
+using System.Data.Entity;
 
 namespace PhysicManagement.Logic.Services
 {
     public class TreatmentService
     {
         #region TreatmentPhase Section
-        public List<Model.TreatmentPhase> GetTreatmentPhasesList()
+
+        public PagedList<Model.TreatmentPhase> GetTreatmentPhasesList(string firstName, string lastName, string mobile,
+             string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.TreatmentPhase.OrderBy(x => x.Target).ToList();
+                IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.ContourAcceptDate != null).Include(x => x.Patient);
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    mobile = code.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
+                }
+                QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
+                return new ViewModels.PagedList<Model.TreatmentPhase>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableMR.Count(),
+                    Records = Queryable.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         public Model.TreatmentPhase GetTreatmentPhaseById(int entityId)
@@ -96,7 +139,13 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-
+        public List<Model.TreatmentPhase> GetTreatmentList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.TreatmentPhase.OrderBy(x => x.Id).ToList();
+            }
+        }
         #endregion
         #region TreatmentProcess Section
         public List<Model.TreatmentProcess> GetTreatmentProcessList()
