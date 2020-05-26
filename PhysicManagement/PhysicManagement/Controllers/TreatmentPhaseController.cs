@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Controllers
 {
@@ -15,11 +17,15 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: TreatmentPhase
-        public ActionResult List()
+        public ActionResult List(string firstName, string lastName, string mobile,
+            string nationalCode, string systemCode, string code)
         {
-
-            List<Model.TreatmentPhase> TreatmentPhase = Service.GetTreatmentPhasesList();
-            return View(TreatmentPhase);
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            PagedList<Model.TreatmentPhase> MedicalRecord = Service.GetTreatmentPhasesList(firstName, lastName, mobile,
+                nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = MedicalRecord.TotalRecords;
+            return View(MedicalRecord);
         }
 
         public ActionResult Modify(int? id)

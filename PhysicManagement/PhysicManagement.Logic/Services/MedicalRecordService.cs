@@ -297,10 +297,28 @@ namespace PhysicManagement.Logic.Services
                 DateTime LastMonthStart = TodayStart.AddMonths(-1);
                 return new ViewModels.DaysStatisticsVM
                 {
-                    UnsetRecord = db.MedicalRecord.Count(x => x.Contour.Count == 0),
-                    Today = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= TodayStart && x.ContourAcceptDate <= TodayEnd),
-                    LastWeek = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= LastWeekStart && x.ContourAcceptDate <= TodayEnd),
-                    LastMonth = db.MedicalRecord.Count(x => x.Contour.Count != 0 && x.ContourAcceptDate >= LastMonthStart && x.ContourAcceptDate <= TodayEnd),
+                    UnsetRecord = db.MedicalRecord.Count(x => x.ContourAcceptDate == null),
+                    Today = db.MedicalRecord.Count(x => x.ContourAcceptDate!= null && x.ContourAcceptDate >= TodayStart && x.ContourAcceptDate <= TodayEnd),
+                    LastWeek = db.MedicalRecord.Count(x => x.ContourAcceptDate != null && x.ContourAcceptDate >= LastWeekStart && x.ContourAcceptDate <= TodayEnd),
+                    LastMonth = db.MedicalRecord.Count(x => x.ContourAcceptDate != null && x.ContourAcceptDate >= LastMonthStart && x.ContourAcceptDate <= TodayEnd),
+                    TotalRecords = db.MedicalRecord.Count()
+                };
+            }
+        }
+        public ViewModels.DaysStatisticsVM GetTotalConformContoursStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    UnsetRecord = db.Contour.Count(x => x.ActionDate == null),
+                    Today = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= TodayStart && x.ActionDate <= TodayEnd),
+                    LastWeek = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= LastWeekStart && x.ActionDate <= TodayEnd),
+                    LastMonth = db.Contour.Count(x => x.ActionDate != null && x.ActionDate >= LastMonthStart && x.ActionDate <= TodayEnd),
                     TotalRecords = db.MedicalRecord.Count()
                 };
             }

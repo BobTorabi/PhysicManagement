@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using PhysicManagement.Logic.Services;
 using PhysicManagement.Model;
+using PhysicManagement.Logic.ViewModels;
 
 namespace PhysicManagement.Controllers
 {
@@ -16,8 +17,13 @@ namespace PhysicManagement.Controllers
             Service = new Logic.Services.ContourService();
         }
 
-        public ActionResult ContourApprove() {
-            List<MedicalRecord> Patients = Service.GetContoursToApprove();
+        public ActionResult ContourApprove(string firstName, string lastName, string mobile,
+            string nationalCode, string systemCode, string code)
+        {
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            PagedList<Model.MedicalRecord> Patients = Service.GetContoursToApprove(firstName, lastName, mobile,
+            nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
             return View(Patients);
         }
 
