@@ -66,7 +66,7 @@
                                 <th>نام پزشک</th>
                                 <th>موبایل</th>
                                 <th>کدملی</th>
-                                <th>شناسه بیمار</th>
+                                <th>شماره پرونده</th>
                                 <th>تاریخ ثبت</th>
                                 <th class="text-center">ارجاع</th>
                             </tr>
@@ -84,7 +84,7 @@
                                     <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
                                     <td>@mr.Patient.Mobile</td>
                                     <td>@mr.Patient.NationalCode</td>
-                                    <td>@mr.Patient.Code</td>
+                                    <td>@mr.SystemCode</td>
                                     <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
                                     <td class="text-center">
                                         <button type="button" onclick="mId = @mr.Id;" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">ثبت اطلاعات نرم افزار<div class="ripple-container"></div></button>
