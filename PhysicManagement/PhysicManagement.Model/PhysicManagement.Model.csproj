@@ -68,7 +68,7 @@
     <Compile Include="CancerOAR.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="CancerTargets.cs">
+    <Compile Include="CancerTarget.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Contour.cs">

@@ -154,11 +154,6 @@
             $('[name="TPDescription"]').focus();
             return;
         }
-        if (needFusion == '' || needFusion == null) {
-            $('[name="NeedFusion"]').focus();
-            return;
-        }
-
         $.post('SetPatientMediacalRecordCPAndFusion', { medicalRecordId: mId, TPDescription: TPDescription, needFusion: needFusion }, function (d) {
             $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
             $('.dataEntry').hide();

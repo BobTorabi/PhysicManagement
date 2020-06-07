@@ -20,6 +20,7 @@ namespace PhysicManagement.Model
         public Nullable<int> CancerOARId { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> SelectDate { get; set; }
+        public Nullable<int> CancerTargetId { get; set; }
     
         public virtual Contour Contour { get; set; }
     }

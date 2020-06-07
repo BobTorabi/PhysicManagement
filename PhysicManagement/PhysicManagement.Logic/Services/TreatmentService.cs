@@ -18,45 +18,46 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.ContourAcceptDate != null).Include(x => x.Patient);
-                if (!string.IsNullOrEmpty(firstName))
-                {
-                    firstName = firstName.Trim().ToPersian();
-                    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
-                }
-                if (!string.IsNullOrEmpty(lastName))
-                {
-                    lastName = lastName.Trim().ToPersian();
-                    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
-                }
-                if (!string.IsNullOrEmpty(mobile))
-                {
-                    mobile = mobile.Trim().toEnglishNumber();
-                    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
-                }
-                if (!string.IsNullOrEmpty(nationalCode))
-                {
-                    nationalCode = nationalCode.Trim().toEnglishNumber();
-                    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
-                }
-                if (!string.IsNullOrEmpty(systemCode))
-                {
-                    systemCode = systemCode.Trim().toEnglishNumber();
-                    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
-                }
-                if (!string.IsNullOrEmpty(code))
-                {
-                    mobile = code.Trim().toEnglishNumber();
-                    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
-                }
-                QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
-                return new ViewModels.PagedList<Model.TreatmentPhase>()
-                {
-                    CurrentPage = CurrentPage,
-                    PageSize = pageSize,
-                    TotalRecords = QueryableMR.Count(),
-                    Records = Queryable.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
-                };
+                return null;
+                //IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.ContourAcceptDate != null).Include(x => x.Patient);
+                //if (!string.IsNullOrEmpty(firstName))
+                //{
+                //    firstName = firstName.Trim().ToPersian();
+                //    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
+                //}
+                //if (!string.IsNullOrEmpty(lastName))
+                //{
+                //    lastName = lastName.Trim().ToPersian();
+                //    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
+                //}
+                //if (!string.IsNullOrEmpty(mobile))
+                //{
+                //    mobile = mobile.Trim().toEnglishNumber();
+                //    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
+                //}
+                //if (!string.IsNullOrEmpty(nationalCode))
+                //{
+                //    nationalCode = nationalCode.Trim().toEnglishNumber();
+                //    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
+                //}
+                //if (!string.IsNullOrEmpty(systemCode))
+                //{
+                //    systemCode = systemCode.Trim().toEnglishNumber();
+                //    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
+                //}
+                //if (!string.IsNullOrEmpty(code))
+                //{
+                //    mobile = code.Trim().toEnglishNumber();
+                //    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
+                //}
+                //QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
+                //return new ViewModels.PagedList<Model.TreatmentPhase>()
+                //{
+                //    CurrentPage = CurrentPage,
+                //    PageSize = pageSize,
+                //    TotalRecords = QueryableMR.Count(),
+                //    Records = QueryableMR.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                //};
             }
         }
         public Model.TreatmentPhase GetTreatmentPhaseById(int entityId)
@@ -210,7 +211,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.TreatmentDevice.OrderBy(x => x.Title).OrderBy(e=>e.Code).ToList();
+                return db.TreatmentDevice.OrderBy(x => x.Title).OrderBy(e => e.Code).ToList();
             }
         }
         public Model.TreatmentDevice GetTreatmentDeviceById(int entityId)

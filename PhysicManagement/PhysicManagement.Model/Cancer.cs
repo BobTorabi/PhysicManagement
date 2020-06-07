@@ -18,7 +18,7 @@ namespace PhysicManagement.Model
         public Cancer()
         {
             this.CancerOAR = new HashSet<CancerOAR>();
-            this.CancerTargets = new HashSet<CancerTargets>();
+            this.CancerTarget = new HashSet<CancerTarget>();
         }
     
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace PhysicManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CancerOAR> CancerOAR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CancerTargets> CancerTargets { get; set; }
+        public virtual ICollection<CancerTarget> CancerTarget { get; set; }
     }
 }

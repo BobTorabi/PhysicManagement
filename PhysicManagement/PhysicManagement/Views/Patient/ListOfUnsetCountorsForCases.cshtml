@@ -87,7 +87,7 @@
                         <tbody>
                             @foreach (var mr in Model)
                             {
-                                <tr>
+                                <tr data-id="@mr.Id">
                                     <td>@Index</td>
                                     <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
                                     <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
@@ -97,48 +97,16 @@
                                     <td>@mr.SystemCode</td>
                                     <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
                                     <td class="text-center">
-                                        <button type="button" 
-                                                onclick="getMedicalRecordData(@mr.Id)"
-                                                class="btn btn-info pull-left" data-toggle="modal" data-target="#exampleModal">ثبت<div class="ripple-container"></div></button>
-                                        @*@if (mr.CancerId != null)
+                                        @if(mr.Contour.Count == 0)
                                         {
-                                            <button type="button" class="btn btn-block btn-sm" onclick="SetCancer(@mr.CancerId,@mr.Id)">@mr.CancerTitle</button>
+                                            <button type="button" onclick="openpanel('@mr.Id')" class="btn btn-info pull-left">ثبت</button>
                                         }
-                                        else
-                                        {
-                                            <div class="form-group dropdown-toggle">
-                                                <select class="selectpicker" onchange="SetCancer(this.value,@mr.Id)" data-style="btn btn-primary btn-round" title="">
-                                                    <option disabled="" selected="">نوع سرطان</option>
-                                                    @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
-                                                    {
-                                                        <option @((mr.CancerId != null && mr.CancerId == item.Id) ? "selected=selected disabled" : "") value="@item.Id">@item.Title</option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        }*@
                                     </td>
                                 </tr>
                                 Index++;
                             }
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="card CancerOAR">
-                <div class="card-header card-header-rose card-header-icon">
-                    <div class="card-icon"><i class="material-icons">add_box</i></div>
-                    <h4 class="card-title">لیست ارگان ها</h4>
-                </div>
-                <div class="card-body">
-
-                    <table class="table table-hover">
-                        <thead class="text-warning">
-                            <tr><th style="width:50px;"></th><th>هدف</th></tr>
-                        </thead>
-                        <tbody id="COAR_Data">
-                        </tbody>
-                    </table>
-
                 </div>
             </div>
         </div>
@@ -150,256 +118,150 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">لیست ارگان ها</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-
                 <table class="table table-hover">
-                    <thead class="text-warning">
-                        <tr>
-                            <th>نام</th>
-                            <th>نام خانوادگی</th>
-                            <th>تاریخ درج پرونده</th>
-                            <th>تاریخ CT</th>
-                            <th>تاریخ ثبت</th>
-                        </tr>
+                    <thead>
+                        <tr><th>نام</th><th>نام خانوادگی</th><th>نام پزشک</th><th>تاریخ پذیرش</th><th>تاریخ CT</th><th>شماره پرونده</th></tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td id="patientName"></td>
+                            <td id="patientLatName"></td>
+                            <td id="doctorName"></td>
+                            <td id="receptionDate"></td>
+                            <td id="ctDate"></td>
+                            <td id="systemCode"></td>
                         </tr>
                     </tbody>
                 </table>
-
                 <div class="form-group dropdown-toggle">
-                   
-                    <select class="selectpicker" data-style="btn btn-primary btn-round" title="">
-                        <option disabled="" selected="">انتخاب نوع سرطان</option>
+                    <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId" data-style="btn btn-primary btn-round" title="">
+                        <option disabled="" selected="">نوع سرطان را انتخاب کنید</option>
                         @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
                         {
                             <option value="@item.Id">@item.Title</option>
                         }
                     </select>
                 </div>
-
-                <table class="table table-hover">
-                    <thead class="text-warning">
-                        <tr>
-                            <th>حجم هدف</th>
-                            <th></th>
-                            <th>بافت سالم</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>ارگان شماره یک</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>ارگان شماره یک</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ارگان شماره دو</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>ارگان شماره یک</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ارگان شماره سه</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>ارگان شماره یک</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ارگان شماره چهار</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>ارگان شماره یک</td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="togglebutton">
-                                            <label>
-                                                <input type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating"></label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                <table class="table table-hover small">
+                    <thead class="text-warning"><tr><th class="bg-green">حجم هدف</th><th class="bg-red">بافت سالم</th></tr></thead>
+                    <tbody id="cancerData">
                     </tbody>
                 </table>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
-                <button type="submit" class="btn btn-rose">ثبت</button>
+                <button type="button" onclick="setCancerData()" class="btn btn-rose">ثبت</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    function getMedicalRecordData(medicalRecordI) {
-        $.get('', { medicalRecordId: medicalRecordI }, function (d) {
-
+    function openpanel(id) {
+        $('#patientName,#patientLatName,#doctorName,#receptionDate,#ctDate,#systemCode').val('');
+        $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: id }, function (d) {
+            $('#patientName').html(d.PatientFirstName);
+            $('#patientLatName').html(d.PatientLastName);
+            $('#doctorName').html(d.DoctorName);
+            $('#receptionDate').html(d.ReceptionDate);
+            $('#ctDate').html(d.CTDate);
+            $('#systemCode').html(d.SystemCode);
+            $('#cancerId').val(d.CancerId).trigger('change');
+            $('#cancerData').empty();
+            $('#exampleModal').modal('show');
         });
     }
-    $('.CancerOAR').hide();
-    function SetCancer(cancerId, mId) {
-        $('#COAR_Data').empty();
-        $.post('../MedicalRecord/SetCancerForMR', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
-            $.getJSON('../CancerOAR/GetCancerOARDataByCancerId', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
-                for (var i = 0; i < d.length; i++) {
-                    $(`<tr data-conourType="` + d[i].Id + `">
-                        <td>
-                            <div class="togglebutton">
-                                <label>
-                                    <input `+ (d[i].IsSelected ? `checked="checked"` : ``) + ` onchange="setContourDetail(` + d[i].Id + `,` + mId + `)" type="checkbox">
-                                    <span class="toggle"></span>
-                                </label>
-                            </div>
-                        </td>
-                        <td>`+ d[i].OrganTitle + `</td>
-                    </tr>`).appendTo('#COAR_Data');
+    function loadCancerDetail() {
+        $('#cancerData').empty();
+        var id = $('#cancerId').val();
+        var name = $('#cancerId option:selected').text();
+        $.getJSON(
+            '../../../Cancer/GetCancerOARAndTargets',
+            { cancerId : id },
+            function (j) {
+            var oars = j.OARs;
+            var targets = j.Targets;
+                var max = oars.length > targets.length ? oars.length : targets.length;
+                debugger;
+            for (var i = 0; i < max; i++) {
+                var oar = '';
+                if (oars != null && oars[i] != undefined) {
+                    oar =
+                    `<div class="col-md-2">
+                       <div class="togglebutton"><label><input id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
+                    </div>
+                    <div class="col-md-4" style="line-height:50px;">`+ oars[i].OrganTitle + `</div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
+                            <input type="text" data-oar-id='`+ oars[i].Id + `' id="ora_desc_` + oars[i].Id + `" class="form-control"/>
+                        </div>
+                    </div>`;
                 }
+                var target = '';
+                if (targets != null && targets[i] != undefined) {
+                    target =
+                        `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                                    <div class="togglebutton"><label><input id="target_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
+                                </div>
+                                <div class="col-md-4" style="padding: 20px 0 0 0;">`+ targets[i].Title + `</div>
+                                <div class="col-md-6">
+                                    <div class="form-group bmd-form-group">
+                                        <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
+                                        <input data-oar-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control"></div>
+                                </div>`;
+                }
+                var tmp =
+                    `<tr data-row='`+i+`'>
+                        <td><div class="row">`+ oar+`</div></td>
+                        <td><div class="row">`+ target +`</div></td>
+                    </tr>`;
+                $(tmp).appendTo('#cancerData');
+            }
+            }
+        );
+    }
+    function setCancerData() {
+        var Data = { cancerId: 1, oars: [], targets: [] };
+        var cancerId = $('#cancerId').val();
+        if (cancerId == '') {
+            alert('لطفا یکی از انواع سرطان را انتخاب کنید.');
+            return;
+        }
+        else {
+            $('tr[data-row]').each(function () {
 
-                $('.CancerOAR').show();
-            });
-        });
+            })
+        }
     }
-    function setContourDetail(cancerOARId, mId) {
-        $.post('../Contour/SetCancerDetailForContour', { medicalRecordId: mId, cancerOARId: cancerOARId }, function (d) {
-        });
-    }
+    //function SetCancer(cancerId, mId) {
+    //    $('#COAR_Data').empty();
+    //    $.post('../MedicalRecord/SetCancerForMR', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
+    //        $.getJSON('../CancerOAR/GetCancerOARDataByCancerId', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
+    //            for (var i = 0; i < d.length; i++) {
+    //                $(`<tr data-conourType="` + d[i].Id + `">
+    //                    <td>
+    //                        <div class="togglebutton">
+    //                            <label>
+    //                                <input `+ (d[i].IsSelected ? `checked="checked"` : ``) + ` onchange="setContourDetail(` + d[i].Id + `,` + mId + `)" type="checkbox">
+    //                                <span class="toggle"></span>
+    //                            </label>
+    //                        </div>
+    //                    </td>
+    //                    <td>`+ d[i].OrganTitle + `</td>
+    //                </tr>`).appendTo('#COAR_Data');
+    //            }
+
+    //            $('.CancerOAR').show();
+    //        });
+    //    });
+    //}
+    //function setContourDetail(cancerOARId, mId) {
+    //    $.post('../Contour/SetCancerDetailForContour', { medicalRecordId: mId, cancerOARId: cancerOARId }, function (d) {
+    //    });
+    //}
 </script>

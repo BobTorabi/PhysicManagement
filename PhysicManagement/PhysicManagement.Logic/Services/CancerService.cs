@@ -150,29 +150,29 @@ namespace PhysicManagement.Logic.Services
         }
         #endregion
         #region Cancer Targets section
-        public List<Model.CancerTargets> GetCancerTargetList()
+        public List<Model.CancerTarget> GetCancerTargetList()
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.CancerTargets.OrderBy(x => x.Title).ToList();
+                return db.CancerTarget.OrderBy(x => x.Title).ToList();
             }
         }
-        public Model.CancerTargets GetCancerTargetById(int entityId)
+        public Model.CancerTarget GetCancerTargetById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.CancerTargets.Find(entityId);
+                var Entity = db.CancerTarget.Find(entityId);
                 return Entity;
             }
         }
-        public List<Model.CancerTargets> GetCancerTargetListByCancerId(int entityId)
+        public List<Model.CancerTarget> GetCancerTargetListByCancerId(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.CancerTargets.Where(x => x.CancerId == entityId).OrderBy(x => x.Title).ToList();
+                return db.CancerTarget.Where(x => x.CancerId == entityId).OrderBy(x => x.Title).ToList();
             }
         }
-        public bool AddCancerTarget(Model.CancerTargets entity)
+        public bool AddCancerTarget(Model.CancerTarget entity)
         {
             var validation = new CancerValidation.CancerTargetEntityValidate().Validate(entity);
             if (!validation.IsValid)
@@ -180,11 +180,11 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                db.CancerTargets.Add(entity);
+                db.CancerTarget.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
-        public bool UpdateCancerTarget(Model.CancerTargets entity)
+        public bool UpdateCancerTarget(Model.CancerTarget entity)
         {
             var validation = new CancerValidation.CancerTargetEntityValidate().Validate(entity);
             if (!validation.IsValid)
@@ -192,7 +192,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.CancerTargets.Find(entity.Id);
+                var Entity = db.CancerTarget.Find(entity.Id);
                 Entity.CancerId = entity.CancerId;
                 Entity.Optimum = entity.Optimum;
                 Entity.Title = entity.Title;
@@ -204,11 +204,11 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.CancerTargets.Find(entityId);
+                var Entity = db.CancerTarget.Find(entityId);
                 if (Entity == null)
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
 
-                db.CancerTargets.Remove(Entity);
+                db.CancerTarget.Remove(Entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -216,7 +216,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.CancerTargets.Count(e => e.CancerId == cancerId);
+                var Entity = db.CancerTarget.Count(e => e.CancerId == cancerId);
                 return Entity;
             }
         }

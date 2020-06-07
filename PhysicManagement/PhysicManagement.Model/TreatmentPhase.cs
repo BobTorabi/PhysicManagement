@@ -24,5 +24,6 @@ namespace PhysicManagement.Model
         public string Description { get; set; }
         public Nullable<System.DateTime> PrescribeDate { get; set; }
         public string PrescribesdUser { get; set; }
+        public Nullable<int> TreatmentDeviceId { get; set; }
     }
 }

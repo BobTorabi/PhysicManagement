@@ -1,4 +1,4 @@
-﻿@model PhysicManagement.Model.CancerTargets
+﻿@model PhysicManagement.Model.CancerTarget
 
 @{
     if (Model.Id == 0)
@@ -44,7 +44,12 @@
                                 <input type="text" id="Optimum" name="Optimum" value="@Model.Optimum" class="form-control">
                             </div>
                         </div>
-                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Description" class="bmd-label-floating">توضیحات</label>
+                                <textarea id="Description" name="Description" class="form-control">@Html.Raw(Model.Description)</textarea>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                     <div class="clearfix"></div>

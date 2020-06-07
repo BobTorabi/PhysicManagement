@@ -1,6 +1,3 @@
-html {
-    scroll-behavior: smooth;
-}
 html[dir="rtl"] {
   text-align: right;
   direction: rtl;
@@ -22,6 +19,11 @@ html[dir="rtl"] .alert-dismissible {
 html[dir="rtl"] .dropdown-menu {
   right: 0;
   text-align: right;
+}
+
+html[dir="rtl"] .card .dropdown-menu{
+	left: 0;
+	right: auto;
 }
 
 html[dir="rtl"] .checkbox label {
@@ -148,6 +150,7 @@ html[dir="rtl"] .form-check-input {
 html[dir="rtl"] .form-check-label {
   padding-right: 1.75rem;
   padding-left: inherit;
+  direction: rtl;
 }
 
 html[dir="rtl"] .offset-1 {
@@ -1184,6 +1187,10 @@ html[dir="rtl"] .card .card-body, html[dir="rtl"] .card .card-footer {
   direction: rtl;
 }
 
+html[dir="rtl"] .card-footer.ltr{
+  direction: ltr;
+}
+
 @media (max-width: 991px) {
   html[dir="rtl"] .navbar-form .btn {
     left: -50px;
@@ -1239,4 +1246,7 @@ html[dir="rtl"] .form-control-feedback {
 }
 html[dir="rtl"] .sidebar{
 	background: #41afdd;
+}
+html[dir="rtl"] .togglebutton label {
+  direction: initial;
 }

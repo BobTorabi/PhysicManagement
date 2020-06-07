@@ -12,12 +12,13 @@ namespace PhysicManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class CancerTargets
+    public partial class CancerTarget
     {
         public int Id { get; set; }
         public Nullable<int> CancerId { get; set; }
         public string Title { get; set; }
         public string Optimum { get; set; }
+        public string Description { get; set; }
     
         public virtual Cancer Cancer { get; set; }
     }

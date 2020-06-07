@@ -16,6 +16,7 @@ namespace PhysicManagement.Controllers
             Service = new Logic.Services.CancerService();
             MedicalService = new MedicalRecordService();
         }
+        
         public ActionResult Index()
         {
             return RedirectToActionPermanent("List");
@@ -92,6 +93,12 @@ namespace PhysicManagement.Controllers
                 return RedirectToAction("List");
             }
 
+        }
+
+        public JsonResult GetCancerOARAndTargets(int cancerId) {
+            var CancertOARs = Service.GetCancerOARListByCancerId(cancerId).Select(x=>new {x.Id,x.OrganTitle,x.CancerId,x.Description });
+            var CancertTargets = Service.GetCancerTargetListByCancerId(cancerId).Select(x=>new {x.Id,x.Title,x.Optimum,x.Description });
+            return Json(new { OARs = CancertOARs, Targets = CancertTargets }, JsonRequestBehavior.AllowGet);
         }
     }
 }

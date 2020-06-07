@@ -26,12 +26,14 @@ namespace PhysicManagement.Logic.Validations
                 RuleFor(e => e.OrganTitle).NotEmpty().WithMessage("عنوان اجباری است");
             }
         }
-        public class CancerTargetEntityValidate : AbstractValidator<Model.CancerTargets>
+        public class CancerTargetEntityValidate : AbstractValidator<Model.CancerTarget>
         {
 
             public CancerTargetEntityValidate()
             {
-                RuleFor(e => e.Title).NotEmpty().WithMessage("");
+                RuleFor(e => e.Title).NotEmpty().WithMessage("عنوان نمی تواند خالی باشد.");
+                RuleFor(e => e.CancerId).NotNull().WithMessage("نوع سزطان را انتخاب کنید.");
+
             }
         }
     }

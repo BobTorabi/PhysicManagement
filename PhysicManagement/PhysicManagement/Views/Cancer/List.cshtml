@@ -49,6 +49,7 @@
                                                 <a class="dropdown-item" href="@Url.Action("Modify","Cancer",new { @id = @Cancer.Id})">ویرایش</a>
                                                 @*<a class="dropdown-item" href="DeleteCancer/@Cancer.Id"> حذف</a>*@
                                                 <a class="dropdown-item" href="~/CancerOAR/List/@Cancer.Id"> لیست ارگان ها</a>
+                                                <a class="dropdown-item" href="~/CancerTargets/List/@Cancer.Id"> لیست هدف ها</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Cancer", new { id = Cancer.Id })')">حذف</a>
                                             </div>

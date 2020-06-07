@@ -9,7 +9,7 @@ namespace PhysicManagement.Controllers
 {
     public class CancerTargetsController : BaseController
     {
-        Logic.Services.CancerService Service;
+        CancerService Service;
         public CancerTargetsController()
         {
             Service = new Logic.Services.CancerService();
@@ -19,9 +19,13 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("list");
         }
         // GET: CancerTargets
-        public ActionResult List()
+        public ActionResult List(int? id)
         {
-            List<Model.CancerTargets> CancerTargets = Service.GetCancerTargetList();
+            List<Model.CancerTarget> CancerTargets = Service.GetCancerTargetList();
+            if (id.HasValue)
+            {
+                CancerTargets = CancerTargets.Where(x => x.CancerId == id).ToList();
+            }
             return View(CancerTargets);
         }
         public ActionResult Modify(int? id)
@@ -30,7 +34,7 @@ namespace PhysicManagement.Controllers
             if (id == null)
             {
                 ViewBag.CancerId = new SelectList(Service.GetCancerList(), "Id", "Title");
-                return View(new Model.CancerTargets());
+                return View(new Model.CancerTarget());
             }
             else
             {
@@ -41,7 +45,7 @@ namespace PhysicManagement.Controllers
 
         }
         [HttpPost]
-        public ActionResult Modify(Model.CancerTargets entity)
+        public ActionResult Modify(Model.CancerTarget entity)
         {
             bool IsAffected;
             if (entity.Id > 0)
@@ -52,12 +56,7 @@ namespace PhysicManagement.Controllers
             {
                 IsAffected = Service.AddCancerTarget(entity);
             }
-            if (IsAffected)
-                return RedirectToAction("Index");
-            else
-            {
-                return View();
-            }
+            return Json(new { location = "../../../CancerTargets/List/" + entity.CancerId });
         }
     }
 }
