@@ -8,31 +8,31 @@
         <EntityTypeShape EntityType="PhysicManagementModel.Calendar" Width="1.875" PointX="8.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PhysicManagementModel.Cancer" Width="1.5" PointX="14.5" PointY="5.5" IsExpanded="true" FillColor="192, 0, 0" />
         <EntityTypeShape EntityType="PhysicManagementModel.CancerOAR" Width="1.5" PointX="16.75" PointY="4" IsExpanded="true" FillColor="192, 0, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="8" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="PhysicManagementModel.Doctor" Width="1.5" PointX="0.625" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="2" PointX="10.5" PointY="13.375" IsExpanded="true" FillColor="Green" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanHostory" Width="1.5" PointX="13.875" PointY="13.875" IsExpanded="true" FillColor="Green" />
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhase" Width="1.5" PointX="1.875" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentProcess" Width="2.25" PointX="3.75" PointY="0.625" IsExpanded="true" />
         <AssociationConnector Association="PhysicManagementModel.FK_CancerOAR_Cancer" ManuallyRouted="false" />
-        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="10.375" PointY="8.25" />
-        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
         <EntityTypeShape EntityType="PhysicManagementModel.Alarm" Width="1.5" PointX="6.375" PointY="17.75" />
         <EntityTypeShape EntityType="PhysicManagementModel.AlarmType" Width="1.5" PointX="3.625" PointY="18.5" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicUser" Width="1.5" PointX="12.75" PointY="0.5" />
         <EntityTypeShape EntityType="PhysicManagementModel.Resident" Width="1.5" PointX="10.875" PointY="0.5" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentDevice" Width="1.5" PointX="6.5" PointY="0.625" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentDevice" Width="2" PointX="6.5" PointY="0.625" />
         <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
         <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="4.5" PointY="4.5" />
-        <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatment" Width="1.5" PointX="8.25" PointY="14.25" FillColor="Green" />
-        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" />
         <EntityTypeShape EntityType="PhysicManagementModel.CancerTarget" Width="1.5" PointX="16.75" PointY="7.5" FillColor="DarkRed" />
         <AssociationConnector Association="PhysicManagementModel.FK_CancerTargets_Cancer" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="5.25" PointY="26" />
+        <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="7.5" PointY="26.125" />
+        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="3" PointY="22.5" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatment" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="5.625" PointY="9" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanHostory" Width="1.5" PointX="7.875" PointY="9.75" />
+        <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
+        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
+        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
+        <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
+        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" />
+        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

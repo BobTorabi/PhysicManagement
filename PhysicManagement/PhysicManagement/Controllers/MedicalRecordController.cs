@@ -8,31 +8,33 @@ namespace PhysicManagement.Controllers
 {
     public class MedicalRecordController : BaseController
     {
-        Logic.Services.MedicalRecordService service;
+        Logic.Services.MedicalRecordService Service;
+        Logic.Services.ContourService ContourService;
         public MedicalRecordController()
         {
-            service = new Logic.Services.MedicalRecordService();
+            Service = new Logic.Services.MedicalRecordService();
+            ContourService = new Logic.Services.ContourService();
         }
         // GET: MedicalRecord
         public ActionResult PatientMedicalRecord(int id)
         {
-            var medicalRecordData = service.GetMedicalRecordById(id);
+            var medicalRecordData = Service.GetMedicalRecordById(id);
             return View(medicalRecordData);
         }
 
-        [HttpPost]
-        public JsonResult SetCancerForMR(int medicalRecordId, int cancerId)
-        {
-            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
-            var medicalRecordData = service.SetCancerForMR(medicalRecordId, cancerId, UserData.UserId.ToString());
-            return Json(
-                new MegaViewModel<bool> { Status = MegaStatus.Successfull },
-                JsonRequestBehavior.AllowGet);
-        }
+        //[HttpPost]
+        //public JsonResult SetCancerForMR(int medicalRecordId, int cancerId)
+        //{
+        //    var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+        //    var medicalRecordData = service.SetCancerForMR(medicalRecordId, cancerId, UserData.UserId.ToString());
+        //    return Json(
+        //        new MegaViewModel<bool> { Status = MegaStatus.Successfull },
+        //        JsonRequestBehavior.AllowGet);
+        //}
 
         public JsonResult GetMedicalRecordData(int medicalRecordId)
         {
-            var medicalRecordData = service.GetMedicalRecordById(medicalRecordId);
+            var medicalRecordData = Service.GetMedicalRecordById(medicalRecordId);
             return Json(
                 new
                 {
@@ -44,6 +46,9 @@ namespace PhysicManagement.Controllers
                     DoctorName = medicalRecordData.DoctorFirstName +" " + medicalRecordData.DoctorLastName,
                     ReceptionDate = Common.DateUtility.GetPersianDateTime(medicalRecordData.ReceptionDate),
                     CTDate = Common.DateUtility.GetPersianDateTime(medicalRecordData.CTEnterDate),
+                    ContourDetail = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId)
+                                    .Select(x=>new {x.Id,x.CancerTargetId,x.CancerOARId,x.Description })
+                                    .ToList()
                 }, JsonRequestBehavior.AllowGet);
         }
     }

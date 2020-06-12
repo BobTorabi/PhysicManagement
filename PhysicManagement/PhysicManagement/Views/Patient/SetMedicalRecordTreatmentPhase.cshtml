@@ -3,6 +3,9 @@
     ViewBag.Title = "تجویز درمان برای بیمار";
     PhysicManagement.Model.Patient PatientData = ViewBag.PatientData;
     PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecordData;
+    List<PhysicManagement.Model.ContourDetails> contourDetails = ViewBag.ContourDetails;
+    List<PhysicManagement.Model.CancerOAR> cancerOARList = ViewBag.CancerOARList;
+    List<PhysicManagement.Model.TreatmentDevice> TreatmentService = ViewBag.TreatmentService;
     int Index = 1;
 }
 
@@ -67,34 +70,41 @@
                         <div class="row">
                             @foreach (var Phase in Model)
                             {
-                                <div class="card">
+                                <div class="card" data-phase-no="@Phase.PhaseNumber">
                                     <div class="card-header card-header-rose card-header-icon">
-                                        <h4 class="card-title">فاز شماره - @Index</h4>
+                                        <h4 class="card-title">تجویز درمان فاز @Index</h4>
                                     </div>
                                     <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">دز (Dose)</label>
-                                                        <input type="text" class="form-control" name="Dose-@Phase.Id">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">فرکشن (Fraction)</label>
-                                                        <input type="text" class="form-control" name="Fraction-@Phase.Id">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">هدف (Target)</label>
-                                                        <textarea class="form-control" name="Target-@Phase.Id" rows="5"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                           
+                                        <table class="table table-hover">
+                                            <thead class="text-warning">
+                                                <tr><th>لیست ارگان های هدف</th><th>دز تجویز شده (Prescribed dose)</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in contourDetails)
+                                                {
+                                                    var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
+                                                    <tr>
+                                                        <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
+                                                        <td><div class="form-group bmd-form-group"><input type="text" class="form-control" name="dose_@item.CancerOARId" /></div></td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                        <div class="form-group bmd-form-group">
+                                            <label for="FirstName" class="bmd-label-floating">فرکشن (Fraction)</label>
+                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <select name="hasContour" class="form-control">
+                                                <option value="" disabled selected>انتخاب دستگاه</option>
+                                                @foreach (var item in TreatmentService)
+                                                {
+                                                    <option value="@item.Id">@item.Title</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 Index++;
@@ -108,7 +118,7 @@
 
                 </div>
             </div>
-          
+
         </div>
     </div>
 </div>

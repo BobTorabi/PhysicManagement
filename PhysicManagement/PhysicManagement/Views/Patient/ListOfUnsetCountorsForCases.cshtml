@@ -161,7 +161,9 @@
 </div>
 
 <script>
+    var med_id = null;
     function openpanel(id) {
+        med_id = id;
         $('#patientName,#patientLatName,#doctorName,#receptionDate,#ctDate,#systemCode').val('');
         $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: id }, function (d) {
             $('#patientName').html(d.PatientFirstName);
@@ -176,7 +178,7 @@
         });
     }
     function loadCancerDetail() {
-       
+
         $('#cancerData').empty();
         var id = $('#cancerId').val();
         if (id == undefined || id == null || id == '') {
@@ -185,31 +187,30 @@
         var name = $('#cancerId option:selected').text();
         $.getJSON(
             '../../../Cancer/GetCancerOARAndTargets',
-            { cancerId : id },
+            { cancerId: id },
             function (j) {
-            var oars = j.OARs;
-            var targets = j.Targets;
+                var oars = j.OARs;
+                var targets = j.Targets;
                 var max = oars.length > targets.length ? oars.length : targets.length;
-                debugger;
-            for (var i = 0; i < max; i++) {
-                var oar = '';
-                if (oars != null && oars[i] != undefined) {
-                    oar =
-                    `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
-                       <div class="togglebutton"><label><input id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
-                    </div>
-                    <div class="col-md-4" style="padding: 20px 0 0 0;">`+ oars[i].OrganTitle + `</div>
-                    <div class="col-md-6">
-                        <div class="form-group bmd-form-group">
-                            <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
-                            <input type="text" data-oar-id='`+ oars[i].Id + `' id="ora_desc_` + oars[i].Id + `" class="form-control"/>
-                        </div>
-                    </div>`;
-                }
-                var target = '';
-                if (targets != null && targets[i] != undefined) {
-                    target =
-                        `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                for (var i = 0; i < max; i++) {
+                    var oar = '';
+                    if (oars != null && oars[i] != undefined) {
+                        oar =
+                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                                <div class="togglebutton"><label><input id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
+                                </div>
+                                <div class="col-md-4" style="padding: 20px 0 0 0;">`+ oars[i].OrganTitle + `</div>
+                                <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
+                                    <input type="text" data-oar-id='`+ oars[i].Id + `' id="ora_desc_` + oars[i].Id + `" class="form-control"/>
+                                </div>
+                            </div>`;
+                    }
+                    var target = '';
+                    if (targets != null && targets[i] != undefined) {
+                        target =
+                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
                                 <div class="togglebutton">
                                     <label>
                                         <input id="target_check_` + oars[i].Id + `" type="checkbox">
@@ -221,59 +222,53 @@
                             <div class="col-md-6">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
-                                    <input data-oar-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control">
+                                    <input data-target-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control">
                                 </div>
                          </div>`;
-                }
-                var tmp =
-                    `<tr data-row='`+i+`'>
-                        <td style="width:50%"><div class="row">`+ oar+`</div></td>
-                        <td style="width:50%"><div class="row">`+ target +`</div></td>
+                    }
+                    var tmp =
+                        `<tr data-row='` + i + `'>
+                        <td style="width:50%" class="oar"><div class="row">`+ oar + `</div></td>
+                        <td style="width:50%" class="target"><div class="row">`+ target + `</div></td>
                     </tr>`;
-                $(tmp).appendTo('#cancerData');
-            }
+                    $(tmp).appendTo('#cancerData');
+                }
             }
         );
     }
     function setCancerData() {
-        var Data = { cancerId: 1, oars: [], targets: [] };
+        var Data = { CancerId: 0, MedicalRecordId: med_id, oars: [], targets: [] };
         var cancerId = $('#cancerId').val();
         if (cancerId == '') {
             alert('لطفا یکی از انواع سرطان را انتخاب کنید.');
             return;
         }
         else {
-            Data.cancerId = cancerId;
+            Data.CancerId = cancerId;
             $('tr[data-row]').each(function () {
-                console.log($(this));
+                var oarSection = $(this).find('td.oar');
+                var targetSection = $(this).find('td.target');
+                var check_ora = oarSection.find('input[type="checkbox"]').is(':checked');
+                var desc_ora = oarSection.find('input[data-oar-id]').val();
+                var id_oar = oarSection.find('input[data-oar-id]').attr('data-oar-id');
+                if (!(id_oar === undefined || id_oar === 'undefined')) {
+                    Data.oars.push({ id: id_oar, value: check_ora, note: desc_ora });
+                }
 
-            })
+                var check_target = targetSection.find('input[type="checkbox"]').is(':checked');
+                var desc_target = targetSection.find('input[data-target-id]').val();
+                var id_target = targetSection.find('input[data-target-id]').attr('data-target-id');
+                if (!(id_target === undefined || id_target === 'undefined')) {
+                    Data.targets.push({ id: id_target, value: check_target, note: desc_target });
+                }
+            });
+            console.log(Data);
+            $.post('../Contour/SetCountorForMediacalRecord', { data: Data }, function (d) {
+                $('tr[data-id="' + med_id + '"]').fadeOut(200);
+                $('#exampleModal').modal('hide');
+                alert('اطلاعات کانتور ثبت شد و برای تائید به دکتر ارسال گردید.');
+            });
         }
     }
-    //function SetCancer(cancerId, mId) {
-    //    $('#COAR_Data').empty();
-    //    $.post('../MedicalRecord/SetCancerForMR', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
-    //        $.getJSON('../CancerOAR/GetCancerOARDataByCancerId', { medicalRecordId: mId, cancerId: cancerId }, function (d) {
-    //            for (var i = 0; i < d.length; i++) {
-    //                $(`<tr data-conourType="` + d[i].Id + `">
-    //                    <td>
-    //                        <div class="togglebutton">
-    //                            <label>
-    //                                <input `+ (d[i].IsSelected ? `checked="checked"` : ``) + ` onchange="setContourDetail(` + d[i].Id + `,` + mId + `)" type="checkbox">
-    //                                <span class="toggle"></span>
-    //                            </label>
-    //                        </div>
-    //                    </td>
-    //                    <td>`+ d[i].OrganTitle + `</td>
-    //                </tr>`).appendTo('#COAR_Data');
-    //            }
 
-    //            $('.CancerOAR').show();
-    //        });
-    //    });
-    //}
-    //function setContourDetail(cancerOARId, mId) {
-    //    $.post('../Contour/SetCancerDetailForContour', { medicalRecordId: mId, cancerOARId: cancerOARId }, function (d) {
-    //    });
-    //}
 </script>

@@ -28,14 +28,15 @@ namespace PhysicManagement.Model
         public Nullable<bool> HadContour { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
         public string ActionUser { get; set; }
-        public string Reserve1 { get; set; }
-        public string Reserve2 { get; set; }
         public Nullable<bool> IsAcceptedByPhysic { get; set; }
         public Nullable<bool> IsAcceptedByDoctor { get; set; }
-        public string AcceptedDoctorUser { get; set; }
+        public string AcceptedDoctorUserId { get; set; }
+        public string AcceptedDoctorFullName { get; set; }
+        public string AcceptedPhysicUserId { get; set; }
+        public string AcceptedPhysicUserFullName { get; set; }
     
+        public virtual PhysicTreatment PhysicTreatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
-        public virtual PhysicTreatment PhysicTreatment { get; set; }
     }
 }

@@ -24,13 +24,13 @@ namespace PhysicManagement.Model
         public Nullable<long> MedicalRecordId { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
         public string Description { get; set; }
-        public string ExtraInfo1 { get; set; }
-        public string ExtraInfo2 { get; set; }
-        public Nullable<System.DateTime> AcceptDate { get; set; }
-        public string AcceptUser { get; set; }
+        public Nullable<System.DateTime> ModifyDate { get; set; }
+        public string DoctorFullName { get; set; }
+        public string DoctorUserId { get; set; }
+        public Nullable<bool> IsAccepted { get; set; }
     
+        public virtual MedicalRecord MedicalRecord { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContourDetails> ContourDetails { get; set; }
-        public virtual MedicalRecord MedicalRecord { get; set; }
     }
 }

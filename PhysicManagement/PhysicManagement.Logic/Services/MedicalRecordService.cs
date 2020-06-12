@@ -47,7 +47,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.MedicalRecord.Count(e => e.TreatmentDeviceId == treatmentDeviceId);
+                var Entity = db.MedicalRecord.Count(e => e.Phase1TreatmentDeviceId == treatmentDeviceId);
                 return Entity;
             }
         }
@@ -144,8 +144,9 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public bool SetCancerForMR(long medicalRecordId, int cancerId, string UserId)
+        public bool SetCancerForMR(long medicalRecordId, int cancerId)
         {
+             var UserData = AuthenticatedUserService.GetUserId();
             try
             {
                 using (var db = new Model.PhysicManagementEntities())
@@ -161,7 +162,10 @@ namespace PhysicManagement.Logic.Services
                     Entity.CancerTitle = CancerObject.Title;
                     Entity.CancerId = CancerObject.Id;
                     Entity.ContourAcceptDate = DateTime.Now;
-                    Entity.ContourAcceptUser = UserId;
+                    Entity.ContourAcceptUserId = UserData.UserId.GetValueOrDefault().ToString();
+                    Entity.ContourAcceptUserFullName = UserData.FullName;
+                    Entity.ContourAcceptUserRole = UserData.RoleName;
+
                     Entity.TreatmentProcessId = 2; //کانتورینگ
                     Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                     var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
@@ -169,12 +173,11 @@ namespace PhysicManagement.Logic.Services
                     {
                         Entity.Contour.Add(new Model.Contour()
                         {
-                            AcceptDate = null,
-                            AcceptUser = null,
+                            ModifyDate = null,
+                            DoctorFullName = null,
+                            DoctorUserId = null,
                             ActionDate = DateTime.Now,
                             Description = "",
-                            ExtraInfo1 = "",
-                            ExtraInfo2 = "",
                             MedicalRecordId = medicalRecordId
                         });
                     }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicManagement.Common", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhysicManagement.Logic", "PhysicManagement.Logic\PhysicManagement.Logic.csproj", "{B655445F-5CA4-4987-8687-0F2CDCDCCC21}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{3ACFAA59-29F7-445D-9061-36B82170E46C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD8409D4-77E5-450E-9F4A-0B5C5689D9AB} = {3ACFAA59-29F7-445D-9061-36B82170E46C}
+		{4707A648-AA54-4C0C-A2DC-8AC2EACCF294} = {3ACFAA59-29F7-445D-9061-36B82170E46C}
+		{B655445F-5CA4-4987-8687-0F2CDCDCCC21} = {3ACFAA59-29F7-445D-9061-36B82170E46C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1EFF7039-CAB0-4F32-929D-BB57F6C6D797}

@@ -12,13 +12,19 @@ namespace PhysicManagement.Controllers
         Logic.Services.PatientService Service;
         Logic.Services.MedicalRecordService MedicalService;
         Logic.Services.PhysicTreatmentService PhysicTreatmentService;
+        Logic.Services.CancerService CancerService;
+        Logic.Services.ContourService ContourService;
+        Logic.Services.TreatmentService TreatmentService;
 
         public PatientController()
         {
             Service = new Logic.Services.PatientService();
             MedicalService = new Logic.Services.MedicalRecordService();
             PhysicTreatmentService = new Logic.Services.PhysicTreatmentService();
-        }
+            CancerService = new Logic.Services.CancerService();
+            ContourService = new Logic.Services.ContourService();
+            TreatmentService = new Logic.Services.TreatmentService();
+       }
         public ActionResult Index()
         {
             return View();
@@ -54,7 +60,7 @@ namespace PhysicManagement.Controllers
             {
                 PhysicTreatmentService.AddPhysicTreatment(new Model.PhysicTreatment
                 {
-                    ActionDate = null,
+                    ActionDate = DateTime.Now,
                     ActionUser = UserData.UserId.ToString(),
                     MedicalRecordId = medicalRecordId,
                     PhaseNumber = i
@@ -76,6 +82,9 @@ namespace PhysicManagement.Controllers
             var ViewData = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(medicalRecordId);
             ViewBag.MedicalRecordData = MedicalRecordData;
             ViewBag.PatientData = PatientData;
+            ViewBag.CancerOARList = CancerService.GetCancerOARList();
+            ViewBag.ContourDetails = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId).Where(x=>x.CancerOARId!= null).ToList();
+            ViewBag.TreatmentService = TreatmentService.GetTreatmentDeviceList();
             return View(ViewData);
         }
 
@@ -85,7 +94,7 @@ namespace PhysicManagement.Controllers
 
             return View();
         }
-        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode,string code)
+        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
@@ -193,7 +202,7 @@ namespace PhysicManagement.Controllers
         {
             ViewBag.CancerList = new Logic.Services.CancerService().GetCancerList();
 
-            List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName,  nationalCode, mobile, systemCode, code, hasContour);
+            List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName, nationalCode, mobile, systemCode, code, hasContour);
             return View(Patient);
         }
         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)

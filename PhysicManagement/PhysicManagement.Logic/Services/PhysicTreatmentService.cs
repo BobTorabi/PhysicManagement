@@ -165,9 +165,11 @@ namespace PhysicManagement.Logic.Services
                 Entity.IsAcceptedByDoctor = entity.IsAcceptedByDoctor;
                 Entity.IsAcceptedByPhysic = entity.IsAcceptedByPhysic;
                 Entity.PlannedDose = entity.PlannedDose;
-                Entity.Reserve1 = entity.Reserve1;
-                Entity.Reserve2 = entity.Reserve2;
-                Entity.AcceptedDoctorUser = entity.AcceptedDoctorUser;
+                Entity.AcceptedDoctorUserId = entity.AcceptedDoctorUserId;
+                Entity.AcceptedDoctorFullName = entity.AcceptedDoctorFullName;
+                Entity.AcceptedPhysicUserFullName = entity.AcceptedPhysicUserFullName;
+                Entity.AcceptedPhysicUserId = entity.AcceptedPhysicUserId;
+                Entity.AcceptedDoctorUserId = entity.AcceptedDoctorUserId;
                 Entity.ActionDate = entity.ActionDate;
                 Entity.Evaluation = entity.Evaluation;
 
