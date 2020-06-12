@@ -192,7 +192,9 @@
           <Property Name="MedicalRecordId" Type="bigint" Nullable="false" />
           <Property Name="PhaseNumber" Type="int" />
           <Property Name="ActionDate" Type="datetime" />
-          <Property Name="ActionUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionUserFullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionUserRole" Type="nvarchar" MaxLength="50" />
           <Property Name="Fraction" Type="int" Nullable="false" />
           <Property Name="TreatmentDeviceId" Type="int" />
         </EntityType>
@@ -583,7 +585,6 @@
           <EntitySet Name="Contour" EntityType="PhysicManagementModel.Contour" />
           <EntitySet Name="ContourDetails" EntityType="PhysicManagementModel.ContourDetails" />
           <EntitySet Name="MedicalRecord" EntityType="PhysicManagementModel.MedicalRecord" />
-          <EntitySet Name="PhysicTreatment" EntityType="PhysicManagementModel.PhysicTreatment" />
           <EntitySet Name="PhysicTreatmentPlan" EntityType="PhysicManagementModel.PhysicTreatmentPlan" />
           <EntitySet Name="PhysicTreatmentPlanHostory" EntityType="PhysicManagementModel.PhysicTreatmentPlanHostory" />
           <AssociationSet Name="FK_Calendar_MedicalRecord" Association="PhysicManagementModel.FK_Calendar_MedicalRecord">
@@ -602,13 +603,14 @@
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
           </AssociationSet>
-          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment">
-            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
-            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
-          </AssociationSet>
           <AssociationSet Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" Association="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
             <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
             <End Role="PhysicTreatmentPlanHostory" EntitySet="PhysicTreatmentPlanHostory" />
+          </AssociationSet>
+          <EntitySet Name="PhysicTreatment" EntityType="PhysicManagementModel.PhysicTreatment" />
+          <AssociationSet Name="FK_PhysicTreatmentPlan_PhysicTreatment" Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment">
+            <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
+            <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Alarm">
@@ -812,19 +814,6 @@
           <NavigationProperty Name="Contour" Relationship="PhysicManagementModel.FK_Contour_MedicalRecord" FromRole="MedicalRecord" ToRole="Contour" />
           <NavigationProperty Name="Patient" Relationship="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" FromRole="MedicalRecord" ToRole="Patient" />
         </EntityType>
-        <EntityType Name="PhysicTreatment">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
-          <Property Name="PhaseNumber" Type="Int32" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="ActionUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Fraction" Type="Int32" Nullable="false" />
-          <Property Name="TreatmentDeviceId" Type="Int32" />
-          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatment" ToRole="PhysicTreatmentPlan" />
-        </EntityType>
         <EntityType Name="PhysicTreatmentPlan">
           <Key>
             <PropertyRef Name="Id" />
@@ -843,8 +832,8 @@
           <Property Name="AcceptedDoctorFullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AcceptedPhysicUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AcceptedPhysicUserFullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PhysicTreatment" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatment" />
           <NavigationProperty Name="PhysicTreatmentPlanHostory" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatmentPlanHostory" />
+          <NavigationProperty Name="PhysicTreatment" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatmentPlan" ToRole="PhysicTreatment" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanHostory">
           <Key>
@@ -907,18 +896,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
-          <End Type="PhysicManagementModel.PhysicTreatment" Role="PhysicTreatment" Multiplicity="0..1" />
-          <End Type="PhysicManagementModel.PhysicTreatmentPlan" Role="PhysicTreatmentPlan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PhysicTreatment">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PhysicTreatmentPlan">
-              <PropertyRef Name="PhysicTreatmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
           <End Type="PhysicManagementModel.PhysicTreatmentPlan" Role="PhysicTreatmentPlan" Multiplicity="0..1" />
           <End Type="PhysicManagementModel.PhysicTreatmentPlanHostory" Role="PhysicTreatmentPlanHostory" Multiplicity="*" />
@@ -928,6 +905,33 @@
             </Principal>
             <Dependent Role="PhysicTreatmentPlanHostory">
               <PropertyRef Name="PhysicTreatmentPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PhysicTreatment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
+          <Property Name="PhaseNumber" Type="Int32" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionUserFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionUserRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fraction" Type="Int32" Nullable="false" />
+          <Property Name="TreatmentDeviceId" Type="Int32" />
+          <NavigationProperty Name="PhysicTreatmentPlan" Relationship="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" FromRole="PhysicTreatment" ToRole="PhysicTreatmentPlan" />
+        </EntityType>
+        <Association Name="FK_PhysicTreatmentPlan_PhysicTreatment">
+          <End Type="PhysicManagementModel.PhysicTreatment" Role="PhysicTreatment" Multiplicity="0..1" />
+          <End Type="PhysicManagementModel.PhysicTreatmentPlan" Role="PhysicTreatmentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicTreatment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicTreatmentPlan">
+              <PropertyRef Name="PhysicTreatmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1214,19 +1218,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PhysicTreatment">
-            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatment">
-              <MappingFragment StoreEntitySet="PhysicTreatment">
-                <ScalarProperty Name="TreatmentDeviceId" ColumnName="TreatmentDeviceId" />
-                <ScalarProperty Name="Fraction" ColumnName="Fraction" />
-                <ScalarProperty Name="ActionUser" ColumnName="ActionUser" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
-                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PhysicTreatmentPlan">
             <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlan">
               <MappingFragment StoreEntitySet="PhysicTreatmentPlan">
@@ -1256,6 +1247,21 @@
                 <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="PhysicTreatmentPlanId" ColumnName="PhysicTreatmentPlanId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatment">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatment">
+              <MappingFragment StoreEntitySet="PhysicTreatment">
+                <ScalarProperty Name="TreatmentDeviceId" ColumnName="TreatmentDeviceId" />
+                <ScalarProperty Name="Fraction" ColumnName="Fraction" />
+                <ScalarProperty Name="ActionUserRole" ColumnName="ActionUserRole" />
+                <ScalarProperty Name="ActionUserFullName" ColumnName="ActionUserFullName" />
+                <ScalarProperty Name="ActionUserId" ColumnName="ActionUserId" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

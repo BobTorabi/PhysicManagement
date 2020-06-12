@@ -85,7 +85,7 @@
                                                     var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
                                                     <tr>
                                                         <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
-                                                        <td><div class="form-group bmd-form-group"><input type="text" class="form-control" name="dose_@item.CancerOARId" /></div></td>
+                                                        <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
                                                     </tr>
                                                 }
 
@@ -93,11 +93,11 @@
                                             </tbody>
                                         </table>
                                         <div class="form-group bmd-form-group">
-                                            <label for="FirstName" class="bmd-label-floating">فرکشن (Fraction)</label>
-                                            <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                            <label for="fraction_@Phase.PhaseNumber" class="bmd-label-floating">فرکشن (Fraction)</label>
+                                            <input type="text" id="fraction_@Phase.PhaseNumber" data-fraction=""  value="" class="form-control">
                                         </div>
                                         <div class="form-group bmd-form-group">
-                                            <select name="hasContour" class="form-control">
+                                            <select data-device="" name="device_phase_@Phase.PhaseNumber" class="form-control">
                                                 <option value="" disabled selected>انتخاب دستگاه</option>
                                                 @foreach (var item in TreatmentService)
                                                 {
@@ -111,7 +111,7 @@
                             }
                         </div>
                         <div class="row">
-                            <button type="submit" class="btn btn-rose pull-right">ثبت</button>
+                            <button type="button" onclick="setData()" class="btn btn-rose pull-right">ثبت</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>
@@ -122,3 +122,39 @@
         </div>
     </div>
 </div>
+<script>
+    function setData() {
+        var Data = {
+            medicalRecordId: @medicalRecord.Id,
+            phases: []
+        };
+        $('.card[data-phase-no]').each(function () {
+            debugger;
+            var phaseData = {
+                no: $(this).attr('data-phase-no'),
+                fraction: $(this).find('input[data-fraction]').val(),
+                deviceId: $(this).find('select[data-device]').val(),
+                cancerAORs:[]
+            };
+            if (phaseData.fraction == '' || phaseData.fraction == null) {
+                alert('لطفا تعداد جلسات را در فرکشن تعیین کنید.');
+                $(this).find('input[data-fraction]').focus();
+                return;
+            }
+            if (phaseData.deviceId == '' || phaseData.deviceId == null) {
+                alert('لطفا دستگاه فاز ' + phaseData.no+ ' را تعیین کنید.');
+                $(this).find('select[data-device]').focus();
+                return;
+            }
+            $(this).find('input[name*="dose_"]').each(function () {
+                if ($(this).val() == '') {
+                    $(this).focus();
+                }
+                phaseData.cancerAORs.push({ id: $(this).attr('data-value'), dose: $(this).val() });
+            });
+            Data.phases.push(phaseData);
+        });
+        $.post('SetMedicalRecordTreatmentPhase', Data, function (d) { });
+        console.log('here');
+    }
+</script>

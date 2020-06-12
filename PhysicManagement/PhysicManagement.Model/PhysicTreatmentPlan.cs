@@ -35,8 +35,8 @@ namespace PhysicManagement.Model
         public string AcceptedPhysicUserId { get; set; }
         public string AcceptedPhysicUserFullName { get; set; }
     
-        public virtual PhysicTreatment PhysicTreatment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
+        public virtual PhysicTreatment PhysicTreatment { get; set; }
     }
 }

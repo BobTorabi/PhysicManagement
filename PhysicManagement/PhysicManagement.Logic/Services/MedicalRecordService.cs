@@ -94,6 +94,15 @@ namespace PhysicManagement.Logic.Services
                 Entity.MRICode = entity.MRICode;
                 Entity.CancerTitle = entity.CancerTitle;
 
+                Entity.Phase1TreatmentDeviceId = entity.Phase1TreatmentDeviceId;
+                Entity.Phase1TreatmentDeviceTitle = entity.Phase1TreatmentDeviceTitle;
+                Entity.Phase2TreatmentDeviceId = entity.Phase2TreatmentDeviceId;
+                Entity.Phase2TreatmentDeviceTitle = entity.Phase2TreatmentDeviceTitle;
+                Entity.Phase3TreatmentDeviceId = entity.Phase3TreatmentDeviceId;
+                Entity.Phase3TreatmentDeviceTitle = entity.Phase3TreatmentDeviceTitle;
+                Entity.Phase4TreatmentDeviceId = entity.Phase4TreatmentDeviceId;
+                Entity.Phase4TreatmentDeviceTitle = entity.Phase4TreatmentDeviceTitle;
+                Entity.TreatmentDeviceIsQueued = entity.TreatmentDeviceIsQueued;
                 return db.SaveChanges() == 1;
             }
         }

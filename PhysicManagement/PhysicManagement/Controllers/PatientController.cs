@@ -1,4 +1,5 @@
 ﻿using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace PhysicManagement.Controllers
         Logic.Services.CancerService CancerService;
         Logic.Services.ContourService ContourService;
         Logic.Services.TreatmentService TreatmentService;
+   
 
         public PatientController()
         {
@@ -61,9 +63,14 @@ namespace PhysicManagement.Controllers
                 PhysicTreatmentService.AddPhysicTreatment(new Model.PhysicTreatment
                 {
                     ActionDate = DateTime.Now,
-                    ActionUser = UserData.UserId.ToString(),
+                    ActionUserId = UserData.UserId.ToString(),
+                    ActionUserRole = UserData.RoleName,
+                    TreatmentDeviceId = null,
+                    Fraction = 0,
+                    ActionUserFullName = UserData.FullName,
                     MedicalRecordId = medicalRecordId,
-                    PhaseNumber = i
+                    PhaseNumber = i,
+                    
                 });
 
             }
@@ -87,11 +94,61 @@ namespace PhysicManagement.Controllers
             ViewBag.TreatmentService = TreatmentService.GetTreatmentDeviceList();
             return View(ViewData);
         }
-
+        /// <summary>
+        /// ثبت اطلاعات فازهای درمانی برای یک پرونده پزشکی
+        /// معادل ذخیره سازی فرم شماره 7
+        /// </summary>
+        /// <param name="medicalRecordId"></param>
+        /// <param name="Data"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult SetMedicalRecordTreatmentPhase(long medicalRecordId, string Data)
+        public ActionResult SetMedicalRecordTreatmentPhase(MedicalRecordTreatmentPhaseVM Data)
         {
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(Data.MedicalRecordId);
+            var PhysicTreatments  = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(Data.MedicalRecordId);
+            foreach (var item in Data.Phases)
+            {
+                var Device = TreatmentService.GetTreatmentDeviceById(item.DeviceId);
+                switch (item.No)
+                {
+                    case 1:
+                        MedicalRecordData.Phase1TreatmentDeviceId = Device.Id;
+                        MedicalRecordData.Phase1TreatmentDeviceTitle = Device.Title;
+                        break;
+                    case 2:
+                        MedicalRecordData.Phase2TreatmentDeviceId = Device.Id;
+                        MedicalRecordData.Phase2TreatmentDeviceTitle = Device.Title;
+                        break;
+                    case 3:
+                        MedicalRecordData.Phase3TreatmentDeviceId = Device.Id;
+                        MedicalRecordData.Phase3TreatmentDeviceTitle = Device.Title;
+                        break;
+                    case 4:
+                        MedicalRecordData.Phase4TreatmentDeviceId = Device.Id;
+                        MedicalRecordData.Phase4TreatmentDeviceTitle = Device.Title;
+                        break;
+                }
+                var CurrentPhysicTreatment = PhysicTreatments.Where(x => x.PhaseNumber == item.No).FirstOrDefault();
+                CurrentPhysicTreatment.TreatmentDeviceId = Device.Id;
+                CurrentPhysicTreatment.Fraction = item.Fraction;
+                PhysicTreatmentService.UpdatePhysicTreatment(CurrentPhysicTreatment);
+                foreach (var oar in item.cancerAORs)
+                {
+                    PhysicTreatmentService.AddPhysicTreatmentPlan(new Model.PhysicTreatmentPlan { 
+                    CancerOARId = oar.Id,
+                    Evaluation = "",
+                    ActionDate = DateTime.Now,
+                    HadContour=false,
+                    PhysicTreatmentId = CurrentPhysicTreatment.Id,
+                    PlannedDose = oar.Dose,
+                    
 
+                    });
+                }
+            }
+            MedicalRecordData.TreatmentDeviceIsQueued = false;
+            MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return View();
         }
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)

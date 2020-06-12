@@ -24,15 +24,15 @@
         <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="5.25" PointY="26" />
         <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="7.5" PointY="26.125" />
         <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="3" PointY="22.5" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatment" Width="1.5" PointX="3.375" PointY="9.75" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="5.625" PointY="9" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanHostory" Width="1.5" PointX="7.875" PointY="9.75" />
         <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
         <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
         <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
         <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" />
         <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatment" Width="1.5" PointX="3.375" PointY="9.625" />
+        <AssociationConnector Association="PhysicManagementModel.FK_PhysicTreatmentPlan_PhysicTreatment" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

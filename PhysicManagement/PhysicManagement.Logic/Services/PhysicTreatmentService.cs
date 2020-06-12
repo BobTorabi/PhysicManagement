@@ -68,21 +68,15 @@ namespace PhysicManagement.Logic.Services
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
-                Logic.Services.MedicalRecordService md = new MedicalRecordService();
-                var PhysicTreatmentObject = md.GetMedicalRecordById(entity.MedicalRecordId);
-                if (PhysicTreatmentObject == null)
-                    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
-
-                PatientService pa = new PatientService();
-                var PhysicTreatmentObject2 = pa.GetPatientById(Convert.ToInt32(entity.ActionUser));
-                if (PhysicTreatmentObject2 == null)
-                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-                entity.ActionUser = PhysicTreatmentObject2.LastName;
+           
 
                 Entity.PhaseNumber = entity.PhaseNumber;
-                Entity.PhysicTreatmentPlan = entity.PhysicTreatmentPlan;
                 Entity.ActionDate = entity.ActionDate;
-
+                Entity.Fraction = entity.Fraction;
+                Entity.ActionUserFullName = entity.ActionUserFullName;
+                Entity.ActionUserId = entity.ActionUserId;
+                Entity.ActionUserRole = entity.ActionUserRole;
+                Entity.TreatmentDeviceId = entity.TreatmentDeviceId;
                 return db.SaveChanges() == 1;
             }
         }
