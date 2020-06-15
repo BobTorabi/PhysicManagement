@@ -172,6 +172,7 @@
     <Content Include="assets\css\dashboard.min.css" />
     <Content Include="assets\css\fonts.css" />
     <Content Include="assets\img\apple-icon.png" />
+    <Content Include="assets\img\css_sprites.png" />
     <Content Include="assets\img\favicon.png" />
     <Content Include="assets\img\login_01.jpg" />
     <Content Include="assets\img\login_02.jpg" />
