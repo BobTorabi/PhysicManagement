@@ -206,14 +206,20 @@
                 if (targets != null && targets[i] != undefined) {
                     target =
                         `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
-                                    <div class="togglebutton"><label><input id="target_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
-                                </div>
-                                <div class="col-md-4" style="padding: 20px 0 0 0;">`+ targets[i].Title + `</div>
-                                <div class="col-md-6">
-                                    <div class="form-group bmd-form-group">
-                                        <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
-                                        <input data-oar-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control"></div>
-                                </div>`;
+                            <div class="togglebutton">
+                                <label>
+                                    <input id="target_check_` + oars[i].Id + `" type="checkbox">
+                                    <span class="toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="padding: 20px 0 0 0;">`+ targets[i].Title + `</div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
+                                <input data-oar-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control">
+                            </div>
+                        </div>`;
                 }
                 var tmp =
                     `<tr data-row='`+i+`'>
