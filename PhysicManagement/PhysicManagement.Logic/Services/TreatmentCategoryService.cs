@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhysicManagement.Logic.Services
 {
     public class TreatmentCategoryService
     {
-        public static List<Model.KFactor> GetAllKFaktors() {
+        public static List<Model.KFactor> GetAllKFaktors()
+        {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.KFactor.ToList();
@@ -18,7 +16,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.KFactor.Where(x=>x.Year == year).FirstOrDefault();
+                return db.KFactor.Where(x => x.Year == year).FirstOrDefault();
             }
         }
         public static List<Model.TreatmentCategory> GetAllTreatmentCategory()
@@ -28,14 +26,14 @@ namespace PhysicManagement.Logic.Services
                 return db.TreatmentCategory.ToList();
             }
         }
-        public static List<Model.TreatmentCategoryService> 
+        public static List<Model.TreatmentCategoryService>
             GetTreatmentCategoryServiceByTreatmentCategoryId(int TreatmentCategoryId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return 
+                return
                     db.TreatmentCategoryService
-                    .Where(x=>x.TreatmentCategoryId == TreatmentCategoryId)
+                    .Where(x => x.TreatmentCategoryId == TreatmentCategoryId)
                     .ToList();
             }
         }
