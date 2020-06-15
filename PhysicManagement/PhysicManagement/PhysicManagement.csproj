@@ -144,11 +144,13 @@
     <Compile Include="Controllers\ContourDetailsController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KFactorController.cs" />
     <Compile Include="Controllers\MedicalRecordController.cs" />
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
     <Compile Include="Controllers\PhysicUserController.cs" />
     <Compile Include="Controllers\ResidentController.cs" />
     <Compile Include="Controllers\TreatmentCategoryController.cs" />
+    <Compile Include="Controllers\TreatmentCategoryServiceController.cs" />
     <Compile Include="Controllers\TreatmentDeviceController.cs" />
     <Compile Include="Controllers\TreatmentPhaseController.cs" />
     <Compile Include="Controllers\TreatmentProcessController.cs" />
@@ -221,6 +223,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\KFactor\" />
+    <Folder Include="Views\TreatmentCategoryService\" />
     <Folder Include="Views\TreatmentCategory\" />
   </ItemGroup>
   <ItemGroup>

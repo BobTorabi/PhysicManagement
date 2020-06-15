@@ -43,9 +43,6 @@ namespace PhysicManagement.Logic.Validations
         }
         #endregion
 
-
-
-
     }
 }
 
