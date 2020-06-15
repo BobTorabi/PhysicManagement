@@ -16,11 +16,11 @@ namespace PhysicManagement.Model
     {
         public long Id { get; set; }
         public Nullable<long> MediacalRecordId { get; set; }
-        public Nullable<long> ContourId { get; set; }
+        public long ContourId { get; set; }
         public Nullable<int> CancerOARId { get; set; }
+        public Nullable<int> CancerTargetId { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> SelectDate { get; set; }
-        public Nullable<int> CancerTargetId { get; set; }
     
         public virtual Contour Contour { get; set; }
     }

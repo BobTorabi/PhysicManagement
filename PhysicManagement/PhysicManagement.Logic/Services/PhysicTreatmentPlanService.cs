@@ -47,7 +47,9 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.PhysicTreatment.Find(entity.Id);
                 Entity.ActionDate = entity.ActionDate;
-                Entity.ActionUser = entity.ActionUser;
+                Entity.ActionUserFullName = entity.ActionUserFullName;
+                Entity.ActionUserId = entity.ActionUserId;
+                Entity.ActionUserRole = entity.ActionUserRole;
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.MedicalRecordId = entity.MedicalRecordId;
                 return db.SaveChanges() == 1;

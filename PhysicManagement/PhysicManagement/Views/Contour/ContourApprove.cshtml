@@ -72,10 +72,7 @@
                         <tbody>
                             @foreach (var mr in Model.Records)
                             {
-                                var CountorData = new PhysicManagement.Logic.Services.ContourService().GetContourByMedicalRecordId(mr.Id);
-                                if (CountorData != null)
-                                {
-                                    <tr>
+                                    <tr data-id="@mr.Id">
                                         <td>@Index</td>
                                         <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
                                         <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
@@ -83,15 +80,10 @@
                                         <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
                                         <td>@(mr.CancerTitle == null ? "" : mr.CancerTitle)</td>
                                         <td>
-                                            <form action="SetApproveContourByDoctor" method="post">
-                                                <input type="hidden" name="countorId" value="@CountorData.Id" />
-                                                <input type="hidden" name="medicalRecordId" value="@mr.Id" />
-                                                <button type="submit" class="btn btn-rose pull-left">تایید<div class="ripple-container"></div></button>
-                                            </form>
+                                            <button type="button" onclick="openpanel('@mr.Id')" class="btn btn-rose pull-left">مشاهده</button>
                                         </td>
                                     </tr>
                                     Index++;
-                                }
                             }
                         </tbody>
                     </table>
@@ -109,3 +101,187 @@
         </div>
     </div>
 </div>
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">لیست ارگان ها</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>نام</th><th>نام خانوادگی</th><th>نام پزشک</th><th>تاریخ پذیرش</th><th>تاریخ CT</th><th>شماره پرونده</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="patientName"></td>
+                            <td id="patientLatName"></td>
+                            <td id="doctorName"></td>
+                            <td id="receptionDate"></td>
+                            <td id="ctDate"></td>
+                            <td id="systemCode"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group dropdown-toggle">
+                    <select class="selectpicker" disabled onchange="loadCancerDetail()" id="cancerId" data-style="btn btn-primary btn-round">
+                        @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                </div>
+                <table class="table table-hover small">
+                    <thead class="text-warning"><tr><th class="bg-green">حجم هدف</th><th class="bg-red">بافت سالم</th></tr></thead>
+                    <tbody id="cancerData">
+                    </tbody>
+                </table>
+                <div class="form-group">
+                  <textarea placeholder="توضیحات پزشک" class="form-control" rows="5" id="des"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
+                <button type="button" onclick="failRequest()" class="btn btn-rose">عدم تائید</button>
+                <button type="button" onclick="sendSubmitRequest()" class="btn btn-rose">تائید</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" id="failModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">عدم تأیید کانتور</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                آیا از عدم تایید کانتور مطمئن هستید؟
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">خیر</button>
+                <button type="submit" onclick="sendFailRequest()" class="btn btn-rose">بلی</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var med_id = null;
+    function failRequest() {
+        $('#failModal').modal('show');
+    }
+    function sendFailRequest() {
+        $('#failModal').modal('hide');
+        $('#exampleModal').modal('hide');
+        $('tr[data-id="' + med_id + '"]').fadeOut();
+        $.post('UnacceptContourByDoctor', { medicalRecordId: med_id, Description: $('#des').val() }, function (d) {
+            alert('نتیجه در سیستم ثبت شد');
+        });
+    }
+    function sendSubmitRequest() {
+        $('#exampleModal').modal('hide');
+        $('tr[data-id="' + med_id + '"]').fadeOut();
+        $.post('AcceptContourByDoctor', { medicalRecordId: med_id, Description: $('#des').val() }, function (d) {
+            alert('نتیجه در سیستم ثبت شد');
+            window.location = "../Patient/SetMedicalRecordPhases?medicalRecordId=" + med_id;
+        });
+    }
+    function openpanel(id) {
+        med_id = id;
+        $('#patientName,#patientLatName,#doctorName,#receptionDate,#ctDate,#systemCode').val('');
+        $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: id }, function (d) {
+            $('#patientName').html(d.PatientFirstName);
+            $('#patientLatName').html(d.PatientLastName);
+            $('#doctorName').html(d.DoctorName);
+            $('#receptionDate').html(d.ReceptionDate);
+            $('#ctDate').html(d.CTDate);
+            $('#systemCode').html(d.SystemCode);
+            $('#cancerId').val(d.CancerId).trigger('change');
+            $('#cancerData').empty();
+            $('#exampleModal').modal('show');
+        });
+    }
+    function loadCancerDetail() {
+
+        $('#cancerData').empty();
+        var id = $('#cancerId').val();
+        if (id == undefined || id == null || id == '') {
+            return;
+        }
+        var name = $('#cancerId option:selected').text();
+        $.getJSON(
+            '../../../Cancer/GetCancerOARAndTargets',
+            { cancerId: id },
+            function (j) {
+                var oars = j.OARs;
+                var targets = j.Targets;
+                var max = oars.length > targets.length ? oars.length : targets.length;
+                for (var i = 0; i < max; i++) {
+                    var oar = '';
+                    if (oars != null && oars[i] != undefined) {
+                        oar =
+                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                                <div class="togglebutton"><label><input disabled id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
+                                </div>
+                                <div class="col-md-4" style="padding: 20px 0 0 0;">`+ oars[i].OrganTitle + `</div>
+                                <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
+                                    <input type="text" disabled data-oar-id='`+ oars[i].Id + `' id="ora_desc_` + oars[i].Id + `" class="form-control"/>
+                                </div>
+                            </div>`;
+                    }
+                    var target = '';
+                    if (targets != null && targets[i] != undefined) {
+                        target =
+                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                                <div class="togglebutton">
+                                    <label>
+                                        <input disabled id="target_check_` + oars[i].Id + `" type="checkbox">
+                                        <span class="toggle"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding: 20px 0 0 0;">`+ targets[i].Title + `</div>
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
+                                    <input disabled data-target-id='`+ oars[i].Id + `' id="target_desc_` + oars[i].Id + `" type="text" class="form-control">
+                                </div>
+                         </div>`;
+                    }
+                    var tmp =
+                        `<tr data-row='` + i + `'>
+                        <td style="width:50%" class="oar"><div class="row">`+ oar + `</div></td>
+                        <td style="width:50%" class="target"><div class="row">`+ target + `</div></td>
+                    </tr>`;
+                    $(tmp).appendTo('#cancerData');
+                }
+                setTimeout(function () { loadContourDetailData(med_id); },150 );
+            }
+        );
+    }
+    function loadContourDetailData(mdId) {
+        $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: mdId }, function (d) {
+            if (d.ContourDetail !== undefined) {
+                if (d.ContourDetail.length > 0) {
+                    for (var i = 0; i < d.ContourDetail.length; i++) {
+                        if (d.ContourDetail[i].CancerOARId != null) {
+                            $('#ora_check_' + d.ContourDetail[i].CancerOARId).attr('checked', 'checked');
+                            $('#ora_desc_' + d.ContourDetail[i].CancerOARId).val(d.ContourDetail[i].Description);
+                        }
+                        if (d.ContourDetail[i].CancerTargetId != null) {
+                            $('#target_check_' + d.ContourDetail[i].CancerTargetId).attr('checked', 'checked');
+                            $('#target_desc_' + d.ContourDetail[i].CancerTargetId).val(d.ContourDetail[i].Description);
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>

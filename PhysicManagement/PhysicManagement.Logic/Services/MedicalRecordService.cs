@@ -47,7 +47,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.MedicalRecord.Count(e => e.TreatmentDeviceId == treatmentDeviceId);
+                var Entity = db.MedicalRecord.Count(e => e.Phase1TreatmentDeviceId == treatmentDeviceId);
                 return Entity;
             }
         }
@@ -94,6 +94,15 @@ namespace PhysicManagement.Logic.Services
                 Entity.MRICode = entity.MRICode;
                 Entity.CancerTitle = entity.CancerTitle;
 
+                Entity.Phase1TreatmentDeviceId = entity.Phase1TreatmentDeviceId;
+                Entity.Phase1TreatmentDeviceTitle = entity.Phase1TreatmentDeviceTitle;
+                Entity.Phase2TreatmentDeviceId = entity.Phase2TreatmentDeviceId;
+                Entity.Phase2TreatmentDeviceTitle = entity.Phase2TreatmentDeviceTitle;
+                Entity.Phase3TreatmentDeviceId = entity.Phase3TreatmentDeviceId;
+                Entity.Phase3TreatmentDeviceTitle = entity.Phase3TreatmentDeviceTitle;
+                Entity.Phase4TreatmentDeviceId = entity.Phase4TreatmentDeviceId;
+                Entity.Phase4TreatmentDeviceTitle = entity.Phase4TreatmentDeviceTitle;
+                Entity.TreatmentDeviceIsQueued = entity.TreatmentDeviceIsQueued;
                 return db.SaveChanges() == 1;
             }
         }
@@ -144,8 +153,9 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public bool SetCancerForMR(long medicalRecordId, int cancerId, string UserId)
+        public bool SetCancerForMR(long medicalRecordId, int cancerId)
         {
+             var UserData = AuthenticatedUserService.GetUserId();
             try
             {
                 using (var db = new Model.PhysicManagementEntities())
@@ -161,7 +171,10 @@ namespace PhysicManagement.Logic.Services
                     Entity.CancerTitle = CancerObject.Title;
                     Entity.CancerId = CancerObject.Id;
                     Entity.ContourAcceptDate = DateTime.Now;
-                    Entity.ContourAcceptUser = UserId;
+                    Entity.ContourAcceptUserId = UserData.UserId.GetValueOrDefault().ToString();
+                    Entity.ContourAcceptUserFullName = UserData.FullName;
+                    Entity.ContourAcceptUserRole = UserData.RoleName;
+
                     Entity.TreatmentProcessId = 2; //کانتورینگ
                     Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                     var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
@@ -169,12 +182,11 @@ namespace PhysicManagement.Logic.Services
                     {
                         Entity.Contour.Add(new Model.Contour()
                         {
-                            AcceptDate = null,
-                            AcceptUser = null,
+                            ModifyDate = null,
+                            DoctorFullName = null,
+                            DoctorUserId = null,
                             ActionDate = DateTime.Now,
                             Description = "",
-                            ExtraInfo1 = "",
-                            ExtraInfo2 = "",
                             MedicalRecordId = medicalRecordId
                         });
                     }

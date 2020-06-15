@@ -28,7 +28,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new PhysicManagementEntities())
             {
-                var c = db.Contour.Where(x => x.AcceptDate == null).Select(x=>x.MedicalRecordId).ToList();
+                var c = db.Contour.Where(x => x.ModifyDate == null).Select(x=>x.MedicalRecordId).ToList();
                 return db
                     .MedicalRecord
                     .Where(x => c.Contains(x.Id))
@@ -41,7 +41,12 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Include(x => x.Patient);
+                IQueryable<MedicalRecord> QueryableMR =
+                    db.MedicalRecord
+                    .Where(t => t.Contour.Any(x=>x.IsAccepted == null))
+                    .Include(x => x.Patient)
+                    .Include(x=>x.Contour);
+
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -111,19 +116,19 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public object SetContourAsAcceptedByDoctor(long countorId)
-        {
-            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+        //public object SetContourAsAcceptedByDoctor(long countorId)
+        //{
+        //    var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
 
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.Contour.Find(countorId);
-                Entity.AcceptDate = DateTime.Now;
-                Entity.AcceptUser = UserData.UserId.ToString();
-
-                return db.SaveChanges() == 1;
-            }
-        }
+        //    using (var db = new Model.PhysicManagementEntities())
+        //    {
+        //        var Entity = db.Contour.Find(countorId);
+        //        Entity.ModifyDate = DateTime.Now;
+        //        Entity.DoctorUserId = UserData.UserId.ToString();
+        //        Entity.DoctorFullName = UserData.FullName;
+        //        return db.SaveChanges() == 1;
+        //    }
+        //}
 
         public bool UpdateContour(Model.Contour entity)
         {
@@ -135,9 +140,11 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.Contour.Find(entity.Id);
                 Entity.Description = entity.Description;
-                Entity.ExtraInfo1 = entity.ExtraInfo1;
-                Entity.ExtraInfo2 = entity.ExtraInfo2;
-
+                Entity.DoctorFullName= entity.DoctorFullName;
+                Entity.ActionDate= entity.ActionDate;
+                Entity.DoctorUserId = entity.DoctorUserId;
+                Entity.IsAccepted = entity.IsAccepted;
+                Entity.ModifyDate = entity.ModifyDate;
                 return db.SaveChanges() == 1;
             }
         }
@@ -170,6 +177,14 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.ContourDetails.Find(entityId);
                 return Entity;
+            }
+        }
+        public List<ContourDetails> GetContourDetailsByMedicalRecordId(long medicalRecordId)
+        {
+            using (var db = new PhysicManagementEntities())
+            {
+                var Entities = db.ContourDetails.Where(x => x.Contour.MedicalRecordId == medicalRecordId).ToList();
+                return Entities;
             }
         }
         public bool AddContourDetails(Model.ContourDetails entity)

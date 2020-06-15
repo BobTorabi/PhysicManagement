@@ -3,6 +3,9 @@
     ViewBag.Title = "تجویز درمان برای بیمار";
     PhysicManagement.Model.Patient PatientData = ViewBag.PatientData;
     PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecordData;
+    List<PhysicManagement.Model.ContourDetails> contourDetails = ViewBag.ContourDetails;
+    List<PhysicManagement.Model.CancerOAR> cancerOARList = ViewBag.CancerOARList;
+    List<PhysicManagement.Model.TreatmentDevice> TreatmentService = ViewBag.TreatmentService;
     int Index = 1;
 }
 
@@ -67,48 +70,91 @@
                         <div class="row">
                             @foreach (var Phase in Model)
                             {
-                                <div class="card">
+                                <div class="card" data-phase-no="@Phase.PhaseNumber">
                                     <div class="card-header card-header-rose card-header-icon">
-                                        <h4 class="card-title">فاز شماره - @Index</h4>
+                                        <h4 class="card-title">تجویز درمان فاز @Index</h4>
                                     </div>
                                     <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">دز (Dose)</label>
-                                                        <input type="text" class="form-control" name="Dose-@Phase.Id">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">فرکشن (Fraction)</label>
-                                                        <input type="text" class="form-control" name="Fraction-@Phase.Id">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group bmd-form-group">
-                                                        <label class="bmd-label-floating">هدف (Target)</label>
-                                                        <textarea class="form-control" name="Target-@Phase.Id" rows="5"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                           
+                                        <table class="table table-hover">
+                                            <thead class="text-warning">
+                                                <tr><th>لیست ارگان های هدف</th><th>دز تجویز شده (Prescribed dose)</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in contourDetails)
+                                                {
+                                                    var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
+                                                    <tr>
+                                                        <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
+                                                        <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                        <div class="form-group bmd-form-group">
+                                            <label for="fraction_@Phase.PhaseNumber" class="bmd-label-floating">فرکشن (Fraction)</label>
+                                            <input type="text" id="fraction_@Phase.PhaseNumber" data-fraction=""  value="" class="form-control">
+                                        </div>
+                                        <div class="form-group bmd-form-group">
+                                            <select data-device="" name="device_phase_@Phase.PhaseNumber" class="form-control">
+                                                <option value="" disabled selected>انتخاب دستگاه</option>
+                                                @foreach (var item in TreatmentService)
+                                                {
+                                                    <option value="@item.Id">@item.Title</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 Index++;
                             }
                         </div>
                         <div class="row">
-                            <button type="submit" class="btn btn-rose pull-right">ثبت</button>
+                            <button type="button" onclick="setData()" class="btn btn-rose pull-right">ثبت</button>
                             <div class="clearfix"></div>
                         </div>
                     </form>
 
                 </div>
             </div>
-          
+
         </div>
     </div>
 </div>
+<script>
+    function setData() {
+        var Data = {
+            medicalRecordId: @medicalRecord.Id,
+            phases: []
+        };
+        $('.card[data-phase-no]').each(function () {
+            debugger;
+            var phaseData = {
+                no: $(this).attr('data-phase-no'),
+                fraction: $(this).find('input[data-fraction]').val(),
+                deviceId: $(this).find('select[data-device]').val(),
+                cancerAORs:[]
+            };
+            if (phaseData.fraction == '' || phaseData.fraction == null) {
+                alert('لطفا تعداد جلسات را در فرکشن تعیین کنید.');
+                $(this).find('input[data-fraction]').focus();
+                return;
+            }
+            if (phaseData.deviceId == '' || phaseData.deviceId == null) {
+                alert('لطفا دستگاه فاز ' + phaseData.no+ ' را تعیین کنید.');
+                $(this).find('select[data-device]').focus();
+                return;
+            }
+            $(this).find('input[name*="dose_"]').each(function () {
+                if ($(this).val() == '') {
+                    $(this).focus();
+                }
+                phaseData.cancerAORs.push({ id: $(this).attr('data-value'), dose: $(this).val() });
+            });
+            Data.phases.push(phaseData);
+        });
+        $.post('SetMedicalRecordTreatmentPhase', Data, function (d) { });
+        console.log('here');
+    }
+</script>

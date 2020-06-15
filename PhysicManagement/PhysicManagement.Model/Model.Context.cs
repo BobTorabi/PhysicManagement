@@ -28,13 +28,9 @@ namespace PhysicManagement.Model
         public virtual DbSet<Calendar> Calendar { get; set; }
         public virtual DbSet<Cancer> Cancer { get; set; }
         public virtual DbSet<CancerOAR> CancerOAR { get; set; }
-        public virtual DbSet<Contour> Contour { get; set; }
         public virtual DbSet<Doctor> Doctor { get; set; }
-        public virtual DbSet<PhysicTreatmentPlan> PhysicTreatmentPlan { get; set; }
-        public virtual DbSet<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
         public virtual DbSet<TreatmentPhase> TreatmentPhase { get; set; }
         public virtual DbSet<TreatmentProcess> TreatmentProcess { get; set; }
-        public virtual DbSet<ContourDetails> ContourDetails { get; set; }
         public virtual DbSet<Alarm> Alarm { get; set; }
         public virtual DbSet<AlarmType> AlarmType { get; set; }
         public virtual DbSet<PhysicUser> PhysicUser { get; set; }
@@ -42,8 +38,12 @@ namespace PhysicManagement.Model
         public virtual DbSet<TreatmentDevice> TreatmentDevice { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
-        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
-        public virtual DbSet<PhysicTreatment> PhysicTreatment { get; set; }
         public virtual DbSet<CancerTarget> CancerTarget { get; set; }
+        public virtual DbSet<Contour> Contour { get; set; }
+        public virtual DbSet<ContourDetails> ContourDetails { get; set; }
+        public virtual DbSet<MedicalRecord> MedicalRecord { get; set; }
+        public virtual DbSet<PhysicTreatmentPlan> PhysicTreatmentPlan { get; set; }
+        public virtual DbSet<PhysicTreatmentPlanHostory> PhysicTreatmentPlanHostory { get; set; }
+        public virtual DbSet<PhysicTreatment> PhysicTreatment { get; set; }
     }
 }

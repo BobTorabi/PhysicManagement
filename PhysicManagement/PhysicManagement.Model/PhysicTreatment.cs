@@ -24,7 +24,11 @@ namespace PhysicManagement.Model
         public long MedicalRecordId { get; set; }
         public Nullable<int> PhaseNumber { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
-        public string ActionUser { get; set; }
+        public string ActionUserId { get; set; }
+        public string ActionUserFullName { get; set; }
+        public string ActionUserRole { get; set; }
+        public int Fraction { get; set; }
+        public Nullable<int> TreatmentDeviceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhysicTreatmentPlan> PhysicTreatmentPlan { get; set; }

@@ -44,7 +44,9 @@ namespace PhysicManagement.Model
         public Nullable<bool> NeedsFusion { get; set; }
         public string TPDescription { get; set; }
         public Nullable<System.DateTime> ContourAcceptDate { get; set; }
-        public string ContourAcceptUser { get; set; }
+        public string ContourAcceptUserId { get; set; }
+        public string ContourAcceptUserRole { get; set; }
+        public string ContourAcceptUserFullName { get; set; }
         public Nullable<int> PhasesCount { get; set; }
         public Nullable<System.DateTime> PhasesPrescribedDate { get; set; }
         public Nullable<bool> IsOnGoing { get; set; }
@@ -53,8 +55,14 @@ namespace PhysicManagement.Model
         public Nullable<bool> IsOnCalendar { get; set; }
         public Nullable<System.DateTime> CalendarStartDate { get; set; }
         public Nullable<System.DateTime> CalendarEndDate { get; set; }
-        public Nullable<int> TreatmentDeviceId { get; set; }
-        public string TreatmentDeviceTitle { get; set; }
+        public Nullable<int> Phase1TreatmentDeviceId { get; set; }
+        public string Phase1TreatmentDeviceTitle { get; set; }
+        public Nullable<int> Phase2TreatmentDeviceId { get; set; }
+        public string Phase2TreatmentDeviceTitle { get; set; }
+        public Nullable<int> Phase3TreatmentDeviceId { get; set; }
+        public string Phase3TreatmentDeviceTitle { get; set; }
+        public Nullable<int> Phase4TreatmentDeviceId { get; set; }
+        public string Phase4TreatmentDeviceTitle { get; set; }
         public Nullable<bool> TreatmentDeviceIsQueued { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
