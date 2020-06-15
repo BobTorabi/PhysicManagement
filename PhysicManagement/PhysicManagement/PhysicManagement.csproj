@@ -148,6 +148,7 @@
     <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
     <Compile Include="Controllers\PhysicUserController.cs" />
     <Compile Include="Controllers\ResidentController.cs" />
+    <Compile Include="Controllers\TreatmentCategoryController.cs" />
     <Compile Include="Controllers\TreatmentDeviceController.cs" />
     <Compile Include="Controllers\TreatmentPhaseController.cs" />
     <Compile Include="Controllers\TreatmentProcessController.cs" />
@@ -220,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\TreatmentCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -308,6 +310,7 @@
     <Content Include="Views\Patient\SetMedicalRecordPhases.cshtml" />
     <Content Include="Views\Patient\SetMedicalRecordTreatmentPhase.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\Home\Calculate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

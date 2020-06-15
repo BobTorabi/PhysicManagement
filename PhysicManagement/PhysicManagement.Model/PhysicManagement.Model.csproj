@@ -80,6 +80,9 @@
     <Compile Include="Doctor.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="KFactor.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="MedicalRecord.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -115,6 +118,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resident.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TreatmentCategory.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TreatmentCategoryService.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="TreatmentDevice.cs">

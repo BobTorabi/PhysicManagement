@@ -59,7 +59,12 @@ namespace PhysicManagement.Common
 
             return Year + "/" + Month + "/" + Day;
         }
-
+        public static string GetPersianYear(DateTime dateTime)
+        {
+            PersianCalendar Calendar = new PersianCalendar();
+            string Year = Calendar.GetYear(dateTime).ToString();
+            return Year;
+        }
         /// <summary>
         /// تبدیل تاریخ میلادی به تاریخ شمسی
         /// </summary>

@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "محاسبه خدمت";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhysicManagement.Model.TreatmentCategory> treatmentCategories = ViewBag.TreatmentCategory;
+    PhysicManagement.Model.KFactor kFactor = ViewBag.kFactor;
+}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">mail_outline</i>
+                        </div>
+                        <h4 class="card-title">نوع درمان</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">لطفا نوع درمان را انتخاب نمایید:</p>
+                        @foreach (var item in treatmentCategories)
+                        {
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input onchange="getData()" class="form-check-input" type="radio" name="treatmentCategories" value="@item.Id" />
+                                    @item.Title
+                                    <span class="circle"><span class="check"></span></span>
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">mail_outline</i>
+                        </div>
+                        <h4 class="card-title">ضریب k</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-category">لطفا ضریب k را وارد نمایید:</p>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group bmd-form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="radio" name="KFactor" checked="checked" />
+                                            ضریب k دولتی
+                                            <span class="circle"><span class="check"></span></span>
+                                        </label>
+                                    </div>
+                                    <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
+                                           value="@kFactor.GovernmentalFactor.ToString("N0")" readonly name="KFactor" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group bmd-form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label"><input class="form-check-input" type="radio" name="KFactor" />ضریب k خصوصی<span class="circle"><span class="check"></span></span></label>
+                                    </div>
+                                    <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
+                                           value="@kFactor.PrivateFactor.ToString("N0")" readonly name="KFactor" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group bmd-form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label"><input class="form-check-input" type="radio" name="KFactor" />ضریب k سایر<span class="circle"><span class="check"></span></span></label>
+                                    </div>
+                                    <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;" name="KFactor" />
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">add_box</i>
+                        </div>
+                        <h4 class="card-title">محاسبه خدمت</h4>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <tr>
+                                    <th>کد</th>
+                                    <th>شرح کد</th>
+                                    <th> ارزش نسبی</th>
+                                    <th>تعداد انجام خدمت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="Data">
+                            </tbody>
+                        </table>
+
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-rose pull-left" data-toggle="modal" data-target="#exampleModal">محاسبه قیمت</button>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">محاسبه قیمت</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-success"> با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما 2.005.000 ريال می باشد.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    function getData() {
+        $('#Data').empty();
+        $.getJSON('../TreatmentCategory/getTreatmentCategoryServices', { id: $('[name="treatmentCategories"]:checked').val() }, function (d) {
+            for (var i = 0; i < d.length; i++) {
+                var tmp =
+                    `<tr>
+                    <td>`+d[i].Code+`</td>
+                    <td>`+d[i].Title+`</td>
+                    <td>`+ d[i].RelativeValue+`</td>
+                    <td>
+                        <div class="form-group bmd-form-group">
+                            <input type="text" class="form-control" name="code_`+ d[i].Code +`" value='1'>
+                        </div>
+                    </td>
+                </tr>`;
+                $(tmp).appendTo('#Data');
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('[name="treatmentCategories"]:eq(0)').attr('checked', 'checked').change();
+    })
+</script>

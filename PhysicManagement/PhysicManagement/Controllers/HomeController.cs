@@ -25,6 +25,15 @@ namespace PhysicManagement.Controllers
         {
             return View();
         }
+        public ActionResult Calculate() {
+            string JYear = Common.DateUtility.GetPersianYear(DateTime.Now);
+            
+            ViewBag.kFactor = Logic.Services.TreatmentCategoryService.GetKFaktorByYear(JYear);
+            ViewBag.TreatmentCategory = Logic.Services.TreatmentCategoryService.GetAllTreatmentCategory();
+
+            return View();
+        }
+       
         public ActionResult Dashboard()
         {
             ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();

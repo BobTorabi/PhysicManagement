@@ -81,10 +81,7 @@ namespace PhysicManagement.Logic.Services
             //entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
 
             PatientService pa = new PatientService();
-            var TreatmentPhaseObject2 = pa.GetPatientById(Convert.ToInt32(entity.PrescribesdUser));
-            if (TreatmentPhaseObject2 == null)
-                throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-            entity.PrescribesdUser = TreatmentPhaseObject2.LastName;
+            
 
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -111,10 +108,7 @@ namespace PhysicManagement.Logic.Services
                 //entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
 
                 PatientService pa = new PatientService();
-                var TreatmentPhaseObject2 = pa.GetPatientById(Convert.ToInt32(entity.PrescribesdUser));
-                if (TreatmentPhaseObject2 == null)
-                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-                entity.PrescribesdUser = TreatmentPhaseObject2.LastName;
+              
 
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.PhaseText = entity.PhaseText;

@@ -120,6 +120,16 @@
           <Property Name="Password" Type="nvarchar" MaxLength="150" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="KFactor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="GovernmentalFactor" Type="int" Nullable="false" />
+          <Property Name="PrivateFactor" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="MedicalRecord">
           <Key>
             <PropertyRef Name="Id" />
@@ -260,6 +270,28 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="DoctorId" Type="int" />
         </EntityType>
+        <EntityType Name="TreatmentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="EnglishTitle" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="TreatmentCategoryService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TreatmentCategoryId" Type="int" />
+          <Property Name="Code" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="RelativeValue" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="TreatmentDevice">
           <Key>
             <PropertyRef Name="Id" />
@@ -284,7 +316,9 @@
           <Property Name="Target" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="PrescribeDate" Type="datetime" />
-          <Property Name="PrescribesdUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrescribesdUserId" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrescribesdUserFullName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PrescribesdUserRole" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TreatmentProcess">
           <Key>
@@ -406,6 +440,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TreatmentCategoryService_TreatmentCategory">
+          <End Role="TreatmentCategory" Type="Self.TreatmentCategory" Multiplicity="0..1" />
+          <End Role="TreatmentCategoryService" Type="Self.TreatmentCategoryService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TreatmentCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TreatmentCategoryService">
+              <PropertyRef Name="TreatmentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PhysicManagementModelStoreContainer">
           <EntitySet Name="Alarm" EntityType="Self.Alarm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlarmType" EntityType="Self.AlarmType" Schema="dbo" store:Type="Tables" />
@@ -416,6 +462,7 @@
           <EntitySet Name="Contour" EntityType="Self.Contour" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContourDetails" EntityType="Self.ContourDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KFactor" EntityType="Self.KFactor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicTreatment" EntityType="Self.PhysicTreatment" Schema="dbo" store:Type="Tables" />
@@ -423,6 +470,8 @@
           <EntitySet Name="PhysicTreatmentPlanHostory" EntityType="Self.PhysicTreatmentPlanHostory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicUser" EntityType="Self.PhysicUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resident" EntityType="Self.Resident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentCategory" EntityType="Self.TreatmentCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TreatmentCategoryService" EntityType="Self.TreatmentCategoryService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentDevice" EntityType="Self.TreatmentDevice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentProcess" EntityType="Self.TreatmentProcess" Schema="dbo" store:Type="Tables" />
@@ -458,6 +507,10 @@
           <AssociationSet Name="FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan" Association="Self.FK_PhysicTreatmentPlanHostory_PhysicTreatmentPlan">
             <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
             <End Role="PhysicTreatmentPlanHostory" EntitySet="PhysicTreatmentPlanHostory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TreatmentCategoryService_TreatmentCategory" Association="Self.FK_TreatmentCategoryService_TreatmentCategory">
+            <End Role="TreatmentCategory" EntitySet="TreatmentCategory" />
+            <End Role="TreatmentCategoryService" EntitySet="TreatmentCategoryService" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -521,22 +574,6 @@
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
-        <EntityType Name="TreatmentPhase">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MedicalRecordId" Type="Int64" />
-          <Property Name="PhaseNumber" Type="Int32" />
-          <Property Name="PhaseText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Dose" Type="Double" />
-          <Property Name="Fraction" Type="Int32" />
-          <Property Name="Target" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PrescribeDate" Type="DateTime" Precision="3" />
-          <Property Name="PrescribesdUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TreatmentDeviceId" Type="Int32" />
-        </EntityType>
         <EntityType Name="TreatmentProcess">
           <Key>
             <PropertyRef Name="Id" />
@@ -564,7 +601,6 @@
           <EntitySet Name="Cancer" EntityType="Self.Cancer" />
           <EntitySet Name="CancerOAR" EntityType="Self.CancerOAR" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" />
-          <EntitySet Name="TreatmentPhase" EntityType="Self.TreatmentPhase" />
           <EntitySet Name="TreatmentProcess" EntityType="Self.TreatmentProcess" />
           <AssociationSet Name="FK_CancerOAR_Cancer" Association="Self.FK_CancerOAR_Cancer">
             <End Role="Cancer" EntitySet="Cancer" />
@@ -612,6 +648,14 @@
             <End Role="PhysicTreatment" EntitySet="PhysicTreatment" />
             <End Role="PhysicTreatmentPlan" EntitySet="PhysicTreatmentPlan" />
           </AssociationSet>
+          <EntitySet Name="KFactor" EntityType="PhysicManagementModel.KFactor" />
+          <EntitySet Name="TreatmentCategory" EntityType="PhysicManagementModel.TreatmentCategory" />
+          <EntitySet Name="TreatmentCategoryService" EntityType="PhysicManagementModel.TreatmentCategoryService" />
+          <AssociationSet Name="FK_TreatmentCategoryService_TreatmentCategory" Association="PhysicManagementModel.FK_TreatmentCategoryService_TreatmentCategory">
+            <End Role="TreatmentCategory" EntitySet="TreatmentCategory" />
+            <End Role="TreatmentCategoryService" EntitySet="TreatmentCategoryService" />
+          </AssociationSet>
+          <EntitySet Name="TreatmentPhase" EntityType="PhysicManagementModel.TreatmentPhase" />
           </EntityContainer>
         <EntityType Name="Alarm">
           <Key>
@@ -935,6 +979,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="KFactor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="GovernmentalFactor" Type="Int32" Nullable="false" />
+          <Property Name="PrivateFactor" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TreatmentCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="EnglishTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TreatmentCategoryService" Relationship="PhysicManagementModel.FK_TreatmentCategoryService_TreatmentCategory" FromRole="TreatmentCategory" ToRole="TreatmentCategoryService" />
+        </EntityType>
+        <EntityType Name="TreatmentCategoryService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TreatmentCategoryId" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RelativeValue" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TreatmentCategory" Relationship="PhysicManagementModel.FK_TreatmentCategoryService_TreatmentCategory" FromRole="TreatmentCategoryService" ToRole="TreatmentCategory" />
+        </EntityType>
+        <Association Name="FK_TreatmentCategoryService_TreatmentCategory">
+          <End Type="PhysicManagementModel.TreatmentCategory" Role="TreatmentCategory" Multiplicity="0..1" />
+          <End Type="PhysicManagementModel.TreatmentCategoryService" Role="TreatmentCategoryService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TreatmentCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TreatmentCategoryService">
+              <PropertyRef Name="TreatmentCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TreatmentPhase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="TreatmentDeviceId" Type="Int32" />
+          <Property Name="PhaseNumber" Type="Int32" />
+          <Property Name="PhaseText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dose" Type="Double" />
+          <Property Name="Fraction" Type="Int32" />
+          <Property Name="Target" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrescribeDate" Type="DateTime" Precision="3" />
+          <Property Name="PrescribesdUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrescribesdUserFullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrescribesdUserRole" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -995,23 +1103,6 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Degree" ColumnName="Degree" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TreatmentPhase">
-            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentPhase">
-              <MappingFragment StoreEntitySet="TreatmentPhase">
-                <ScalarProperty Name="TreatmentDeviceId" ColumnName="TreatmentDeviceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
-                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
-                <ScalarProperty Name="PhaseText" ColumnName="PhaseText" />
-                <ScalarProperty Name="Dose" ColumnName="Dose" />
-                <ScalarProperty Name="Fraction" ColumnName="Fraction" />
-                <ScalarProperty Name="Target" ColumnName="Target" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PrescribeDate" ColumnName="PrescribeDate" />
-                <ScalarProperty Name="PrescribesdUser" ColumnName="PrescribesdUser" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1261,6 +1352,60 @@
                 <ScalarProperty Name="ActionUserId" ColumnName="ActionUserId" />
                 <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
                 <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KFactor">
+            <EntityTypeMapping TypeName="PhysicManagementModel.KFactor">
+              <MappingFragment StoreEntitySet="KFactor">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PrivateFactor" ColumnName="PrivateFactor" />
+                <ScalarProperty Name="GovernmentalFactor" ColumnName="GovernmentalFactor" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentCategory">
+            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentCategory">
+              <MappingFragment StoreEntitySet="TreatmentCategory">
+                <ScalarProperty Name="EnglishTitle" ColumnName="EnglishTitle" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentCategoryService">
+            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentCategoryService">
+              <MappingFragment StoreEntitySet="TreatmentCategoryService">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RelativeValue" ColumnName="RelativeValue" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="TreatmentCategoryId" ColumnName="TreatmentCategoryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TreatmentPhase">
+            <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentPhase">
+              <MappingFragment StoreEntitySet="TreatmentPhase">
+                <ScalarProperty Name="PrescribesdUserRole" ColumnName="PrescribesdUserRole" />
+                <ScalarProperty Name="PrescribesdUserFullName" ColumnName="PrescribesdUserFullName" />
+                <ScalarProperty Name="PrescribesdUserId" ColumnName="PrescribesdUserId" />
+                <ScalarProperty Name="PrescribeDate" ColumnName="PrescribeDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Fraction" ColumnName="Fraction" />
+                <ScalarProperty Name="Dose" ColumnName="Dose" />
+                <ScalarProperty Name="PhaseText" ColumnName="PhaseText" />
+                <ScalarProperty Name="PhaseNumber" ColumnName="PhaseNumber" />
+                <ScalarProperty Name="TreatmentDeviceId" ColumnName="TreatmentDeviceId" />
                 <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

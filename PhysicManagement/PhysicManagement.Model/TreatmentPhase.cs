@@ -16,6 +16,7 @@ namespace PhysicManagement.Model
     {
         public long Id { get; set; }
         public Nullable<long> MedicalRecordId { get; set; }
+        public Nullable<int> TreatmentDeviceId { get; set; }
         public Nullable<int> PhaseNumber { get; set; }
         public string PhaseText { get; set; }
         public Nullable<double> Dose { get; set; }
@@ -23,7 +24,8 @@ namespace PhysicManagement.Model
         public string Target { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> PrescribeDate { get; set; }
-        public string PrescribesdUser { get; set; }
-        public Nullable<int> TreatmentDeviceId { get; set; }
+        public string PrescribesdUserId { get; set; }
+        public string PrescribesdUserFullName { get; set; }
+        public string PrescribesdUserRole { get; set; }
     }
 }

@@ -71,6 +71,7 @@
     <Compile Include="Services\PhysicTreatmentService.cs" />
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />
+    <Compile Include="Services\TreatmentCategoryService.cs" />
     <Compile Include="Services\TreatmentService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Validations\AlarmValidation.cs" />
