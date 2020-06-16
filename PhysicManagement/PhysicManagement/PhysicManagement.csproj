@@ -223,9 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\KFactor\" />
     <Folder Include="Views\TreatmentCategoryService\" />
-    <Folder Include="Views\TreatmentCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -315,6 +313,10 @@
     <Content Include="Views\Patient\SetMedicalRecordTreatmentPhase.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Home\Calculate.cshtml" />
+    <Content Include="Views\KFactor\Modify.cshtml" />
+    <Content Include="Views\KFactor\List.cshtml" />
+    <Content Include="Views\TreatmentCategory\Modify.cshtml" />
+    <Content Include="Views\TreatmentCategory\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

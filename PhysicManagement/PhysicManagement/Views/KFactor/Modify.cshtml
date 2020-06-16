@@ -1,0 +1,58 @@
+﻿@model PhysicManagement.Model.KFactor
+
+@{
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت ضریب جدید";
+    }
+    else
+    {
+        ViewBag.Title = " ویرایش ضریب";
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">اطلاعات نمایشی ضریب k</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Year" class="bmd-label-floating">سال</label>
+                                    <input type="text" id="Year" name="Year" value="@Model.Year" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="GovernmentalFactor" class="bmd-label-floating">سازمان دولتی</label>
+                                    <input type="text" id="GovernmentalFactor" name="GovernmentalFactor" value="@Model.GovernmentalFactor" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="PrivateFactor" class="bmd-label-floating">سازمان خصوصی</label>
+                                    <input type="text" id="PrivateFactor" name="PrivateFactor" value="@Model.PrivateFactor" class="form-control">
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
