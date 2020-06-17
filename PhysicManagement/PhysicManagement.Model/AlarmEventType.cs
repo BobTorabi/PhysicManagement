@@ -25,6 +25,7 @@ namespace PhysicManagement.Model
         public string EnglishTitle { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> TreatmentProcessStepId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlarmConfig> AlarmConfig { get; set; }

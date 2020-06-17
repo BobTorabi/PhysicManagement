@@ -264,8 +264,6 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Doctor\List.cshtml" />
     <Content Include="Views\Doctor\Modify.cshtml" />
-    <Content Include="Views\Alarm\List.cshtml" />
-    <Content Include="Views\Alarm\Modify.cshtml" />
     <Content Include="Views\Patient\List.cshtml" />
     <Content Include="Views\Patient\Modify.cshtml" />
     <Content Include="Views\PhysicTreatment\List.cshtml" />
@@ -317,6 +315,8 @@
     <Content Include="Views\Account\NoAccess.cshtml" />
     <Content Include="Views\TreatmentCategoryService\List.cshtml" />
     <Content Include="Views\TreatmentCategoryService\Modify.cshtml" />
+    <Content Include="Views\Alarm\List.cshtml" />
+    <Content Include="Views\Alarm\Inbox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

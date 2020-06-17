@@ -7,11 +7,13 @@ namespace PhysicManagement.Controllers
     public class AlarmController : BaseController
     {
         AlarmService Service;
-        
+
         public AlarmController()
         {
             Service = new AlarmService();
         }
+
+        #region BasicOperations
         public ActionResult Index()
         {
             return RedirectToActionPermanent("List");
@@ -25,7 +27,7 @@ namespace PhysicManagement.Controllers
         public ActionResult Modify(int? id)
         {
             Logic.Services.TreatmentService ts = new TreatmentService();
-            if(id == null)
+            if (id == null)
             {
                 //ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title");
                 //ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber");
@@ -38,7 +40,7 @@ namespace PhysicManagement.Controllers
                 //ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber",Entity.GenerateTreatmentPhaseId);
                 return View(Entity);
             }
-            
+
         }
         [HttpPost]
         public ActionResult Modify(Model.Alarm entity)
@@ -69,6 +71,14 @@ namespace PhysicManagement.Controllers
             var AlarmData = Service.GetAlarmById(id);
             Service.DeleteAlarm(AlarmData.Id);
             return RedirectToAction("List");
+        }
+        #endregion
+        public ActionResult Inbox()
+        {
+            var userData = AuthenticatedUserService.GetUserId();
+            var userType = AuthenticatedUserService.GetUserType();
+            var unreadAlarms = new AlarmService().GetUnreadAlarmListByUserType(userType, (int)userData.UserId);
+            return View(unreadAlarms);
         }
     }
 }
