@@ -1,0 +1,68 @@
+﻿@model IEnumerable<PhysicManagement.Model.TreatmentCategory>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">لیست دستبندی درمان</h4>
+                <h3>
+                    <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
+                </h3>
+            </div>
+            <div class="card-body table-responsive">
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-warning">
+                        <p>@TempData["Error"]</p>
+                    </div>
+                }
+                <table class="table table-hover">
+                    <thead class="text-warning">
+                        <tr>
+                            <th>ردیف</th>
+                            <th>نام  </th>
+                            <th>توضیحات </th>
+                            <th style="width:50px;">امکانات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int Index = 1;
+                            foreach (var TreatmentCategory in Model)
+                            {
+                                <tr>
+                                    <td>@Index</td>
+                                    <td>@TreatmentCategory.Title</td>
+                                    <td>@TreatmentCategory.Description</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                امکانات
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" href="@Url.Action("Modify","TreatmentCategory",new { @id = @TreatmentCategory.Id})">ویرایش</a>
+                                                @*<a class="dropdown-item" href="DeleteCancer/@Cancer.Id"> حذف</a>*@
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","TreatmentCategory", new { id = TreatmentCategory.Id })')">حذف</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                Index++;
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

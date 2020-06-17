@@ -13,7 +13,8 @@ namespace PhysicManagement.Logic.Services
     {
         #region TreatmentPhase Section
 
-        public PagedList<Model.TreatmentPhase> GetTreatmentPhasesList(string firstName, string lastName, string mobile,
+        public PagedList<Model.TreatmentPhase> 
+            GetTreatmentPhasesList(string firstName, string lastName, string mobile,
              string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -74,13 +75,13 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
-            Logic.Services.MedicalRecordService md = new MedicalRecordService();
+            //Logic.Services.MedicalRecordService md = new MedicalRecordService();
             ////var TreatmentPhaseObject = md.GetMedicalRecordById(Convert.ToInt64(entity.MedicalRecordId.GetValueOrDefault()));
             //if (TreatmentPhaseObject == null)
             //    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
             //entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
 
-            PatientService pa = new PatientService();
+            //PatientService pa = new PatientService();
             
 
             using (var db = new Model.PhysicManagementEntities())
@@ -115,7 +116,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.PrescribeDate = entity.PrescribeDate;
                 Entity.Target = entity.Target;
                 Entity.Description = entity.Description;
-                Entity.Dose = entity.Dose;
+                //Entity.Dose = entity.Dose;
                 Entity.Fraction = entity.Fraction;
 
                 return db.SaveChanges() == 1;

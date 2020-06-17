@@ -65,6 +65,7 @@
     <Compile Include="Services\CancerService.cs" />
     <Compile Include="Services\ContourService.cs" />
     <Compile Include="Services\DoctorService.cs" />
+    <Compile Include="Services\kFactorService.cs" />
     <Compile Include="Services\MedicalRecordService.cs" />
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicTreatmentPlanService.cs" />
@@ -79,11 +80,13 @@
     <Compile Include="Validations\CancerValidation.cs" />
     <Compile Include="Validations\ContourValidation.cs" />
     <Compile Include="Validations\DoctorValidation.cs" />
+    <Compile Include="Validations\KFactorValidation.cs" />
     <Compile Include="Validations\MedicalRecordValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
     <Compile Include="Validations\PhysicTreatmentValidation.cs" />
     <Compile Include="Validations\PhysicUserValidation.cs" />
     <Compile Include="Validations\ResidentValidation.cs" />
+    <Compile Include="Validations\TreatmentCategoryValidation.cs" />
     <Compile Include="Validations\TreatmentValidation.cs" />
     <Compile Include="Validations\UserValidation.cs" />
     <Compile Include="ViewModels\DaysStatisticsVM.cs" />

@@ -132,6 +132,9 @@
     <Compile Include="TreatmentPhase.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="TreatmentPhaseDetail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="TreatmentProcess.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
