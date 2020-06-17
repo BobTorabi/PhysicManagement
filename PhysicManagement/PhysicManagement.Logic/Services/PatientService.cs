@@ -197,7 +197,7 @@ namespace PhysicManagement.Logic.Services
                 if (!string.IsNullOrEmpty(systemCode))
                 {
                     systemCode = systemCode.Trim().toEnglishNumber();
-                    Queryable = Queryable.Where(x => x.SystemCode == systemCode);
+                    Queryable = Queryable.Where(x => x.SystemCode == systemCode || x.CTCode == systemCode);
                 }
                 if (!string.IsNullOrEmpty(code))
                 {
@@ -291,7 +291,7 @@ namespace PhysicManagement.Logic.Services
                 if (!string.IsNullOrEmpty(systemCode))
                 {
                     systemCode = systemCode.Trim().toEnglishNumber();
-                    QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(z=>z.SystemCode == systemCode));
+                    QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(z=>z.SystemCode == systemCode || z.CTCode == systemCode));
                 }
                 QueryablePatient = QueryablePatient.OrderByDescending(x => x.RegisterDate);
                 return new ViewModels.PagedList<Model.Patient>()
