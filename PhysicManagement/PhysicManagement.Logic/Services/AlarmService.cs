@@ -49,6 +49,16 @@ namespace PhysicManagement.Logic.Services
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
+                Entity.AlarmEventTypeId = entity.AlarmEventTypeId;
+                Entity.Body = entity.Body;
+                Entity.DeliverDate = entity.DeliverDate;
+                Entity.DoctorId = entity.DoctorId;
+                Entity.IsArchived = entity.IsArchived;
+                Entity.IsDelivered = entity.IsDelivered;
+                Entity.IsSMS = entity.IsSMS;
+                Entity.IsSystemAlarm = entity.IsSystemAlarm;
+                Entity.SendDate = entity.SendDate;
+
                 return db.SaveChanges() == 1;
             }
         }

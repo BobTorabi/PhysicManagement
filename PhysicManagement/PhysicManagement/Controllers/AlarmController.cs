@@ -1,4 +1,5 @@
 ﻿using PhysicManagement.Logic.Services;
+using PhysicManagement.Model;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -79,6 +80,25 @@ namespace PhysicManagement.Controllers
             var userType = AuthenticatedUserService.GetUserType();
             var unreadAlarms = new AlarmService().GetUnreadAlarmListByUserType(userType, (int)userData.UserId);
             return View(unreadAlarms);
+        }
+
+        [HttpPost]
+        public JsonResult SetAlarmAsRead(int id) {
+            var AlarmData = Service.GetAlarmById(id);
+            AlarmData.IsDelivered = true;
+            bool IsDone = Service.UpdateAlarm(AlarmData);
+            var Result = new MegaViewModel<bool>();
+            if (IsDone)
+            {
+                Result.Data = true;
+                Result.Status = MegaStatus.Successfull;
+            }
+            else {
+                Result.Data = false;
+                Result.Status = MegaStatus.Failed;
+                Result.Messages.Add("خطا در خواندن پیام");
+            }
+            return Json(Result, JsonRequestBehavior.AllowGet);
         }
     }
 }
