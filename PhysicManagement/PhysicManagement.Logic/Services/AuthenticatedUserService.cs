@@ -1,13 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PhysicManagement.Logic.Enums;
 
 namespace PhysicManagement.Logic.Services
 {
     public class AuthenticatedUserService
     {
+        public static UserType GetUserType()
+        {
+            var currentUser = GetUserId();
+            switch (currentUser.RoleName.ToLower())
+            {
+                case "doctor":
+                    return UserType.Doctor;
+                case "resident":
+                    return UserType.Resident;
+                case "physicuser":
+                    return UserType.Physist;
+                default:
+                    return UserType.User;
+            }
+        }
+
         public static (int? UserId,string RoleName,string FullName) GetUserId()
         {
             string CookieName = "RoleType";
