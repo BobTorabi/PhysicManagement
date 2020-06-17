@@ -1,15 +1,14 @@
 ﻿@model IEnumerable<PhysicManagement.Model.Alarm>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "";
 }
-
 
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-info">
-                <h4 class="card-title">لیست هشدارها</h4>
+                <h4 class="card-title">لیست سرطان</h4>
                 <h3>
                     <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
                 </h3>
@@ -25,54 +24,47 @@
                     <thead class="text-warning">
                         <tr>
                             <th>ردیف</th>
-                            <th> نوع هشدار</th>
-                            <th> کاربر ایجاد کننده</th>
-                            <th>عنوان فاز درمان</th>
-                            <th>کاربر تایید کننده</th>
-                            <th>تاریخ نظر</th>
-                            <th>تولید تاریخ</th>
+                            <th>نام  </th>
+                            <th>نام انگلیسی</th>
+                            <th>توضیحات </th>
                             <th style="width:50px;">امکانات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @{
                             int Index = 1;
-                            foreach (var alarm in Model)
+                            foreach (var Cancer in Model)
                             {
                                 <tr>
                                     <td>@Index</td>
-                                    <td>@alarm.AlarmTypeTitle</td>
-                                    <td>@alarm.GenerateUser</td>
-                                    <td>@alarm.GenerateTreatmentPhaseTitle</td>
-                                    <td>@alarm.ReviewUserName</td>
-                                    <td>@Html.DisplayForDate(alarm.ReviewDate)</td>
-                                    <td>@Html.DisplayForDate(alarm.GenerateDate)</td>
+                                    <td>@Cancer.Title</td>
+                                    <td>@Cancer.EnglishTitle</td>
+                                    <td>@Cancer.Description</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="@Url.Action("Modify","Alarm",new { @id = @alarm.Id})">ویرایش</a>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","Cancer",new { @id = @Cancer.Id})">ویرایش</a>
+                                                @*<a class="dropdown-item" href="DeleteCancer/@Cancer.Id"> حذف</a>*@
+                                                <a class="dropdown-item" href="~/CancerOAR/List/@Cancer.Id"> لیست ارگان ها</a>
+                                                <a class="dropdown-item" href="~/CancerTargets/List/@Cancer.Id"> لیست هدف ها</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Alarm", new { id = alarm.Id })')">حذف</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Cancer", new { id = Cancer.Id })')">حذف</a>
                                             </div>
-                                            @*<div class="dropdown-divider"></div>
-                                                <a class="dropdown-item"  data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Alarm", new { id = @alarm.Id })')">حذف</a>
-                                            *@
                                         </div>
-                    
                                     </td>
                                 </tr>
-                                 Index++;
+                                Index++;
                             }
 
                         }
 
 
-                        </tbody>
-                        </table>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
-            </div>
+        </div>
+    </div>
+</div>
