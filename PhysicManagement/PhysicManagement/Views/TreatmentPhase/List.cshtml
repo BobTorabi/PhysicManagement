@@ -1,4 +1,4 @@
-﻿@model PhysicManagement.Logic.ViewModels.PagedList<PhysicManagement.Model.TreatmentPhase>
+﻿@model PhysicManagement.Logic.ViewModels.PagedList<PhysicManagement.Model.MedicalRecord>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,10 +7,8 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-header card-header-info">
-                    <h4 class="card-title">لیست فاز درمانی</h4>
-                    <h3>
-                        <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
-                    </h3>
+                    <h4 class="card-title">تجویز درمانی</h4>
+                   
                 </div>
                 <div class="row">
                     <form method="get" style="width:100%;padding:10px 30px;" action="List">
@@ -62,49 +60,54 @@
                         <thead class="text-warning">
                             <tr>
                                 <th>ردیف</th>
-                                <th>شناسه پرونده پزشکی</th>
-                                <th>فاز</th>
-                                <th>عنوان فاز</th>
-                                <th>دز</th>
-                                <th>فرکشن/Fraction</th>
-                                <th>هدف/Target</th>
-                                <th>توضیحات</th>
-                                <th>تاریخ</th>
-                                <th>کاربر</th>
+                                <th>نام</th>
+                                <th>نام خانوادگی</th>
+                                <th>موبایل</th>
+                                <th>کد ملی</th>
+                                <th>شناسه بیمار</th>
+                                <th>تاریخ ثبت</th>
                                 <th style="width:50px;">امکانات</th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                int Index = 1;
-                                foreach (var treatmentPhase in Model.Records)
+                                if (Model == null)
                                 {
                                     <tr>
-                                        <td>@Index</td>
-                                        <td>@treatmentPhase.MedicalRecordId</td>
-                                        <td>@treatmentPhase.PhaseNumber</td>
-                                        <td>@treatmentPhase.PhaseText</td>
-                                        <td>@treatmentPhase.Dose</td>
-                                        <td>@treatmentPhase.Fraction</td>
-                                        <td>@treatmentPhase.Target</td>
-                                        <td>@treatmentPhase.Description</td>
-                                        <td>@treatmentPhase.PrescribeDate</td>
-                                        <td>@treatmentPhase.PrescribesdUser</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    امکانات
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-left">
-                                                    <a class="dropdown-item" href="Modify/@treatmentPhase.Id">ویرایش</a>
-                                                    <div class="dropdown-divider"></div>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td colspan="8">اطلاعاتی برای جستجو وارد کنید</td>
                                     </tr>
-                                    Index++;
                                 }
+                                else
+                                {
+                                    int Index = 1;
+                                    foreach (var mr in Model.Records)
+                                    {
+                                        <tr>
+                                            <td>@Index</td>
+                                            <td>@mr.PatientFirstName</td>
+                                            <td>@mr.PatientLastName</td>
+                                            <td>@mr.Patient.Mobile</td>
+                                            <td>@mr.Patient.NationalCode</td>
+                                            <td>@mr.Patient.Code</td>
+                                            <td>@Html.DisplayForDateTime(mr.Patient.RegisterDate)</td>
 
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        امکانات
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-left">
+                                                        <a 
+                                                           class="dropdown-item" 
+                                                           target="_blank" 
+                                                           href="~/Patient/SetMedicalRecordPhases?medicalRecordId=@mr.Id">تجویز درمان</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        Index++;
+                                    }
+                                }
                             }
 
 

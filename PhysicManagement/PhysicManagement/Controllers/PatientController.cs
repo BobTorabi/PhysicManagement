@@ -16,7 +16,7 @@ namespace PhysicManagement.Controllers
         CancerService CancerService;
         ContourService ContourService;
         TreatmentService TreatmentService;
-   
+
 
         public PatientController()
         {
@@ -26,7 +26,7 @@ namespace PhysicManagement.Controllers
             CancerService = new CancerService();
             ContourService = new ContourService();
             TreatmentService = new TreatmentService();
-       }
+        }
         public ActionResult Index()
         {
             return View();
@@ -56,24 +56,34 @@ namespace PhysicManagement.Controllers
         public ActionResult SetMedicalRecordPhases(long medicalRecordId, int Phases)
         {
             var UserData = AuthenticatedUserService.GetUserId();
-
-            MedicalService.UpdateMedicalRecordForPhaseCount(medicalRecordId, Phases);
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             for (int i = 1; i <= Phases; i++)
             {
-                PhysicTreatmentService.AddPhysicTreatment(new Model.PhysicTreatment
+                TreatmentService.AddTreatmentPhase(new Model.TreatmentPhase
                 {
-                    ActionDate = DateTime.Now,
-                    ActionUserId = UserData.UserId.ToString(),
-                    ActionUserRole = UserData.RoleName,
-                    TreatmentDeviceId = null,
-                    Fraction = 0,
-                    ActionUserFullName = UserData.FullName,
+                    ApprovedDate = null,
+                    ApprovedUserFullName = null,
+                    Description = "",
+                    Fraction = null,
+                    IsApproved = null,
                     MedicalRecordId = medicalRecordId,
+                    PatientFirstName = MedicalRecordData.PatientFirstName,
+                    PatientLastName = MedicalRecordData.PatientLastName,
                     PhaseNumber = i,
-                    
+                    PhaseText = "",
+                    PrescribeDate = DateTime.Now,
+                    PrescribedUserRole = UserData.RoleName,
+                    PrescribesdUserFullName = UserData.FullName,
+                    PrescribesdUserId = UserData.UserId.ToString(),
+                    Reserve1 = null,
+                    Reserve2 = null,
+                    Reserve3 = "",
+                    Target = "",
+                    TreatmentDeviceId = null,
+                    TreatmentDeviceTitle = null
                 });
-
             }
+            MedicalService.UpdateMedicalRecordForPhaseCount(medicalRecordId, Phases);
             return Json(new { location = "../Patient/SetMedicalRecordTreatmentPhase?medicalRecordId=" + medicalRecordId }, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -86,11 +96,11 @@ namespace PhysicManagement.Controllers
         {
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var PatientData = Service.GetPatientById(MedicalRecordData.PatientId);
-            var ViewData = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(medicalRecordId);
+            var ViewData = TreatmentService.GetTreatmentPhasesByMedicalRecordId(medicalRecordId);
             ViewBag.MedicalRecordData = MedicalRecordData;
             ViewBag.PatientData = PatientData;
             ViewBag.CancerOARList = CancerService.GetCancerOARList();
-            ViewBag.ContourDetails = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId).Where(x=>x.CancerOARId!= null).ToList();
+            ViewBag.ContourDetails = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId).Where(x => x.CancerOARId != null).ToList();
             ViewBag.TreatmentService = TreatmentService.GetTreatmentDeviceList();
             return View(ViewData);
         }
@@ -106,7 +116,7 @@ namespace PhysicManagement.Controllers
         {
             var UserData = AuthenticatedUserService.GetUserId();
             var MedicalRecordData = MedicalService.GetMedicalRecordById(Data.MedicalRecordId);
-            var PhysicTreatments  = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(Data.MedicalRecordId);
+            var TreatmentPhase = TreatmentService.GetTreatmentPhasesByMedicalRecordId(Data.MedicalRecordId);
             foreach (var item in Data.Phases)
             {
                 var Device = TreatmentService.GetTreatmentDeviceById(item.DeviceId);
@@ -129,23 +139,34 @@ namespace PhysicManagement.Controllers
                         MedicalRecordData.Phase4TreatmentDeviceTitle = Device.Title;
                         break;
                 }
-                var CurrentPhysicTreatment = PhysicTreatments.Where(x => x.PhaseNumber == item.No).FirstOrDefault();
-                CurrentPhysicTreatment.TreatmentDeviceId = Device.Id;
-                CurrentPhysicTreatment.Fraction = item.Fraction;
-                PhysicTreatmentService.UpdatePhysicTreatment(CurrentPhysicTreatment);
+                var CurrentTreatmentPhase = TreatmentPhase.Where(x => x.PhaseNumber == item.No).FirstOrDefault();
+                CurrentTreatmentPhase.TreatmentDeviceId = Device.Id;
+                CurrentTreatmentPhase.Fraction = item.Fraction;
+                TreatmentService.UpdateTreatmentPhase(CurrentTreatmentPhase);
+
                 foreach (var oar in item.cancerAORs)
                 {
-                    PhysicTreatmentService.AddPhysicTreatmentPlan(new Model.PhysicTreatmentPlan { 
-                    CancerOARId = oar.Id,
-                    Evaluation = "",
-                    ActionDate = DateTime.Now,
-                    HadContour=false,
-                    PhysicTreatmentId = CurrentPhysicTreatment.Id,
-                    PlannedDose = oar.Dose,
-                    
-
+                    var CancerOAR = CancerService.GetCancerOARById(oar.Id);
+                    TreatmentService.AddTreatmentPhaseDetail(new Model.TreatmentPhaseDetail
+                    {
+                        CancerOARId = CancerOAR.Id,
+                        CancerOARTitle = CancerOAR.OrganTitle,
+                        CancerOARTolerance = CancerOAR.Tolerance,
+                        CancerTargetOptimum = "",
+                        CancerTargetId = null,
+                        CancerTargetTitle ="",
+                        Description = "",
+                        HasApproved = null,
+                        MedicalRecordId = MedicalRecordData.Id,
+                        PatientFirstName = MedicalRecordData.PatientFirstName,
+                        PatientLastName = MedicalRecordData.PatientLastName,
+                        PrescribedDate = DateTime.Now,
+                        PrescribedDose = oar.Dose,
+                        TreatmentPhaseId = CurrentTreatmentPhase.Id
                     });
+                    
                 }
+                
             }
             MedicalRecordData.TreatmentDeviceIsQueued = false;
             MedicalService.UpdateMedicalRecord(MedicalRecordData);

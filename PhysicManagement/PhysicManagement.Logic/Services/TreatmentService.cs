@@ -13,52 +13,52 @@ namespace PhysicManagement.Logic.Services
     {
         #region TreatmentPhase Section
 
-        public PagedList<Model.TreatmentPhase> 
+        public PagedList<Model.MedicalRecord> 
             GetTreatmentPhasesList(string firstName, string lastName, string mobile,
              string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return null;
-                //IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.ContourAcceptDate != null).Include(x => x.Patient);
-                //if (!string.IsNullOrEmpty(firstName))
-                //{
-                //    firstName = firstName.Trim().ToPersian();
-                //    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
-                //}
-                //if (!string.IsNullOrEmpty(lastName))
-                //{
-                //    lastName = lastName.Trim().ToPersian();
-                //    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
-                //}
-                //if (!string.IsNullOrEmpty(mobile))
-                //{
-                //    mobile = mobile.Trim().toEnglishNumber();
-                //    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
-                //}
-                //if (!string.IsNullOrEmpty(nationalCode))
-                //{
-                //    nationalCode = nationalCode.Trim().toEnglishNumber();
-                //    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
-                //}
-                //if (!string.IsNullOrEmpty(systemCode))
-                //{
-                //    systemCode = systemCode.Trim().toEnglishNumber();
-                //    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
-                //}
-                //if (!string.IsNullOrEmpty(code))
-                //{
-                //    mobile = code.Trim().toEnglishNumber();
-                //    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
-                //}
-                //QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
-                //return new ViewModels.PagedList<Model.TreatmentPhase>()
-                //{
-                //    CurrentPage = CurrentPage,
-                //    PageSize = pageSize,
-                //    TotalRecords = QueryableMR.Count(),
-                //    Records = QueryableMR.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
-                //};
+                IQueryable<Model.MedicalRecord> QueryableMR =
+                    db.MedicalRecord.Where(t =>t.Contour.Any(e=>e.IsAccepted == true) && t.PhasesCount == null).Include(x => x.Patient);
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    mobile = code.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
+                }
+                QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
+                return new PagedList<Model.MedicalRecord>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableMR.Count(),
+                    Records = QueryableMR.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         public Model.TreatmentPhase GetTreatmentPhaseById(int entityId)
@@ -75,18 +75,26 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
-            //Logic.Services.MedicalRecordService md = new MedicalRecordService();
-            ////var TreatmentPhaseObject = md.GetMedicalRecordById(Convert.ToInt64(entity.MedicalRecordId.GetValueOrDefault()));
-            //if (TreatmentPhaseObject == null)
-            //    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
-            //entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var md = new MedicalRecordService();
+                var MedicalRecordObject = md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
+                if (MedicalRecordObject == null)
+                    throw MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
 
-            //PatientService pa = new PatientService();
-            
+                db.TreatmentPhase.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool AddTreatmentPhaseDetail(Model.TreatmentPhaseDetail entity)
+        {
+            var validation = new TreatmentValidation.TreatmentPhaseDetailEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                db.TreatmentPhase.Add(entity);
+                db.TreatmentPhaseDetail.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -100,23 +108,25 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.TreatmentPhase.Find(entity.Id);
                 if (Entity == null)
-                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+                    throw MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
-                //Logic.Services.MedicalRecordService md = new MedicalRecordService();
-                //var TreatmentPhaseObject = md.GetMedicalRecordById(Convert.ToInt64(entity.MedicalRecordId.GetValueOrDefault()));
-                //if (TreatmentPhaseObject == null)
-                //    throw Common.MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
-                //entity.MedicalRecordId = Convert.ToInt64(TreatmentPhaseObject.MRICode);
-
-                PatientService pa = new PatientService();
-              
+                var md = new MedicalRecordService();
+                var MedicalRecordObject = md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
+                if (MedicalRecordObject == null)
+                    throw MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
+                entity.MedicalRecordId = Convert.ToInt64(MedicalRecordObject.MRICode);
 
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.PhaseText = entity.PhaseText;
                 Entity.PrescribeDate = entity.PrescribeDate;
                 Entity.Target = entity.Target;
                 Entity.Description = entity.Description;
-                //Entity.Dose = entity.Dose;
+                Entity.PatientFirstName = MedicalRecordObject.PatientFirstName;
+                Entity.PatientLastName = MedicalRecordObject.PatientLastName;
+                Entity.PhaseText = entity.PhaseText;
+                Entity.TreatmentDeviceId = entity.TreatmentDeviceId;
+                Entity.TreatmentDeviceTitle = entity.TreatmentDeviceTitle;
+                Entity.IsApproved = entity.IsApproved;
                 Entity.Fraction = entity.Fraction;
 
                 return db.SaveChanges() == 1;
@@ -135,11 +145,18 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public List<Model.TreatmentPhase> GetTreatmentList()
+        public List<Model.TreatmentPhase> GetTreatmentPhaseList()
         {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.TreatmentPhase.OrderBy(x => x.Id).ToList();
+            }
+        }
+        public List<Model.TreatmentPhase> GetTreatmentPhasesByMedicalRecordId(long medicalRecordId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.TreatmentPhase.Where(x=>x.MedicalRecordId == medicalRecordId).OrderBy(x => x.Id).ToList();
             }
         }
         #endregion

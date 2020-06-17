@@ -16,14 +16,15 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: TreatmentPhase
-        public ActionResult List(string firstName, string lastName, string mobile,
-            string nationalCode, string systemCode, string code)
+        public ActionResult List(string firstName, string lastName, string mobile, string nationalCode, string systemCode, string code)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 5;
-            PagedList<Model.TreatmentPhase> MedicalRecord = Service.GetTreatmentPhasesList(firstName, lastName, mobile,
-                nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
-            ViewBag.TotalRecords = MedicalRecord == null ? 100 :MedicalRecord.TotalRecords;
+            ViewBag.PageSize = 25;
+            PagedList<Model.MedicalRecord> MedicalRecord = 
+                Service.GetTreatmentPhasesList
+                (firstName, lastName, mobile, nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
+
+            ViewBag.TotalRecords = MedicalRecord == null ? 100 : MedicalRecord.TotalRecords;
             return View(MedicalRecord);
         }
 
