@@ -29,10 +29,13 @@ namespace PhysicManagement.Controllers
         {
             if (id == null)
             {
+                ViewBag.TreatmentCategoryId = new SelectList(Service.GetTreatmentCategoryList(), "Id", "Title");
                 return View(new Model.TreatmentCategoryService());
             }
             else
             {
+
+                ViewBag.TreatmentCategoryId = new SelectList(Service.GetTreatmentCategoryList(), "Id", "Title");
                 var Entity = Service.GetTreatmentCategoryServiceById(id.GetValueOrDefault());
                 return View(Entity);
             }

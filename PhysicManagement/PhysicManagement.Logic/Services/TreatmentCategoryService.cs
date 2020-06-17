@@ -148,6 +148,8 @@ namespace PhysicManagement.Logic.Services
                 var Entity = db.TreatmentCategoryService.Find(entity.Id);
                 Entity.Title = entity.Title;
                 Entity.Description = entity.Description;
+                Entity.RelativeValue = entity.RelativeValue;
+                Entity.Code = entity.Code;
                 return db.SaveChanges() == 1;
             }
         }

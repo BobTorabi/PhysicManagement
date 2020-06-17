@@ -315,13 +315,13 @@
     <Content Include="Views\TreatmentCategory\Modify.cshtml" />
     <Content Include="Views\TreatmentCategory\List.cshtml" />
     <Content Include="Views\Account\NoAccess.cshtml" />
-    <Content Include="Views\TreatmentCategoryService\List.cshtml" />
-    <Content Include="Views\TreatmentCategoryService\Modify.cshtml" />
     <Content Include="Views\Alarm\Inbox.cshtml" />
     <Content Include="Views\Alarm\List.cshtml" />
     <Content Include="Views\AlarmConfig\List.cshtml" />
     <Content Include="Views\AlarmEventType\List.cshtml" />
     <Content Include="Views\AlarmEventType\Modify.cshtml" />
+    <Content Include="Views\TreatmentCategoryService\List.cshtml" />
+    <Content Include="Views\TreatmentCategoryService\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
