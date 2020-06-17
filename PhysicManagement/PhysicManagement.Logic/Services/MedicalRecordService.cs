@@ -155,7 +155,7 @@ namespace PhysicManagement.Logic.Services
 
         public bool SetCancerForMR(long medicalRecordId, int cancerId)
         {
-             var UserData = AuthenticatedUserService.GetUserId();
+            var UserData = AuthenticatedUserService.GetUserId();
             try
             {
                 using (var db = new Model.PhysicManagementEntities())
@@ -190,7 +190,22 @@ namespace PhysicManagement.Logic.Services
                             MedicalRecordId = medicalRecordId
                         });
                     }
+                    else
+                    {
+                        MedicalRecordContourObject.IsAccepted = null;
+                        MedicalRecordContourObject.ModifyDate = DateTime.Now;
+                    
+                        MedicalRecordContourObject.ActionDate = DateTime.Now;
+                        MedicalRecordContourObject.Description = "";
+                        var Contour = new Services.ContourService();
+                        Contour.UpdateContour(MedicalRecordContourObject);
 
+                        var Details =  Contour.GetContourDetailsByMedicalRecordId(medicalRecordId);
+                        foreach (var item in Details)
+                        {
+                            Contour.DeleteContourDetails(item.Id);
+                        }
+                    }
                     int RowsAffected = db.SaveChanges();
                     return true;
                 }
@@ -310,7 +325,7 @@ namespace PhysicManagement.Logic.Services
                 return new ViewModels.DaysStatisticsVM
                 {
                     UnsetRecord = db.MedicalRecord.Count(x => x.ContourAcceptDate == null),
-                    Today = db.MedicalRecord.Count(x => x.ContourAcceptDate!= null && x.ContourAcceptDate >= TodayStart && x.ContourAcceptDate <= TodayEnd),
+                    Today = db.MedicalRecord.Count(x => x.ContourAcceptDate != null && x.ContourAcceptDate >= TodayStart && x.ContourAcceptDate <= TodayEnd),
                     LastWeek = db.MedicalRecord.Count(x => x.ContourAcceptDate != null && x.ContourAcceptDate >= LastWeekStart && x.ContourAcceptDate <= TodayEnd),
                     LastMonth = db.MedicalRecord.Count(x => x.ContourAcceptDate != null && x.ContourAcceptDate >= LastMonthStart && x.ContourAcceptDate <= TodayEnd),
                     TotalRecords = db.MedicalRecord.Count()

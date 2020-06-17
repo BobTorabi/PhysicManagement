@@ -47,9 +47,9 @@ namespace PhysicManagement.Controllers
                     CTDate = Common.DateUtility.GetPersianDateTime(medicalRecordData.CTEnterDate),
                     Contour = new
                     {
-                        Contour.IsAccepted,
-                        Contour.Description,
-                        ActionDate = Common.DateUtility.GetPersianDateTime(Contour.ActionDate)
+                        IsAccepted = Contour?.IsAccepted,
+                        Description = Contour?.Description,
+                        ActionDate = Common.DateUtility.GetPersianDateTime(Contour?.ActionDate)
                     },
                     ContourDetail = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId)
                                     .Select(x => new { x.Id, x.CancerTargetId, x.CancerOARId, x.Description })
