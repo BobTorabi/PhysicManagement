@@ -23,16 +23,30 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">notifications</i>
-                        <span class="notification">۵</span>
+                        @{
+                            var userData = PhysicManagement.Logic.Services.AuthenticatedUserService.GetUserId();
+                            var userType = PhysicManagement.Logic.Services.AuthenticatedUserService.GetUserType();
+                            var unreadAlarms = new PhysicManagement.Logic.Services.AlarmService().GetUnreadAlarmListByUserType(userType, (int)userData.UserId);
+                        }
+
+                        <span class="notification">
+                            @unreadAlarms.Count
+                        </span>
+
                         <p class="d-lg-none d-md-block">
                             اعلان‌ها
                         </p>
                     </a>
+
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">دکتر رضایی به ایمیل شما پاسخ داد</a>
-                        <a class="dropdown-item" href="#">شما 5 نامه در کارتابل دارید</a>
-                        <a class="dropdown-item" href="#">اعلان دیگر</a>
-                        <a class="dropdown-item" href="#">اعلان دیگر</a>
+                        <a class="dropdown-item" href="#">
+                            کاربر: @userData.FullName
+                        </a>
+                        <a class="dropdown-item" href="#">
+                        شما
+                            @unreadAlarms.Count
+                            نامه در کارتابل دارید
+                        </a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

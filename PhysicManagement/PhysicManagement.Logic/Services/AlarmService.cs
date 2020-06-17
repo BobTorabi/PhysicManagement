@@ -3,6 +3,7 @@ using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using PhysicManagement.Logic.Enums;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -48,18 +49,6 @@ namespace PhysicManagement.Logic.Services
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
-                //entity.
-                //entity.GenerateUser = AlaramObject2.LastName;
-
-                //Entity.IsActive = entity.IsActive;
-                //Entity.IsOnBoard = entity.IsOnBoard;
-                //Entity.ReviewDate = entity.ReviewDate;
-                //Entity.ReviewText = entity.ReviewText;
-                //Entity.ReviewUserName = entity.ReviewUserName;
-                //Entity.AlarmTypeId = entity.AlarmTypeId;               
-                //Entity.GenerateDate = entity.GenerateDate;
-                //Entity.GenerateUser = entity.GenerateUser;
-
                 return db.SaveChanges() == 1;
             }
         }
@@ -75,7 +64,29 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+        public List<Model.Alarm> GetUnreadAlarmListByUserType(UserType userType, int entityId)
+        {
+            if (entityId == 0)
+                throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                switch (userType)
+                {
+                    case UserType.Doctor:
+                        return db.Alarm.Where(x => x.DoctorId == entityId && x.IsDelivered == false).OrderBy(x => x.Id).ToList();
+                    case UserType.Resident:
+                        return db.Alarm.Where(x => x.ResidentId == entityId && x.IsDelivered == false).OrderBy(x => x.Id).ToList();
+                    case UserType.Physist:
+                        return db.Alarm.Where(x => x.PhysicUserId == entityId && x.IsDelivered == false).OrderBy(x => x.Id).ToList();
+                    case UserType.User:
+                        return db.Alarm.Where(x => x.UserId == entityId && x.IsDelivered == false).OrderBy(x => x.Id).ToList();
+                    default:
+                        return null;
+                }
+            }
+        }
         #endregion
-        
+
     }
 }

@@ -15,6 +15,7 @@
           <Property Name="Body" Type="nvarchar(max)" />
           <Property Name="UserId" Type="int" />
           <Property Name="DoctorId" Type="int" />
+          <Property Name="ResidentId" Type="int" />
           <Property Name="PhysicUserId" Type="int" />
           <Property Name="IsSystemAlarm" Type="bit" />
           <Property Name="IsDelivered" Type="bit" />
@@ -23,6 +24,10 @@
           <Property Name="IsArchived" Type="bit" />
           <Property Name="IsSMS" Type="bit" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="TreatmentProcessId" Type="int" />
+          <Property Name="TreatmentProcessTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="PatientFullName" Type="nvarchar" MaxLength="150" />
+          <Property Name="MedicalRecordId" Type="bigint" />
         </EntityType>
         <EntityType Name="AlarmConfig">
           <Key>
@@ -1176,6 +1181,11 @@
           <Property Name="IsArchived" Type="Boolean" />
           <Property Name="IsSMS" Type="Boolean" />
           <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidentId" Type="Int32" />
+          <Property Name="TreatmentProcessId" Type="Int32" />
+          <Property Name="TreatmentProcessTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PatientFullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="MedicalRecordId" Type="Int64" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -1578,6 +1588,11 @@
           <EntitySetMapping Name="Alarm">
             <EntityTypeMapping TypeName="PhysicManagementModel.Alarm">
               <MappingFragment StoreEntitySet="Alarm">
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PatientFullName" ColumnName="PatientFullName" />
+                <ScalarProperty Name="TreatmentProcessTitle" ColumnName="TreatmentProcessTitle" />
+                <ScalarProperty Name="TreatmentProcessId" ColumnName="TreatmentProcessId" />
+                <ScalarProperty Name="ResidentId" ColumnName="ResidentId" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="IsSMS" ColumnName="IsSMS" />
                 <ScalarProperty Name="IsArchived" ColumnName="IsArchived" />
