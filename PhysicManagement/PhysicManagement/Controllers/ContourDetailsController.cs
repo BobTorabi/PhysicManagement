@@ -1,9 +1,6 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using PhysicManagement.Logic.Services;
 
 namespace PhysicManagement.Controllers
 {
@@ -13,7 +10,7 @@ namespace PhysicManagement.Controllers
 
         public ContourDetailsController()
         {
-            Service = new Logic.Services.ContourService();
+            Service = new ContourService();
         }
         public ActionResult Index()
         {
@@ -27,7 +24,7 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult Modify(int? id)
         {
-            Logic.Services.CancerService ts = new CancerService();
+            CancerService ts = new CancerService();
             if (id == null)
             {
                 ViewBag.CancerOARId = new SelectList(ts.GetCancerOARList(), "Id", "OrganTitle");

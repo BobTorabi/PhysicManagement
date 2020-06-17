@@ -7,8 +7,8 @@ namespace PhysicManagement.Controllers
 {
     public class CancerController : BaseController
     {
-        CancerService Service;
-        MedicalRecordService MedicalService;
+        readonly CancerService Service;
+        readonly MedicalRecordService MedicalService;
         public CancerController()
         {
             Service = new CancerService();

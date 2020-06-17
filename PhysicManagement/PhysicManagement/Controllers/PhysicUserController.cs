@@ -1,20 +1,15 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
-
-
-
     public class PhysicUserController : BaseController
     {
-        Logic.Services.PhysicUserService Service;
+        PhysicUserService Service;
         public PhysicUserController()
         {
-            Service = new Logic.Services.PhysicUserService();
+            Service = new PhysicUserService();
         }
         public ActionResult Index()
         {

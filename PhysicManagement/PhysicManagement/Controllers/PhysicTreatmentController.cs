@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using PhysicManagement.Logic.Services;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class PhysicTreatmentController : BaseController
     {
-        Logic.Services.PhysicTreatmentService Service;
+        readonly PhysicTreatmentService Service;
         public PhysicTreatmentController()
         {
             Service = new Logic.Services.PhysicTreatmentService();

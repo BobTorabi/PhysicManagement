@@ -1,19 +1,16 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using PhysicManagement.Logic.Services;
 
 namespace PhysicManagement.Controllers
 {
     public class CancerOARController : BaseController
     {
-        Logic.Services.CancerService Service;
+        CancerService Service;
         public CancerOARController()
         {
-            Service = new Logic.Services.CancerService();
+            Service = new CancerService();
         }
         public ActionResult Index()
         {

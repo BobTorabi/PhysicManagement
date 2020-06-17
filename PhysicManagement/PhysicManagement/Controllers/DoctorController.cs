@@ -1,19 +1,17 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class DoctorController : BaseController
     {
-        Logic.Services.DoctorService Service;
-        Logic.Services.MedicalRecordService MedicalRecordService;
+        DoctorService Service;
+        MedicalRecordService MedicalRecordService;
         public DoctorController()
         {
-            Service = new Logic.Services.DoctorService();
-            MedicalRecordService = new Logic.Services.MedicalRecordService();
+            Service = new DoctorService();
+            MedicalRecordService = new MedicalRecordService();
         }
         public ActionResult Index()
         {
@@ -36,7 +34,7 @@ namespace PhysicManagement.Controllers
             else
             {
                 var Entity = Service.GetDoctorById(id.GetValueOrDefault());
-                Entity.Password = Logic.Services.DoctorService.DecryptPassword(Entity.Username, Entity.Password);
+                Entity.Password = DoctorService.DecryptPassword(Entity.Username, Entity.Password);
                 return View(Entity);
             }
 
@@ -44,19 +42,12 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.Doctor entity)
         {
-            bool IsAffected;
             if (entity.Id > 0)
-            {
-                IsAffected = Service.UpdateDoctor(entity);
-            }
+                Service.UpdateDoctor(entity);
             else
-            {
-                IsAffected = Service.AddDoctor(entity);
-            }
+                Service.AddDoctor(entity);
             return RedirectToAction("List");
-
         }
-
 
         [HttpPost]
         [ActionName("Delete")]

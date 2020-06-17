@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -14,6 +11,7 @@ namespace PhysicManagement.Controllers
                 Logic.Services
                 .TreatmentCategoryService.GetTreatmentCategoryServiceByTreatmentCategoryId(id)
                 .Select(x=>new {x.Id,x.Title,x.RelativeValue,x.Code }).ToList();
+
             return Json(Data, JsonRequestBehavior.AllowGet);
         }
     }

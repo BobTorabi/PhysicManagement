@@ -1,19 +1,15 @@
 ﻿using PhysicManagement.Logic.Services;
-using System;
 using System.Collections.Generic;
-using System.IO.Ports;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class ResidentController : BaseController
     {
-        Logic.Services.ResidentService Service;
+        ResidentService Service;
         public ResidentController()
         {
-            Service = new Logic.Services.ResidentService();
+            Service = new ResidentService();
         }
         public ActionResult Index()
         {
@@ -36,7 +32,7 @@ namespace PhysicManagement.Controllers
             else
             {
                 var Entity = Service.GetResidentById(id.GetValueOrDefault());
-                Entity.Password = Logic.Services.ResidentService.DecryptPassword(Entity.Username, Entity.Password);
+                Entity.Password = ResidentService.DecryptPassword(Entity.Username, Entity.Password);
                 return View(Entity);
             }
 

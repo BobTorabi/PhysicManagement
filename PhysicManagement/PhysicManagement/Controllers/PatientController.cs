@@ -1,31 +1,31 @@
-﻿using PhysicManagement.Logic.ViewModels;
+﻿using PhysicManagement.Logic.Services;
+using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class PatientController : BaseController
     {
-        Logic.Services.PatientService Service;
-        Logic.Services.MedicalRecordService MedicalService;
-        Logic.Services.PhysicTreatmentService PhysicTreatmentService;
-        Logic.Services.CancerService CancerService;
-        Logic.Services.ContourService ContourService;
-        Logic.Services.TreatmentService TreatmentService;
+        PatientService Service;
+        MedicalRecordService MedicalService;
+        PhysicTreatmentService PhysicTreatmentService;
+        CancerService CancerService;
+        ContourService ContourService;
+        TreatmentService TreatmentService;
    
 
         public PatientController()
         {
-            Service = new Logic.Services.PatientService();
-            MedicalService = new Logic.Services.MedicalRecordService();
-            PhysicTreatmentService = new Logic.Services.PhysicTreatmentService();
-            CancerService = new Logic.Services.CancerService();
-            ContourService = new Logic.Services.ContourService();
-            TreatmentService = new Logic.Services.TreatmentService();
+            Service = new PatientService();
+            MedicalService = new MedicalRecordService();
+            PhysicTreatmentService = new PhysicTreatmentService();
+            CancerService = new CancerService();
+            ContourService = new ContourService();
+            TreatmentService = new TreatmentService();
        }
         public ActionResult Index()
         {
@@ -55,7 +55,7 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult SetMedicalRecordPhases(long medicalRecordId, int Phases)
         {
-            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var UserData = AuthenticatedUserService.GetUserId();
 
             MedicalService.UpdateMedicalRecordForPhaseCount(medicalRecordId, Phases);
             for (int i = 1; i <= Phases; i++)
@@ -104,7 +104,7 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult SetMedicalRecordTreatmentPhase(MedicalRecordTreatmentPhaseVM Data)
         {
-            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var UserData = AuthenticatedUserService.GetUserId();
             var MedicalRecordData = MedicalService.GetMedicalRecordById(Data.MedicalRecordId);
             var PhysicTreatments  = PhysicTreatmentService.GetPhysicTreatmentByMedicalRecordId(Data.MedicalRecordId);
             foreach (var item in Data.Phases)
@@ -197,7 +197,7 @@ namespace PhysicManagement.Controllers
 
         public ActionResult RegisterPatient()
         {
-            ViewBag.doctorId = new Logic.Services.DoctorService().GetIdNameFromDoctorList();
+            ViewBag.doctorId = new DoctorService().GetIdNameFromDoctorList();
             return View();
         }
 
@@ -218,13 +218,13 @@ namespace PhysicManagement.Controllers
         }
         public JsonResult PatientInfoByMedicalRecordId(int medicalRecordId)
         {
-            var Data = new Logic.Services.PatientService().GetPatientByMedicalRecordId(medicalRecordId);
+            var Data = new PatientService().GetPatientByMedicalRecordId(medicalRecordId);
             return Json(new MegaViewModel<PatientVMs.MedicalRecordDataWithPatientData>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult PatientCTCode(string mriCode, string ctDescription, long medicalRecordId)
         {
-            Logic.Services.MedicalRecordService medicalRecordService = new Logic.Services.MedicalRecordService();
+            MedicalRecordService medicalRecordService = new Logic.Services.MedicalRecordService();
             var PatientCTCode = medicalRecordService.AddMedicalRecordCTCode(mriCode, ctDescription, medicalRecordId);
             return Json(new { location = "PatientInfo?patientId=" + PatientCTCode.Id }, JsonRequestBehavior.AllowGet);
         }
@@ -257,7 +257,7 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, bool? hasContour)
         {
-            ViewBag.CancerList = new Logic.Services.CancerService().GetCancerList();
+            ViewBag.CancerList = new CancerService().GetCancerList();
 
             List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetCountor(firstName, lastName, nationalCode, mobile, systemCode, code, hasContour);
             return View(Patient);

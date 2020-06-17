@@ -1,22 +1,22 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class UserController : BaseController
     {
-        Logic.Services.UserService Service;
+        readonly UserService Service;
         public UserController()
         {
-            Service = new Logic.Services.UserService();
+            Service = new UserService();
         }
+        
         public ActionResult Index()
         {
             return RedirectToActionPermanent("List");
         }
+
         // GET: User
         public ActionResult List()
         {
@@ -33,7 +33,7 @@ namespace PhysicManagement.Controllers
             else
             {
                 var Entity = Service.GetUserById(id.GetValueOrDefault());
-                Entity.Password = Logic.Services.UserService.DecryptPassword(Entity.Username, Entity.Password);
+                Entity.Password = UserService.DecryptPassword(Entity.Username, Entity.Password);
                 return View(Entity);
             }
 

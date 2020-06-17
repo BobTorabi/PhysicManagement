@@ -6,11 +6,11 @@ namespace PhysicManagement.Controllers
 {
     public class TreatmentDeviceController : BaseController
     {
-        Logic.Services.TreatmentService Service;
-        Logic.Services.MedicalRecordService MedicalService;
+        TreatmentService Service;
+        MedicalRecordService MedicalService;
         public TreatmentDeviceController()
         {
-            Service = new Logic.Services.TreatmentService();
+            Service = new TreatmentService();
             MedicalService = new MedicalRecordService();
         }
         public ActionResult Index()

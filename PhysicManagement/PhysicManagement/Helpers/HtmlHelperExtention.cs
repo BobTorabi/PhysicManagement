@@ -39,21 +39,6 @@ namespace PhysicManagement.Helpers
                 return "خیر";
             }
         }
-        //public static string DisplayUserName(this HtmlHelper helper, int? item)
-        //{
-        //    if (item.HasValue)
-        //    {
-        //        if (item == 1)
-        //            return "مدیر سایت";
-
-        //        var userData = Logic.Account.Services.UserService.GetFullnameUserById(item.Value);
-        //        if (userData != null)
-        //            return userData;
-        //        else
-        //            return "نامشخص";
-        //    }
-        //    return "نامشخص";
-        //}
 
         /// <summary>
         /// convert and show date as persian date instead of gregorian date
@@ -258,53 +243,6 @@ namespace PhysicManagement.Helpers
             return MvcHtmlString.Create(container.ToString(TagRenderMode.Normal));
         }
 
-        //public static MvcHtmlString ImagePreview<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, char Size)
-        //{
-        //    if (html is null)
-        //    {
-        //        throw new ArgumentNullException(nameof(html));
-        //    }
-
-        //    if (expression is null)
-        //    {
-        //        throw new ArgumentNullException(nameof(expression));
-        //    }
-
-        //    if (!(expression.Body is MemberExpression memberExpression))
-        //        return null;
-        //    var name = memberExpression.Member.Name;
-
-        //    var imageTag = new TagBuilder("img");
-        //    imageTag.Attributes["id"] = $"img{name}";
-        //    imageTag.Attributes["class"] = "rounded";
-
-        //    if (html.ViewData.Model != null)
-        //    {
-        //        string ImageAddress;
-        //        try
-        //        {
-        //            Func<TModel, TValue> method = expression.Compile();
-        //            string value = method(html.ViewData.Model)?.ToString();
-        //            if (!string.IsNullOrEmpty(value))
-        //            {
-        //                var ImageData = JSON.Desrialize<Logic.FileUpload.ViewModel.FileData>(value);
-        //                ImageAddress = "/FileStorage/" + Size + "/" + ImageData.FileId + "/" + ImageData.FileName + "?rnd=" + Common.FileID.NewID();
-        //            }
-        //            else
-        //            {
-
-        //                ImageAddress = (Size == 't' ? "/Images/no-image-t.jpg" : "/Images/no-image.jpg");
-        //            }
-        //        }
-        //        catch
-        //        {
-        //            ImageAddress = (Size == 't' ? "/Images/no-image-t.jpg" : "/Images/no-image.jpg");
-        //        }
-        //        imageTag.Attributes["src"] = ImageAddress;
-        //    }
-
-        //    return MvcHtmlString.Create(imageTag.ToString(TagRenderMode.Normal));
-        //}
         public static MvcHtmlString FileUpload<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
         {
             if (html is null)

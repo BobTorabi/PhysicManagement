@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PhysicManagement.Logic.Services;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class MedicalRecordController : BaseController
     {
-        Logic.Services.MedicalRecordService Service;
-        Logic.Services.ContourService ContourService;
+        MedicalRecordService Service;
+        ContourService ContourService;
         public MedicalRecordController()
         {
-            Service = new Logic.Services.MedicalRecordService();
-            ContourService = new Logic.Services.ContourService();
+            Service = new MedicalRecordService();
+            ContourService = new ContourService();
         }
         // GET: MedicalRecord
         public ActionResult PatientMedicalRecord(int id)

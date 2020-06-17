@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using PhysicManagement.Logic.Services;
-using PhysicManagement.Model;
+﻿using PhysicManagement.Logic.Services;
 using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Model;
 using PhysicManagement.Models;
-using System.Data.Entity.Infrastructure;
+using System;
+using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class ContourController : Controller
     {
-        Logic.Services.ContourService Service;
-        Logic.Services.MedicalRecordService MedicalRecordService;
+        ContourService Service;
+        MedicalRecordService MedicalRecordService;
         public ContourController()
         {
             Service = new ContourService();
@@ -48,7 +44,7 @@ namespace PhysicManagement.Controllers
 
         public JsonResult UnacceptContourByDoctor(long medicalRecordId, string Description)
         {
-            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var UserData = AuthenticatedUserService.GetUserId();
             var CountourData = Service.GetContourByMedicalRecordId(medicalRecordId);
             CountourData.DoctorFullName = UserData.FullName;
             CountourData.DoctorUserId = UserData.UserId.GetValueOrDefault().ToString();

@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using PhysicManagement.Logic.Services;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class TreatmentProcessController : BaseController
     {
-        Logic.Services.TreatmentService Service;
+        TreatmentService Service;
         public TreatmentProcessController()
         {
-            Service = new Logic.Services.TreatmentService();
+            Service = new TreatmentService();
         }
         public ActionResult Index()
         {

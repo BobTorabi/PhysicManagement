@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhysicManagement.Logic.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,14 +9,14 @@ namespace PhysicManagement.Controllers
 {
     public class HomeController : BaseController
     {
-        Logic.Services.PatientService PatientService;
-        Logic.Services.ContourService ContourService;
-        Logic.Services.MedicalRecordService MedicalRecordService;
+        PatientService PatientService;
+        ContourService ContourService;
+        MedicalRecordService MedicalRecordService;
         public HomeController()
         {
-            PatientService = new Logic.Services.PatientService();
-            ContourService = new Logic.Services.ContourService();
-            MedicalRecordService = new Logic.Services.MedicalRecordService();
+            PatientService = new PatientService();
+            ContourService = new ContourService();
+            MedicalRecordService = new MedicalRecordService();
         }
         public ActionResult Index()
         {
@@ -28,8 +29,8 @@ namespace PhysicManagement.Controllers
         public ActionResult Calculate() {
             string JYear = Common.DateUtility.GetPersianYear(DateTime.Now);
             
-            ViewBag.kFactor = Logic.Services.TreatmentCategoryService.GetKFaktorByYear(JYear);
-            ViewBag.TreatmentCategory = Logic.Services.TreatmentCategoryService.GetAllTreatmentCategory();
+            ViewBag.kFactor = TreatmentCategoryService.GetKFaktorByYear(JYear);
+            ViewBag.TreatmentCategory = TreatmentCategoryService.GetAllTreatmentCategory();
 
             return View();
         }

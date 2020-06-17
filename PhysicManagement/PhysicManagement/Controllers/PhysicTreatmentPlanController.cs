@@ -1,5 +1,4 @@
 ﻿using PhysicManagement.Logic.Services;
-using PhysicManagement.Model;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -7,11 +6,11 @@ namespace PhysicManagement.Controllers
 {
     public class PhysicTreatmentPlanController : BaseController
     {
-        Logic.Services.PhysicTreatmentService Service;
-        Logic.Services.PhysicTreatmentPlanService planService;
+        PhysicTreatmentService Service;
+        PhysicTreatmentPlanService planService;
         public PhysicTreatmentPlanController()
         {
-            Service = new Logic.Services.PhysicTreatmentService();
+            Service = new PhysicTreatmentService();
             planService = new PhysicTreatmentPlanService();
         }
         public ActionResult Index()
@@ -28,7 +27,7 @@ namespace PhysicManagement.Controllers
 
         public ActionResult Modify(int? id)
         {
-            Logic.Services.CancerService cancer = new Logic.Services.CancerService();
+            CancerService cancer = new CancerService();
             if (id == null)
             {
                 ViewBag.PhysicTreatmentId = new SelectList(Service.GetPhysicTreatmentList(), "Id", "PhaseNumber");
@@ -63,6 +62,7 @@ namespace PhysicManagement.Controllers
                 return View(entity);
             }
         }
+
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
