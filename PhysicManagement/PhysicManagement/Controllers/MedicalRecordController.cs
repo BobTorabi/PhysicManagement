@@ -19,7 +19,19 @@ namespace PhysicManagement.Controllers
             var medicalRecordData = Service.GetMedicalRecordById(id);
             return View(medicalRecordData);
         }
-
+       public ActionResult ModifyPatientMedicalRecord (int? id)
+        {
+            ViewBag.doctorId = new DoctorService().GetIdNameFromDoctorList();
+            ViewBag.CancerList = new CancerService().GetCancerList();
+            var Entity = Service.GetMedicalRecordById(id.GetValueOrDefault());
+                return View(Entity);
+        }
+        [HttpPost]
+        public ActionResult ModifyPatientMedicalRecord(Model.MedicalRecord entity)
+        {
+            Service.UpdateMedicalRecord(entity);
+            return RedirectToAction("Index","Patient");
+        }
         //[HttpPost]
         //public JsonResult SetCancerForMR(int medicalRecordId, int cancerId)
         //{

@@ -312,6 +312,7 @@
     <Content Include="Views\Patient\SetMedicalRecordTreatmentPhase.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\Home\Calculate.cshtml" />
+    <Content Include="Views\MedicalRecord\ModifyPatientMedicalRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

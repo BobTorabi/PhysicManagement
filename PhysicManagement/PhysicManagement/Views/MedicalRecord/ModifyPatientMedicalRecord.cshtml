@@ -1,0 +1,172 @@
+﻿@model PhysicManagement.Model.MedicalRecord
+
+@{
+    ViewBag.Title = "ویرایش پرونده پزشکی";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">اطلاعات نمایشی پرونده بیمار</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="PatientFirstName" class="bmd-label-floating">نام </label>
+                                    <input type="text" id="PatientFirstName" name="PatientFirstName" value="@Model.PatientFirstName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="PatientLastName" class="bmd-label-floating">نام خانوادگی</label>
+                                    <input type="text" id="PatientLastName" name="PatientLastName" value="@Model.PatientLastName" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group dropdown-toggle">
+                                    @{
+                                        var DoctorList = ViewBag.doctorId;
+
+                                    }
+                                    <select name="doctorId" id="doctorId" class="selectpicker" data-style="btn btn-primary btn-round" title="" required="true" aria-required="true">
+                                        <option disabled="" selected="">* نام پزشک معالج</option>
+                                        @foreach (var item in DoctorList)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group dropdown-toggle">
+                                    <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId" data-style="btn btn-primary btn-round" title="">
+                                        <option disabled="" selected="">نوع سرطان را انتخاب کنید</option>
+                                        @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
+                                        {
+                                            <option value="@item.Id">@item.Title</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="SystemCode" class="bmd-label-floating">شماره پرونده</label>
+                                    <input type="text" id="SystemCode" name="SystemCode" value="@Model.SystemCode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.ReceptionDate, "تاریخ ثبت پرونده")
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="CTCode" class="bmd-label-floating">کد سی تی </label>
+                                    <input type="text" id="CTCode" name="CTCode" value="@Model.CTCode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.CTEnterDate, "تاریخ ثبت سی تی")
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="TPCode" class="bmd-label-floating">کد تی پی</label>
+                                    <input type="text" id="TPCode" name="TPCode" value="@Model.TPCode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.TPEnterDate, "تاریخ ثبت تی پی")
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="MRICode" class="bmd-label-floating">کد MRI </label>
+                                    <input type="text" id="MRICode" name="MRICode" value="@Model.MRICode" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.EditorPersianDatePicker(model => model.MRIEnterDate, "تاریخ ثبت MRI")
+                                </div>
+                            </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="ContourAcceptUserFullName" class="bmd-label-floating">کاربر تایید کننده کانتور</label>
+                                            <input type="text" id="ContourAcceptUserFullName" name="ContourAcceptUserFullName" value="@Model.ContourAcceptUserFullName" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorPersianDatePicker(model => model.ContourAcceptDate, "تاریخ تایید کانتور")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="PhasesCount" class="bmd-label-floating">شماره فاز</label>
+                                            <input type="text" id="PhasesCount" name="PhasesCount" value="@Model.PhasesCount" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorPersianDatePicker(model => model.PhasesPrescribedDate, "تاریخ فاز تجویز شده")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="PhysicTreatementAcceptUser" class="bmd-label-floating">کاربر تاییدکننده بخش فیزیک</label>
+                                            <input type="text" id="PhysicTreatementAcceptUser" name="PhysicTreatementAcceptUser" value="@Model.PhysicTreatementAcceptUser" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorPersianDatePicker(model => model.PhysicTreatementAcceptDate, "تاریخ تایید بخش فیزیک")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorPersianDatePicker(model => model.CalendarStartDate, "تاریخ شروع")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            @Html.EditorPersianDatePicker(model => model.CalendarEndDate, "تاریخ پایان")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>توضیحات سی تی</label>
+                                            <div class="form-group bmd-form-group">
+                                                <label class="bmd-label-floating">لطفا توضیحات مربوط به تصویربرداری را وارد نمایید</label>
+                                                <textarea class="form-control" name="CTDescription" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>توضیحات تی پی</label>
+                                            <div class="form-group bmd-form-group">
+                                                <label class="bmd-label-floating">لطفا توضیحات مربوط به تصویربرداری را وارد نمایید</label>
+                                                <textarea class="form-control" name="TPDescription" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
