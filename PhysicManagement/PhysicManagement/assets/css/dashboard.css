@@ -19836,3 +19836,85 @@ Copyright (c) 2015 Daniel Eden
 .text-center{
 	text-align: center;
 }
+
+.bg-icons{
+	width: 58px;
+	height: 50px;
+}
+
+.bg-menu-icons{
+	width: 39px;
+	height: 33px;
+	margin: 0 0 0 15px;
+	float: right;
+}
+
+.bg-icon_01 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -10px -10px;
+}
+
+.bg-icon_02 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -88px -10px;
+}
+
+.bg-icon_03 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -10px -80px;
+}
+
+.bg-icon_04 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -88px -80px;
+}
+
+.bg-icon_05 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -166px -10px;
+}
+
+.bg-icon_06 {
+    width: 58px; height: 50px;
+    background: url('../img/css_sprites.png') -166px -80px;
+}
+
+.bg-icon_10 {
+    width: 30px; height: 21px;
+    background: url('../img/css_sprites.png') -187px -150px;
+}
+
+.bg-icon_11 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -6px -150px;
+}
+
+.bg-icon_12 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -69px -150px;
+}
+
+.bg-icon_13 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -128px -150px;
+}
+
+.bg-icon_14 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -244px -10px;
+}
+
+.bg-icon_15 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -244px -63px;
+}
+
+.bg-icon_16 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -244px -116px;
+}
+
+.bg-icon_17 {
+    width: 39px; height: 33px;
+    background: url('../img/css_sprites.png') -10px -203px;
+}
