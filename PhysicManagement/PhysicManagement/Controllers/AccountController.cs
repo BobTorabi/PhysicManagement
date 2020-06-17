@@ -131,12 +131,15 @@ namespace PhysicManagement.Controllers
             Cookie.ExpireCookie("Apa_Co_Auth");
             return Redirect("~/Account/Login");
         }
+
+
         [Authorization()]
         public ActionResult ProfileData()
         {
             ViewBag.RoleName = Cookie.ReadCookie("RoleType");
             return View();
         }
+
 
         [HttpPost]
         [Authorization()]
@@ -147,16 +150,23 @@ namespace PhysicManagement.Controllers
             return Redirect("ProfileData");
         }
 
-        [Authorization()]
+        [Authorization(Roles = "resident")]
         public ActionResult ChangePassword()
         {
             ViewBag.RoleName = Cookie.ReadCookie("RoleType");
             return View();
         }
-        [Authorization()]
+
+
         [HttpPost]
+        [Authorization(Roles = "resident")]
         public ActionResult ChangePassword(string OldPassword,string NewPassword,string NewPasswordRetype)
         {
+            return View();
+        }
+
+        public ActionResult NoAccess() {
+
             return View();
         }
     }

@@ -23,7 +23,7 @@ namespace PhysicManagement.Controllers
             ViewBag.PageSize = 5;
             PagedList<Model.TreatmentPhase> MedicalRecord = Service.GetTreatmentPhasesList(firstName, lastName, mobile,
                 nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
-            ViewBag.TotalRecords = MedicalRecord.TotalRecords;
+            ViewBag.TotalRecords = MedicalRecord == null ? 100 :MedicalRecord.TotalRecords;
             return View(MedicalRecord);
         }
 

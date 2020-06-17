@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 
 namespace PhysicManagement.Controllers
 {
@@ -42,6 +43,23 @@ namespace PhysicManagement.Controllers
         {
             string RoleTypeCookieName = "RoleType";
             string RoleType = Common.Cookie.ReadCookie(RoleTypeCookieName)?.ToLower();
+            if (!string.IsNullOrEmpty(Roles))
+            {
+                string[] GrantedRoles = (Roles ?? "").ToLower().Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                if (!GrantedRoles.Contains(RoleType))
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                              new RouteValueDictionary(new
+                              {
+                                  action = "NoAccess",
+                                  controller = "Account",
+                                  area = "",
+                                  data = filterContext.HttpContext.Request.Url.AbsoluteUri
+                              }));
+                    return;
+                }
+            }
+            
             switch (RoleType)
             {
                 case "doctor":
