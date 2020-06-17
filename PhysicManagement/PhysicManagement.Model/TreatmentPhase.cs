@@ -16,16 +16,19 @@ namespace PhysicManagement.Model
     {
         public long Id { get; set; }
         public Nullable<long> MedicalRecordId { get; set; }
+        public string PatientFirstName { get; set; }
+        public string PatientLastName { get; set; }
         public Nullable<int> TreatmentDeviceId { get; set; }
+        public string TreatmentDeviceTitle { get; set; }
         public Nullable<int> PhaseNumber { get; set; }
         public string PhaseText { get; set; }
-        public Nullable<double> Dose { get; set; }
         public Nullable<int> Fraction { get; set; }
         public string Target { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> PrescribeDate { get; set; }
         public string PrescribesdUserId { get; set; }
         public string PrescribesdUserFullName { get; set; }
-        public string PrescribesdUserRole { get; set; }
+        public string PrescribedUserRole { get; set; }
+        public Nullable<bool> IsApproved { get; set; }
     }
 }

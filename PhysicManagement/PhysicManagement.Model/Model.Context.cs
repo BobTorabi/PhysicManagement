@@ -48,5 +48,6 @@ namespace PhysicManagement.Model
         public virtual DbSet<TreatmentCategory> TreatmentCategory { get; set; }
         public virtual DbSet<TreatmentCategoryService> TreatmentCategoryService { get; set; }
         public virtual DbSet<TreatmentPhase> TreatmentPhase { get; set; }
+        public virtual DbSet<TreatmentPhaseDetail> TreatmentPhaseDetail { get; set; }
     }
 }
