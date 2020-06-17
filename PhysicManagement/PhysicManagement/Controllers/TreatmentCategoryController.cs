@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using PhysicManagement.Logic.Services;
 
@@ -56,6 +57,25 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+        
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult DeleteForm(int id)
+        {
+            var TreatmentCategoryServices = Service.GetTreatmentCategoriesServiceByTreatmentCategoryId(id);
+            if (TreatmentCategoryServices.Count == 0)
+            {
+                Service.DeleteTreatmentCategory(id);
+                return RedirectToAction("List");
+            }
+            else {
+                TempData["Error"] = "این دسته بندی زیرمجموعه دارد. ابتدا دسته بندی های زیرمجموعه را حذف کنید..";
+                return RedirectToAction("List");
+            }
+        }
+
         public JsonResult getTreatmentCategoryServices(int id)
         {
             var Data =  

@@ -27,6 +27,7 @@
                             <th>ردیف</th>
                             <th>نام  </th>
                             <th>توضیحات </th>
+                            <th>تعداد زیرمجوعه</th>
                             <th style="width:50px;">امکانات</th>
                         </tr>
                     </thead>
@@ -39,14 +40,15 @@
                                     <td>@Index</td>
                                     <td>@TreatmentCategory.Title</td>
                                     <td>@TreatmentCategory.Description</td>
+                                    <td>@TreatmentCategory.TreatmentCategoryService.Count</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" href="@Url.Action("List","TreatmentCategoryService",new { @id = @TreatmentCategory.Id})">کدهای درمان</a>
                                                 <a class="dropdown-item" href="@Url.Action("Modify","TreatmentCategory",new { @id = @TreatmentCategory.Id})">ویرایش</a>
-                                                @*<a class="dropdown-item" href="DeleteCancer/@Cancer.Id"> حذف</a>*@
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","TreatmentCategory", new { id = TreatmentCategory.Id })')">حذف</a>
                                             </div>
@@ -55,9 +57,7 @@
                                 </tr>
                                 Index++;
                             }
-
                         }
-
 
                     </tbody>
                 </table>

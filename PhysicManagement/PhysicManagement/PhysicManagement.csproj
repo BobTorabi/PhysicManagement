@@ -224,7 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\TreatmentCategoryService\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -319,6 +318,8 @@
     <Content Include="Views\TreatmentCategory\Modify.cshtml" />
     <Content Include="Views\TreatmentCategory\List.cshtml" />
     <Content Include="Views\Account\NoAccess.cshtml" />
+    <Content Include="Views\TreatmentCategoryService\List.cshtml" />
+    <Content Include="Views\TreatmentCategoryService\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

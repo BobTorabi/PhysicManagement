@@ -57,5 +57,15 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult DeleteForm(int id)
+        {
+            Service.DeleteTreatmentCategoryService(id);
+            return RedirectToAction("List");
+        }
     }
 }

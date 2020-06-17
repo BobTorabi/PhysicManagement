@@ -49,7 +49,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.TreatmentCategory.OrderBy(x => x.Title).ToList();
+                return db.TreatmentCategory.Include("TreatmentCategoryService").OrderBy(x => x.Title).ToList();
             }
         }
         public Model.TreatmentCategory GetTreatmentCategoryById(int entityId)
@@ -114,6 +114,14 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.TreatmentCategoryService.Find(entityId);
+                return Entity;
+            }
+        }
+        public List<Model.TreatmentCategoryService> GetTreatmentCategoriesServiceByTreatmentCategoryId(int treatmentCategoryId)
+        {
+            using (var db = new PhysicManagementEntities())
+            {
+                var Entity = db.TreatmentCategoryService.Where(e=>e.TreatmentCategoryId == treatmentCategoryId).ToList();
                 return Entity;
             }
         }
