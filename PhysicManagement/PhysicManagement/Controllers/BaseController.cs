@@ -18,7 +18,8 @@ namespace PhysicManagement.Controllers
             if (filterContext.Exception != null)
             {
                 List<string> Result = new List<string>();
-                filterContext.HttpContext.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                filterContext.HttpContext.Response.StatusCode = 
+                    (int)System.Net.HttpStatusCode.InternalServerError;
                 if (filterContext.Exception is ValidationException)
                 {
                     ((ValidationException)filterContext.Exception).Errors.ToList().ForEach(error => { Result.Add(error.ErrorMessage); });

@@ -57,7 +57,7 @@
                                         <select name="hasContour" class="form-control">
                                             <option value="" disabled selected>انتخاب وضعیت کانتور پرونده</option>
                                             <option value="">مهم نیست</option>
-                                            <option value="true">اطلاعات کانتور دارد</option>
+                                            <option value="true">اطلاعات کانتور تائید نشده</option>
                                             <option value="false">اطلاعات کانتور ندارد</option>
                                         </select>
                                     </div>
@@ -97,10 +97,7 @@
                                     <td>@mr.SystemCode</td>
                                     <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
                                     <td class="text-center">
-                                        @if(mr.Contour.Count == 0)
-                                        {
-                                            <button type="button" onclick="openpanel('@mr.Id')" class="btn btn-info pull-left">ثبت</button>
-                                        }
+                                        <button type="button" onclick="openpanel('@mr.Id')" class="btn btn-info pull-left">ثبت</button>
                                     </td>
                                 </tr>
                                 Index++;
@@ -150,7 +147,9 @@
                     <tbody id="cancerData">
                     </tbody>
                 </table>
-
+                <div class="form-group doctor_desc">
+                    <textarea placeholder="توضیحات پزشک" class="form-control" rows="5" id="des"></textarea>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
@@ -174,6 +173,14 @@
             $('#systemCode').html(d.SystemCode);
             $('#cancerId').val(d.CancerId).trigger('change');
             $('#cancerData').empty();
+            debugger;
+            if (d.Contour == null) {
+                $('.doctor_desc').hide();
+            }
+            else {
+                $('#des').val(d.Contour.Description);
+
+            }
             $('#exampleModal').modal('show');
         });
     }
@@ -233,11 +240,13 @@
                     </tr>`;
                     $(tmp).appendTo('#cancerData');
                 }
+                setTimeout(function () { loadContourDetailData(med_id); }, 150);
+
             }
         );
     }
     function setCancerData() {
-        var Data = { CancerId: 0, MedicalRecordId: med_id, oars: [], targets: [] };
+        var Data = { CancerId: 0, Description: $('#des').val(), MedicalRecordId: med_id, oars: [], targets: [] };
         var cancerId = $('#cancerId').val();
         if (cancerId == '') {
             alert('لطفا یکی از انواع سرطان را انتخاب کنید.');
@@ -270,5 +279,22 @@
             });
         }
     }
-
+    function loadContourDetailData(mdId) {
+        $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: mdId }, function (d) {
+            if (d.ContourDetail !== undefined) {
+                if (d.ContourDetail.length > 0) {
+                    for (var i = 0; i < d.ContourDetail.length; i++) {
+                        if (d.ContourDetail[i].CancerOARId != null) {
+                            $('#ora_check_' + d.ContourDetail[i].CancerOARId).attr('checked', 'checked');
+                            $('#ora_desc_' + d.ContourDetail[i].CancerOARId).val(d.ContourDetail[i].Description);
+                        }
+                        if (d.ContourDetail[i].CancerTargetId != null) {
+                            $('#target_check_' + d.ContourDetail[i].CancerTargetId).attr('checked', 'checked');
+                            $('#target_desc_' + d.ContourDetail[i].CancerTargetId).val(d.ContourDetail[i].Description);
+                        }
+                    }
+                }
+            }
+        });
+    }
 </script>

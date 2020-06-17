@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using PhysicManagement.Common;
+using PhysicManagement.Logic.Services;
+using System;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -10,16 +9,16 @@ namespace PhysicManagement.Controllers
     {
         public ActionResult Login()
         {
-            if (Common.Cookie.IsCookieSet("RoleType"))
+            if (Cookie.IsCookieSet("RoleType"))
             {
-                string RoleValue = (Common.Cookie.ReadCookie("RoleType") ?? "").ToString();
+                string RoleValue = (Cookie.ReadCookie("RoleType") ?? "").ToString();
                 switch (RoleValue)
                 {
                     default:
                         return View();
                     case "doctor":
                         { 
-                        var UserData = Logic.Services.DoctorService.IsAuthenticated();
+                        var UserData = DoctorService.IsAuthenticated();
                             if (UserData == null)
                                 return View();
                             else { 
@@ -28,7 +27,7 @@ namespace PhysicManagement.Controllers
                         }
                     case "resident":
                         {
-                            var UserData = Logic.Services.ResidentService.IsAuthenticated();
+                            var UserData = ResidentService.IsAuthenticated();
                             if (UserData == null)
                                 return View();
                             else
@@ -38,7 +37,7 @@ namespace PhysicManagement.Controllers
                         }
                     case "physicuser":
                         {
-                            var UserData = Logic.Services.PhysicUserService.IsAuthenticated();
+                            var UserData = PhysicUserService.IsAuthenticated();
                             if (UserData == null)
                                 return View();
                             else
@@ -51,7 +50,7 @@ namespace PhysicManagement.Controllers
             return View();
         }
         public ActionResult TestData(string a, string b) {
-            return Json(new { a = a, aEnc = Logic.Services.DoctorService.EncryptPassword(a, b) }, JsonRequestBehavior.AllowGet);
+            return Json(new { a = a, aEnc = DoctorService.EncryptPassword(a, b) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult Login(string userName, string password, short roleType)
@@ -65,7 +64,7 @@ namespace PhysicManagement.Controllers
                 //Doctor
                 case 1:
                     {
-                        var UserData = Logic.Services.DoctorService.GetUserData(userName, password);
+                        var UserData = DoctorService.GetUserData(userName, password);
                         if (UserData == null)
                         {
                             TempData["Error"] = "اطلاعات وارد شده اشتباه است";
@@ -73,8 +72,8 @@ namespace PhysicManagement.Controllers
                         }
                         else
                         {
-                            Logic.Services.DoctorService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "doctor",DateTime.Now.AddMonths(1));
+                            DoctorService.SetAuthenticationCookie(userName, password, true);
+                            Cookie.SetCookie("RoleType", "doctor",DateTime.Now.AddMonths(1));
                             if (Request["data"] != null)
                             {
                                 return Redirect(Request["data"]);
@@ -89,7 +88,7 @@ namespace PhysicManagement.Controllers
                 //Resident
                 case 2:
                     {
-                        var UserData = Logic.Services.ResidentService.GetUserData(userName, password);
+                        var UserData = ResidentService.GetUserData(userName, password);
                         if (UserData == null)
                         {
                             TempData["Error"] = "اطلاعات وارد شده اشتباه است";
@@ -97,15 +96,15 @@ namespace PhysicManagement.Controllers
                         }
                         else
                         {
-                            Logic.Services.ResidentService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "resident", DateTime.Now.AddMonths(1));
+                            ResidentService.SetAuthenticationCookie(userName, password, true);
+                            Cookie.SetCookie("RoleType", "resident", DateTime.Now.AddMonths(1));
                             return Redirect("~/Home/Dashboard");
                         }
                     }
                 //PhysicUser
                 case 3:
                     {
-                        var UserData = Logic.Services.PhysicUserService.GetUserData(userName, password);
+                        var UserData = PhysicUserService.GetUserData(userName, password);
                         if (UserData == null)
                         {
                             TempData["Error"] = "اطلاعات وارد شده اشتباه است";
@@ -113,8 +112,8 @@ namespace PhysicManagement.Controllers
                         }
                         else
                         {
-                            Logic.Services.PhysicUserService.SetAuthenticationCookie(userName, password, true);
-                            Common.Cookie.SetCookie("RoleType", "PhysicUser", DateTime.Now.AddMonths(1));
+                            PhysicUserService.SetAuthenticationCookie(userName, password, true);
+                            Cookie.SetCookie("RoleType", "PhysicUser", DateTime.Now.AddMonths(1));
                             return Redirect("~/Home/Dashboard");
                         }
                     }
@@ -128,14 +127,14 @@ namespace PhysicManagement.Controllers
 
         public ActionResult LogOut()
         {
-            Common.Cookie.ExpireCookie("RoleType");
-            Common.Cookie.ExpireCookie("Apa_Co_Auth");
+            Cookie.ExpireCookie("RoleType");
+            Cookie.ExpireCookie("Apa_Co_Auth");
             return Redirect("~/Account/Login");
         }
         [Authorization()]
         public ActionResult ProfileData()
         {
-            ViewBag.RoleName = Common.Cookie.ReadCookie("RoleType");
+            ViewBag.RoleName = Cookie.ReadCookie("RoleType");
             return View();
         }
 
@@ -143,15 +142,15 @@ namespace PhysicManagement.Controllers
         [Authorization()]
         public ActionResult ProfileUpdateForDoctor(Model.Doctor doctor)
         {
-            var DoctorData = Logic.Services.DoctorService.IsAuthenticated();
-            Logic.Services.DoctorService.UpdateProfile(DoctorData.Id, doctor.Username, doctor.FirstName, doctor.LastName, doctor.Mobile);
+            var DoctorData = DoctorService.IsAuthenticated();
+            DoctorService.UpdateProfile(DoctorData.Id, doctor.Username, doctor.FirstName, doctor.LastName, doctor.Mobile);
             return Redirect("ProfileData");
         }
 
         [Authorization()]
         public ActionResult ChangePassword()
         {
-            ViewBag.RoleName = Common.Cookie.ReadCookie("RoleType");
+            ViewBag.RoleName = Cookie.ReadCookie("RoleType");
             return View();
         }
         [Authorization()]

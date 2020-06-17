@@ -1,19 +1,17 @@
 ﻿using PhysicManagement.Logic.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class CancerController : BaseController
     {
-        Logic.Services.CancerService Service;
-        Logic.Services.MedicalRecordService MedicalService;
+        CancerService Service;
+        MedicalRecordService MedicalService;
         public CancerController()
         {
-            Service = new Logic.Services.CancerService();
+            Service = new CancerService();
             MedicalService = new MedicalRecordService();
         }
         

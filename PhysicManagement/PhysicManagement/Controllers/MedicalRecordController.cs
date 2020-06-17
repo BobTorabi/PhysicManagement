@@ -35,6 +35,7 @@ namespace PhysicManagement.Controllers
         public JsonResult GetMedicalRecordData(int medicalRecordId)
         {
             var medicalRecordData = Service.GetMedicalRecordById(medicalRecordId);
+            var Contour = ContourService.GetContourByMedicalRecordId(medicalRecordId);
             return Json(
                 new
                 {
@@ -43,11 +44,17 @@ namespace PhysicManagement.Controllers
                     medicalRecordData.SystemCode,
                     medicalRecordData.CancerId,
                     medicalRecordData.CancerTitle,
-                    DoctorName = medicalRecordData.DoctorFirstName +" " + medicalRecordData.DoctorLastName,
+                    DoctorName = medicalRecordData.DoctorFirstName + " " + medicalRecordData.DoctorLastName,
                     ReceptionDate = Common.DateUtility.GetPersianDateTime(medicalRecordData.ReceptionDate),
                     CTDate = Common.DateUtility.GetPersianDateTime(medicalRecordData.CTEnterDate),
+                    Contour = new
+                    {
+                        Contour.IsAccepted,
+                        Contour.Description,
+                        ActionDate = Common.DateUtility.GetPersianDateTime(Contour.ActionDate)
+                    },
                     ContourDetail = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId)
-                                    .Select(x=>new {x.Id,x.CancerTargetId,x.CancerOARId,x.Description })
+                                    .Select(x => new { x.Id, x.CancerTargetId, x.CancerOARId, x.Description })
                                     .ToList()
                 }, JsonRequestBehavior.AllowGet);
         }

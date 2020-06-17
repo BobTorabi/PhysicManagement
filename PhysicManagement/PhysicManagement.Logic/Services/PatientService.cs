@@ -167,7 +167,7 @@ namespace PhysicManagement.Logic.Services
                     bool HasContour = hasContour.Value;
                     if (HasContour)
                     {
-                        Queryable = Queryable.Where(x => x.Contour.Count > 0);
+                        Queryable = Queryable.Where(x => x.Contour.Any(t=>t.IsAccepted == false));
                     }
                     else
                     {
