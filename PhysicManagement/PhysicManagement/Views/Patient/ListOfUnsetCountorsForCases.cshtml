@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label for="SystemCode" class="bmd-label-floating">شماره پرونده </label>
+                                        <label for="SystemCode" class="bmd-label-floating">شماره پرونده یا همان کد سی‌تی اسکن </label>
                                         <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 <th>کد ملی</th>
                                 <th>شناسه بیمار</th>
                                 <th>اطلاعات کانتور</th>
-                                <th>شماره پرونده</th>
+                                <th>شماره پرونده / کد سی‌تی اسکن</th>
                                 <th>تاریخ ثبت</th>
                                 <th class="text-center"></th>
                             </tr>
@@ -94,7 +94,7 @@
                                     <td>@mr.Patient.NationalCode</td>
                                     <td>@mr.Patient.Code</td>
                                     <td>@(mr.Contour.Count==0?"ندارد":"دارد")</td>
-                                    <td>@mr.SystemCode</td>
+                                    <td>@mr.CTCode</td>
                                     <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
                                     <td class="text-center">
                                         <button type="button" onclick="openpanel('@mr.Id')" class="btn btn-info pull-left">ثبت</button>
