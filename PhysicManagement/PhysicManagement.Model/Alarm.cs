@@ -15,16 +15,18 @@ namespace PhysicManagement.Model
     public partial class Alarm
     {
         public long Id { get; set; }
-        public Nullable<int> AlarmTypeId { get; set; }
-        public string AlarmTypeTitle { get; set; }
-        public Nullable<System.DateTime> GenerateDate { get; set; }
-        public string GenerateUser { get; set; }
-        public Nullable<int> GenerateTreatmentPhaseId { get; set; }
-        public string GenerateTreatmentPhaseTitle { get; set; }
-        public Nullable<bool> IsOnBoard { get; set; }
-        public Nullable<System.DateTime> ReviewDate { get; set; }
-        public string ReviewUserName { get; set; }
-        public string ReviewText { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> AlarmEventTypeId { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> DoctorId { get; set; }
+        public Nullable<int> PhysicUserId { get; set; }
+        public Nullable<bool> IsSystemAlarm { get; set; }
+        public Nullable<bool> IsDelivered { get; set; }
+        public Nullable<System.DateTime> SendDate { get; set; }
+        public Nullable<System.DateTime> DeliverDate { get; set; }
+        public Nullable<bool> IsArchived { get; set; }
+        public Nullable<bool> IsSMS { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

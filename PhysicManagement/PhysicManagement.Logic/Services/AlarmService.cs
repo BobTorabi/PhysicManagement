@@ -13,7 +13,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Alarm.OrderBy(x => x.ReviewUserName).ToList();
+                return db.Alarm.OrderBy(x => x.Id).ToList();
             }
         }
         public Model.Alarm GetAlarmById(long entityId)
@@ -29,12 +29,6 @@ namespace PhysicManagement.Logic.Services
             var validation = new AlarmValidation.AlarmEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
-
-            var AlaramTypeObject = GetAlarmTypeById(entity.AlarmTypeId.GetValueOrDefault());
-            if (AlaramTypeObject ==null)
-                throw Common.MegaException.ThrowException("نوع هشدار وارد شده در پایگاه داده وجود ندارد.");
-
-            entity.AlarmTypeTitle = AlaramTypeObject.Title;
 
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -54,37 +48,17 @@ namespace PhysicManagement.Logic.Services
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
+                //entity.
+                //entity.GenerateUser = AlaramObject2.LastName;
 
-                var AlaramTypeObject = GetAlarmTypeById(entity.AlarmTypeId.GetValueOrDefault());
-                if (AlaramTypeObject == null)
-                    throw Common.MegaException.ThrowException("نوع هشدار وارد شده در پایگاه داده وجود ندارد.");
-
-                entity.AlarmTypeTitle = AlaramTypeObject.Title;
-
-                TreatmentService td = new TreatmentService();
-
-                var AlaramObject = td.GetTreatmentPhaseById(entity.GenerateTreatmentPhaseId.GetValueOrDefault());
-                if (AlaramObject == null)
-                    throw Common.MegaException.ThrowException("عنوان برنامه درمان وارد شده در پایگاه داده وجود ندارد.");
-
-                entity.GenerateTreatmentPhaseTitle = AlaramObject.PhaseText;
-
-                PatientService pa = new PatientService();
-
-                var AlaramObject2 = pa.GetPatientById(Convert.ToInt32(entity.GenerateUser));
-                if (AlaramObject2 == null)
-                    throw Common.MegaException.ThrowException("کاربر وارد شده در پایگاه داده وجود ندارد.");
-
-                entity.GenerateUser = AlaramObject2.LastName;
-
-                Entity.IsActive = entity.IsActive;
-                Entity.IsOnBoard = entity.IsOnBoard;
-                Entity.ReviewDate = entity.ReviewDate;
-                Entity.ReviewText = entity.ReviewText;
-                Entity.ReviewUserName = entity.ReviewUserName;
-                Entity.AlarmTypeId = entity.AlarmTypeId;               
-                Entity.GenerateDate = entity.GenerateDate;
-                Entity.GenerateUser = entity.GenerateUser;
+                //Entity.IsActive = entity.IsActive;
+                //Entity.IsOnBoard = entity.IsOnBoard;
+                //Entity.ReviewDate = entity.ReviewDate;
+                //Entity.ReviewText = entity.ReviewText;
+                //Entity.ReviewUserName = entity.ReviewUserName;
+                //Entity.AlarmTypeId = entity.AlarmTypeId;               
+                //Entity.GenerateDate = entity.GenerateDate;
+                //Entity.GenerateUser = entity.GenerateUser;
 
                 return db.SaveChanges() == 1;
             }
@@ -102,65 +76,6 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
-        #region AlarmType section
-        public List<Model.AlarmType> GetAlarmTypeList()
-        {
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                return db.AlarmType.OrderBy(x => x.Title).ToList();
-            }
-        }
-        public Model.AlarmType GetAlarmTypeById(int entityId)
-        {
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.AlarmType.Find(entityId);
-                return Entity;
-            }
-        }
-        public bool AddAlarmType(Model.AlarmType entity)
-        {
-            var validation = new AlarmValidation.AlarmTypeEntityValidate().Validate(entity);
-            if (!validation.IsValid)
-                throw new ValidationException(validation.Errors);
-
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                db.AlarmType.Add(entity);
-                return db.SaveChanges() == 1;
-            }
-        }
-        public bool UpdateAlarmType(Model.AlarmType entity)
-        {
-            var validation = new AlarmValidation.AlarmTypeEntityValidate().Validate(entity);
-            if (!validation.IsValid)
-                throw new ValidationException(validation.Errors);
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.AlarmType.Find(entity.Id);
-                Entity.IsActive = entity.IsActive;
-                Entity.Title = entity.Title;
-                Entity.Description = entity.Description;
-                Entity.EnglishTitle = entity.EnglishTitle;
-
-                return db.SaveChanges() == 1;
-
-            }
-        }
-        public bool DeleteAlarmType(int entityId)
-        {
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.AlarmType.Find(entityId);
-                if (Entity == null)
-                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
-
-                db.AlarmType.Remove(Entity);
-                return db.SaveChanges() == 1;
-            }
-        }
-
-        #endregion
-
+        
     }
 }

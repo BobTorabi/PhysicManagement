@@ -12,12 +12,21 @@ namespace PhysicManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class AlarmType
+    public partial class AlarmEventType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AlarmEventType()
+        {
+            this.AlarmConfig = new HashSet<AlarmConfig>();
+        }
+    
         public int Id { get; set; }
         public string Title { get; set; }
         public string EnglishTitle { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlarmConfig> AlarmConfig { get; set; }
     }
 }

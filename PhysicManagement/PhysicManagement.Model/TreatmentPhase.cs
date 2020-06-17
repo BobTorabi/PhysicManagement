@@ -30,5 +30,10 @@ namespace PhysicManagement.Model
         public string PrescribesdUserFullName { get; set; }
         public string PrescribedUserRole { get; set; }
         public Nullable<bool> IsApproved { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public string ApprovedUserFullName { get; set; }
+        public Nullable<bool> Reserve1 { get; set; }
+        public Nullable<bool> Reserve2 { get; set; }
+        public string Reserve3 { get; set; }
     }
 }

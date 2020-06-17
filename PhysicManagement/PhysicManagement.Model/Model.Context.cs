@@ -29,9 +29,6 @@ namespace PhysicManagement.Model
         public virtual DbSet<Cancer> Cancer { get; set; }
         public virtual DbSet<CancerOAR> CancerOAR { get; set; }
         public virtual DbSet<Doctor> Doctor { get; set; }
-        public virtual DbSet<TreatmentProcess> TreatmentProcess { get; set; }
-        public virtual DbSet<Alarm> Alarm { get; set; }
-        public virtual DbSet<AlarmType> AlarmType { get; set; }
         public virtual DbSet<PhysicUser> PhysicUser { get; set; }
         public virtual DbSet<Resident> Resident { get; set; }
         public virtual DbSet<TreatmentDevice> TreatmentDevice { get; set; }
@@ -49,5 +46,9 @@ namespace PhysicManagement.Model
         public virtual DbSet<TreatmentCategoryService> TreatmentCategoryService { get; set; }
         public virtual DbSet<TreatmentPhase> TreatmentPhase { get; set; }
         public virtual DbSet<TreatmentPhaseDetail> TreatmentPhaseDetail { get; set; }
+        public virtual DbSet<AlarmConfig> AlarmConfig { get; set; }
+        public virtual DbSet<AlarmEventType> AlarmEventType { get; set; }
+        public virtual DbSet<TreatmentProcess> TreatmentProcess { get; set; }
+        public virtual DbSet<Alarm> Alarm { get; set; }
     }
 }

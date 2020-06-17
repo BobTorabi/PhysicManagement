@@ -56,7 +56,10 @@
     <Compile Include="Alarm.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="AlarmType.cs">
+    <Compile Include="AlarmConfig.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AlarmEventType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Calendar.cs">

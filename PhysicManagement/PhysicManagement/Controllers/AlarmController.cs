@@ -27,15 +27,15 @@ namespace PhysicManagement.Controllers
             Logic.Services.TreatmentService ts = new TreatmentService();
             if(id == null)
             {
-                ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title");
-                ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber");
+                //ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title");
+                //ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber");
                 return View(new Model.Alarm());
             }
             else
             {
                 var Entity = Service.GetAlarmById(id.GetValueOrDefault());
-                ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title",Entity.AlarmTypeId);
-                ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber",Entity.GenerateTreatmentPhaseId);
+                //ViewBag.AlarmTypeId = new SelectList(Service.GetAlarmTypeList(), "Id", "Title",Entity.AlarmTypeId);
+                //ViewBag.GenerateTreatmentPhaseId = new SelectList(ts.GetTreatmentList(), "Id", "PhaseNumber",Entity.GenerateTreatmentPhaseId);
                 return View(Entity);
             }
             
