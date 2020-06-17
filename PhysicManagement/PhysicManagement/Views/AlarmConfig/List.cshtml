@@ -1,14 +1,14 @@
-﻿@model IEnumerable<PhysicManagement.Model.Alarm>
+﻿@model IEnumerable<PhysicManagement.Model.AlarmConfig>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "";
 }
 
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-info">
-                <h4 class="card-title">لیست هشدار ها</h4>
+                <h4 class="card-title">لیست پیکربندی هشدار</h4>
                 <h3>
                     <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
                 </h3>
@@ -24,23 +24,29 @@
                     <thead class="text-warning">
                         <tr>
                             <th>ردیف</th>
-                            <th>عنوان</th>
-                            <th>نام بیمار</th>
-                            <th>عنوان روند درمان</th>
-                            <th>زمان ارسال</th>
+                            <th>پیام ادمین</th>
+                            <th>پیام دکتر</th>
+                            <th>پیام فیزیست</th>
+                            <th>پیام رزیدنت</th>
+                            <th>پیام کل</th>
+                            <th>آخرین کاربر اصلاح شده</th>
+                            <th>تاریخ آخرین تغییر</th>
                         </tr>
                     </thead>
                     <tbody>
                         @{
                             int Index = 1;
-                            foreach (var Alarms in Model)
+                            foreach (var alarmConfig in Model)
                             {
                                 <tr>
                                     <td>@Index</td>
-                                    <td>@Alarms.Title</td>
-                                    <td>@Alarms.PatientFullName</td>
-                                    <td>@Alarms.TreatmentProcessTitle</td>
-                                    <td>@Alarms.SendDate</td>
+                                    <td>@alarmConfig.SendAdminSMS</td>
+                                    <td>@alarmConfig.SendDoctorSMS</td>
+                                    <td>@alarmConfig.SendPhysictSMS</td>
+                                    <td>@alarmConfig.SendResidentSMS</td>
+                                    <td>@alarmConfig.SendAggregateSMS</td>
+                                    <td>@alarmConfig.LastModifiedUser</td>
+                                    <td>@alarmConfig.LastModifiedDate</td>
                                 </tr>
                                 Index++;
                             }
@@ -54,4 +60,3 @@
         </div>
     </div>
 </div>
-

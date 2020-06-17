@@ -134,7 +134,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlarmConfigController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
+    <Compile Include="Controllers\AlarmEventTypeController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CancerController.cs" />
     <Compile Include="Controllers\CancerOARController.cs" />
@@ -315,8 +317,11 @@
     <Content Include="Views\Account\NoAccess.cshtml" />
     <Content Include="Views\TreatmentCategoryService\List.cshtml" />
     <Content Include="Views\TreatmentCategoryService\Modify.cshtml" />
-    <Content Include="Views\Alarm\List.cshtml" />
     <Content Include="Views\Alarm\Inbox.cshtml" />
+    <Content Include="Views\Alarm\List.cshtml" />
+    <Content Include="Views\AlarmConfig\List.cshtml" />
+    <Content Include="Views\AlarmEventType\List.cshtml" />
+    <Content Include="Views\AlarmEventType\Modify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

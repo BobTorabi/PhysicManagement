@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PhysicManagement.Model.TreatmentCategory>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,6 +14,27 @@
                     <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
                 </h3>
             </div>
+            <div class="row">
+                <form method="get" style="width:100%;padding:10px 30px;" action="List">
+                    <div class="row  gray-bg">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Title" class="bmd-label-floating"> عنوان</label>
+                                <input type="text" id="Title" name="Title" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Subset" class="bmd-label-floating"> تعداد زیر مجموعه</label>
+                                <input type="text" id="Subset" name="Subset" value="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                    <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
             <div class="card-body table-responsive">
                 @if (TempData["Error"] != null)
                 {
@@ -25,7 +46,7 @@
                     <thead class="text-warning">
                         <tr>
                             <th>ردیف</th>
-                            <th>نام  </th>
+                            <th>عنوان  </th>
                             <th>توضیحات </th>
                             <th>تعداد زیرمجوعه</th>
                             <th style="width:50px;">امکانات</th>
