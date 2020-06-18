@@ -139,7 +139,7 @@ html[dir="rtl"] .alert-dismissible .close {
 
 html[dir="rtl"] .dropdown-toggle::after {
   margin-right: .255em;
-  margin-left: 0;
+  margin-left: .500em;
 }
 
 html[dir="rtl"] .form-check-input {

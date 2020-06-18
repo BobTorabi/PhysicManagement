@@ -45,6 +45,21 @@ namespace PhysicManagement.Controllers
 
             return View(ModelData);
         }
+
+        public ActionResult ListOfTreatmentPlans(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
+        {
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            PagedList<Model.Patient> Patient =
+                Service
+                .GetPatientListWithFilters
+                (firstName, lastName, mobile, nationalCode, caseCode, code, CurrentPage, ViewBag.PageSize);
+
+            ViewBag.TotalRecords = Patient.TotalRecords;
+            return View(Patient);
+        }
+
+
         /// <summary>
         /// فرم شماره 6 - ثبات
         /// ثبت اطلاعات تعداد فازهای یک پرونده پزشکی
