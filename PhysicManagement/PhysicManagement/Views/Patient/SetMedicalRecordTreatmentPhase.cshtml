@@ -75,23 +75,28 @@
                                         <h4 class="card-title">تجویز درمان فاز @Index</h4>
                                     </div>
                                     <div class="card-body">
-                                        <table class="table table-hover">
-                                            <thead class="text-warning">
-                                                <tr><th>لیست ارگان های هدف</th><th>دز تجویز شده (Prescribed dose)</th></tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in contourDetails)
-                                                {
-                                                    var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
-                                                    <tr>
-                                                        <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
-                                                        <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
-                                                    </tr>
-                                                }
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-hover">
+                                                    <thead class="text-warning">
+                                                        <tr><th>لیست ارگان های هدف</th><th>دز تجویز شده (Prescribed dose)</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in contourDetails)
+                                                        {
+                                                            var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
+                                                            <tr>
+                                                                <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
+                                                                <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
+                                                            </tr>
+                                                        }
 
 
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                        </div>
                                         <div class="row">
                                             <div class="form-group col-md-6 bmd-form-group">
                                                 <label for="fraction_@Phase.PhaseNumber" class="bmd-label-floating">فرکشن (Fraction)</label>

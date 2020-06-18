@@ -14980,6 +14980,11 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   vertical-align: middle;
 }
 
+table .togglebutton label .toggle,
+table .togglebutton label input[type=checkbox][disabled]+.toggle {
+  margin-top: -13px;
+}
+
 .togglebutton label .toggle:after {
   content: "";
   display: inline-block;
@@ -15358,7 +15363,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   padding-right: 10px;
   text-transform: capitalize;
   font-size: 13px;
-  padding: 7px 15px;
+  padding: 10px 15px;
 }
 
 .sidebar .sidebar-background {
@@ -16842,6 +16847,21 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   margin-top: 0;
 }
 
+.table .form-group {
+    margin: 8px 0 3px !important;
+	padding-bottom: 0px !important;
+}
+
+.table .form-group .form-control{
+	background-image: none;
+    background-image: linear-gradient(to top, #41afdd 2px, rgba(156, 39, 176, 0) 2px);
+	background-color: #f0f0f0;
+}
+
+.table .form-control{
+	height: 30px;
+}
+
 .table .form-check .form-check-sign {
   top: -13px;
   left: 0;
@@ -16872,7 +16892,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .table>thead>tr>td,
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
-  padding: 12px 8px;
+  padding: 5px 5px;
   vertical-align: middle;
   border-color: #ddd;
 }
@@ -19917,4 +19937,23 @@ Copyright (c) 2015 Daniel Eden
 .bg-icon_17 {
     width: 39px; height: 33px;
     background: url('../img/css_sprites.png') -10px -203px;
+}
+
+.k_box{
+	min-height: 232px;
+}
+	.k_box .form-check-label{
+		min-height: 31px;
+	}
+	.k_box .form-check-label {
+		padding-right: 1.2rem !important;
+	}	
+
+.text-justify{
+	text-align: justify;
+}	
+
+table.togglebutton_margin .togglebutton label .toggle, 
+table.togglebutton_margin .togglebutton label input[type="checkbox"][disabled] + .toggle {
+    margin-top: 5px;
 }
