@@ -83,6 +83,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.MedicalRecord.Find(entity.Id);
+                Entity.DoctorId = entity.DoctorId;
                 Entity.PatientFirstName = entity.PatientFirstName;
                 Entity.PatientLastName = entity.PatientLastName;
                 Entity.DoctorFirstName = entity.DoctorFirstName;
@@ -92,7 +93,30 @@ namespace PhysicManagement.Logic.Services
                 Entity.TPCode = entity.TPCode;
                 Entity.TPDescription = entity.TPDescription;
                 Entity.MRICode = entity.MRICode;
+                Entity.CancerId = entity.CancerId;
                 Entity.CancerTitle = entity.CancerTitle;
+                Entity.CTEnterDate = entity.CTEnterDate;
+                Entity.Calendar = entity.Calendar;
+                Entity.CalendarEndDate = entity.CalendarEndDate;
+                Entity.CalendarStartDate = entity.CalendarStartDate;
+                Entity.Contour = entity.Contour;
+                Entity.ContourAcceptDate = entity.ContourAcceptDate;
+                Entity.ContourAcceptUserFullName = entity.ContourAcceptUserFullName;
+                Entity.ContourAcceptUserId = entity.ContourAcceptUserId;
+                Entity.ContourAcceptUserRole = entity.ContourAcceptUserRole;
+                Entity.IsOnCalendar = entity.IsOnCalendar;
+                Entity.IsOnGoing = entity.IsOnGoing;
+                Entity.LastTreatmentProcessChangeDate = entity.LastTreatmentProcessChangeDate;
+                Entity.MRIEnterDate = entity.MRIEnterDate;
+                Entity.NeedsFusion = entity.NeedsFusion;
+                Entity.PhasesCount = entity.PhasesCount;
+                Entity.PhasesPrescribedDate = entity.PhasesPrescribedDate;
+                Entity.PhysicTreatementAcceptDate = entity.PhysicTreatementAcceptDate;
+                Entity.PhysicTreatementAcceptUser = entity.PhysicTreatementAcceptUser;
+                Entity.ReceptionDate = entity.ReceptionDate;
+                Entity.TPEnterDate = entity.TPEnterDate;
+                Entity.TreatmentProcessId = entity.TreatmentProcessId;
+                Entity.SystemCode = entity.SystemCode;
 
                 Entity.Phase1TreatmentDeviceId = entity.Phase1TreatmentDeviceId;
                 Entity.Phase1TreatmentDeviceTitle = entity.Phase1TreatmentDeviceTitle;
