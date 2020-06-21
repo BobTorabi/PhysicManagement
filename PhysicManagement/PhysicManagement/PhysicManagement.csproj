@@ -145,7 +145,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KFactorController.cs" />
     <Compile Include="Controllers\MedicalRecordController.cs" />
-    <Compile Include="Controllers\PhysicTreatmentHostoryController.cs" />
     <Compile Include="Controllers\PhysicUserController.cs" />
     <Compile Include="Controllers\ResidentController.cs" />
     <Compile Include="Controllers\TreatmentCategoryController.cs" />
@@ -154,8 +153,6 @@
     <Compile Include="Controllers\TreatmentPhaseController.cs" />
     <Compile Include="Controllers\TreatmentProcessController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
-    <Compile Include="Controllers\PhysicTreatmentController.cs" />
-    <Compile Include="Controllers\PhysicTreatmentPlanController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -266,12 +263,6 @@
     <Content Include="Views\Doctor\Modify.cshtml" />
     <Content Include="Views\Patient\List.cshtml" />
     <Content Include="Views\Patient\Modify.cshtml" />
-    <Content Include="Views\PhysicTreatment\List.cshtml" />
-    <Content Include="Views\PhysicTreatment\Modify.cshtml" />
-    <Content Include="Views\PhysicTreatmentPlan\List.cshtml" />
-    <Content Include="Views\PhysicTreatmentPlan\Modify.cshtml" />
-    <Content Include="Views\PhysicTreatmentHostory\List.cshtml" />
-    <Content Include="Views\PhysicTreatmentHostory\Modify.cshtml" />
     <Content Include="Views\TreatmentDevice\List.cshtml" />
     <Content Include="Views\TreatmentDevice\Modify.cshtml" />
     <Content Include="Views\TreatmentPhase\List.cshtml" />

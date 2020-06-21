@@ -12,7 +12,6 @@ namespace PhysicManagement.Controllers
     {
         PatientService Service;
         MedicalRecordService MedicalService;
-        PhysicTreatmentService PhysicTreatmentService;
         CancerService CancerService;
         ContourService ContourService;
         TreatmentService TreatmentService;
@@ -22,7 +21,6 @@ namespace PhysicManagement.Controllers
         {
             Service = new PatientService();
             MedicalService = new MedicalRecordService();
-            PhysicTreatmentService = new PhysicTreatmentService();
             CancerService = new CancerService();
             ContourService = new ContourService();
             TreatmentService = new TreatmentService();
@@ -171,7 +169,7 @@ namespace PhysicManagement.Controllers
                         CancerTargetId = null,
                         CancerTargetTitle ="",
                         Description = "",
-                        HasApproved = null,
+                        PresciptionHasApproved = null,
                         MedicalRecordId = MedicalRecordData.Id,
                         PatientFirstName = MedicalRecordData.PatientFirstName,
                         PatientLastName = MedicalRecordData.PatientLastName,
