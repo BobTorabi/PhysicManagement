@@ -37,6 +37,9 @@
         setFormValidation('#RangeValidation');
 
         var url = window.location.pathname;
-        $('.nav-link[href*="' + url + '"]').parent().addClass('active')
+        $('.nav-link[href*="' + url + '"]').parent().addClass('active');
+
+        var th_len = $('.card-body .table>thead').find('tr>th').length;
+        $('td[colspan]').attr('colspan', th_len);
     });
 </script>

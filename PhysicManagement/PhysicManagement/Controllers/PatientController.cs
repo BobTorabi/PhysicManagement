@@ -175,7 +175,11 @@ namespace PhysicManagement.Controllers
                         PatientLastName = MedicalRecordData.PatientLastName,
                         PrescribedDate = DateTime.Now,
                         PrescribedDose = oar.Dose,
-                        TreatmentPhaseId = CurrentTreatmentPhase.Id
+                        TreatmentPhaseId = CurrentTreatmentPhase.Id,
+                        AcceptedDoctorDate = DateTime.Now,
+                        AcceptedDoctorFullName = UserData.FullName,
+                        AcceptedDoctorUserId = UserData.UserId,
+                        DoctorDescription = ""
                     });
                     
                 }
@@ -183,7 +187,7 @@ namespace PhysicManagement.Controllers
             }
             MedicalRecordData.TreatmentDeviceIsQueued = false;
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
-            return View();
+            return Redirect("~/TreatmentPhase/List");
         }
         public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
         {

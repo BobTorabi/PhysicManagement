@@ -19,8 +19,9 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
+                var MRList = GetMedicalRecordsNotApproved();
                 IQueryable<Model.MedicalRecord> QueryableMR =
-                    db.MedicalRecord.Where(t =>t.Contour.Any(e=>e.IsAccepted == true) && t.PhasesCount == null).Include(x => x.Patient);
+                    db.MedicalRecord.Where(t => MRList.Contains(t.Id)).Include(x => x.Patient);
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -151,12 +152,38 @@ namespace PhysicManagement.Logic.Services
             {
                 return db.TreatmentPhase.OrderBy(x => x.Id).ToList();
             }
+        } 
+        /// <summary>
+        /// بازگردانی لیست شناسه پرونده پزشکی هایی که فاز درمانی آنها تائید نشده باشد
+        /// </summary>
+        /// <returns></returns>
+        public long[] GetMedicalRecordsNotApproved()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return 
+                    db.TreatmentPhase.Where(x => x.IsApproved == null).OrderBy(x => x.Id)
+                    .Select(x => x.MedicalRecordId).ToList()
+                    .Where(x=>x.HasValue).Select(x=>x.Value).ToArray();
+            }
         }
         public List<Model.TreatmentPhase> GetTreatmentPhasesByMedicalRecordId(long medicalRecordId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.TreatmentPhase.Where(x=>x.MedicalRecordId == medicalRecordId).OrderBy(x => x.Id).ToList();
+            }
+        }
+        public List<Model.TreatmentPhaseDetail> GetTreatmentPhaseDetatilssByMedicalRecordId(long medicalRecordId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Phases = GetTreatmentPhasesByMedicalRecordId(medicalRecordId);
+                var PhaseIds = Phases.Select(x => x.Id).ToArray();
+                return 
+                    db.TreatmentPhaseDetail
+                    .Where(x => x.TreatmentPhaseId!= null && x.MedicalRecordId == medicalRecordId && PhaseIds.Contains(x.TreatmentPhaseId.Value) )
+                    .OrderBy(x => x.Id).ToList();
             }
         }
         #endregion

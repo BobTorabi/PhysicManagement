@@ -1,15 +1,22 @@
 ﻿using PhysicManagement.Logic.Services;
 using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
 {
     public class TreatmentPhaseController : BaseController
     {
-        TreatmentService Service;
+        readonly TreatmentService Service;
+        readonly MedicalRecordService MedicalService;
+        readonly CancerService CancerService;
         public TreatmentPhaseController()
         {
             Service = new TreatmentService();
+            MedicalService = new MedicalRecordService();
+            CancerService = new CancerService();
         }
         public ActionResult Index()
         {
@@ -27,38 +34,30 @@ namespace PhysicManagement.Controllers
             ViewBag.TotalRecords = MedicalRecord == null ? 100 : MedicalRecord.TotalRecords;
             return View(MedicalRecord);
         }
-
-        public ActionResult Modify(int? id)
+        public ActionResult SetPhaseAsPlanned(long medicalRecordId)
         {
-            if (id == null)
-            {
-                return View(new Model.TreatmentPhase());
-            }
-            else
-            {
-                var Entity = Service.GetTreatmentPhaseById(id.GetValueOrDefault());
-                return View(Entity);
-            }
-
+            ViewBag.MedicalRecordId = medicalRecordId;
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x=>x.PhaseNumber).ToList();
+            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
+            ViewBag.CancerOARList = CancerService.GetCancerOARListByCancerId(MedicalRecordData.CancerId.GetValueOrDefault());
+            ViewBag.CancerOARData = PhaseDetails.Where(t => t.CancerOARId != null).Select(t => t.CancerOARId.Value).ToArray();
+            ViewBag.PhaseDetails = PhaseDetails;
+            return View(Phases);
         }
+
         [HttpPost]
-        public ActionResult Modify(Model.TreatmentPhase entity)
-        {
-            bool IsAffected;
-            if (entity.Id > 0)
+        [Authorization(Roles = "doctor")]
+        public ActionResult SetPhaseAsPlanned(List<SetPhaseDetail> Data, long medicalRecordId) {
+            ViewBag.MedicalRecordId = medicalRecordId;
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
+            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
+            foreach (var PHD in PhaseDetails)
             {
-                IsAffected = Service.UpdateTreatmentPhase(entity);
+
             }
-            else
-            {
-                IsAffected = Service.AddTreatmentPhase(entity);
-            }
-            if (IsAffected)
-                return RedirectToAction("Index");
-            else
-            {
-                return View();
-            }
+            return View(Phases);
         }
     }
 }
