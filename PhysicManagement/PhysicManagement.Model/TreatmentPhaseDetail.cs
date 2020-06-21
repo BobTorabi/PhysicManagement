@@ -28,10 +28,19 @@ namespace PhysicManagement.Model
         public string PrescribedDose { get; set; }
         public Nullable<System.DateTime> PrescribedDate { get; set; }
         public string PrescribedUser { get; set; }
-        public Nullable<bool> HasApproved { get; set; }
+        public Nullable<bool> PresciptionHasApproved { get; set; }
+        public Nullable<bool> PhysicPlanHasAccepted { get; set; }
         public string Description { get; set; }
         public Nullable<bool> Reserved1 { get; set; }
         public Nullable<bool> Reserved2 { get; set; }
         public string Reserve3 { get; set; }
+        public Nullable<bool> HadContour { get; set; }
+        public string PlannedDose { get; set; }
+        public string Evaluation { get; set; }
+        public string PhysicUserFullName { get; set; }
+        public Nullable<int> AcceptedDoctorUserId { get; set; }
+        public Nullable<System.DateTime> AcceptedDoctorDate { get; set; }
+        public string AcceptedDoctorFullName { get; set; }
+        public string DoctorDescription { get; set; }
     }
 }

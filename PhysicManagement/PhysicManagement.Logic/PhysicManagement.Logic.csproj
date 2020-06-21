@@ -68,8 +68,6 @@
     <Compile Include="Services\kFactorService.cs" />
     <Compile Include="Services\MedicalRecordService.cs" />
     <Compile Include="Services\PatientService.cs" />
-    <Compile Include="Services\PhysicTreatmentPlanService.cs" />
-    <Compile Include="Services\PhysicTreatmentService.cs" />
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />
     <Compile Include="Services\TreatmentCategoryService.cs" />
@@ -83,7 +81,6 @@
     <Compile Include="Validations\KFactorValidation.cs" />
     <Compile Include="Validations\MedicalRecordValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
-    <Compile Include="Validations\PhysicTreatmentValidation.cs" />
     <Compile Include="Validations\PhysicUserValidation.cs" />
     <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentCategoryValidation.cs" />

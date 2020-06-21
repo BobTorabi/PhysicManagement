@@ -12,16 +12,14 @@ namespace PhysicManagement.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class PhysicTreatmentPlanHostory
+    public partial class PhysicTreatmentPlanHistory
     {
         public int Id { get; set; }
-        public Nullable<int> PhysicTreatmentPlanId { get; set; }
+        public Nullable<int> PhysicTreatmentPhaseDetailId { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> ChangeDate { get; set; }
         public string ActionUser { get; set; }
         public Nullable<bool> HasAlarm { get; set; }
         public Nullable<bool> IsDoctor { get; set; }
-    
-        public virtual PhysicTreatmentPlan PhysicTreatmentPlan { get; set; }
     }
 }
