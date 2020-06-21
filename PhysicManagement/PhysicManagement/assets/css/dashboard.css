@@ -15363,7 +15363,7 @@ table .togglebutton label input[type=checkbox][disabled]+.toggle {
   padding-right: 10px;
   text-transform: capitalize;
   font-size: 13px;
-  padding: 10px 15px;
+  padding: 1px 15px;
 }
 
 .sidebar .sidebar-background {

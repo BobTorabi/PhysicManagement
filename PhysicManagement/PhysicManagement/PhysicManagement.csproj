@@ -161,6 +161,7 @@
     <Compile Include="Models\CountorDataForMedicalRecordVM.cs" />
     <Compile Include="Models\MedicalRecordTreatmentPhaseVM.cs" />
     <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\SetPhaseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -266,7 +267,6 @@
     <Content Include="Views\TreatmentDevice\List.cshtml" />
     <Content Include="Views\TreatmentDevice\Modify.cshtml" />
     <Content Include="Views\TreatmentPhase\List.cshtml" />
-    <Content Include="Views\TreatmentPhase\Modify.cshtml" />
     <Content Include="Views\TreatmentProcess\List.cshtml" />
     <Content Include="Views\TreatmentProcess\Modify.cshtml" />
     <Content Include="Views\Resident\Modify.cshtml" />
@@ -309,6 +309,7 @@
     <Content Include="Views\Alarm\List.cshtml" />
     <Content Include="Views\Alarm\Inbox.cshtml" />
     <Content Include="Views\Patient\ListOfTreatmentPlans.cshtml" />
+    <Content Include="Views\TreatmentPhase\SetPhaseAsPlanned.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

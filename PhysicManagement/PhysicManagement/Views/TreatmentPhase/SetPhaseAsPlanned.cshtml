@@ -1,0 +1,102 @@
+﻿@model List<PhysicManagement.Model.TreatmentPhase>
+@{
+    ViewBag.Title = "طراحی درمان";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">طراحی درمان</h4>
+            </div>
+            <div class="card-body">
+
+                <table class="table data table-hover center table-striped">
+                    <thead class="text-warning">
+                        <tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <th>Evaluation(P@(item.PhaseNumber))</th>
+                                <th width="140">Planned Dose (P@(item.PhaseNumber))</th>
+                            }
+                            <th>Tolerance</th>
+                            <th>Organ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            List<PhysicManagement.Model.TreatmentPhaseDetail> PHDetails = ViewBag.PhaseDetails;
+                            List<PhysicManagement.Model.CancerOAR> CancerOARList = ViewBag.CancerOARList;
+                            foreach (var CancerOAR in CancerOARList)
+                            {
+                                var HasOARInDetail = PHDetails.Count(x => x.CancerOARId == CancerOAR.Id) != 0;
+
+                                <tr>
+
+                                    @foreach (var Phase in Model)
+                                    {
+                                        var PHDetail = PHDetails.Where(x => x.TreatmentPhaseId == Phase.Id && x.CancerOARId == CancerOAR.Id).FirstOrDefault();
+                                        <td>
+                                            @if (HasOARInDetail)
+                                            {
+                                                <div class="form-group bmd-form-group">
+                                                    <label class="bmd-label-floating"></label>
+                                                    <input type="text" class="form-control eval" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="evaluation-@Phase.Id">
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (HasOARInDetail)
+                                            {
+                                                <div class="form-group bmd-form-group">
+                                                    <label class="bmd-label-floating"></label>
+                                                    <input type="text" class="form-control dose" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="plannedDose-@Phase.Id">
+                                                </div>
+                                            }
+                                        </td>
+                                    }
+
+
+                                    <td><div class="form-group">Max Dose &lt; @CancerOAR.Tolerance</div></td>
+                                    <td><div class="form-group">@CancerOAR.OrganTitle</div></td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <button type="button" onclick="SetData()" class="btn btn-rose">ثبت</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    function SetData() {
+        var Data = [];
+        $('.data>tbody>tr').each(function () {
+            debugger;
+            $(this).find('input.dose').each(function () {
+                var Detail = { phaseId: 0, phaseDetailId: 0, evaluation: '', plannedDose: '', cancerOARId: 0 };
+                Detail.phaseId = $(this).attr('data-phaseid');
+                Detail.cancerOARId = $(this).attr('data-canceroarid');
+                Detail.phaseDetailId = $(this).attr('data-phaseDetailId');
+                Detail.plannedDose = $(this).val();
+                Detail.evaluation = $('input[data-canceroarid="' + Detail.cancerOARId+'"][data-phaseid="' + Detail.phaseId+'"][data-phaseDetailId="' + Detail.phaseDetailId+'"]').val();
+                Data.push(Detail);
+            });
+          
+        });
+        console.log(Data);
+        $.post('SetPhaseAsPlanned', { Data: Data, medicalRecordId : @ViewBag.MedicalRecordId }, function (d) {
+            window.location = "../../treatmentPhase/List";
+        })
+    }
+</script>

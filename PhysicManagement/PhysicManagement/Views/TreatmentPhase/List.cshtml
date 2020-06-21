@@ -6,13 +6,10 @@
     <div class="row">
         <div class="col-lg-12 col-md-12">
             <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title">تجویز درمانی</h4>
-                   
-                </div>
+                <div class="card-header card-header-info"><h4 class="card-title">تجویز درمانی</h4></div>
                 <div class="row">
                     <form method="get" style="width:100%;padding:10px 30px;" action="List">
-                        <div class="row  gray-bg">
+                        <div class="row  gray-bg" style="margin:3px;">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
@@ -49,10 +46,11 @@
                                     <input type="text" id="Code" name="Code" value="" class="form-control">
                                 </div>
                             </div>
+                            <div class="col text-left">
+                                <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                                <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-rose pull-left">جستجو</button>
-                        <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
-                        <div class="clearfix"></div>
                     </form>
                 </div>
                 <div class="card-body table-responsive">
@@ -71,11 +69,9 @@
                         </thead>
                         <tbody>
                             @{
-                                if (Model == null)
+                                if (Model == null || Model.Records == null || Model.Records.Count() == 0)
                                 {
-                                    <tr>
-                                        <td colspan="8">اطلاعاتی برای جستجو وارد کنید</td>
-                                    </tr>
+                                    <tr><td colspan="1"><p class="text-center" style="padding:30px;">رکوردی برای نمایش وجود ندارد</p></td></tr>
                                 }
                                 else
                                 {
@@ -97,10 +93,9 @@
                                                         امکانات
                                                     </button>
                                                     <div class="dropdown-menu dropdown-menu-left">
-                                                        <a 
-                                                           class="dropdown-item" 
-                                                           target="_blank" 
-                                                           href="~/Patient/SetMedicalRecordPhases?medicalRecordId=@mr.Id">تجویز درمان</a>
+                                                        <a class="dropdown-item"
+                                                           target="_blank"
+                                                           href="~/treatmentPhase/SetPhaseAsPlanned?medicalRecordId=@mr.Id">طراحی درمان</a>
                                                     </div>
                                                 </div>
                                             </td>
