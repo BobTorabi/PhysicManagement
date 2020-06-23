@@ -311,6 +311,7 @@
           <Property Name="PrescribesdUserFullName" Type="nvarchar" MaxLength="100" />
           <Property Name="PrescribedUserRole" Type="nvarchar" MaxLength="50" />
           <Property Name="IsApproved" Type="bit" />
+          <Property Name="IsPrescribedByDoctor" Type="bit" />
           <Property Name="ApprovedDate" Type="datetime" />
           <Property Name="ApprovedUserFullName" Type="nvarchar" MaxLength="150" />
           <Property Name="Reserve1" Type="bit" />
@@ -1035,6 +1036,7 @@
           <Property Name="Reserve1" Type="Boolean" />
           <Property Name="Reserve2" Type="Boolean" />
           <Property Name="Reserve3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPrescribedByDoctor" Type="Boolean" />
         </EntityType>
         <EntityType Name="TreatmentPhaseDetail">
           <Key>
@@ -1409,6 +1411,7 @@
           <EntitySetMapping Name="TreatmentPhase">
             <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentPhase">
               <MappingFragment StoreEntitySet="TreatmentPhase">
+                <ScalarProperty Name="IsPrescribedByDoctor" ColumnName="IsPrescribedByDoctor" />
                 <ScalarProperty Name="Reserve3" ColumnName="Reserve3" />
                 <ScalarProperty Name="Reserve2" ColumnName="Reserve2" />
                 <ScalarProperty Name="Reserve1" ColumnName="Reserve1" />

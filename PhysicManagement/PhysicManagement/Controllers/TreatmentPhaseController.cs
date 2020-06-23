@@ -27,8 +27,20 @@ namespace PhysicManagement.Controllers
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 25;
-            PagedList<Model.MedicalRecord> MedicalRecord = 
-                Service.GetTreatmentPhasesList
+            PagedList<Model.MedicalRecord> MedicalRecord =
+                Service.GetTreatmentPhasesListForDoctor
+                (firstName, lastName, mobile, nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
+
+            ViewBag.TotalRecords = MedicalRecord == null ? 100 : MedicalRecord.TotalRecords;
+            return View(MedicalRecord);
+        }
+
+        public ActionResult ListForPhysicist(string firstName, string lastName, string mobile, string nationalCode, string systemCode, string code)
+        {
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 25;
+            PagedList<Model.MedicalRecord> MedicalRecord =
+                Service.GetTreatmentPhasesListForPhysist
                 (firstName, lastName, mobile, nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
 
             ViewBag.TotalRecords = MedicalRecord == null ? 100 : MedicalRecord.TotalRecords;
@@ -38,7 +50,7 @@ namespace PhysicManagement.Controllers
         {
             ViewBag.MedicalRecordId = medicalRecordId;
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
-            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x=>x.PhaseNumber).ToList();
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
             var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
             ViewBag.CancerOARList = CancerService.GetCancerOARListByCancerId(MedicalRecordData.CancerId.GetValueOrDefault());
             ViewBag.CancerOARData = PhaseDetails.Where(t => t.CancerOARId != null).Select(t => t.CancerOARId.Value).ToArray();
@@ -46,18 +58,73 @@ namespace PhysicManagement.Controllers
             return View(Phases);
         }
 
+        public ActionResult SetPhaseAsApproved(long medicalRecordId)
+        {
+            ViewBag.MedicalRecordId = medicalRecordId;
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
+            var PhaseIds = Phases.Select(x => x.Id).ToArray();
+            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByPhaseIds(PhaseIds);
+            ViewBag.CancerOARList = CancerService.GetCancerOARListByCancerId(MedicalRecordData.CancerId.GetValueOrDefault());
+            ViewBag.CancerOARData = PhaseDetails.Where(t => t.CancerOARId != null).Select(t => t.CancerOARId.Value).ToArray();
+            ViewBag.PhaseDetails = PhaseDetails;
+            return View(Phases);
+        }
+
+        [HttpPost]
+        public JsonResult SetPhaseAsApprovedByPhysicst(long medicalRecordId) {
+
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
+            var PhaseIds = Phases.Select(x => x.Id).ToArray();
+            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByPhaseIds(PhaseIds);
+            foreach (var Phase in Phases)
+            {
+                Phase.IsApproved = true;
+                Service.UpdateTreatmentPhase(Phase);
+
+            }
+            foreach (var PHD in PhaseDetails)
+            {
+                PHD.MedicalRecordId = medicalRecordId;
+                PHD.PhysicPlanHasAccepted = true;
+                PHD.PhysicUserFullName = UserData.FullName;
+                PHD.PresciptionHasApproved = true;
+                Service.UpdateTreatmentPhaseDetail(PHD);
+            }
+
+            return Json(new { location = "" }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [Authorization(Roles = "doctor")]
-        public ActionResult SetPhaseAsPlanned(List<SetPhaseDetail> Data, long medicalRecordId) {
+        public ActionResult SetPhaseAsPlanned(List<SetPhaseDetail> Data, long medicalRecordId)
+        {
+            var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
             ViewBag.MedicalRecordId = medicalRecordId;
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
             var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
-            foreach (var PHD in PhaseDetails)
+            foreach (var Phase in Phases)
             {
+                Phase.IsPrescribedByDoctor = true;
+                Phase.PrescribesdUserId = UserData.UserId.ToString();
+                Phase.PrescribedUserRole = UserData.RoleName;
+                Phase.PrescribesdUserFullName = UserData.FullName;
+                Service.UpdateTreatmentPhase(Phase);
 
             }
-            return View(Phases);
+            foreach (var item in Data)
+            {
+                var PHD = PhaseDetails.Where(x => x.Id == item.PhaseDetailId).FirstOrDefault();
+                PHD.PlannedDose = item.PlannedDose;
+                PHD.Evaluation = item.Evaluation;
+                PHD.HadContour = true;
+                Service.UpdateTreatmentPhaseDetail(PHD);
+            }
+
+            return Json(new { location = ""},JsonRequestBehavior.AllowGet);
         }
     }
 }

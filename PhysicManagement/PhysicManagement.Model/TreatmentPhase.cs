@@ -35,5 +35,6 @@ namespace PhysicManagement.Model
         public Nullable<bool> Reserve1 { get; set; }
         public Nullable<bool> Reserve2 { get; set; }
         public string Reserve3 { get; set; }
+        public Nullable<bool> IsPrescribedByDoctor { get; set; }
     }
 }

@@ -14,12 +14,62 @@ namespace PhysicManagement.Logic.Services
         #region TreatmentPhase Section
 
         public PagedList<Model.MedicalRecord> 
-            GetTreatmentPhasesList(string firstName, string lastName, string mobile,
+            GetTreatmentPhasesListForDoctor(string firstName, string lastName, string mobile,
              string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var MRList = GetMedicalRecordsNotApproved();
+                var MRList = GetMedicalRecordsNotApprovedByDoctor();
+                IQueryable<Model.MedicalRecord> QueryableMR =
+                    db.MedicalRecord.Where(t => MRList.Contains(t.Id)).Include(x => x.Patient);
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(nationalCode))
+                {
+                    nationalCode = nationalCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.NationalCode.Contains(nationalCode));
+                }
+                if (!string.IsNullOrEmpty(systemCode))
+                {
+                    systemCode = systemCode.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.SystemCode.Contains(systemCode));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    mobile = code.Trim().toEnglishNumber();
+                    QueryableMR = QueryableMR.Where(e => e.Patient.Code.Contains(code));
+                }
+                QueryableMR = QueryableMR.OrderByDescending(x => x.ReceptionDate);
+                return new PagedList<Model.MedicalRecord>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableMR.Count(),
+                    Records = QueryableMR.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
+            }
+        }
+
+        public PagedList<Model.MedicalRecord>
+           GetTreatmentPhasesListForPhysist(string firstName, string lastName, string mobile,
+            string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var MRList = GetMedicalRecordsNotApprovedByPhysist();
                 IQueryable<Model.MedicalRecord> QueryableMR =
                     db.MedicalRecord.Where(t => MRList.Contains(t.Id)).Include(x => x.Patient);
                 if (!string.IsNullOrEmpty(firstName))
@@ -134,6 +184,60 @@ namespace PhysicManagement.Logic.Services
 
             }
         }
+
+
+        public bool UpdateTreatmentPhaseDetail(Model.TreatmentPhaseDetail entity)
+        {
+            var validation = new TreatmentValidation.TreatmentPhaseDetailEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.TreatmentPhaseDetail.Find(entity.Id);
+                if (Entity == null)
+                    throw MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                var md = new MedicalRecordService();
+                var MedicalRecordObject = md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
+                if (MedicalRecordObject == null)
+                    throw MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
+                entity.MedicalRecordId = Convert.ToInt64(MedicalRecordObject.MRICode);
+
+                Entity.AcceptedDoctorDate = entity.AcceptedDoctorDate;
+                Entity.AcceptedDoctorFullName = entity.AcceptedDoctorFullName;
+                Entity.AcceptedDoctorUserId = entity.AcceptedDoctorUserId;
+                Entity.CancerOARId = entity.CancerOARId;
+                Entity.CancerOARTitle = entity.CancerOARTitle;
+                Entity.CancerOARTolerance = entity.CancerOARTolerance;
+                Entity.CancerTargetId = entity.CancerTargetId;
+                Entity.CancerTargetOptimum = entity.CancerTargetOptimum;
+                Entity.CancerTargetTitle = entity.CancerTargetTitle;
+                Entity.Description = entity.Description;
+                Entity.DoctorDescription = entity.DoctorDescription;
+                Entity.Evaluation = entity.Evaluation;
+                Entity.HadContour = entity.HadContour;
+                Entity.MedicalRecordId = entity.MedicalRecordId;
+                Entity.PatientFirstName = entity.PatientFirstName;
+                Entity.PatientLastName = entity.PatientLastName;
+                Entity.PhysicPlanHasAccepted = entity.PhysicPlanHasAccepted;
+                Entity.PhysicUserFullName = entity.PhysicUserFullName;
+                Entity.PlannedDose = entity.PlannedDose;
+                Entity.PresciptionHasApproved = entity.PresciptionHasApproved;
+                Entity.PrescribedDate = entity.PrescribedDate;
+                Entity.PrescribedDose = entity.PrescribedDose;
+                Entity.PrescribedUser = entity.PrescribedUser;
+                Entity.Reserve3 = entity.Reserve3;
+                Entity.Reserved1 = entity.Reserved1;
+                Entity.Reserved2 = entity.Reserved2;
+                Entity.TreatmentPhaseId = entity.TreatmentPhaseId;
+
+
+
+                return db.SaveChanges() == 1;
+
+            }
+        }
         public bool DeleteTreatmentPhase(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -157,21 +261,53 @@ namespace PhysicManagement.Logic.Services
         /// بازگردانی لیست شناسه پرونده پزشکی هایی که فاز درمانی آنها تائید نشده باشد
         /// </summary>
         /// <returns></returns>
-        public long[] GetMedicalRecordsNotApproved()
+        public long[] GetMedicalRecordsNotApprovedByDoctor()
         {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return 
-                    db.TreatmentPhase.Where(x => x.IsApproved == null).OrderBy(x => x.Id)
+                    db
+                    .TreatmentPhase
+                    .Where(x => x.IsApproved == null && x.IsPrescribedByDoctor == null)
+                    .OrderBy(x => x.Id)
                     .Select(x => x.MedicalRecordId).ToList()
                     .Where(x=>x.HasValue).Select(x=>x.Value).ToArray();
             }
         }
+        /// <summary>
+        /// بازگردانی لیست شناسه پرونده پزشکی هایی که فاز درمانی آنها تائید نشده باشد
+        /// </summary>
+        /// <returns></returns>
+        public long[] GetMedicalRecordsNotApprovedByPhysist()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return
+                    db
+                    .TreatmentPhase
+                    .Where(x => x.IsApproved == null && x.IsPrescribedByDoctor == true)
+                    .OrderBy(x => x.Id)
+                    .Select(x => x.MedicalRecordId).ToList()
+                    .Where(x => x.HasValue).Select(x => x.Value).ToArray();
+            }
+        }
+
         public List<Model.TreatmentPhase> GetTreatmentPhasesByMedicalRecordId(long medicalRecordId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
                 return db.TreatmentPhase.Where(x=>x.MedicalRecordId == medicalRecordId).OrderBy(x => x.Id).ToList();
+            }
+        }
+
+        public List<Model.TreatmentPhaseDetail> GetTreatmentPhaseDetatilssByPhaseIds(long[] phaseIds)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return
+                    db.TreatmentPhaseDetail
+                    .Where(x => x.TreatmentPhaseId != null  && phaseIds.Contains(x.TreatmentPhaseId.Value))
+                    .OrderBy(x => x.Id).ToList();
             }
         }
         public List<Model.TreatmentPhaseDetail> GetTreatmentPhaseDetatilssByMedicalRecordId(long medicalRecordId)
