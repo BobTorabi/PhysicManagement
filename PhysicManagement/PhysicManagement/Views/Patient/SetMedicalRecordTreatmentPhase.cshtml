@@ -161,7 +161,13 @@
             });
             Data.phases.push(phaseData);
         });
-        $.post('SetMedicalRecordTreatmentPhase', Data, function (d) { });
-        console.log('here');
+        $.post('SetMedicalRecordTreatmentPhase', Data, function (d) {
+            alert('ثبت تجویز درمان با موفقیت انجام گردید.<br>لطفا صبر کنید.');
+            
+            setTimeout(function () {
+                window.location = '../../../Contour/ContourApprove';
+            }, 2000);
+        });
+  
     }
 </script>

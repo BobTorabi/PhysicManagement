@@ -154,7 +154,9 @@ namespace PhysicManagement.Controllers
                 }
                 var CurrentTreatmentPhase = TreatmentPhase.Where(x => x.PhaseNumber == item.No).FirstOrDefault();
                 CurrentTreatmentPhase.TreatmentDeviceId = Device.Id;
+                CurrentTreatmentPhase.TreatmentDeviceTitle = Device.Title;
                 CurrentTreatmentPhase.Fraction = item.Fraction;
+                CurrentTreatmentPhase.IsPrescribedByDoctor = true;
                 TreatmentService.UpdateTreatmentPhase(CurrentTreatmentPhase);
 
                 foreach (var oar in item.cancerAORs)
