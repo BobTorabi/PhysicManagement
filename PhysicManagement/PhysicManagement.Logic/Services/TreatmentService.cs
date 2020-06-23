@@ -179,6 +179,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.TreatmentDeviceTitle = entity.TreatmentDeviceTitle;
                 Entity.IsApproved = entity.IsApproved;
                 Entity.Fraction = entity.Fraction;
+                Entity.IsPrescribedByDoctor = entity.IsPrescribedByDoctor;
 
                 return db.SaveChanges() == 1;
 
@@ -268,9 +269,9 @@ namespace PhysicManagement.Logic.Services
                 return 
                     db
                     .TreatmentPhase
-                    .Where(x => x.IsApproved == null && x.IsPrescribedByDoctor == null)
+                    .Where(x => x.IsApproved != true && x.IsPrescribedByDoctor == null)
                     .OrderBy(x => x.Id)
-                    .Select(x => x.MedicalRecordId).ToList()
+                    .Select(x => x.MedicalRecordId).Distinct().ToList()
                     .Where(x=>x.HasValue).Select(x=>x.Value).ToArray();
             }
         }
