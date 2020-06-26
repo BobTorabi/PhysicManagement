@@ -30,30 +30,16 @@
                                     <input type="text" id="PatientLastName" name="PatientLastName" value="@Model.PatientLastName" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group dropdown-toggle">
-                                    @{
-                                        var DoctorList = ViewBag.doctorId;
-
-                                    }
-                                    <select name="doctorId" id="doctorId" class="selectpicker" data-style="btn btn-primary btn-round" title="" required="true" aria-required="true">
-                                        <option disabled="" selected="">نام پزشک معالج</option>
-                                        @foreach (var item in DoctorList)
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="doctorId" class="bmd-label-floating">نام پزشک </label>
+                                    @Html.DropDownList("doctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group dropdown-toggle">
-                                    <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId" data-style="btn btn-primary btn-round" title="">
-                                        <option disabled="" selected="">نوع سرطان را انتخاب کنید</option>
-                                        @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
-                                        {
-                                            <option value="@item.Id">@item.Title</option>
-                                        }
-                                    </select>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="CancerId" class="bmd-label-floating">سرطان </label>
+                                    @Html.DropDownList("CancerId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-4">

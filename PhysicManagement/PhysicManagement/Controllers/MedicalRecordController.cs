@@ -8,10 +8,14 @@ namespace PhysicManagement.Controllers
     {
         MedicalRecordService Service;
         ContourService ContourService;
+        CancerService CancerService;
+        DoctorService doctorService;
         public MedicalRecordController()
         {
             Service = new MedicalRecordService();
             ContourService = new ContourService();
+            CancerService = new CancerService();
+            doctorService = new DoctorService();
         }
         // GET: MedicalRecord
         public ActionResult PatientMedicalRecord(int id)
@@ -21,10 +25,11 @@ namespace PhysicManagement.Controllers
         }
        public ActionResult ModifyPatientMedicalRecord (int? id)
         {
-            ViewBag.doctorId = new DoctorService().GetIdNameFromDoctorList();
-            ViewBag.CancerList = new CancerService().GetCancerList();
-            var Entity = Service.GetMedicalRecordById(id.GetValueOrDefault());
-                return View(Entity);
+            var entity = Service.GetMedicalRecordById(id.GetValueOrDefault());
+            ViewBag.doctorId = new SelectList(doctorService.GetIdNameFromDoctorList(), "Id", "Name", entity.DoctorId);
+            ViewBag.CancerId = new SelectList(CancerService.GetCancerList(), "Id", "Title", entity.CancerId);
+           
+                return View(entity);
         }
         [HttpPost]
         public ActionResult ModifyPatientMedicalRecord(Model.MedicalRecord entity)
