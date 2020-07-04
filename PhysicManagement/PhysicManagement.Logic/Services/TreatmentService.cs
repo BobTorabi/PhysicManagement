@@ -323,6 +323,42 @@ namespace PhysicManagement.Logic.Services
                     .OrderBy(x => x.Id).ToList();
             }
         }
+        public ViewModels.DaysStatisticsVM GetTotalTreatmentPhaseStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    UnsetRecord = db.TreatmentPhase.Count(e => e.PrescribeDate == null),
+                    Today = db.TreatmentPhase.Count(e => (e.PrescribeDate != null) && e.PrescribeDate <= TodayEnd && e.PrescribeDate >= TodayStart),
+                    LastWeek = db.TreatmentPhase.Count(e => (e. PrescribeDate!= null) && e.PrescribeDate >= LastWeekStart && e.PrescribeDate <= TodayEnd),
+                    LastMonth = db.TreatmentPhase.Count(e => (e.PrescribeDate != null) && e.PrescribeDate >= LastMonthStart && e.PrescribeDate <= TodayEnd),
+                    TotalRecords = db.TreatmentPhase.Count()
+                };
+            }
+        }
+        public ViewModels.DaysStatisticsVM GetTotalConformTreatmentPhaseStatistics()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                DateTime TodayStart = DateTime.Now.Date;
+                DateTime TodayEnd = TodayStart.AddDays(1).AddSeconds(-1);
+                DateTime LastWeekStart = TodayStart.AddDays(-7);
+                DateTime LastMonthStart = TodayStart.AddMonths(-1);
+                return new ViewModels.DaysStatisticsVM
+                {
+                    UnsetRecord = db.TreatmentPhase.Count(e => e.IsApproved == null && e.IsPrescribedByDoctor == true),
+                    Today = db.TreatmentPhase.Count(e => (e.ApprovedDate != null) && e.ApprovedDate <= TodayEnd && e.ApprovedDate >= TodayStart),
+                    LastWeek = db.TreatmentPhase.Count(e => (e.ApprovedDate != null) && e.ApprovedDate >= LastWeekStart && e.ApprovedDate <= TodayEnd),
+                    LastMonth = db.TreatmentPhase.Count(e => (e.ApprovedDate != null) && e.ApprovedDate >= LastMonthStart && e.ApprovedDate <= TodayEnd),
+                    TotalRecords = db.TreatmentPhase.Count()
+                };
+            }
+        }
         #endregion
         #region TreatmentProcess Section
         public List<Model.TreatmentProcess> GetTreatmentProcessList()
