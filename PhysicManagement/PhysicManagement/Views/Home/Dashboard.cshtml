@@ -8,6 +8,8 @@
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM TreatmentPlansStatistics = ViewBag.TreatmentPlansStatistics;
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM PatientReceptionStatistics = ViewBag.PatientReceptionStatistics;
     PhysicManagement.Logic.ViewModels.DaysStatisticsVM ConformContourStatistics = ViewBag.ConformContourStatistics;
+    PhysicManagement.Logic.ViewModels.DaysStatisticsVM TreatmentPhaseStatistics = ViewBag.TreatmentPhaseStatistics;
+    PhysicManagement.Logic.ViewModels.DaysStatisticsVM ConformTreatmentPhaseStatistics = ViewBag.ConformTreatmentPhaseStatistics;
 }
 
     <div class="row">
@@ -220,9 +222,9 @@
                     <div class="card-icon">
                         <div class="bg-icons bg-icon_06"></div>
                     </div>
-                    <p class="card-category">تجویز درمان</p>
+                    <p class="card-category">طراحی درمان</p>
                     <h3 class="card-title">
-                        10
+                        @TreatmentPhaseStatistics.UnsetRecord
                         <small>نفر</small>
                     </h3>
                     <div class="row pt-2">
@@ -230,36 +232,36 @@
                             <p class="card-category">تعداد بیمار های امروز</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">7 نفر</p>
+                            <p class="card-category">@TreatmentPhaseStatistics.Today نفر</p>
                         </div>
                         <div class="col-8">
                             <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">12 نفر</p>
+                            <p class="card-category">@TreatmentPhaseStatistics.LastWeek نفر</p>
                         </div>
                         <div class="col-8">
                             <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">52 نفر</p>
+                            <p class="card-category">@TreatmentPhaseStatistics.LastMonth نفر</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer ltr">
-                    <a href="#" class="btn btn-info">ثبت تجویز درمان</a>
+                    <a href="@Url.Action("List","treatmentPhase")" class="btn btn-info">طراحی درمان</a>
                 </div>
             </div>
         </div>
-        @*<div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-primary card-header-icon">
                     <div class="card-icon">
-                        <i class="fa fa-twitter"></i>
+                        <i class="material-icons">library_books</i>
                     </div>
-                    <p class="card-category">پلن فیزیک</p>
+                    <p class="card-category">تایید پلن</p>
                     <h3 class="card-title">
-                        12
+                        @ConformTreatmentPhaseStatistics.UnsetRecord
                         <small>نفر</small>
                     </h3>
                     <div class="row pt-2">
@@ -267,27 +269,27 @@
                             <p class="card-category">تعداد بیمار های امروز</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">7 نفر</p>
+                            <p class="card-category">@ConformTreatmentPhaseStatistics.Today نفر</p>
                         </div>
                         <div class="col-8">
                             <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">12 نفر</p>
+                            <p class="card-category">@ConformTreatmentPhaseStatistics.LastWeek نفر</p>
                         </div>
                         <div class="col-8">
                             <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
                         </div>
                         <div class="col-4 text-left">
-                            <p class="card-category">52 نفر</p>
+                            <p class="card-category">@ConformTreatmentPhaseStatistics.LastMonth نفر</p>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer ltr">
-                    <a href="#" class="btn btn-info">ثبت پلن فیزیک</a>
+                    <a href="@Url.Action("ListForPhysicist","treatmentPhase")" class="btn btn-info">تایید پلن</a>
                 </div>
             </div>
-        </div>*@
+        </div>
 
 
 

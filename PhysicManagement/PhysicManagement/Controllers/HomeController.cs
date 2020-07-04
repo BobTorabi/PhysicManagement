@@ -12,11 +12,13 @@ namespace PhysicManagement.Controllers
         PatientService PatientService;
         ContourService ContourService;
         MedicalRecordService MedicalRecordService;
+        TreatmentService TreatmentService;
         public HomeController()
         {
             PatientService = new PatientService();
             ContourService = new ContourService();
             MedicalRecordService = new MedicalRecordService();
+            TreatmentService = new TreatmentService();
         }
         public ActionResult Index()
         {
@@ -43,6 +45,8 @@ namespace PhysicManagement.Controllers
             ViewBag.TreatmentPlansStatistics = MedicalRecordService.GetTotalTreatmentPlansStatistics();
             ViewBag.PatientReceptionStatistics = PatientService.GetPatientsReceptionStatistics();
             ViewBag.ConformContourStatistics = MedicalRecordService.GetTotalConformContoursStatistics();
+            ViewBag.TreatmentPhaseStatistics = TreatmentService.GetTotalTreatmentPhaseStatistics();
+            ViewBag.ConformTreatmentPhaseStatistics = TreatmentService.GetTotalConformTreatmentPhaseStatistics();
             return View();
         }
     }
