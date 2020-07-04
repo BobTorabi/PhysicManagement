@@ -333,7 +333,7 @@ namespace PhysicManagement.Logic.Services
                 DateTime LastMonthStart = TodayStart.AddMonths(-1);
                 return new ViewModels.DaysStatisticsVM
                 {
-                    UnsetRecord = db.TreatmentPhase.Count(e => e.PrescribeDate == null),
+                    UnsetRecord = db.TreatmentPhase.Count(e => e.IsApproved != true && e.IsPrescribedByDoctor == null),
                     Today = db.TreatmentPhase.Count(e => (e.PrescribeDate != null) && e.PrescribeDate <= TodayEnd && e.PrescribeDate >= TodayStart),
                     LastWeek = db.TreatmentPhase.Count(e => (e. PrescribeDate!= null) && e.PrescribeDate >= LastWeekStart && e.PrescribeDate <= TodayEnd),
                     LastMonth = db.TreatmentPhase.Count(e => (e.PrescribeDate != null) && e.PrescribeDate >= LastMonthStart && e.PrescribeDate <= TodayEnd),
