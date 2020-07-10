@@ -21,7 +21,7 @@ namespace PhysicManagement.Controllers
         public ActionResult List(string firstName, string lastName, string mobile, string code)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize = 10;
             Logic.ViewModels.PagedList<Model.Doctor> Doctor =
                 Service.GetDoctorList(firstName, lastName, mobile, code, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Doctor.TotalRecords;

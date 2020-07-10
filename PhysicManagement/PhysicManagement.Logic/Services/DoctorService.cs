@@ -313,6 +313,8 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.IsActive = true;
+                entity.Password = EncryptPassword(entity.Username, entity.Password);
                 db.Doctor.Add(entity);
                 return db.SaveChanges() == 1;
             }
@@ -333,6 +335,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.Code = entity.Code;
                 Entity.Degree = entity.Degree;
                 Entity.Description = entity.Description;
+                Entity.Password = EncryptPassword(entity.Username, entity.Password);
 
                 return db.SaveChanges() == 1;
             }
