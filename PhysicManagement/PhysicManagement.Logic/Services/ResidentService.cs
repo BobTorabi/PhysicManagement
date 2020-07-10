@@ -53,7 +53,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-     
+
 
         public static void SetAuthenticationCookie(string userName, string passWord, bool rememberMe)
         {
@@ -108,7 +108,6 @@ namespace PhysicManagement.Logic.Services
                 var UserExists = db.Resident.Where(x => x.Id == userId && x.IsActive == true).Count();
                 return UserExists == 1;
             }
-
         }
 
 
@@ -135,22 +134,22 @@ namespace PhysicManagement.Logic.Services
                 return UserExists;
             }
         }
-     
-        public static bool Register(string userName, string firstName, string lastName, string passWord, string mobileNo, string code, string description, string gender)
+
+        public static bool Register(Resident entity)
         {
             Resident UserEntity = new Resident()
             {
+                FirstName = entity.FirstName,
+                LastName = entity.LastName,
+                Mobile = entity.Mobile,               
+                Password = EncryptPassword(entity.Username, entity.Password),
+                Username = entity.Username,
+                Code = entity.Code,
+                Gender = entity.Gender,
+                Description = entity.Description,
+                DoctorId = entity.DoctorId,
 
-                FirstName = firstName,
-                IsActive = true,
-                Mobile = mobileNo,
-                LastName = lastName,
-                Password = EncryptPassword(userName, passWord),
-                Username = userName,
-                Code = code,
-                Gender = gender,
-                Description = description,
-                DoctorId = 1
+                IsActive = true
             };
 
             var validation = new ResidentValidation.ResidentEntityValidation().Validate(UserEntity);
@@ -158,7 +157,7 @@ namespace PhysicManagement.Logic.Services
             {
                 using (var db = new Model.PhysicManagementEntities())
                 {
-                    if (IsUserValidByUserName(userName))
+                    if (IsUserValidByUserName(UserEntity.Username))
                     {
                         throw new ValidationException("این نام کاربری تکراری است");
                     }
@@ -173,21 +172,20 @@ namespace PhysicManagement.Logic.Services
 
         }
 
-        public static bool UpdateProfile(int id, string userName, string firstName, string lastName, string mobileNo)
+        public static bool UpdateResident(Resident entity)
         {
-            var currentUser = GetUserByUserId(id);
-            if (currentUser == null)
-                throw MegaException.ThrowException("چنین کاربری در سامانه پیدا نشد.");
-
-            currentUser.FirstName = firstName;
-            currentUser.LastName = lastName;
-            currentUser.Mobile = mobileNo;
-            var validation = new ResidentValidation.ResidentEntityValidation().Validate(currentUser);
+            var validation = new ResidentValidation.ResidentEntityValidation().Validate(entity);
             if (validation.IsValid)
             {
                 using (var db = new Model.PhysicManagementEntities())
                 {
-                    db.Resident.Add(currentUser);
+                    var currentUser = db.Resident.Find(entity.Id);
+                    currentUser.FirstName = entity.FirstName;
+                    currentUser.LastName = entity.LastName;
+                    currentUser.Mobile = entity.Mobile;
+                    currentUser.DoctorId = entity.DoctorId;
+                    currentUser.Password = EncryptPassword(entity.Username, entity.Password);
+
                     return db.SaveChanges() == 1;
                 }
             }
@@ -200,7 +198,7 @@ namespace PhysicManagement.Logic.Services
             if (userEntity == null)
                 throw MegaException.ThrowException("کاربری با این شناسه در پایگاه داده وجود ندارد");
 
-            ResidentService.UpdateProfile(userEntity.Id, userEntity.Username, userEntity.FirstName, userEntity.LastName, userEntity.Mobile);
+            ResidentService.UpdateResident(userEntity);
             return true;
         }
         public static bool Logout()
@@ -302,25 +300,25 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        public bool UpdateResident(Model.Resident entity)
-        {
-            var vallidtion = new ResidentValidation.ResidentEntityValidation().Validate(entity);
-            if (!vallidtion.IsValid)
-                throw new ValidationException(vallidtion.Errors);
+        //public bool UpdateResident(Model.Resident entity)
+        //{
+        //    var vallidtion = new ResidentValidation.ResidentEntityValidation().Validate(entity);
+        //    if (!vallidtion.IsValid)
+        //        throw new ValidationException(vallidtion.Errors);
 
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.Resident.Find(entity.Id);
-                Entity.FirstName = entity.FirstName;
-                Entity.LastName = entity.LastName;
-                Entity.Username = entity.Username;
-                Entity.Password = entity.Password;
-                Entity.Mobile = entity.Mobile;
-                Entity.Description = entity.Description;
+        //    using (var db = new Model.PhysicManagementEntities())
+        //    {
+        //        var Entity = db.Resident.Find(entity.Id);
+        //        Entity.FirstName = entity.FirstName;
+        //        Entity.LastName = entity.LastName;
+        //        Entity.Username = entity.Username;
+        //        Entity.Password = entity.Password;
+        //        Entity.Mobile = entity.Mobile;
+        //        Entity.Description = entity.Description;
 
-                return db.SaveChanges() == 1;
-            }
-        }
+        //        return db.SaveChanges() == 1;
+        //    }
+        //}
         public bool DeleteResident(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
