@@ -16,10 +16,13 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: PhysicUser
-        public ActionResult List()
+        public ActionResult List(string firstName, string lastName, string mobile, string degree)
         {
-
-            List<Model.PhysicUser> PhysicUser = Service.GetPhysicUserList();
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            Logic.ViewModels.PagedList<Model.PhysicUser> PhysicUser =
+                Service.GetPhysicUserList(firstName, lastName, mobile, degree, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = PhysicUser.TotalRecords;
             return View(PhysicUser);
         }
 

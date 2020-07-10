@@ -18,11 +18,14 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: Doctor
-        public ActionResult List()
+        public ActionResult List(string firstName, string lastName, string mobile, string code)
         {
-
-            List<Model.Doctor> Doctors = Service.GetDoctorList();
-            return View(Doctors);
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 5;
+            Logic.ViewModels.PagedList<Model.Doctor> Doctor =
+                Service.GetDoctorList(firstName, lastName, mobile, code, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = Doctor.TotalRecords;
+            return View(Doctor);
         }
 
         public ActionResult Modify(int? id)

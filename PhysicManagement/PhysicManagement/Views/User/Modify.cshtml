@@ -24,6 +24,18 @@
                     <form method="post">
                         <input type="hidden" name="Id" value="@Model.Id" />
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Username" class="bmd-label-floating">نام کاربری</label>
+                                    <input type="text" id="Username" name="Username" value="@Model.Username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Code" class="bmd-label-floating">رمز عبور</label>
+                                    <input type="text" id="Code" name="Code" value="@Model.Password" class="form-control">
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="FirstName" class="bmd-label-floating">نام </label>
@@ -36,30 +48,17 @@
                                     <input type="text" id="LastName" name="LastName" value="@Model.LastName" class="form-control">
                                 </div>
                             </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Username" class="bmd-label-floating">نام کاربری</label>
-                                    <input type="text" id="Username" name="Username" value="@Model.Username" class="form-control">
-                                </div>
-                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="Mobile" class="bmd-label-floating">موبایل </label>
                                     <input type="text" id="Mobile" name="Mobile" value="@Model.Mobile" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">رمز عبور</label>
-                                    <input type="text" id="Code" name="Code" value="@Model.Password" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
-                                </div>
-                            </div>
+                            @*<div class="col-md-4">
+            <div class="form-group">
+                @Html.EditorPersianDatePicker(model => model.RegisterDate, "ناریخ ثبت")
+            </div>
+        </div>*@
                             <div class="col-12">
                                 <div class="form-check">
                                     <label class="form-check-label">

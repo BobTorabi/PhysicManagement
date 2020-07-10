@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
 using PhysicManagement.Common;
 using PhysicManagement.Logic.Validations;
+using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -242,11 +244,40 @@ namespace PhysicManagement.Logic.Services
         #endregion
         #region PhysicUser section
 
-        public List<Model.PhysicUser> GetPhysicUserList()
+        public PagedList<Model.PhysicUser> GetPhysicUserList(string firstName, string lastName, string mobile, string degree, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.PhysicUser.OrderBy(x => x.FirstName).ToList();
+                IQueryable<Model.PhysicUser> QueryablePhysicUser = db.PhysicUser;
+
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryablePhysicUser = QueryablePhysicUser.Where(x => x.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryablePhysicUser = QueryablePhysicUser.Where(x => x.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryablePhysicUser = QueryablePhysicUser.Where(x => x.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(degree))
+                {
+                    degree = degree.Trim().toEnglishNumber();
+                    QueryablePhysicUser = QueryablePhysicUser.Where(x => x.Degree.Contains(degree));
+                }
+                QueryablePhysicUser = QueryablePhysicUser.OrderByDescending(x => x.IsActive);
+                return new ViewModels.PagedList<Model.PhysicUser>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryablePhysicUser.Count(),
+                    Records = QueryablePhysicUser.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         public Model.PhysicUser GetPhysicUserById(int entityId)
