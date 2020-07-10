@@ -2,6 +2,8 @@
 using FluentValidation;
 using System.Collections.Generic;
 using System.Linq;
+using PhysicManagement.Logic.ViewModels;
+using PhysicManagement.Common;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -12,7 +14,8 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Cancer.OrderBy(x => x.Title).ToList();
+                return db.Cancer.ToList();
+
             }
         }
         public Model.Cancer GetCancerById(int entityId)

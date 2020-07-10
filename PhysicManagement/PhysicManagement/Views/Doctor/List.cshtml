@@ -1,4 +1,4 @@
-﻿@model List<PhysicManagement.Model.Doctor>
+﻿@model PhysicManagement.Logic.ViewModels.PagedList<PhysicManagement.Model.Doctor>
 @{
     ViewBag.Title = "";
 }
@@ -13,56 +13,99 @@
                 </h3>
             </div>
             <div class="card-body table-responsive">
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-warning">
-                        <p>@TempData["Error"]</p>
-                    </div>
-                }
+                <div class="row">
+                    <form method="get" style="width:100%;padding:10px 30px;" action="List">
+                        <div class="row  gray-bg">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FirstName" class="bmd-label-floating">نام پزشک</label>
+                                    <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="LastName" class="bmd-label-floating">نام خانوادگی پزشک</label>
+                                    <input type="text" id="LastName" name="LastName" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                    <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Code" class="bmd-label-floating">کد نظام پزشکی </label>
+                                    <input type="text" id="Code" name="Code" value="" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                        <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
                 <table class="table table-hover">
                     <thead class="text-warning">
                         <tr>
                             <th>ردیف</th>
-                            <th>نام کاربری </th>
                             <th>نام</th>
                             <th>نام خانوادگی</th>
-                            <th>تخصص</th>
+                            <th>موبایل</th>
+                            <th>کد نظام پزشکی</th>
                             <th style="width:50px;">امکانات</th>
                         </tr>
                     </thead>
                     <tbody>
                         @{
-                            int Index = 1;
-                            foreach (var doctor in Model)
+                            if (Model == null)
                             {
                                 <tr>
-                                    <td>@Index</td>
-                                    <td>@doctor.Username</td>
-                                    <td>@doctor.FirstName</td>
-                                    <td>@doctor.LastName</td>
-                                    <td>@doctor.Degree</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                امکانات
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="@Url.Action("Modify","Doctor",new { @id = doctor.Id })">ویرایش</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal"
-                                                   onclick="DeleteEntity('حذف','@Url.Action("Delete","Doctor", new { id = doctor.Id })')">حذف</a>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <td colspan="8">اطلاعاتی برای جستجو وارد کنید</td>
                                 </tr>
-                                Index++;
                             }
+                            else
+                            {
+                                int Index = 1;
+                                foreach (var doctor in Model.Records)
+                                {
+                                    <tr>
+                                        <td>@Index</td>
+                                        <td>@doctor.FirstName</td>
+                                        <td>@doctor.LastName</td>
+                                        <td>@doctor.Mobile</td>
+                                        <td>@doctor.Code</td>   
 
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    امکانات
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-left">
+                                                    <a class="dropdown-item" href="@Url.Action("Modify","Doctor",new { @id = doctor.Id })">ویرایش اطلاعات پزشک</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Doctor", new { id = doctor.Id })')">حذف</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    Index++;
+                                }
+                            }
                         }
 
 
                     </tbody>
                 </table>
+                <div class="row">
+                    @{
+                        int PageSize = (int)(ViewBag.PageSize);
+                        int TotalRecords = (int)(ViewBag.TotalRecords);
+
+                    }
+                    @Html.Pagger(TotalRecords, PageSize)
+                </div>
             </div>
         </div>
     </div>

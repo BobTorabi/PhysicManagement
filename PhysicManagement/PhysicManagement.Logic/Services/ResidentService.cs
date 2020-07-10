@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using PhysicManagement.Common;
 using PhysicManagement.Logic.Validations;
+using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Model;
 using System;
 using System.Collections.Generic;
@@ -250,11 +251,35 @@ namespace PhysicManagement.Logic.Services
 
         #endregion
         #region Resident Section
-        public List<Model.Resident> GetResidentList()
+        public PagedList<Model.Resident> GetResidentList(string firstName, string lastName, string mobile, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Resident.OrderBy(x => x.FirstName).ToList();
+                IQueryable<Model.Resident> QueryableResident = db.Resident;
+
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryableResident = QueryableResident.Where(x => x.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryableResident = QueryableResident.Where(x => x.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryableResident = QueryableResident.Where(x => x.Mobile.Contains(mobile));
+                }
+                QueryableResident = QueryableResident.OrderByDescending(x => x.IsActive);
+                return new ViewModels.PagedList<Model.Resident>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableResident.Count(),
+                    Records = QueryableResident.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         public Model.Resident GetResidentById(int entityId)

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using PhysicManagement.Common;
 using PhysicManagement.Logic.Validations;
+using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Model;
 using System;
 using System.Collections.Generic;
@@ -252,11 +253,40 @@ namespace PhysicManagement.Logic.Services
         #endregion
         #region Doctor section
 
-        public List<Model.Doctor> GetDoctorList()
+        public PagedList<Model.Doctor> GetDoctorList(string firstName, string lastName, string mobile, string code, int CurrentPage = 1, int pageSize     = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Doctor.OrderBy(x => x.FirstName).ToList();
+                IQueryable<Model.Doctor> QueryableDoctor = db.Doctor;
+
+                if (!string.IsNullOrEmpty(firstName))
+                {
+                    firstName = firstName.Trim().ToPersian();
+                    QueryableDoctor = QueryableDoctor.Where(x => x.FirstName.Contains(firstName));
+                }
+                if (!string.IsNullOrEmpty(lastName))
+                {
+                    lastName = lastName.Trim().ToPersian();
+                    QueryableDoctor = QueryableDoctor.Where(x => x.LastName.Contains(lastName));
+                }
+                if (!string.IsNullOrEmpty(mobile))
+                {
+                    mobile = mobile.Trim().toEnglishNumber();
+                    QueryableDoctor = QueryableDoctor.Where(x => x.Mobile.Contains(mobile));
+                }
+                if (!string.IsNullOrEmpty(code))
+                {
+                    code = code.Trim().toEnglishNumber();
+                    QueryableDoctor = QueryableDoctor.Where(x => x.Code.Contains(code));
+                }
+                QueryableDoctor = QueryableDoctor.OrderByDescending(x => x.IsActive);
+                return new ViewModels.PagedList<Model.Doctor>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableDoctor.Count(),
+                    Records = QueryableDoctor.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         public List<ViewModels.IdName> GetIdNameFromDoctorList()

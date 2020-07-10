@@ -22,7 +22,6 @@ namespace PhysicManagement.Controllers
         // GET: Cancer
         public ActionResult List()
         {
-
             List<Model.Cancer> Cancer = Service.GetCancerList();
             return View(Cancer);
         }

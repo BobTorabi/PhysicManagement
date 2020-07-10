@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PhysicManagement.Model.Cancer>
+﻿@model List<PhysicManagement.Model.Cancer>
 
 @{
     ViewBag.Title = "";
@@ -8,7 +8,7 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-info">
-                <h4 class="card-title">لیست سرطان</h4>
+                <h4 class="card-title">سرطان</h4>
                 <h3>
                     <a class="btn btn-sm bg-light text-dark" href="Modify">افزودن جدید</a>
                 </h3>
@@ -33,25 +33,25 @@
                     <tbody>
                         @{
                             int Index = 1;
-                            foreach (var Cancer in Model)
+                            foreach (var cancer in Model)
                             {
                                 <tr>
                                     <td>@Index</td>
-                                    <td>@Cancer.Title</td>
-                                    <td>@Cancer.EnglishTitle</td>
-                                    <td>@Cancer.Description</td>
+                                    <td>@cancer.Title</td>
+                                    <td>@cancer.EnglishTitle</td>
+                                    <td>@cancer.Description</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                <a class="dropdown-item" href="@Url.Action("Modify","Cancer",new { @id = @Cancer.Id})">ویرایش</a>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","Cancer",new { @id = cancer.Id})">ویرایش</a>
                                                 @*<a class="dropdown-item" href="DeleteCancer/@Cancer.Id"> حذف</a>*@
-                                                <a class="dropdown-item" href="~/CancerOAR/List/@Cancer.Id"> لیست ارگان ها</a>
-                                                <a class="dropdown-item" href="~/CancerTargets/List/@Cancer.Id"> لیست هدف ها</a>
+                                                <a class="dropdown-item" href="~/CancerOAR/List/@cancer.Id">بافت های سالم</a>
+                                                <a class="dropdown-item" href="~/CancerTargets/List/@cancer.Id">حجم های هدف</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Cancer", new { id = Cancer.Id })')">حذف</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","Cancer", new { id = cancer.Id })')">حذف</a>
                                             </div>
                                         </div>
                                     </td>
