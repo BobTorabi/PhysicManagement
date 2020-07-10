@@ -7,9 +7,11 @@ namespace PhysicManagement.Controllers
     public class ResidentController : BaseController
     {
         ResidentService Service;
+        DoctorService DoctorService;
         public ResidentController()
         {
             Service = new ResidentService();
+            DoctorService = new DoctorService();
         }
         public ActionResult Index()
         {
@@ -20,7 +22,7 @@ namespace PhysicManagement.Controllers
         {
 
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize = 10;
             Logic.ViewModels.PagedList<Model.Resident> Resident =
                 Service.GetResidentList(firstName, lastName, mobile, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Resident.TotalRecords;
@@ -31,11 +33,13 @@ namespace PhysicManagement.Controllers
         {
             if (id == null)
             {
+                ViewBag.DoctorId = new SelectList(DoctorService.GetIdNameFromDoctorList(), "Id", "Name");
                 return View(new Model.Resident());
             }
             else
             {
                 var Entity = Service.GetResidentById(id.GetValueOrDefault());
+                ViewBag.DoctorId = new SelectList(DoctorService.GetIdNameFromDoctorList(), "Id", "Name", Entity.DoctorId);
                 Entity.Password = ResidentService.DecryptPassword(Entity.Username, Entity.Password);
                 return View(Entity);
             }
@@ -47,11 +51,11 @@ namespace PhysicManagement.Controllers
             bool IsAffected;
             if (entity.Id > 0)
             {
-                IsAffected = ResidentService.UpdateProfile(entity.Id,entity.Username, entity.FirstName, entity.Password, entity.Mobile);
+                IsAffected = ResidentService.UpdateResident(entity);
             }
             else
             {
-                IsAffected = ResidentService.Register(entity.Username, entity.FirstName,entity.LastName, entity.Password, entity.Mobile, entity.Code, entity.Description, entity.Gender);
+                IsAffected = ResidentService.Register(entity);
             }
             if (IsAffected)
                 return RedirectToAction("List");
