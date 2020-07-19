@@ -242,6 +242,7 @@
           <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
           <Property Name="Degree" Type="nvarchar" MaxLength="50" />
           <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Resident">
           <Key>
@@ -374,6 +375,7 @@
           <Property Name="IsSupervisor" Type="bit" />
           <Property Name="RegisterDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_AlarmConfig_AlarmEventType">
           <End Role="AlarmEventType" Type="Self.AlarmEventType" Multiplicity="0..1" />
@@ -672,6 +674,7 @@
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Resident">
           <Key>
@@ -712,6 +715,7 @@
           <Property Name="IsSupervisor" Type="Boolean" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -1137,6 +1141,7 @@
           <EntitySetMapping Name="PhysicUser">
             <EntityTypeMapping TypeName="PhysicManagementModel.PhysicUser">
               <MappingFragment StoreEntitySet="PhysicUser">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Degree" ColumnName="Degree" />
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
@@ -1181,6 +1186,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="PhysicManagementModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
                 <ScalarProperty Name="IsSupervisor" ColumnName="IsSupervisor" />

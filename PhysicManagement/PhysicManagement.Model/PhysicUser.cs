@@ -24,5 +24,6 @@ namespace PhysicManagement.Model
         public string Mobile { get; set; }
         public string Degree { get; set; }
         public string Description { get; set; }
+        public string Gender { get; set; }
     }
 }
