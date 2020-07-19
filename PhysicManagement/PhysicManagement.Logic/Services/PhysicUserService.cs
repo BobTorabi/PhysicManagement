@@ -315,6 +315,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.Password = entity.Password;
                 Entity.Mobile = entity.Mobile;
                 Entity.Description = entity.Description;
+                Entity.Gender = entity.Gender;
 
                 return db.SaveChanges() == 1;
             }
