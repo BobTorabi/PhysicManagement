@@ -20,12 +20,15 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: Cancer
-        public ActionResult List()
+        public ActionResult List(string title, string englishTitle)
         {
-            List<Model.Cancer> Cancer = Service.GetCancerList();
+            int CurrentPage = int.Parse(Request["p"] ?? "1");
+            ViewBag.PageSize = 10;
+            Logic.ViewModels.PagedList<Model.Cancer> Cancer =
+                Service.GetCancerList(title, englishTitle, CurrentPage, ViewBag.PageSize);
+            ViewBag.TotalRecords = Cancer.TotalRecords;
             return View(Cancer);
         }
-
         public ActionResult Modify(int? id)
         {
             if (id == null)
