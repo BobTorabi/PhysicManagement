@@ -10,11 +10,12 @@ namespace PhysicManagement.Controllers
 {
     public class PatientController : BaseController
     {
-        PatientService Service;
-        MedicalRecordService MedicalService;
-        CancerService CancerService;
-        ContourService ContourService;
-        TreatmentService TreatmentService;
+        readonly PatientService Service;
+        readonly MedicalRecordService MedicalService;
+        readonly CancerService CancerService;
+        readonly ContourService ContourService;
+        readonly TreatmentService TreatmentService;
+        readonly CalendarService CalendarService;
 
 
         public PatientController()
@@ -24,6 +25,7 @@ namespace PhysicManagement.Controllers
             CancerService = new CancerService();
             ContourService = new ContourService();
             TreatmentService = new TreatmentService();
+            CalendarService = new CalendarService();
         }
         public ActionResult Index()
         {
@@ -34,6 +36,10 @@ namespace PhysicManagement.Controllers
         {
             List<Model.Patient> Patient = Service.GetPatientList();
             return View(Patient);
+        }
+        public ActionResult Calander(int? mrId) {
+
+            return View();
         }
         public ActionResult SetMedicalRecordPhases(long medicalRecordId)
         {
