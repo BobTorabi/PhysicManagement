@@ -15363,7 +15363,7 @@ table .togglebutton label input[type=checkbox][disabled]+.toggle {
   padding-right: 10px;
   text-transform: capitalize;
   font-size: 13px;
-  padding: 1px 15px;
+  padding: 10px 15px;
 }
 
 .sidebar .sidebar-background {
@@ -19956,4 +19956,137 @@ Copyright (c) 2015 Daniel Eden
 table.togglebutton_margin .togglebutton label .toggle, 
 table.togglebutton_margin .togglebutton label input[type="checkbox"][disabled] + .toggle {
     margin-top: 5px;
+}
+
+.seven-cols .col-md-1{
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.seven-cols small,.seven-cols .small {
+	font-size: 50%;
+}
+.seven-cols .card-title {
+	margin: -2px 0 0 0 !important;
+}
+.seven-cols .card [class*="card-header-"] .card-icon,
+.seven-cols .card [class*="card-header-"] .card-text {
+	padding: 5px;
+	margin-top: 5px;
+	margin-right: 15px;
+}
+.seven-cols .btn{
+	width: 100%;
+	padding: 7px 0;
+}
+
+@media (min-width: 640px){
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1{
+    width: 33.33% !important;
+	flex:none !important;
+	max-width: 33.33% !important;
+  }
+}
+
+@media (min-width: 1240px){
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1{
+    width: 33.33% !important;
+	flex:none !important;
+	max-width: 33.33% !important;
+  }
+}
+ 
+@media (min-width: 1300px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+    max-width: 14.285714285714285714285714285714% !important;
+	flex:none !important;
+  }
+  .seven-cols .card [class*="card-header-"] {
+	margin: 0px 5px 0;
+  }
+}
+
+.past_month{
+	opacity: 0.5;
+}
+
+.guid .col-lg-2:before{
+	content: "";
+	width: 20px;
+	height: 20px;
+	background: #d3cbd6;
+	display: inline-block;
+	margin: 11px 0 0 5px;
+	vertical-align: text-bottom;
+}
+.icon_guid{
+	content: "";
+	width: 30px;
+	height: 30px;
+	background: #d3cbd6 !important;
+	margin: 11px 0px 0 0;
+	float: right;
+}
+.guid .pe:before,
+.icon_guid.pe{
+	background: #d3cbd6 !important;
+}
+.guid .av:before,
+.icon_guid.av{
+	background: #e4de09 !important;
+}
+.guid .in:before,
+.icon_guid.in{
+	background: #b4b140 !important;
+}
+.guid .pa:before,
+.icon_guid.pa{
+	background: #548685 !important;
+}
+.guid .co:before,
+.icon_guid.co{
+	background: #5d9cbb !important;
+}
+.guid .ca:before,
+.icon_guid.ca{
+	background: #ff3100 !important;
+}
+.guid .al:before,
+.icon_guid.al{
+	background: #d3cbd6;
+	border:1px solid #ff3100 !important;
+}
+.guid .ov:before,
+.icon_guid.ov{
+	background: #c1573f !important;
+}
+.guid .un:before,
+\.icon_guid.un{
+	background: #d7ae14;
+	border:1px solid #4d79a6 !important;
+}
+.guid .de:before,
+.icon_guid.de{
+	background: #fff;
+	border:1px solid #ccc !important;
+}
+
+.seven-cols .card{
+	margin-bottom: 10px;
+	margin-top: 0px;
+}
+
+.seven-cols .card-stats .card-header + .card-footer {
+    margin-top: 0;
+}
+
+.seven-cols .card.card-stats.active{
+	background: #abe6ee;
 }

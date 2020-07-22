@@ -312,6 +312,7 @@
     <Content Include="Views\TreatmentPhase\SetPhaseAsPlanned.cshtml" />
     <Content Include="Views\TreatmentPhase\ListForPhysicist.cshtml" />
     <Content Include="Views\TreatmentPhase\SetPhaseAsApproved.cshtml" />
+    <Content Include="Views\Patient\Calander.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
