@@ -24,6 +24,14 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+        public List<Model.Calendar> GetCalendarByMedicalRecordIdAndPhaseId(long mrId,long phaseId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.Calendar.Where(e=>e.MedicalRecordId == mrId && e.PhysicTreatmentId == phaseId).ToList();
+                return Entity;
+            }
+        }
         public bool AddCalendar(Model.Calendar entity)
         {
             var validtion = new CalendarValidation.CalendarEntityValidate().Validate(entity);

@@ -1,0 +1,95 @@
+﻿@model List<PhysicManagement.Model.TreatmentPhase>
+@{
+    ViewBag.Title = "انتخاب فاز درمان برای پرونده";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecord;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">mail_outline</i>
+                    </div>
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" class="form-control" value="@medicalRecord.PatientFirstName @medicalRecord.PatientLastName" name="FistName" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">نام پزشک</label>
+                                <input type="text" class="form-control" value="@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName" name="SystemCode" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">شناسه بیمار</label>
+                                <input type="text" class="form-control" value="@medicalRecord.Patient.Code" name="Code" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">شناسه پرونده</label>
+                                <input type="text" class="form-control" value="@medicalRecord.SystemCode" name="SystemCode" disabled="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group bmd-form-group">
+                                <label class="bmd-label-floating">نوع سرطان</label>
+                                <input type="text" class="form-control" value="@medicalRecord.CancerTitle" name="SystemCode" disabled="">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <table class="table table-hover">
+                            <thead class="text-warning">
+                                <tr>
+                                    <th>فاز درمان</th>
+                                    <th>تعداد جلسات</th>
+                                    <th>دستگاه درمانی</th>
+                                    <th>تاریخ تجویز</th>
+                                    <th>تاریخ تائید</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model == null)
+                                    {
+                                        <tr>
+                                            <td colspan="8">اطلاعاتی برای جستجو وارد کنید</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var phase in Model)
+                                        {
+                                            <tr>
+                                                <td><a href="Calander?mrId=@medicalRecord.Id&phaseId=@phase.Id">فاز شماره @phase.PhaseNumber</a></td>
+                                                <td>@phase.Fraction جلسه</td>
+                                                <td>@phase.TreatmentDeviceTitle</td>
+                                                <td>@Html.DisplayForDateTime(phase.PrescribeDate)</td>
+                                                <td>@Html.DisplayForDateTime(phase.ApprovedDate)</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

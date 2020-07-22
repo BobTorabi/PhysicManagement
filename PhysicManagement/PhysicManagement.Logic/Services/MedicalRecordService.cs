@@ -23,7 +23,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.MedicalRecord.Find(entityId);
+                var Entity = db.MedicalRecord.Include("Patient").Where(x=>x.Id == entityId).FirstOrDefault();
                 return Entity;
             }
         }

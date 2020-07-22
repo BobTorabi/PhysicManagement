@@ -37,9 +37,41 @@ namespace PhysicManagement.Controllers
             List<Model.Patient> Patient = Service.GetPatientList();
             return View(Patient);
         }
-        public ActionResult Calander(int? mrId) {
+        /// <summary>
+        /// نمایش تقویم برای یک پرونده خاص و فاز درمان خاص
+        /// </summary>
+        /// <param name="mrId"></param>
+        /// <param name="phaseId"></param>
+        /// <returns></returns>
+        public ActionResult Calander(long? mrId,long? phaseId) {
+            if (mrId.HasValue == false)
+            {
+                // در صورتی که پرونده قابل شناسایی نباشد به لیست تائید پلن شده ها بر میگردیم تا انتخاب پرونده انجام شود
+                return Redirect("~/treatmentPhase/ListForPhysicist");
+            }
+            else {
+                long MedicalRecordId = mrId.GetValueOrDefault();
+                var MedicalRecordEntity = MedicalService.GetMedicalRecordById(MedicalRecordId);
+                if (!phaseId.HasValue || MedicalRecordEntity == null)
+                {
+                    return Redirect("/Patient/TreatmentData?mrId=" + MedicalRecordId);
+                }
+                else {
+                    ViewBag.MedicalRecord = MedicalRecordEntity;
+                    ViewBag.TreatmentPhase = "";
+                    var CalendarData = CalendarService.GetCalendarByMedicalRecordIdAndPhaseId(MedicalRecordId, phaseId.GetValueOrDefault());
+                    return View(CalendarData);
+                }
 
-            return View();
+                
+            }
+            
+        }
+        public ActionResult CalanderChoosePhase(int mrId) {
+            var MedicalRecordEntity = MedicalService.GetMedicalRecordById(mrId);
+            var TreatmentPhaseData = TreatmentService.GetTreatmentPhasesByMedicalRecordId(MedicalRecordEntity.Id);
+            ViewBag.MedicalRecord = MedicalRecordEntity;
+            return View(TreatmentPhaseData);
         }
         public ActionResult SetMedicalRecordPhases(long medicalRecordId)
         {
