@@ -31,7 +31,7 @@ namespace PhysicManagement.Common
 
             return Year + "/" + Month + "/" + Day + delimiter + hour + ":" + minute;
         }
-
+      
         /// <summary>
         /// تبدیل تاریخ میلادی به تاریخ و ساعت شمسی
         /// </summary>
@@ -90,6 +90,16 @@ namespace PhysicManagement.Common
 
             return PersionDayOfWeek(dateTime) + " " + Day + " " + PersianGetMonthName(Calendar.GetMonth(dateTime));
         }
+        public static string GetPersianMonthName(DateTime dateTime)
+        {
+            PersianCalendar Calendar = new PersianCalendar();
+            return PersianGetMonthName(Calendar.GetMonth(dateTime));
+        }
+        public static int GetPersianDay(DateTime dateTime)
+        {
+            PersianCalendar Calendar = new PersianCalendar();
+            return Calendar.GetDayOfMonth(dateTime);
+        }
         public static DateTime GetDateOfFirstDayOfCurrentJalaliMonth()
         {
             DateTime NeededDate = DateTime.Now;
@@ -105,7 +115,7 @@ namespace PhysicManagement.Common
         /// </summary>
         /// <param name="month">عدد ماه مورد نظر</param>
         /// <returns>عنوان ماه</returns>
-        private static string PersianGetMonthName(int month)
+        public static string PersianGetMonthName(int month)
         {
             switch (month)
             {
@@ -143,7 +153,7 @@ namespace PhysicManagement.Common
         /// </summary>
         /// <param name="date">تاریخ مورد نظر</param>
         /// <returns>عنوان روز مورد نظر</returns>
-        private static string PersionDayOfWeek(DateTime date)
+        public static string PersionDayOfWeek(DateTime date)
         {
             switch (date.DayOfWeek)
             {
