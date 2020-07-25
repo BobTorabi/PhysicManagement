@@ -112,7 +112,7 @@ namespace PhysicManagement.Logic.Services
                 };
             }
         }
-        public Model.TreatmentPhase GetTreatmentPhaseById(int entityId)
+        public Model.TreatmentPhase GetTreatmentPhaseById(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {

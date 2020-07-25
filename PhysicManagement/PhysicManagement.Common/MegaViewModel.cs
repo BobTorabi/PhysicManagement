@@ -19,7 +19,9 @@ public class MegaViewModel<T>
         Status = MegaStatus.Failed;
         Messages = new List<string>(messages);
     }
-
+    public void AddMessage(string Message) {
+        Messages.Add(Message);
+    }
     public MegaStatus Status { get; set; }
     public List<string> Messages { get; set; }
     public T Data { get; set; }
