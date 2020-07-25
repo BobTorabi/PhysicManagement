@@ -58,7 +58,8 @@ namespace PhysicManagement.Controllers
                 }
                 else {
                     ViewBag.MedicalRecord = MedicalRecordEntity;
-                    ViewBag.TreatmentPhase = "";
+                    ViewBag.TreatmentPhase = TreatmentService.GetTreatmentPhaseById(phaseId.GetValueOrDefault());
+                    ViewBag.TreatmentPhaseId = phaseId;
                     var CalendarData = CalendarService.GetCalendarByMedicalRecordIdAndPhaseId(MedicalRecordId, phaseId.GetValueOrDefault());
                     return View(CalendarData);
                 }

@@ -1,33 +1,105 @@
 ﻿
 @{
-    ViewBag.Title = "Calander";
+    ViewBag.Title = "تقویم درمان بیمار";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    PhysicManagement.Model.TreatmentPhase treatmentPhase = ViewBag.TreatmentPhase;
 }
 <div class="container-fluid">
-    <div class="row seven-cols">
-        @for (int i = 0; i < 31; i++)
-        {
-            DateTime currentDate = DateTime.Now.AddDays(i);
-            string JalaliDate = PhysicManagement.Common.DateUtility.GetPersianDateTime(currentDate);
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title">@treatmentPhase.PatientFirstName @treatmentPhase.PatientLastName (@treatmentPhase.Fraction جلسه)</h4>
+                    <h3>
+                        <button type="button" class="btn btn-sm bg-light text-dark" data-toggle="modal" data-target="#AddRange">
+                            افزودن به تقویم
+                        </button>
+                    </h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="row guid">
+                        <div class="col">
+                            <table class="table table-hover">
+                                <thead class="text-warning">
+                                    <tr>
+                                        <th>ردیف</th>
+                                        <th>نام بیمار</th>
+                                        <th>موبایل</th>
+                                        <th>کد ملی</th>
+                                        <th>وضعیت</th>
+                                        <th>تاریخ ثبت</th>
+                                        <th style="width:50px;">امکانات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int Index = 1;
+                                        foreach (var patient in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            امکانات
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-left">
+                                                            <a class="dropdown-item" href="Modify/@patient.Id">ویرایش</a>
+                                                            @*<a class="dropdown-item" href="Modify/@patient.Id">حذف</a>*@
+                                                            <div class="dropdown-divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            Index++;
+                                        }
 
-            <div class="col-md-1">
-                <div class="card card-stats active">
-                    <div class="card-header card-header-warning card-header-icon ">
-                        <p class="card-category">@PhysicManagement.Common.DateUtility.PersionDayOfWeek(currentDate)</p>
-                        <h3 class="card-title">
-                            @PhysicManagement.Common.DateUtility.GetPersianDay(currentDate)
-                            <small>
-                                @PhysicManagement.Common.DateUtility.GetPersianMonthName(currentDate)
-                            </small>
-                        </h3>
-                    </div>
-                    <div class="card-footer ltr">
-                        <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    </div>
+    <div class="row seven-cols">
 
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title">تقویم کاربر</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="row guid">
+                        @for (int i = 0; i < 31; i++)
+                        {
+                            DateTime currentDate = DateTime.Now.AddDays(i);
+                            string JalaliDate = PhysicManagement.Common.DateUtility.GetPersianDateTime(currentDate);
+
+                            <div class="col-md-1">
+                                <div class="card card-stats active">
+                                    <div class="card-header card-header-warning card-header-icon ">
+                                        <p class="card-category">@PhysicManagement.Common.DateUtility.PersionDayOfWeek(currentDate)</p>
+                                        <h3 class="card-title">
+                                            @PhysicManagement.Common.DateUtility.GetPersianDay(currentDate)
+                                            <small>
+                                                @PhysicManagement.Common.DateUtility.GetPersianMonthName(currentDate)
+                                            </small>
+                                        </h3>
+                                    </div>
+                                    <div class="card-footer ltr">
+                                        <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -55,7 +127,43 @@
         </div>
     </div>
 
+    <!-- Add Range Modal -->
+    <div class="modal fade" id="AddRange" tabindex="-1" role="dialog" aria-labelledby="AddRange" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تقویم بیمار</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="PhaseId" value="@ViewBag.TreatmentPhaseId" />
+                        <div class="form-group bmd-form-group">
+                            <label for="patientFirstName" class="bmd-label-floating">از تاریخ</label>
+                            @Html.EditorPersianDatePicker("fromDate", "از تاریخ", DateTime.Now)
+                        </div>
+                        <div class="form-group bmd-form-group">
+                            <label for="patientFirstName" class="bmd-label-floating">تا تاریخ</label>
+                            <input type="text" id="patientFirstName" required name="toDate" value="@treatmentPhase.Fraction روز بعد" disabled class="form-control">
+                        </div>
+                        <div class="form-group dropdown-toggle">
+                            <select class="selectpicker" data-style="btn btn-primary btn-round" title="">
+                                <option selected="">پنج شنبه و جمعه وقت دهی گردد؟</option>
+                                <option value="true">بلی</option>
+                                <option value="false">خیر</option>
+                            </select>
+                        </div>
 
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                        <button type="button" class="btn btn-primary">ثبت در تقویم</button>
+                    </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -91,390 +199,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function setCalendar() {
 
-
-@*<div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">یکشنبه</p>
-                <h3 class="card-title">1<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت<div class="ripple-container"></div></button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">دوشنبه</p>
-                <h3 class="card-title">2<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت<div class="ripple-container"></div></button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">سه شنبه</p>
-                <h3 class="card-title">3<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">چهارشنبه</p>
-                <h3 class="card-title">4<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">پنجشنبه</p>
-                <h3 class="card-title">5<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">جمعه</p>
-                <h3 class="card-title">6<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">شنبه</p>
-                <h3 class="card-title">7<small>خرداد</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info">تغییر وضعیت<div class="ripple-container"></div></button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">یکشنبه</p>
-                <h3 class="card-title">8<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">دوشنبه</p>
-                <h3 class="card-title">9<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">سه شنبه</p>
-                <h3 class="card-title">10<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">چهارشنبه</p>
-                <h3 class="card-title">11<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">پنجشنبه</p>
-                <h3 class="card-title">12<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">جمعه</p>
-                <h3 class="card-title">13<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">شنبه</p>
-                <h3 class="card-title">14<small>خرداد</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info">تغییر وضعیت<div class="ripple-container"></div></button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">یکشنبه</p>
-                <h3 class="card-title">15<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats active">
-            <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon icon_guid in"></div>
-                <p class="card-category">دوشنبه</p>
-                <h3 class="card-title ">16<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت<div class="ripple-container"></div></button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">سه شنبه</p>
-                <h3 class="card-title">
-                    17<small>تیرماه</small>
-                </h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">چهارشنبه</p>
-                <h3 class="card-title">18<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">پنجشنبه</p>
-                <h3 class="card-title">19<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">جمعه</p>
-                <h3 class="card-title">20<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">شنبه</p>
-                <h3 class="card-title">21<small>خرداد</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">یکشنبه</p>
-                <h3 class="card-title">22<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">دوشنبه</p>
-                <h3 class="card-title">
-                    23<small>تیرماه</small>
-                </h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">سه شنبه</p>
-                <h3 class="card-title">24<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">چهارشنبه</p>
-                <h3 class="card-title">
-                    25<small>تیرماه</small>
-                </h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">پنجشنبه</p>
-                <h3 class="card-title">26<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">جمعه</p>
-                <h3 class="card-title">27<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">شنبه</p>
-                <h3 class="card-title">28<small>خرداد</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">یکشنبه</p>
-                <h3 class="card-title">29<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">دوشنبه</p>
-                <h3 class="card-title">30<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">سه شنبه</p>
-                <h3 class="card-title">31<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats past_month">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">چهارشنبه</p>
-                <h3 class="card-title">1<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats past_month">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">پنجشنبه</p>
-                <h3 class="card-title">2<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-1">
-        <div class="card card-stats past_month">
-            <div class="card-header card-header-warning card-header-icon">
-                <p class="card-category">جمعه</p>
-                <h3 class="card-title">3<small>تیرماه</small></h3>
-            </div>
-            <div class="card-footer ltr">
-                <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
-            </div>
-        </div>
-    </div>*@
+    }
+</script>
