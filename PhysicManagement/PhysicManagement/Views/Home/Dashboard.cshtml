@@ -16,36 +16,33 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
-                    @*<a style="color:#fff;" title="ثبت بیمار جدید" href="@Url.Action("RegisterPatient","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>*@
-                    <div class="card-icon">
-                        <div class="bg-icons bg-icon_01"></div>
-                    </div>
+                    <div class="card-icon"><div class="bg-icons bg-icon_01"></div></div>
                     <p class="card-category">پذیرش بیمار</p>
                     <h3 class="card-title">
-                        @PatientsStatistics.TotalRecords
-                        <small>نفر</small>
+                        <a style="color:#444;" target="_blank" href="~/Patient/PatientSearch">
+                            @PatientsStatistics.TotalRecords
+                            <small>نفر</small>
+                        </a>
                     </h3>
                     <div class="row pt-2">
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار های امروز</p>
+                        <div class="col-12">
+                            <a style="color:#444;" target="_blank" href="~/Patient/PatientSearch?lastDaysReport=1" class="row">
+                                <div class="col-9"><p class="card-category">تعداد بیمار های امروز</p></div>
+                                <div class="col-3 text-left"><p class="card-category"> @PatientsStatistics.Today نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.Today نفر</p>
+                        <div class="col-12">
+                            <a style="color:#444;" target="_blank" href="~/Patient/PatientSearch?lastDaysReport=7" class="row">
+                                <div class="col-9"><p class="card-category">تعداد بیمار ها طی هفته جاری</p></div>
+                                <div class="col-3 text-left"><p class="card-category"> @PatientsStatistics.LastWeek نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category"> @PatientsStatistics.LastMonth نفر</p>
-                        </div>
+                       <div class="col-12">
+                           <a target="_blank" class="row" href="~/Patient/PatientSearch?lastDaysReport=30">
+                               <div class="col-9"><p class="card-category">تعداد بیمار ها طی ماه جاری</p></div>
+                               <div class="col-3 text-left"><p class="card-category"> @PatientsStatistics.LastMonth نفر</p></div>
+                           </a>
+                       </div>
                     </div>
                 </div>
                 <div class="card-footer ltr">
@@ -56,36 +53,35 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
-                    @*<a style="color:#fff;" title="ثبت تصویر برداری" href="@Url.Action("PatientWithNoCTScanOrMRI","Patient")" class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </a>*@
                     <div class="card-icon">
                         <div class="bg-icons bg-icon_02"></div>
                     </div>
                         <p class="card-category">در انتظار تصویربرداری</p>
                         <h3 class="card-title">
-                            @CTCodesStatistics.UnsetRecord
-                            <small>نفر</small>
+                            <a style="color:#444;" target="_blank" href="~/Patient/PatientWithNoCTScanOrMRI">
+                                @CTCodesStatistics.UnsetRecord
+                                <small>نفر</small>
+                            </a>
                         </h3>
                         <div class="row pt-2">
-                            <div class="col-9">
-                                <p class="card-category">تعداد ثبت امروز</p>
-                            </div>
-                            <div class="col-3 text-left">
-                                <p class="card-category">@CTCodesStatistics.Today نفر</p>
-                            </div>
-                            <div class="col-9">
-                                <p class="card-category">تعداد ثبت هفته گذشته</p>
-                            </div>
-                            <div class="col-3 text-left">
-                                <p class="card-category">@CTCodesStatistics.LastWeek نفر</p>
-                            </div>
-                            <div class="col-9">
-                                <p class="card-category">تعداد ثبت ماه گذشته</p>
-                            </div>
-                            <div class="col-3 text-left">
-                                <p class="card-category">@CTCodesStatistics.LastMonth نفر</p>
-                            </div>
+                          <div class="col-12">
+                              <a target="_blank" href="~/Patient/PatientWithNoCTScanOrMRI?lastDaysReport=1" class="row">
+                                  <div class="col-9"><p class="card-category">تعداد ثبت امروز</p></div>
+                                  <div class="col-3 text-left"><p class="card-category">@CTCodesStatistics.Today نفر</p></div>
+                              </a>
+                          </div>
+                           <div class="col-12">
+                               <a target="_blank" href="~/Patient/PatientWithNoCTScanOrMRI?lastDaysReport=7" class="row">
+                                   <div class="col-9"><p class="card-category">تعداد ثبت هفته گذشته</p></div>
+                                   <div class="col-3 text-left"><p class="card-category">@CTCodesStatistics.LastWeek نفر</p></div>
+                               </a>
+                           </div>
+                           <div class="col-12">
+                               <a target="_blank" href="~/Patient/PatientWithNoCTScanOrMRI?lastDaysReport=30" class="row">
+                                   <div class="col-9"><p class="card-category">تعداد ثبت ماه گذشته</p></div>
+                                   <div class="col-3 text-left"><p class="card-category">@CTCodesStatistics.LastMonth نفر</p></div>
+                               </a>
+                           </div>
                         </div>
                     </div>
                     <div class="card-footer ltr">
@@ -96,40 +92,40 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-rose card-header-icon">
-                    @*<a style="color:#fff;" title="ثبت انتخاب نرم افزار طراحی درمان" href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="card-icon">
-            <i class="material-icons">content_copy</i>
-        </a>*@
                     <div class="card-icon">
                         <div class="bg-icons bg-icon_03"></div>
                     </div>
                     <p class="card-category">در انتظار انتخاب نرم افزار طراحی درمان</p>
                     <h3 class="card-title">
-                        @TreatmentPlansStatistics.UnsetRecord
-                        <small>نفر</small>
+                        <a style="color:#444;" href="~/Patient/PatientWithNoThreatmentPlan" target="_blank">
+                            @TreatmentPlansStatistics.UnsetRecord
+                            <small>نفر</small>
+                        </a>
                     </h3>
                     <div class="row pt-2">
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار های امروز</p>
+                        <div class="col-12">
+                            <a target="_blank" href="~/Patient/PatientWithNoThreatmentPlan?lastDaysReport=1" class="row">
+                                <div class="col-9"><p class="card-category">تعداد بیمار های امروز</p></div>
+                                <div class="col-3 text-left"><p class="card-category">@TreatmentPlansStatistics.Today نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.Today نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-9">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-3 text-left">
-                            <p class="card-category">@TreatmentPlansStatistics.LastMonth نفر</p>
-                        </div>
+                      <div class="col-12">
+                          <a  target="_blank" href="~/Patient/PatientWithNoThreatmentPlan?lastDaysReport=7" class="row">
+                              <div class="col-9"><p class="card-category">تعداد بیمار ها طی هفته جاری</p></div>
+                              <div class="col-3 text-left"><p class="card-category">@TreatmentPlansStatistics.LastWeek نفر</p></div>
+                          </a>
+                      </div>
+                      <div class="col-12">
+                          <a target="_blank" href="~/Patient/PatientWithNoThreatmentPlan?lastDaysReport=30" class="row">
+                              <div class="col-9"><p class="card-category">تعداد بیمار ها طی ماه جاری</p></div>
+                              <div class="col-3 text-left"><p class="card-category">@TreatmentPlansStatistics.LastMonth نفر</p></div>
+                          </a>
+                      </div>  
+                      
                     </div>
                 </div>
                 <div class="card-footer ltr">
-                    <a href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">ثبت انتخاب نرم افزار طراحی درمان</a>
+                    <a target="_blank" href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">ثبت انتخاب نرم افزار طراحی درمان</a>
                 </div>
             </div>
         </div>
@@ -144,28 +140,35 @@
                     </div>
                     <p class="card-category">در انتظار ثبت کانتور</p>
                     <h3 class="card-title">
-                        @ContourStatistics.UnsetRecord
-                        <small>نفر</small>
+                        <a style="color:#444;" href="~/Patient/ListOfUnsetCountorsForCases?hasContour=False" target="_blank">
+                            @ContourStatistics.UnsetRecord
+                            <small>نفر</small>
+                        </a>
                     </h3>
                     <div class="row pt-2">
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار های امروز</p>
+                        <div class="col-12">
+                            <a class="row" target="_blank" href="~/Patient/ListOfUnsetCountorsForCases?hasContour=True&lastDaysReport=1">
+                                <div class="col-8"><p class="card-category">تعداد بیمار های امروز</p></div>
+                                <div class="col-4 text-left"><p class="card-category">@ContourStatistics.Today نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.Today نفر</p>
+                        <div class="col-12">
+                            <a class="row" target="_blank" href="~/Patient/ListOfUnsetCountorsForCases?hasContour=True&lastDaysReport=7">
+                                <div class="col-8">
+                                    <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                                </div>
+                                <div class="col-4 text-left">
+                                    <p class="card-category">@ContourStatistics.LastWeek نفر</p>
+                                </div>
+                            </a>
                         </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        <div class="col-12">
+                            <a class="row" target="_blank" href="~/Patient/ListOfUnsetCountorsForCases?hasContour=True&lastDaysReport=30">
+                                <div class="col-8"><p class="card-category">تعداد بیمار ها طی ماه جاری</p></div>
+                                <div class="col-4 text-left"><p class="card-category">@ContourStatistics.LastMonth نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ContourStatistics.LastMonth نفر</p>
-                        </div>
+                       
                     </div>
                 </div>
                 <div class="card-footer ltr">
@@ -176,36 +179,34 @@
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
-                    @*<a style="color:#fff;" title="تایید کانتور" href="@Url.Action("ContourApprove","Contour")" class="card-icon">
-            <i class="material-icons">content_copy</i>
-        </a>*@
-                    <div class="card-icon">
-                        <div class="bg-icons bg-icon_05"></div>
-                    </div>
+                    <div class="card-icon"><div class="bg-icons bg-icon_05"></div></div>
                     <p class="card-category">در انتظار تایید کانتور</p>
                     <h3 class="card-title">
-                        @ConformContourStatistics.UnsetRecord
-                        <small>نفر</small>
+                        <a href="~/Contour/ContourApprove" target="_blank" style="color:#444">
+                            @ConformContourStatistics.UnsetRecord
+                            <small>نفر</small>
+                        </a>
                     </h3>
                     <div class="row pt-2">
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار های امروز</p>
+                        <div class="col-12">
+                            <a href="~/Contour/ContourApprove?lastDaysReport=1" class="row" target="_blank">
+                                <div class="col-8"><p class="card-category">تعداد بیمار های امروز</p></div>
+                                <div class="col-4 text-left"><p class="card-category">@ConformContourStatistics.Today نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ConformContourStatistics.Today نفر</p>
+                        <div class="col-12">
+                            <a href="~/Contour/ContourApprove?lastDaysReport=7" class="row" target="_blank">
+                                <div class="col-8"><p class="card-category">تعداد بیمار ها طی هفته جاری</p></div>
+                                <div class="col-4 text-left"><p class="card-category">@ConformContourStatistics.LastWeek نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی هفته جاری</p>
+                        <div class="col-12">
+                            <a href="~/Contour/ContourApprove?lastDaysReport=7" class="row" target="_blank">
+                                <div class="col-8"><p class="card-category">تعداد بیمار ها طی ماه جاری</p></div>
+                                <div class="col-4 text-left"><p class="card-category">@ConformContourStatistics.LastMonth نفر</p></div>
+                            </a>
                         </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ConformContourStatistics.LastWeek نفر</p>
-                        </div>
-                        <div class="col-8">
-                            <p class="card-category">تعداد بیمار ها طی ماه جاری</p>
-                        </div>
-                        <div class="col-4 text-left">
-                            <p class="card-category">@ConformContourStatistics.LastMonth نفر</p>
-                        </div>
+
                     </div>
                 </div>
                 <div class="card-footer ltr">
