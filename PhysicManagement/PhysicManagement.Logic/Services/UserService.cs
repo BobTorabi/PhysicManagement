@@ -291,6 +291,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.Password = entity.Password;
                 Entity.IsSupervisor = entity.IsSupervisor;
                 Entity.RegisterDate = entity.RegisterDate;
+                Entity.Gender = entity.Gender;
 
                 return db.SaveChanges() == 1;
             }

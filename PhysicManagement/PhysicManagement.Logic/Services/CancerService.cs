@@ -1,9 +1,12 @@
-﻿using PhysicManagement.Logic.Validations;
-using FluentValidation;
+﻿using FluentValidation;
+using PhysicManagement.Logic.Validations;
 using System.Collections.Generic;
 using System.Linq;
-using PhysicManagement.Logic.ViewModels;
+using System;
+using System.Data.Entity;
+using PhysicManagement.Model;
 using PhysicManagement.Common;
+using PhysicManagement.Logic.ViewModels;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -74,6 +77,33 @@ namespace PhysicManagement.Logic.Services
 
                 db.Cancer.Remove(Entity);
                 return db.SaveChanges() == 1;
+            }
+        }
+
+        public PagedList<Cancer> GetCancerList(string title, string englishTitle,int CurrentPage = 1, int pageSize = 30)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                IQueryable<Model.Cancer> QueryableCancer = db.Cancer;
+
+                if (!string.IsNullOrEmpty(title))
+                {
+                    title = title.Trim().ToPersian();
+                    QueryableCancer = QueryableCancer.Where(x => x.Title.Contains(title));
+                }
+                if (!string.IsNullOrEmpty(englishTitle))
+                {
+                    englishTitle = englishTitle.Trim().ToPersian();
+                    QueryableCancer = QueryableCancer.Where(x => x.EnglishTitle.Contains(englishTitle));
+                }
+                QueryableCancer = QueryableCancer.OrderByDescending(x => x.Id);
+                return new ViewModels.PagedList<Model.Cancer>()
+                {
+                    CurrentPage = CurrentPage,
+                    PageSize = pageSize,
+                    TotalRecords = QueryableCancer.Count(),
+                    Records = QueryableCancer.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList()
+                };
             }
         }
         #endregion
