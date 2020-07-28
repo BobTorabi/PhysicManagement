@@ -21,11 +21,30 @@ namespace PhysicManagement.Logic.Services
             }
         }
         public PagedList<Model.MedicalRecord> GetPatientListDontHaveMriOrCTScan(string firstName,string lastName,string mobile,
-            string nationalCode,string systemCode,string code,int CurrentPage = 1, int pageSize = 30)
+            string nationalCode,string systemCode,string code,int? lastDaysReport, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.MedicalRecord> QueryableMR = db.MedicalRecord.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null).Include(x => x.Patient);
+                IQueryable<Model.MedicalRecord> QueryableMR = 
+                    db.MedicalRecord
+                    
+                    .Include(x => x.Patient);
+
+                if (lastDaysReport.HasValue)
+                {
+                    DateTime Now = DateTime.Now.Date;
+                    DateTime LastDate = Now.AddDays(lastDaysReport.Value * -1);
+                    QueryableMR = QueryableMR
+                        .Where(e
+                        =>
+                        e.CTEnterDate >= LastDate
+
+                    );
+                }
+                else
+                {
+                    QueryableMR = QueryableMR.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null);
+                }
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -119,11 +138,21 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public List<Model.MedicalRecord> GetPatientListWithUnsetFusion(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
+        public List<Model.MedicalRecord> GetPatientListWithUnsetFusion
+            (string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,int? lastDaysReport)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<MedicalRecord> Queryable = db.MedicalRecord.Where(t => t.NeedsFusion == null);
+                IQueryable<MedicalRecord> Queryable = db.MedicalRecord;
+                if (lastDaysReport.HasValue)
+                {
+                    DateTime LastDate = DateTime.Now.Date.AddDays(lastDaysReport.Value * -1);
+                    Queryable = Queryable.Where(x => x.NeedsFusion != null &&  x.TPEnterDate >= LastDate);
+                }
+                else
+                {
+                    Queryable = Queryable.Where(t => t.NeedsFusion == null);
+                }
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -255,14 +284,18 @@ namespace PhysicManagement.Logic.Services
 
         }
         public ViewModels.PagedList<Model.Patient> GetPatientListWithFilters(string firstName, string lastName, string mobile,
-            string nationalCode, string systemCode, string code, int CurrentPage = 1, int pageSize = 30)
+            string nationalCode, string systemCode, string code,int? lastDaysReport, int CurrentPage = 1, int pageSize = 30)
         {
 
             using (var db = new Model.PhysicManagementEntities())
             {
                 
                 IQueryable<Model.Patient> QueryablePatient = db.Patient.Include(x => x.MedicalRecord);
-
+                if (lastDaysReport.HasValue)
+                {
+                    DateTime LastDaysReport = DateTime.Now.Date.AddDays(lastDaysReport.GetValueOrDefault()*-1);
+                    QueryablePatient = QueryablePatient.Where(x => x.RegisterDate >= LastDaysReport);
+                }
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();

@@ -230,12 +230,13 @@ namespace PhysicManagement.Controllers
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return Redirect("~/TreatmentPhase/List");
         }
-        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
+        public ActionResult
+            PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code,int? lastDaysReport)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
-            Logic.ViewModels.PagedList<Model.Patient> Patient =
-                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, code, CurrentPage, ViewBag.PageSize);
+            PagedList<Model.Patient> Patient =
+                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, code,lastDaysReport, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
@@ -312,12 +313,14 @@ namespace PhysicManagement.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult PatientWithNoCTScanOrMRI(string firstName, string lastName, string mobile,
-            string nationalCode, string systemCode, string code)
+            string nationalCode, string systemCode, string code,int? lastDaysReport)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
-            PagedList<Model.MedicalRecord> MedicalRecord = Service.GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
-            nationalCode, systemCode, code, CurrentPage, ViewBag.PageSize);
+            PagedList<Model.MedicalRecord> MedicalRecord = 
+                Service.
+                GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
+            nationalCode, systemCode, code, lastDaysReport, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = MedicalRecord.TotalRecords;
 
             return View(MedicalRecord);
@@ -329,9 +332,11 @@ namespace PhysicManagement.Controllers
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code)
+        public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,int? lastDaysReport)
         {
-            List<Model.MedicalRecord> Patient = Service.GetPatientListWithUnsetFusion(firstName, lastName, nationalCode, mobile, systemCode, code);
+            List<Model.MedicalRecord> Patient =
+                Service.
+                GetPatientListWithUnsetFusion(firstName, lastName, nationalCode, mobile, systemCode, code, lastDaysReport);
             return View(Patient);
         }
         public ActionResult ListOfUnsetCountorsForCases(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, bool? hasContour)
