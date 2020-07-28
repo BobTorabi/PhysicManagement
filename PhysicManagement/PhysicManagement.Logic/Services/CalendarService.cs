@@ -34,9 +34,7 @@ namespace PhysicManagement.Logic.Services
         }
         public bool AddCalendar(Model.Calendar entity)
         {
-            var validtion = new CalendarValidation.CalendarEntityValidate().Validate(entity);
-                if (!validtion.IsValid)
-                throw new ValidationException(validtion.Errors);
+        
 
                 using(var db = new Model.PhysicManagementEntities())
                 {
