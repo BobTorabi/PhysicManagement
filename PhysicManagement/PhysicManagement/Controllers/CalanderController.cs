@@ -27,8 +27,7 @@ namespace PhysicManagement.Controllers
             }
             else
             {
-                DateTime? _FromDate = Common.DateUtility.TryGetDateTime(fromDate);
-                if (_FromDate.HasValue)
+                if (DateTime.TryParse(fromDate, out DateTime _FromDate))
                 {
                     var MedicalRecordObj = medicalRecordService.GetMedicalRecordById(mrId);
                     if (MedicalRecordObj == null)
@@ -45,7 +44,10 @@ namespace PhysicManagement.Controllers
                         else
                         {
                             var CalandersData = CalendarService.GetCalendarByMedicalRecordIdAndPhaseId(mrId, phaseId);
-                            if (CalandersData != null && CalandersData.Count >= 0)
+                            if (CalandersData==null)
+                                CalandersData = new List<Model.Calendar>();
+
+                            if (CalandersData.Count > 0)
                             {
                                 Result.AddMessage("تقدیم قبلا مقدار دهی شده است.ابتدا باید تمام مقادیر قبلی را پاک کنید.");
                             }
@@ -53,7 +55,40 @@ namespace PhysicManagement.Controllers
                             {
                                 for (int i = 0; i < PhaseData.Fraction; i++)
                                 {
-
+                                    CalendarService.AddCalendar(new Model.Calendar { 
+                                    AttendanceStatusId = null,
+                                    Date = _FromDate,
+                                    DoctorFullName = MedicalRecordObj.DoctorFirstName + " "+ MedicalRecordObj.DoctorLastName,
+                                    MedicalRecordId = mrId,
+                                    PatientFullName = MedicalRecordObj.PatientFirstName + " "+ MedicalRecordObj.PatientLastName,
+                                    PersianDate = Common.DateUtility.GetPersianDateTime(_FromDate,"/"),
+                                    PhysicTreatmentId = int.Parse(phaseId.ToString()),
+                                    SessionNumber = (i+1),
+                                    TreatmentPhaseText ="",
+                                    });
+                                    if (needFreeDays)
+                                    {
+                                        _FromDate = _FromDate.AddDays(1);
+                                    }
+                                    else {
+                                        switch (_FromDate.DayOfWeek)
+                                        {
+                                            default:
+                                            case DayOfWeek.Saturday:
+                                            case DayOfWeek.Sunday:
+                                            case DayOfWeek.Monday:
+                                            case DayOfWeek.Tuesday:
+                                            case DayOfWeek.Wednesday:
+                                                _FromDate = _FromDate.AddDays(1);
+                                                break;
+                                            case DayOfWeek.Thursday:
+                                                _FromDate = _FromDate.AddDays(2);
+                                                break;
+                                            case DayOfWeek.Friday:
+                                                _FromDate = _FromDate.AddDays(1);
+                                                break;
+                                        }
+                                    }
                                 }
                             }
                         }
