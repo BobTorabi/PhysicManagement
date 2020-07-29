@@ -40,7 +40,11 @@ namespace PhysicManagement.Controllers
             {
                 var Entity = Service.GetResidentById(id.GetValueOrDefault());
                 ViewBag.DoctorId = new SelectList(DoctorService.GetIdNameFromDoctorList(), "Id", "Name", Entity.DoctorId);
-                Entity.Password = ResidentService.DecryptPassword(Entity.Username, Entity.Password);
+                try
+                {
+                    Entity.Password = ResidentService.DecryptPassword(Entity.Username, Entity.Password);
+                }
+                catch { }
                 return View(Entity);
             }
 
@@ -61,7 +65,7 @@ namespace PhysicManagement.Controllers
                 return RedirectToAction("List");
             else
             {
-                return View();
+                return View(entity);
             }
         }
 

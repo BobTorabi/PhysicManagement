@@ -10,7 +10,7 @@ using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
-   public class UserService
+    public class UserService
     {
         #region User Authorization
         protected const string AuthenticationCookieName = "Apa_Co_Auth";
@@ -70,7 +70,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.User.Where(x => x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName ).FirstOrDefault();
+                return db.User.Where(x => x.Id == userId && x.IsActive == true).OrderBy(x => x.FirstName).FirstOrDefault();
             }
         }
 
@@ -206,19 +206,19 @@ namespace PhysicManagement.Logic.Services
             return true;
         }
 
-        public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
+        public static bool ChangeUserPassword(int userId, string oldPassword, string newPassword)
         {
-            string encryptedOldPassword = EncryptPassword(userName, oldPassword);
-            var userData = GetUserData(userName, encryptedOldPassword);
-            if (userData == null)
-                throw MegaException.ThrowException("چنین کاربری پیدا نشد.");
-
-            string encryptedNewPassword = EncryptPassword(userName, newPassword);
-            userData.Password = encryptedNewPassword;
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.User.Find(userData.Id);
-                Entity.Password = userData.Password;
+                var UserData = GetUserByUserId(userId);
+                string encryptedOldPassword = EncryptPassword(UserData.Username, oldPassword);
+                var userData = GetUserData(UserData.Username, oldPassword);
+                if (userData == null)
+                    throw MegaException.ThrowException("رمز وارد شده اشتباه است.");
+
+                string encryptedNewPassword = EncryptPassword(userData.Username, newPassword);
+                UserData.Password = encryptedNewPassword;
+
                 return db.SaveChanges() == 1;
             }
         }

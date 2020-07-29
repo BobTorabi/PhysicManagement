@@ -1,6 +1,7 @@
 ﻿using PhysicManagement.Common;
 using PhysicManagement.Logic.Services;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -17,11 +18,12 @@ namespace PhysicManagement.Controllers
                     default:
                         return View();
                     case "doctor":
-                        { 
-                        var UserData = DoctorService.IsAuthenticated();
+                        {
+                            var UserData = DoctorService.IsAuthenticated();
                             if (UserData == null)
                                 return View();
-                            else { 
+                            else
+                            {
                                 return Redirect("~/Home/Dashboard");
                             }
                         }
@@ -49,7 +51,8 @@ namespace PhysicManagement.Controllers
             }
             return View();
         }
-        public ActionResult TestData(string a, string b) {
+        public ActionResult TestData(string a, string b)
+        {
             return Json(new { a = a, aEnc = DoctorService.EncryptPassword(a, b) }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -73,15 +76,16 @@ namespace PhysicManagement.Controllers
                         else
                         {
                             DoctorService.SetAuthenticationCookie(userName, password, true);
-                            Cookie.SetCookie("RoleType", "doctor",DateTime.Now.AddMonths(1));
+                            Cookie.SetCookie("RoleType", "doctor", DateTime.Now.AddMonths(1));
                             if (Request["data"] != null)
                             {
                                 return Redirect(Request["data"]);
                             }
-                            else {
+                            else
+                            {
                                 return Redirect("~/Home/Dashboard");
                             }
-                            
+
                         }
 
                     }
@@ -150,7 +154,7 @@ namespace PhysicManagement.Controllers
             return Redirect("ProfileData");
         }
 
-        [Authorization(Roles = "resident")]
+        [Authorization()]
         public ActionResult ChangePassword()
         {
             ViewBag.RoleName = Cookie.ReadCookie("RoleType");
@@ -159,13 +163,50 @@ namespace PhysicManagement.Controllers
 
 
         [HttpPost]
-        [Authorization(Roles = "resident")]
-        public ActionResult ChangePassword(string OldPassword,string NewPassword,string NewPasswordRetype)
+        [Authorization()]
+        public ActionResult ChangePassword(string OldPassword, string NewPassword, string NewPasswordRetype)
         {
+            if (string.IsNullOrEmpty(OldPassword))
+            {
+                ViewBag.Error = "رمز فعلی خود را وارد کنید";
+            }
+            else if (string.IsNullOrEmpty(NewPassword))
+            {
+                ViewBag.Error = "رمز جدید خود را وارد کنید";
+            }
+            else if (string.IsNullOrEmpty(NewPasswordRetype))
+            {
+                ViewBag.Error = "تکرار رمز جدید خود را وارد کنید";
+            }
+            else if (NewPasswordRetype != NewPassword)
+            {
+                ViewBag.Error = "رمز جدید و تکرار آن شبیه به هم نیست.";
+            }
+            else
+            {
+                try
+                {
+                    AuthenticatedUserService.ChangePassword(NewPassword, OldPassword);
+                    ViewBag.Done = "تغییر رمز با موفقیت انجام شد. لطفا دوباره وارد سیستم شوید";
+                }
+                catch (Exception ex)
+                {
+                    if (ex is FluentValidation.ValidationException Ex)
+                    {
+                        ViewBag.Error = Ex.Errors.Select(x => x.ErrorMessage).FirstOrDefault();
+                    }
+                    else
+                    {
+                        ViewBag.Error = "خطایی نا معلوم اتفاق افتاد.";
+                    }
+                }
+            }
             return View();
+
         }
 
-        public ActionResult NoAccess() {
+        public ActionResult NoAccess()
+        {
 
             return View();
         }

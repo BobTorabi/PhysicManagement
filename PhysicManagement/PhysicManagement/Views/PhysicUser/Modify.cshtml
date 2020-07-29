@@ -62,10 +62,10 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <select id="Gender" name="Gender" value="@Model.Gender" class="form-control">
-                                    <option>جنسیت</option>
-                                    <option value="مرد">مرد</option>
-                                    <option value="زن">زن</option>
+                                <select id="Gender" name="Gender" class="form-control">
+                                    <option @(string.IsNullOrEmpty(Model.Gender)?"selected":"")  value="">جنسیت</option>
+                                    <option @(Model.Gender == "مرد" ?"selected":"") value="مرد">مرد</option>
+                                    <option @(Model.Gender == "زن" ?"selected":"") value="زن">زن</option>
                                 </select>
                             </div>
                         </div>

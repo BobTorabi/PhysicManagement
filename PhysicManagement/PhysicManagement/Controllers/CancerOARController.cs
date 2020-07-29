@@ -45,14 +45,13 @@ namespace PhysicManagement.Controllers
         [HttpPost]
         public ActionResult Modify(Model.CancerOAR entity)
         {
-            bool IsAffected;
             if (entity.Id > 0)
             {
-                IsAffected = Service.UpdateCancerOAR(entity);
+                Service.UpdateCancerOAR(entity);
             }
             else
             {
-                IsAffected = Service.AddCancerOAR(entity);
+                Service.AddCancerOAR(entity);
             }
             return Json(new { location = "../../../CancerOAR/list/" + entity.CancerId },JsonRequestBehavior.AllowGet);
 
@@ -60,8 +59,9 @@ namespace PhysicManagement.Controllers
 
         public ActionResult DeleteCancerOAR(int id)
         {
+            var CancerId =  Service.GetCancerOARById(id).CancerId;
             var cancerOAR = Service.DeleteCancerOAR(id);
-            return RedirectToAction("List");
+            return Redirect("/CancerOAR/list/" + CancerId);
         }
 
         public JsonResult GetCancerOARDataByCancerId(int cancerId,long? medicalRecordId) {
