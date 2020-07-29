@@ -202,7 +202,7 @@
         })
         $(document).ready(function () {
             getAllQS();
-            $('form[method=post]').attr('onsubmit', 'formValidate(this,event)');
+            $('form[method=post]').not('[noInit]').attr('onsubmit', 'formValidate(this,event)');
             $('button[type=reset]').click(function () {
                 $('form').find('input,select,textarea').each(function () {
                     $(this).val('');

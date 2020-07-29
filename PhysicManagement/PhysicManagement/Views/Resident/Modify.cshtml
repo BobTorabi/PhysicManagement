@@ -1,13 +1,11 @@
 ﻿@model PhysicManagement.Model.Resident
-@{
-    if (Model.Id == 0)
-    {
-        ViewBag.Title = "ثبت رزیدنت جدید";
-    }
-    else
-    {
-        ViewBag.Title = "ویرایش اطلاعات رزیدنت ";
-    }
+@if (Model == null)
+{
+    ViewBag.Title = "ثبت رزیدنت جدید";
+}
+else
+{
+    ViewBag.Title = "ویرایش اطلاعات رزیدنت ";
 }
 <div class="row">
     <div class="col-md-12">
@@ -65,7 +63,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.DropDownList("DoctorId", null, "پزشک مربوطه", htmlAttributes: new { @class = "form-control" })
-                                
+
                             </div>
                         </div>
                         <div class="col-md-12">

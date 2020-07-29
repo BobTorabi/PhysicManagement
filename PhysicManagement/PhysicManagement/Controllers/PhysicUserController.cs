@@ -35,7 +35,11 @@ namespace PhysicManagement.Controllers
             else
             {
                 var Entity = Service.GetPhysicUserById(id.GetValueOrDefault());
-                Entity.Password = Logic.Services.PhysicUserService.DecryptPassword(Entity.Username, Entity.Password);
+                try
+                {
+                    Entity.Password = PhysicUserService.DecryptPassword(Entity.Username, Entity.Password);
+                }
+                catch { }
                 return View(Entity);
             }
 
@@ -59,7 +63,7 @@ namespace PhysicManagement.Controllers
                 return View();
             }
         }
-        
+
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]

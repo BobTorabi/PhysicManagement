@@ -319,6 +319,7 @@
     <Content Include="Views\TreatmentPhase\SetPhaseAsApproved.cshtml" />
     <Content Include="Views\Patient\Calander.cshtml" />
     <Content Include="Views\Patient\CalanderChoosePhase.cshtml" />
+    <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">

@@ -141,7 +141,7 @@ namespace PhysicManagement.Logic.Services
             {
                 FirstName = entity.FirstName,
                 LastName = entity.LastName,
-                Mobile = entity.Mobile,               
+                Mobile = entity.Mobile,
                 Password = EncryptPassword(entity.Username, entity.Password),
                 Username = entity.Username,
                 Code = entity.Code,
@@ -207,19 +207,19 @@ namespace PhysicManagement.Logic.Services
             return true;
         }
 
-        public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
+        public static bool ChangeUserPassword(int userId, string oldPassword, string newPassword)
         {
-            string encryptedOldPassword = EncryptPassword(userName, oldPassword);
-            var userData = GetUserData(userName, encryptedOldPassword);
-            if (userData == null)
-                throw MegaException.ThrowException("چنین کاربری پیدا نشد.");
-
-            string encryptedNewPassword = EncryptPassword(userName, newPassword);
-            userData.Password = encryptedNewPassword;
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Resident.Find(userData.Id);
-                Entity.Password = userData.Password;
+                var UserData = GetUserByUserId(userId);
+                string encryptedOldPassword = EncryptPassword(UserData.Username, oldPassword);
+                var userData = GetUserData(UserData.Username, oldPassword);
+                if (userData == null)
+                    throw MegaException.ThrowException("رمز وارد شده اشتباه است.");
+
+                string encryptedNewPassword = EncryptPassword(userData.Username, newPassword);
+                UserData.Password = encryptedNewPassword;
+
                 return db.SaveChanges() == 1;
             }
         }

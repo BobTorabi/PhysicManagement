@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.SqlServer.Server;
 using PhysicManagement.Common;
 using PhysicManagement.Logic.Validations;
 using PhysicManagement.Logic.ViewModels;
@@ -210,19 +211,19 @@ namespace PhysicManagement.Logic.Services
             return true;
         }
 
-        public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
+        public static bool ChangeUserPassword(int userId, string oldPassword, string newPassword)
         {
-            string encryptedOldPassword = EncryptPassword(userName, oldPassword);
-            var userData = GetUserData(userName, encryptedOldPassword);
-            if (userData == null)
-                throw MegaException.ThrowException("چنین کاربری پیدا نشد.");
-
-            string encryptedNewPassword = EncryptPassword(userName, newPassword);
-            userData.Password = encryptedNewPassword;
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.Doctor.Find(userData.Id);
-                Entity.Password = userData.Password;
+                var UserData = GetUserByUserId(userId);
+                string encryptedOldPassword = EncryptPassword(UserData.Username, oldPassword);
+                var userData = GetUserData(UserData.Username, oldPassword);
+                if (userData == null)
+                    throw MegaException.ThrowException("رمز وارد شده اشتباه است.");
+
+                string encryptedNewPassword = EncryptPassword(userData.Username, newPassword);
+                UserData.Password = encryptedNewPassword;
+
                 return db.SaveChanges() == 1;
             }
         }
@@ -242,7 +243,7 @@ namespace PhysicManagement.Logic.Services
 
         public static string EncryptPassword(string userName, string passWord)
         {
-            return Cryptography.Encrypt( passWord);
+            return Cryptography.Encrypt(passWord);
         }
 
         public static string DecryptPassword(string userName, string encryptedPassword)
@@ -253,7 +254,7 @@ namespace PhysicManagement.Logic.Services
         #endregion
         #region Doctor section
 
-        public PagedList<Model.Doctor> GetDoctorList(string firstName, string lastName, string mobile, string code, int CurrentPage = 1, int pageSize     = 30)
+        public PagedList<Model.Doctor> GetDoctorList(string firstName, string lastName, string mobile, string code, int CurrentPage = 1, int pageSize = 30)
         {
             using (var db = new Model.PhysicManagementEntities())
             {

@@ -65,7 +65,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-     
+
         public static PhysicUser GetUserData(string userName, string password)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
@@ -148,7 +148,7 @@ namespace PhysicManagement.Logic.Services
                 Password = EncryptPassword(userName, passWord),
                 Username = userName,
                 Degree = degree,
-               
+
                 Description = description,
             };
 
@@ -204,19 +204,19 @@ namespace PhysicManagement.Logic.Services
             Cookie.ExpireCookie(AuthenticationCookieName);
             return true;
         }
-        public static bool ChangeUserPassword(string userName, string oldPassword, string newPassword)
+        public static bool ChangeUserPassword(int userId, string oldPassword, string newPassword)
         {
-            string encryptedOldPassword = EncryptPassword(userName, oldPassword);
-            var userData = GetUserDate(userName, encryptedOldPassword);
-            if (userData == null)
-                throw MegaException.ThrowException("چنین کاربری پیدا نشد.");
-
-            string encryptedNewPassword = EncryptPassword(userName, newPassword);
-            userData.Password = encryptedNewPassword;
-            using (var db = new Model.PhysicManagementEntities())
+            using (var db = new PhysicManagementEntities())
             {
-                var Entity = db.PhysicUser.Find(userData.Id);
-                Entity.Password = userData.Password;
+                var UserData = GetUserByUserId(userId);
+                string encryptedOldPassword = EncryptPassword(UserData.Username, oldPassword);
+                var userData = GetUserData(UserData.Username, oldPassword);
+                if (userData == null)
+                    throw MegaException.ThrowException("رمز وارد شده اشتباه است.");
+
+                string encryptedNewPassword = EncryptPassword(userData.Username, newPassword);
+                UserData.Password = encryptedNewPassword;
+
                 return db.SaveChanges() == 1;
             }
         }
@@ -296,24 +296,26 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.Password = EncryptPassword(entity.Username, entity.Password);
                 db.PhysicUser.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
         public bool UpdatePhysicUser(Model.PhysicUser entity)
         {
-            var vallidtion = new PhysicUserValidation.PhysicUserEntityValidation().Validate(entity);
-            if (!vallidtion.IsValid)
-                throw new ValidationException(vallidtion.Errors);
+            //var vallidtion = new PhysicUserValidation.PhysicUserEntityValidation().Validate(entity);
+            //if (!vallidtion.IsValid)
+            //    throw new ValidationException(vallidtion.Errors);
 
-            using (var db = new Model.PhysicManagementEntities())
+            using (var db = new PhysicManagementEntities())
             {
                 var Entity = db.PhysicUser.Find(entity.Id);
                 Entity.FirstName = entity.FirstName;
                 Entity.LastName = entity.LastName;
                 Entity.Username = entity.Username;
-                Entity.Password = entity.Password;
+                Entity.Password = EncryptPassword(entity.Username, entity.Password);
                 Entity.Mobile = entity.Mobile;
+                Entity.Gender = entity.Gender;
                 Entity.Description = entity.Description;
                 Entity.Gender = entity.Gender;
 
