@@ -100,6 +100,21 @@
                 }
             });
         };
+        function warning(msg) {
+            $.notify({
+                icon: "add_alert",
+                message: msg
+
+            }, {
+                type: 'warning',
+                timer: 4000,
+                placement: {
+                    from: 'bottom',
+                    align: 'right'
+                }
+            });
+        }
+
         function showNotification(from, align) {
             $.notify({
                 icon: "add_alert",

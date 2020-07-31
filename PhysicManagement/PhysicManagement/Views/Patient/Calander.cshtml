@@ -1,143 +1,164 @@
-﻿
+﻿@model List<PhysicManagement.Model.Calendar>
 @{
     ViewBag.Title = "تقویم درمان بیمار";
     Layout = "~/Views/Shared/_Layout.cshtml";
     PhysicManagement.Model.TreatmentPhase treatmentPhase = ViewBag.TreatmentPhase;
     PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecord;
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title">@treatmentPhase.PatientFirstName @treatmentPhase.PatientLastName (@treatmentPhase.Fraction جلسه)</h4>
-                    <h3>
-                        <button type="button" class="btn btn-sm bg-light text-dark" data-toggle="modal" data-target="#AddRange">
-                            افزودن به تقویم
-                        </button>
-                    </h3>
-                </div>
-                <div class="card-body table-responsive">
-                    <div class="row guid">
-                        <div class="col">
-                            <table class="table table-hover">
-                                <thead class="text-warning">
-                                    <tr>
-                                        <th>ردیف</th>
-                                        <th>نام بیمار</th>
-                                        <th>موبایل</th>
-                                        <th>کد ملی</th>
-                                        <th>وضعیت</th>
-                                        <th>تاریخ ثبت</th>
-                                        <th style="width:50px;">امکانات</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        int Index = 1;
-                                        foreach (var patient in Model)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            امکانات
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-left">
-                                                            <a class="dropdown-item" href="Modify/@patient.Id">ویرایش</a>
-                                                            @*<a class="dropdown-item" href="Modify/@patient.Id">حذف</a>*@
-                                                            <div class="dropdown-divider"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">@treatmentPhase.PatientFirstName @treatmentPhase.PatientLastName (@treatmentPhase.Fraction جلسه)</h4>
+                        <h3>
+                            <button type="button" class="btn btn-sm bg-light text-dark" data-toggle="modal" data-target="#AddRange">
+                                افزودن به تقویم
+                            </button>
+                        </h3>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="row guid">
+                            <div class="col">
+                                <table class="table table-hover">
+                                    <thead class="text-warning">
+                                        <tr>
+                                            <th>ردیف</th>
+                                            <th>تاریخ </th>
+                                            <th>نام دکتر</th>
+                                            <th>وضعیت</th>
+                                            <th style="width:50px;">امکانات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int Index = 1;
+                                            foreach (PhysicManagement.Model.Calendar calendarItem in Model)
+                                            {
+                                                <tr>
+                                                    <td>@Index</td>
+                                                    <td>@calendarItem.PersianDate</td>
+                                                    <td>@calendarItem.DoctorFullName</td>
+                                                    <td>@calendarItem.AttendanceStatusId</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                امکانات
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-left">
+                                                                <a class="dropdown-item" onclick="itemId=@calendarItem.Id;" data-toggle="modal" data-target="#ChangeStatusModal">ویرایش وضعیت</a>
+                                                                <a class="dropdown-item" onclick="itemId=@calendarItem.Id;" data-toggle="modal" data-target="#DeleteFromCal">حذف</a>
+                                                                <div class="dropdown-divider"></div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            Index++;
+                                                    </td>
+                                                </tr>
+                                                Index++;
+                                            }
+
                                         }
 
-                                    }
 
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                </tbody>
-                            </table>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row seven-cols">
+        <div class="row seven-cols">
 
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title">تقویم کاربر</h4>
-                </div>
-                <div class="card-body table-responsive">
-                    <div class="row guid">
-                        @for (int i = 0; i < 31; i++)
-                        {
-                            DateTime currentDate = DateTime.Now.AddDays(i);
-                            string JalaliDate = PhysicManagement.Common.DateUtility.GetPersianDateTime(currentDate);
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">تقویم کاربر</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="row guid">
+                            @for (int i = 0; i < 31; i++)
+                            {
+                                DateTime currentDate = DateTime.Now.AddDays(i);
+                                string JalaliDate = PhysicManagement.Common.DateUtility.GetPersianDateTime(currentDate);
 
-                            <div class="col-md-1">
-                                <div class="card card-stats active">
-                                    <div class="card-header card-header-warning card-header-icon ">
-                                        <p class="card-category">@PhysicManagement.Common.DateUtility.PersionDayOfWeek(currentDate)</p>
-                                        <h3 class="card-title">
-                                            @PhysicManagement.Common.DateUtility.GetPersianDay(currentDate)
-                                            <small>
-                                                @PhysicManagement.Common.DateUtility.GetPersianMonthName(currentDate)
-                                            </small>
-                                        </h3>
-                                    </div>
-                                    <div class="card-footer ltr">
-                                        <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
+                                <div class="col-md-1">
+                                    <div class="card card-stats active">
+                                        <div class="card-header card-header-warning card-header-icon ">
+                                            <p class="card-category">@PhysicManagement.Common.DateUtility.PersionDayOfWeek(currentDate)</p>
+                                            <h3 class="card-title">
+                                                @PhysicManagement.Common.DateUtility.GetPersianDay(currentDate)
+                                                <small>
+                                                    @PhysicManagement.Common.DateUtility.GetPersianMonthName(currentDate)
+                                                </small>
+                                            </h3>
+                                        </div>
+                                        <div class="card-footer ltr">
+                                            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تغییر وضعیت</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">راهنما</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="row guid">
+                            <div class="col-lg-2 col-md-2 pe">Pending</div>
+                            <div class="col-lg-2 col-md-2 av">Available</div>
+                            <div class="col-lg-2 col-md-2 in">In Progress</div>
+                            <div class="col-lg-2 col-md-2 pa">Partially Completed</div>
+                            <div class="col-lg-2 col-md-2 co">Complete</div>
+                            <div class="col-lg-2 col-md-2 ca">Cancelled</div>
+                            <div class="col-lg-2 col-md-2 al">Almost Due</div>
+                            <div class="col-lg-2 col-md-2 ov">Overdue</div>
+                            <div class="col-lg-2 col-md-2 un">Unscheduled</div>
+                            <div class="col-lg-2 col-md-2 de">Decision</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-    </div>
-    <div class="row">
-        <div class="col-lg-12 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title">راهنما</h4>
-                </div>
-                <div class="card-body table-responsive">
-                    <div class="row guid">
-                        <div class="col-lg-2 col-md-2 pe">Pending</div>
-                        <div class="col-lg-2 col-md-2 av">Available</div>
-                        <div class="col-lg-2 col-md-2 in">In Progress</div>
-                        <div class="col-lg-2 col-md-2 pa">Partially Completed</div>
-                        <div class="col-lg-2 col-md-2 co">Complete</div>
-                        <div class="col-lg-2 col-md-2 ca">Cancelled</div>
-                        <div class="col-lg-2 col-md-2 al">Almost Due</div>
-                        <div class="col-lg-2 col-md-2 ov">Overdue</div>
-                        <div class="col-lg-2 col-md-2 un">Unscheduled</div>
-                        <div class="col-lg-2 col-md-2 de">Decision</div>
+        <!-- DeleteFromCal Modal -->
+        <div class="modal fade" id="DeleteFromCal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">حذف از تقویم</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>آیا تمایل به حذف این تاریخ دارید؟</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div></div></button>
+                        <button type="button" onclick="deleteFromCalendar()" class="btn btn-primary">حذف</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Add Range Modal -->
-    <div class="modal fade" id="AddRange" tabindex="-1" role="dialog" aria-labelledby="AddRange" style="display: none;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تقویم بیمار</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
+        <!-- Add Range Modal -->
+        <div class="modal fade" id="AddRange" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">تقویم بیمار</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
                         <input type="hidden" name="PhaseId" value="@ViewBag.TreatmentPhaseId" />
                         <div class="form-group bmd-form-group">
@@ -160,47 +181,58 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-                        <button type="button"  onclick="SetRange()" class="btn btn-primary">ثبت در تقویم</button>
+                        <button type="button" onclick="SetRange()" class="btn btn-primary">ثبت در تقویم</button>
                     </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تغییر وضعیت بیمار</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group dropdown-toggle">
-                        <select class="selectpicker" data-style="btn btn-primary btn-round" title="">
-                            <option selected="">لطفا وضعیت بیمار را انتخاب نمایید</option>
-                            <option value="1">Pending</option>
-                            <option value="2">Available</option>
-                            <option value="3">In Progress</option>
-                            <option value="4">Partially Completed</option>
-                            <option value="4">Complete</option>
-                            <option value="4">Cancelled</option>
-                            <option value="4">Almost Due</option>
-                            <option value="4">Overdue</option>
-                            <option value="4">Unscheduled</option>
-                            <option value="4">Decision</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div></div></button>
-                    <button type="button" class="btn btn-primary">تغییر</button>
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="ChangeStatusModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">تغییر وضعیت بیمار</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group dropdown-toggle">
+                            <select class="selectpicker" data-style="btn btn-primary btn-round" title="">
+                                <option selected="">لطفا وضعیت بیمار را انتخاب نمایید</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Available</option>
+                                <option value="3">In Progress</option>
+                                <option value="4">Partially Completed</option>
+                                <option value="4">Complete</option>
+                                <option value="4">Cancelled</option>
+                                <option value="4">Almost Due</option>
+                                <option value="4">Overdue</option>
+                                <option value="4">Unscheduled</option>
+                                <option value="4">Decision</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن<div class="ripple-container"><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div><div class="ripple-decorator ripple-on ripple-out" style="left: 44.5781px; top: 12px; background-color: rgb(51, 51, 51); transform: scale(11.1074);"></div></div></button>
+                        <button type="button" class="btn btn-primary">تغییر</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 <script type="text/javascript">
+    var itemId = null;
+    function deleteFromCalendar() {
+        $.post('/Calander/DeleteFromCalendar',
+            { mrId: @medicalRecord.Id, phaseId: @treatmentPhase.Id, id: itemId },
+            function (d) {
+            if (d["Status"] == 200) {window.location.reload();}
+            else { warning(d["Messages"][0]); }
+            $('#AddRange').modal('hide');
+            }
+        );
+    }
     function SetRange() {
         $.post('/Calander/SetCalanderForMedicalRecordAndPhase', {
             mrId: @medicalRecord.Id,
@@ -212,8 +244,9 @@
                 window.location.reload();
             }
             else {
-                alert(d["Messages"][0]);
-            }
+                warning(d["Messages"][0]);
+                }
+                $('#AddRange').modal('hide');
         });
     }
 </script>

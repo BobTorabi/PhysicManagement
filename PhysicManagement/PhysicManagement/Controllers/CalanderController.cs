@@ -49,7 +49,7 @@ namespace PhysicManagement.Controllers
 
                             if (CalandersData.Count > 0)
                             {
-                                Result.AddMessage("تقدیم قبلا مقدار دهی شده است.ابتدا باید تمام مقادیر قبلی را پاک کنید.");
+                                Result.AddMessage("تقویم قبلا مقدار دهی شده است.ابتدا باید تمام مقادیر قبلی را پاک کنید.");
                             }
                             else
                             {
@@ -101,6 +101,11 @@ namespace PhysicManagement.Controllers
             }
 
             return Json(Result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult DeleteFromCalendar(long mrId, int phaseId, long id) {
+            return Json(new { },JsonRequestBehavior.AllowGet);
         }
     }
 }
