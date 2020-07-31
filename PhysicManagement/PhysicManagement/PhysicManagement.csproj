@@ -320,6 +320,7 @@
     <Content Include="Views\Patient\Calander.cshtml" />
     <Content Include="Views\Patient\CalanderChoosePhase.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="Views\Home\CalculatePrint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
