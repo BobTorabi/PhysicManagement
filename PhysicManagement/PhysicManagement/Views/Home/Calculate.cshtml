@@ -7,7 +7,7 @@
 }
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 phide">
             <div class="card">
                 <div class="card-header card-header-rose card-header-icon">
                     <div class="card-icon">
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 phide">
             <div class="card">
                 <div class="card-header card-header-rose card-header-icon">
                     <div class="card-icon">
@@ -92,7 +92,14 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-hover">
-                        <thead class="text-warning"><tr><th>کد</th><th>شرح کد</th><th> ارزش نسبی</th><th>تعداد انجام خدمت</th></tr></thead>
+                        <thead class="text-warning">
+                            <tr>
+                                <th>کد</th>
+                                <th>شرح کد</th>
+                                <th> ارزش نسبی</th>
+                                <th class="phide">تعداد انجام خدمت</th>
+                            </tr>
+                        </thead>
                         <tbody id="Data"></tbody>
                     </table>
                     <div class="col-md-12">
@@ -118,12 +125,18 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-success" onclick="gotoPrint()">پرینت</button>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    function gotoPrint() {
+        var kfaktor = parseInt($('[name=KFactor]:checked').val());
+        var tcId = $('input[name=treatmentCategories]:checked').val();
+        window.open('CalculatePrint?kItem=' + kfaktor + '&tcId=' + tcId);
+    }
     function getData() {
         $('#Data').empty();
         $.getJSON('../TreatmentCategory/getTreatmentCategoryServices', { id: $('[name="treatmentCategories"]:checked').val() }, function (d) {
@@ -133,7 +146,7 @@
                     <td>`+ d[i].Code + `</td>
                     <td>`+ d[i].Title + `</td>
                     <td>`+ d[i].RelativeValue + `</td>
-                    <td>
+                    <td class="phide">
                         <div class="form-group bmd-form-group">
                             <input type="text" class="form-control rv" name="code_`+ d[i].Code + `" data-rv='` + d[i].RelativeValue + `' value='1'>
                         </div>

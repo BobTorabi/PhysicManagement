@@ -33,7 +33,7 @@ namespace PhysicManagement.Controllers
             }
             else
             {
-                var Entity = Service.GetTreatmentCategoryById(id.GetValueOrDefault());
+                Model.TreatmentCategory Entity = Service.GetTreatmentCategoryById(id.GetValueOrDefault());
                 return View(Entity);
             }
 
@@ -78,9 +78,8 @@ namespace PhysicManagement.Controllers
 
         public JsonResult getTreatmentCategoryServices(int id)
         {
-            var Data =  
-                Logic.Services
-                .TreatmentCategoryService.GetTreatmentCategoryServiceByTreatmentCategoryId(id)
+            var Data =
+                Service.GetTreatmentCategoryServiceByTreatmentCategoryId(id)
                 .Select(x=>new {x.Id,x.Title,x.RelativeValue,x.Code }).ToList();
 
             return Json(Data, JsonRequestBehavior.AllowGet);

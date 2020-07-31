@@ -25,7 +25,13 @@ namespace PhysicManagement.Logic.Services
                 return db.KFactor.Where(x => x.Year == year).FirstOrDefault();
             }
         }
-
+        public TreatmentCategory GetTreatmentCategoryById(int id)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.TreatmentCategory.Find(id);
+            }
+        }
         public static List<Model.TreatmentCategory> GetAllTreatmentCategory()
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -33,7 +39,8 @@ namespace PhysicManagement.Logic.Services
                 return db.TreatmentCategory.ToList();
             }
         }
-        public static List<Model.TreatmentCategoryService>
+
+        public List<Model.TreatmentCategoryService>
             GetTreatmentCategoryServiceByTreatmentCategoryId(int TreatmentCategoryId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -52,14 +59,7 @@ namespace PhysicManagement.Logic.Services
                 return db.TreatmentCategory.Include("TreatmentCategoryService").OrderBy(x => x.Title).ToList();
             }
         }
-        public Model.TreatmentCategory GetTreatmentCategoryById(int entityId)
-        {
-            using (var db = new Model.PhysicManagementEntities())
-            {
-                var Entity = db.TreatmentCategory.Find(entityId);
-                return Entity;
-            }
-        }
+       
         public bool AddTreatmentCategory(Model.TreatmentCategory entity)
         {
             var validation = new TreatmentCategoryValidation.TreatmentCategoryEntityValidate().Validate(entity);

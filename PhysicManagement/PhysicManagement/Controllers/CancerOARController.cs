@@ -62,6 +62,7 @@ namespace PhysicManagement.Controllers
             var CancerId =  Service.GetCancerOARById(id).CancerId;
             var cancerOAR = Service.DeleteCancerOAR(id);
             return Redirect("/CancerOAR/list/" + CancerId);
+
         }
 
         public JsonResult GetCancerOARDataByCancerId(int cancerId,long? medicalRecordId) {
