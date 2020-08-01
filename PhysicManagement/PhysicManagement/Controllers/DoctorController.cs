@@ -37,7 +37,11 @@ namespace PhysicManagement.Controllers
             else
             {
                 var Entity = Service.GetDoctorById(id.GetValueOrDefault());
-                Entity.Password = DoctorService.DecryptPassword(Entity.Username, Entity.Password);
+                try
+                {
+                    Entity.Password = DoctorService.DecryptPassword(Entity.Username, Entity.Password);
+                }
+                catch { }
                 return View(Entity);
             }
 
