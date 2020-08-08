@@ -18,14 +18,15 @@
                 <table class="table data table-hover center table-striped">
                     <thead class="text-warning">
                         <tr>
+                            <th>Organ</th>
+                            <th>Tolerance</th>
 
                             @foreach (var item in Model)
                             {
                                 <th>Evaluation(P@(item.PhaseNumber))</th>
                                 <th width="140">Planned Dose (P@(item.PhaseNumber))</th>
                             }
-                            <th>Tolerance</th>
-                            <th>Organ</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -36,35 +37,35 @@
                             {
                                 var HasOARInDetail = PHDetails.Count(x => x.CancerOARId == CancerOAR.Id) != 0;
 
-                                <tr>
+                                                <tr>
+                                                    <td><div class="form-group">@CancerOAR.OrganTitle</div></td>
+                                                    <td><div class="form-group">Max Dose &lt; @CancerOAR.Tolerance</div></td>
 
-                                    @foreach (var Phase in Model)
-                                    {
-                                        var PHDetail = PHDetails.Where(x => x.TreatmentPhaseId == Phase.Id && x.CancerOARId == CancerOAR.Id).FirstOrDefault();
-                                        <td>
-                                            @if (HasOARInDetail)
-                                            {
-                                                <div class="form-group bmd-form-group">
-                                                    <label class="bmd-label-floating"></label>
-                                                    <input type="text" value="@PHDetail.PlannedDose" class="form-control eval" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="evaluation-@Phase.Id">
-                                                </div>
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (HasOARInDetail)
-                                            {
-                                                <div class="form-group bmd-form-group">
-                                                    <label class="bmd-label-floating"></label>
-                                                    <input type="text" value="@PHDetail.Evaluation" class="form-control dose" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="plannedDose-@Phase.Id">
-                                                </div>
-                                            }
-                                        </td>
-                                    }
+                                                    @foreach (var Phase in Model)
+                                                    {
+                                                        var PHDetail = PHDetails.Where(x => x.TreatmentPhaseId == Phase.Id && x.CancerOARId == CancerOAR.Id).FirstOrDefault();
+                                                        <td>
+                                                            @if (HasOARInDetail)
+                                                            {
+                                                                <div class="form-group bmd-form-group">
+                                                                    <label class="bmd-label-floating"></label>
+                                                                    <input type="text" value="@PHDetail.PlannedDose" class="form-control eval" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="evaluation-@Phase.Id">
+                                                                </div>
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            @if (HasOARInDetail)
+                                                            {
+                                                                <div class="form-group bmd-form-group">
+                                                                    <label class="bmd-label-floating"></label>
+                                                                    <input type="text" value="@PHDetail.Evaluation" class="form-control dose" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="plannedDose-@Phase.Id">
+                                                                </div>
+                                                            }
+                                                        </td>
+                                                    }
 
 
-                                    <td><div class="form-group">Max Dose &lt; @CancerOAR.Tolerance</div></td>
-                                    <td><div class="form-group">@CancerOAR.OrganTitle</div></td>
-                                </tr>
+                                                </tr>
                             }
                         }
 

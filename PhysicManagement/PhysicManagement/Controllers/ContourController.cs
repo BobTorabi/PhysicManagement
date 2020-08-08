@@ -26,7 +26,7 @@ namespace PhysicManagement.Controllers
         /// <param name="lastName">نام خانوادگی بیمار</param>
         /// <param name="mobile">شماره موبایل بیمار</param>
         /// <param name="nationalCode">کد ملی بیمار</param>
-        /// <param name="systemCode">شماره پرونده</param>
+        /// <param name="systemCode">شماره پرونده سیستم</param>
         /// <param name="code">کد بیمار</param>
         /// <returns></returns>
         public ActionResult ContourApprove(string firstName, string lastName, string mobile, string nationalCode, string systemCode, string code)
