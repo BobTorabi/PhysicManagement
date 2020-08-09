@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <table class="table table-hover">
                                                     <thead class="text-warning">
                                                         <tr><th>لیست ارگان های هدف</th><th>دز تجویز شده (Prescribed dose Gy)</th></tr>
@@ -88,16 +88,38 @@
                                                             <tr>
                                                                 <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
                                                                 <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
+
                                                             </tr>
                                                         }
-
-
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            
+                                            <div class="col-md-6">
+                                                <table class="table table-hover">
+                                                    <thead class="text-warning">
+                                                        <tr><th>تعداد جلسات درمان(فرکشن)</th><th>انتخاب دستگاه</th></tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input type="text" id="fraction_@Phase.PhaseNumber" data-fraction="" value="" class="form-control"></td>
+                                                            <td>
+                                                                <div class="form-group col-md-12 bmd-form-group">
+                                                                    <select data-device="" name="device_phase_@Phase.PhaseNumber" class="form-control">
+                                                                        <option value="" disabled selected>انتخاب دستگاه</option>
+                                                                        @foreach (var item in TreatmentService)
+                                                                        {
+                                                                            <option value="@item.Id">@item.Title</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="row">
+                                        </div>
+                                        @*<div class="row">
                                             <div class="form-group col-md-6 bmd-form-group">
                                                 <label for="fraction_@Phase.PhaseNumber" class="bmd-label-floating">تعداد جلسات درمان(فرکشن)</label>
                                                 <input type="text" id="fraction_@Phase.PhaseNumber" data-fraction="" value="" class="form-control">
@@ -111,9 +133,23 @@
                                                     }
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>*@
                                     </div>
-                                </div>
+                                        @*<div class="row">
+                                            <div class="form-group col-md-6 bmd-form-group">
+                                                <label for="fraction_@Phase.PhaseNumber" class="bmd-label-floating">تعداد جلسات درمان(فرکشن)</label>
+                                                <input type="text" id="fraction_@Phase.PhaseNumber" data-fraction="" value="" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-6 bmd-form-group">
+                                                <select data-device="" name="device_phase_@Phase.PhaseNumber" class="form-control">
+                                                    <option value="" disabled selected>انتخاب دستگاه</option>
+                                                    @foreach (var item in TreatmentService)
+                                                    {
+                                                        <option value="@item.Id">@item.Title</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>*@
                                 Index++;
                             }
                         </div>
