@@ -77,19 +77,22 @@
                             }
                             @foreach (var medicalRecord in Model.Records)
                             {
-                                <tr data-id="@medicalRecord.Id">
-                                    <td>@Index</td>
-                                    <td>@medicalRecord.Patient.FirstName @medicalRecord.Patient.LastName</td>
-                                    <td>@medicalRecord.Patient.Mobile</td>
-                                    <td>@medicalRecord.Patient.NationalCode</td>
-                                    <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
-                                    <td>@medicalRecord.Patient.Code</td>
-                                    <td>@medicalRecord.SystemCode</td>
-                                    <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
-                                    <td class="text-center">
-                                        <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
-                                    </td>
-                                </tr>
+                            <tr data-id="@medicalRecord.Id">
+                                <td>@Index</td>
+                                <td>@medicalRecord.Patient.FirstName @medicalRecord.Patient.LastName</td>
+                                <td>@medicalRecord.Patient.Mobile</td>
+                                <td>@medicalRecord.Patient.NationalCode</td>
+                                <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
+                                <td>@medicalRecord.Patient.Code</td>
+                                <td>@medicalRecord.SystemCode</td>
+                                <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
+                                <td class="text-center">
+                                    <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
+                                </td>
+                                <td class="text-center">
+                                    <a href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">اطلاعات تصویر برداری ندارد</a>
+                                </td>
+                            </tr>
                             }
 
 
