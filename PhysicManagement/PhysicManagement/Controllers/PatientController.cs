@@ -16,6 +16,7 @@ namespace PhysicManagement.Controllers
         readonly ContourService ContourService;
         readonly TreatmentService TreatmentService;
         readonly CalendarService CalendarService;
+        readonly DoctorService DoctorService;
 
 
         public PatientController()
@@ -26,6 +27,7 @@ namespace PhysicManagement.Controllers
             ContourService = new ContourService();
             TreatmentService = new TreatmentService();
             CalendarService = new CalendarService();
+            DoctorService = new DoctorService();
         }
         public ActionResult Index()
         {
@@ -43,20 +45,23 @@ namespace PhysicManagement.Controllers
         /// <param name="mrId"></param>
         /// <param name="phaseId"></param>
         /// <returns></returns>
-        public ActionResult Calander(long? mrId,long? phaseId) {
+        public ActionResult Calander(long? mrId, long? phaseId)
+        {
             if (mrId.HasValue == false)
             {
                 // در صورتی که پرونده قابل شناسایی نباشد به لیست تائید پلن شده ها بر میگردیم تا انتخاب پرونده انجام شود
                 return Redirect("~/treatmentPhase/ListForPhysicist");
             }
-            else {
+            else
+            {
                 long MedicalRecordId = mrId.GetValueOrDefault();
                 var MedicalRecordEntity = MedicalService.GetMedicalRecordById(MedicalRecordId);
                 if (!phaseId.HasValue || MedicalRecordEntity == null)
                 {
                     return Redirect("/Patient/TreatmentData?mrId=" + MedicalRecordId);
                 }
-                else {
+                else
+                {
                     ViewBag.MedicalRecord = MedicalRecordEntity;
                     ViewBag.TreatmentPhase = TreatmentService.GetTreatmentPhaseById(phaseId.GetValueOrDefault());
                     ViewBag.TreatmentPhaseId = phaseId;
@@ -64,11 +69,12 @@ namespace PhysicManagement.Controllers
                     return View(CalendarData);
                 }
 
-                
+
             }
-            
+
         }
-        public ActionResult CalanderChoosePhase(int mrId) {
+        public ActionResult CalanderChoosePhase(int mrId)
+        {
             var MedicalRecordEntity = MedicalService.GetMedicalRecordById(mrId);
             var TreatmentPhaseData = TreatmentService.GetTreatmentPhasesByMedicalRecordId(MedicalRecordEntity.Id);
             ViewBag.MedicalRecord = MedicalRecordEntity;
@@ -83,14 +89,15 @@ namespace PhysicManagement.Controllers
             return View(ModelData);
         }
 
-        public ActionResult ListOfTreatmentPlans(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
+        public ActionResult ListOfTreatmentPlans
+            (string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
             PagedList<Model.Patient> Patient =
                 Service
                 .GetPatientListWithFilters
-                (firstName, lastName, mobile, nationalCode, caseCode, code, CurrentPage, ViewBag.PageSize);
+                (firstName, lastName, mobile, nationalCode, caseCode, code, null, null, null, null, CurrentPage, ViewBag.PageSize);
 
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
@@ -208,7 +215,7 @@ namespace PhysicManagement.Controllers
                         CancerOARTolerance = CancerOAR.Tolerance,
                         CancerTargetOptimum = "",
                         CancerTargetId = null,
-                        CancerTargetTitle ="",
+                        CancerTargetTitle = "",
                         Description = "",
                         PresciptionHasApproved = null,
                         MedicalRecordId = MedicalRecordData.Id,
@@ -222,21 +229,33 @@ namespace PhysicManagement.Controllers
                         AcceptedDoctorUserId = UserData.UserId,
                         DoctorDescription = ""
                     });
-                    
+
                 }
-                
+
             }
             MedicalRecordData.TreatmentDeviceIsQueued = false;
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return Redirect("~/TreatmentPhase/List");
         }
         public ActionResult
-            PatientSearch(string firstName, string lastName, string mobile, string nationalCode, string caseCode, string code,int? lastDaysReport)
+            PatientSearch
+            (string firstName, string lastName, string mobile, string nationalCode,
+            string caseCode, string code, int? lastDaysReport,
+            bool? ContourState, int? DoctorId, string RecieptDate
+            )
         {
+            DateTime? _RecieptDate = null;
+            if (!string.IsNullOrEmpty(RecieptDate))
+            {
+                _RecieptDate = Common.DateUtility.TryGetDateTime(RecieptDate, Common.DateUtility.TimeFormat.StartOfDay);
+            }
+            var Doctors = DoctorService.GetIdNameFromDoctorList();
+            ViewBag.DoctorId = new SelectList(Doctors, "Id", "Name", DoctorId);
             int CurrentPage = int.Parse(Request["p"] ?? "1");
-            ViewBag.PageSize = 5;
+            ViewBag.PageSize = 25;
             PagedList<Model.Patient> Patient =
-                Service.GetPatientListWithFilters(firstName, lastName, mobile, nationalCode, caseCode, code,lastDaysReport, CurrentPage, ViewBag.PageSize);
+                Service.GetPatientListWithFilters
+                (firstName, lastName, mobile, nationalCode, caseCode, code, lastDaysReport, ContourState, DoctorId, _RecieptDate, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = Patient.TotalRecords;
             return View(Patient);
         }
@@ -282,9 +301,11 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description)
+        public ActionResult RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description, bool isIranian)
         {
-            var PatientObject = Service.RegisterPatient(patientFirstName, patientLastName, nationalCode, doctorId, mobile, description);
+            var PatientObject = 
+                Service.RegisterPatient
+                (patientFirstName, patientLastName, nationalCode, doctorId, mobile, description, isIranian);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)
@@ -313,11 +334,11 @@ namespace PhysicManagement.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult PatientWithNoCTScanOrMRI(string firstName, string lastName, string mobile,
-            string nationalCode, string systemCode, string code,int? lastDaysReport)
+            string nationalCode, string systemCode, string code, int? lastDaysReport)
         {
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
-            PagedList<Model.MedicalRecord> MedicalRecord = 
+            PagedList<Model.MedicalRecord> MedicalRecord =
                 Service.
                 GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
             nationalCode, systemCode, code, lastDaysReport, CurrentPage, ViewBag.PageSize);
@@ -332,7 +353,7 @@ namespace PhysicManagement.Controllers
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code,int? lastDaysReport)
+        public ActionResult PatientWithNoThreatmentPlan(string firstName, string lastName, string nationalCode, string mobile, string systemCode, string code, int? lastDaysReport)
         {
             List<Model.MedicalRecord> Patient =
                 Service.

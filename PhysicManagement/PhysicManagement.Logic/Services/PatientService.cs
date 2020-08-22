@@ -284,7 +284,7 @@ namespace PhysicManagement.Logic.Services
 
         }
         public ViewModels.PagedList<Model.Patient> GetPatientListWithFilters(string firstName, string lastName, string mobile,
-            string nationalCode, string systemCode, string code,int? lastDaysReport, int CurrentPage = 1, int pageSize = 30)
+            string nationalCode, string systemCode, string code,int? lastDaysReport,bool? ContourState,int? DoctorId, DateTime? RecieptDate, int CurrentPage = 1, int pageSize = 30)
         {
 
             using (var db = new Model.PhysicManagementEntities())
@@ -300,6 +300,30 @@ namespace PhysicManagement.Logic.Services
                 {
                     firstName = firstName.Trim().ToPersian();
                     QueryablePatient = QueryablePatient.Where(x => x.FirstName.Contains(firstName));
+                }
+                if (DoctorId.HasValue)
+                {
+                    int _DoctorId = DoctorId.Value;
+                    QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(t=>t.DoctorId == DoctorId));
+                }
+                if (ContourState.HasValue)
+                {
+                    bool _ContourState = ContourState.Value;
+                    if (_ContourState)
+                    {
+                        QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(t => t.ContourAcceptDate != null));
+                    }
+                    else
+                    {
+                        QueryablePatient = QueryablePatient.Where(x => x.MedicalRecord.Any(t => t.ContourAcceptDate == null));
+                    }
+                }
+                if (RecieptDate.HasValue)
+                {
+                    DateTime _RecieptDate = RecieptDate.Value;
+                    DateTime _RecieptDateEnd = _RecieptDate.AddDays(1).AddMilliseconds(-1);
+                    QueryablePatient = QueryablePatient.Where(x => x.RegisterDate >= _RecieptDate && x.RegisterDate <= _RecieptDateEnd);
+
                 }
                 if (!string.IsNullOrEmpty(lastName))
                 {
@@ -473,11 +497,12 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description)
+        public Model.Patient RegisterPatient(string patientFirstName, string patientLastName, string nationalCode, int doctorId, string mobile, string description,bool isIranian)
         {
             // بررسی وجود بیمار با استفاده از کدملی
             var PatientObject = GetPatientByNationalCode(nationalCode);
             // چنین بیماری از قبل وجو نداشته و فرایند ثبت جدید باید انجام شود
+            string RandomNo = FileID.ID(10).ToString();
             if (PatientObject == null)
             {
                 bool IsAffected = AddPatient(new Model.Patient
@@ -489,22 +514,23 @@ namespace PhysicManagement.Logic.Services
                     GenderIsMale = null,
                     LastName = patientLastName,
                     Mobile = mobile,
-                    NationalCode = nationalCode,
+                    NationalCode = (isIranian ? nationalCode: RandomNo),
                     Province = "",
-                    RegisterDate = System.DateTime.Now,
-
-
+                    RegisterDate = DateTime.Now,
+                    IsIranian = isIranian,
+                    IsDeleted = false
                 });
 
                 if (!IsAffected)
                     throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
             }
-            PatientObject = GetPatientByNationalCode(nationalCode);
+            PatientObject = GetPatientByNationalCode((isIranian ? nationalCode : RandomNo));
 
             Model.Doctor DoctorObject = new DoctorService().GetDoctorById(doctorId);
             MedicalRecordService medicalRecordService = new MedicalRecordService();
             var IsMedicalRecordInserted = medicalRecordService.AddMedicalRecord(new Model.MedicalRecord
             {
+                
                 DoctorId = doctorId,
                 DoctorFirstName = DoctorObject.FirstName,
                 DoctorLastName = DoctorObject.LastName,

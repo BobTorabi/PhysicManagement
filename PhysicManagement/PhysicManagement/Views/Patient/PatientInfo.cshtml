@@ -14,45 +14,52 @@
                 <h4 class="card-title">@ViewBag.Title</h4>
             </div>
             <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">نام </label>
-                                <div class="form-control">@Model.FirstName</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">نام خانوادگی</label>
-                                <div class="form-control">@Model.LastName</div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">کد ملی</label>
-                                <div class="form-control">@Model.NationalCode</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">موبایل </label>
-                                <div class="form-control">@Model.Mobile</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">شناسه بیمار</label>
-                                <div class="form-control">@Model.Code</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">تاریخ ثبت</label>
-                                <div class="form-control">@Html.DisplayForDate(Model.RegisterDate)</div>
-                            </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">نام </label>
+                            <div class="form-control">@Model.FirstName</div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">نام خانوادگی</label>
+                            <div class="form-control">@Model.LastName</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">موبایل </label>
+                            <div class="form-control">@Model.Mobile</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">آیا ایرانیست؟</label>
+                            <div class="form-control">@(Model.IsIranian?"بلی":"خیر")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">کد ملی</label>
+                            <div class="form-control">@Model.NationalCode</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">شناسه بیمار</label>
+                            <div class="form-control">@Model.Code</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="bmd-label-floating">تاریخ ثبت</label>
+                            <div class="form-control">@Html.DisplayForDate(Model.RegisterDate)</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <table class="table table-hover">
                         <thead class="text-warning">

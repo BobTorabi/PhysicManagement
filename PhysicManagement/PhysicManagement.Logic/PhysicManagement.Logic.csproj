@@ -43,6 +43,15 @@
     <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.8.6.2\lib\net45\FluentValidation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NikSms.Library.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NikSms.Library.Net.1.0.3\lib\NikSms.Library.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="SmsIrRestful, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SmsIrRestful.1.1.3\lib\SmsIrRestful.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ComponentModel.Annotations.4.4.1\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
@@ -70,6 +79,7 @@
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />
+    <Compile Include="Services\SMSWebService.cs" />
     <Compile Include="Services\TreatmentCategoryService.cs" />
     <Compile Include="Services\TreatmentService.cs" />
     <Compile Include="Services\UserService.cs" />

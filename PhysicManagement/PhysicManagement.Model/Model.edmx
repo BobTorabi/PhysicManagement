@@ -215,6 +215,8 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="RegisterDate" Type="datetime" />
+          <Property Name="IsIranian" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanHistory">
           <Key>
@@ -616,7 +618,6 @@
           <EntitySet Name="Resident" EntityType="PhysicManagementModel.Resident" />
           <EntitySet Name="TreatmentDevice" EntityType="PhysicManagementModel.TreatmentDevice" />
           <EntitySet Name="User" EntityType="PhysicManagementModel.User" />
-          <EntitySet Name="Patient" EntityType="PhysicManagementModel.Patient" />
           <EntitySet Name="CancerTarget" EntityType="PhysicManagementModel.CancerTarget" />
           <AssociationSet Name="FK_CancerTargets_Cancer" Association="PhysicManagementModel.FK_CancerTargets_Cancer">
             <End Role="Cancer" EntitySet="Cancer" />
@@ -637,10 +638,6 @@
             <End Role="Contour" EntitySet="Contour" />
             <End Role="ContourDetails" EntitySet="ContourDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_MedicalRecord_MedicalRecord" Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord">
-            <End Role="Patient" EntitySet="Patient" />
-            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
-          </AssociationSet>
           <EntitySet Name="KFactor" EntityType="PhysicManagementModel.KFactor" />
           <EntitySet Name="TreatmentCategory" EntityType="PhysicManagementModel.TreatmentCategory" />
           <EntitySet Name="TreatmentCategoryService" EntityType="PhysicManagementModel.TreatmentCategoryService" />
@@ -659,6 +656,11 @@
           <EntitySet Name="PhysicTreatmentPlanHistory" EntityType="PhysicManagementModel.PhysicTreatmentPlanHistory" />
           <EntitySet Name="TreatmentPhase" EntityType="PhysicManagementModel.TreatmentPhase" />
           <EntitySet Name="TreatmentPhaseDetail" EntityType="PhysicManagementModel.TreatmentPhaseDetail" />
+          <EntitySet Name="Patient" EntityType="PhysicManagementModel.Patient" />
+          <AssociationSet Name="FK_MedicalRecord_MedicalRecord" Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PhysicUser">
           <Key>
@@ -716,23 +718,6 @@
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Patient">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="NationalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GenderIsMale" Type="Boolean" />
-          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MedicalRecord" Relationship="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" FromRole="Patient" ToRole="MedicalRecord" />
         </EntityType>
         <EntityType Name="CancerTarget">
           <Key>
@@ -869,18 +854,6 @@
             </Principal>
             <Dependent Role="ContourDetails">
               <PropertyRef Name="ContourId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MedicalRecord_MedicalRecord">
-          <End Type="PhysicManagementModel.Patient" Role="Patient" Multiplicity="1" />
-          <End Type="PhysicManagementModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Patient">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MedicalRecord">
-              <PropertyRef Name="PatientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1075,6 +1048,37 @@
           <Property Name="AcceptedDoctorFullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="DoctorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GenderIsMale" Type="Boolean" />
+          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegisterDate" Type="DateTime" Precision="3" />
+          <Property Name="IsIranian" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MedicalRecord" Relationship="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" FromRole="Patient" ToRole="MedicalRecord" />
+        </EntityType>
+        <Association Name="FK_MedicalRecord_MedicalRecord">
+          <End Type="PhysicManagementModel.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="PhysicManagementModel.MedicalRecord" Role="MedicalRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MedicalRecord">
+              <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1195,23 +1199,6 @@
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Patient">
-            <EntityTypeMapping TypeName="PhysicManagementModel.Patient">
-              <MappingFragment StoreEntitySet="Patient">
-                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="GenderIsMale" ColumnName="GenderIsMale" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1472,6 +1459,25 @@
                 <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
                 <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="TreatmentPhaseId" ColumnName="TreatmentPhaseId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patient">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsIranian" ColumnName="IsIranian" />
+                <ScalarProperty Name="RegisterDate" ColumnName="RegisterDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="GenderIsMale" ColumnName="GenderIsMale" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

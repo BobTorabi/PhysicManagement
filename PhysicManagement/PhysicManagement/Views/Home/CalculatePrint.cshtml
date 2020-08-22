@@ -1,51 +1,25 @@
 ﻿
 @{
     Layout = null;
-    List<PhysicManagement.Model.TreatmentCategoryService> treatmentCategoryServices = ViewBag.TreatmentCategoryServices;
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>محاسبه هزینه</title>
-    <link href="~/assets/css/fonts.css" rel="stylesheet" />
-    <style type="text/css">
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            margin:30px;
-        }
-        table {
-            border: 1px solid #444;
-            width: 100%;
-        }
-        table tr > td {
-            border: 1px solid #444;
-            padding: 5px 10px;
-        }
-        table tr > th{
-            border: 1px solid #444;
-            padding: 5px 10px;
-            background-color:#444;
-            color:#fff;
-        }
-        table tr > td:first-child{
-            text-align:center;
-        }
-        table tr > td:last-child{
-            text-align: center;
-        }
-        input[type=text]{
-            border:medium none;
-            border-bottom:1px dotted #444;
-            padding:5px;
-        }
-        p {
-            line-height:30px;
-        }
-    </style>
+<meta name="viewport" content="width=device-width" />
+<title>محاسبه هزینه</title>
+<link href="~/assets/css/fonts.css" rel="stylesheet" />
+<script src="~/assets/js/core/jquery.min.js"></script>
+<style type="text/css">
+* {margin: 0;padding: 0;}
+body {margin:30px;}
+table {border: 1px solid #444;width: 100%;}
+table tr > td {border: 1px solid #444;padding: 5px 10px;}
+table tr > th{border: 1px solid #444;padding: 5px 10px;background-color:#444;color:#fff;}
+table tr > td:first-child{text-align:center;}
+table tr > td:last-child{text-align: center;}
+input[type=text]{border:medium none;border-bottom:1px dotted #444;padding:5px;}
+p {line-height:30px;}
+</style>
 </head>
 <body dir="rtl">
     <div style="margin:0 auto;max-width:1024px;">
@@ -53,25 +27,28 @@
             بیمار خانم / آقای <input type="text" /> <b>@ViewBag.TreatmentCategoryTitle</b> قرار گرفته و خدمات ذیل ارائه گردید.
         </p>
         <br />
-        <table border="0" cellpadding="0" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>کد</th>
-                    <th>شرح کد</th>
-                    <th>ارزش نسبی</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in treatmentCategoryServices)
-                {
-                    <tr>
-                        <td>@item.Code</td>
-                        <td>@item.Description</td>
-                        <td>@item.RelativeValue</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="data">
+
+        </div>
+        <br />
+        <div class="price"></div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('.data').empty();
+            $('<table>').html(window.opener.$('#dataTable').find('table').html()).appendTo('.data');
+            $('input[data-rv]').each(function () {
+                debugger;
+                var $val = window.opener.$('input[data-rv="' + $(this).attr('data-rv') + '"]').val();
+                $(this).replaceWith('<b>' + $val + '</b>');
+            });
+
+
+            var kFaktor = window.opener.$('input[name="KFactor"]:checked');
+            $('<div>').html('محاسبه با ' + '<b>' + kFaktor.attr('data-name') + '</b>' + ' به ارزش ' + kFaktor.val()+' ریال می باشد.').appendTo('.price');
+            $('<div>').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + window.opener.calculate() + ' ريال می باشد').appendTo('.price');
+
+        })
+    </script>
 </body>
 </html>

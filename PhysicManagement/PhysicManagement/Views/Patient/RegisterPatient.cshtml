@@ -16,33 +16,48 @@
             <div class="card-body">
                 <form id="FormValidation" method="post">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="patientFirstName" class="bmd-label-floating"> * نام بیمار</label>
-                                <input type="text" id="patientFirstName" required="true" aria-required="true" name="patientFirstName" value="" class="form-control">
+                                <input type="text" id="patientFirstName" required name="patientFirstName" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="patientLastName" class="bmd-label-floating"> * نام خانوادگی بیمار</label>
-                                <input type="text" id="patientLastName" required="true" aria-required="true" name="patientLastName" value="" class="form-control">
+                                <input type="text" id="patientLastName" required name="patientLastName" class="form-control">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4" id="nationalCodeBox">
                             <div class="form-group">
                                 <label for="nationalCode" class="bmd-label-floating">کد ملی</label>
                                 <input type="text" id="nationalCode" name="nationalCode" value="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                      
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Mobile" class="bmd-label-floating">شماره همراه بیمار </label>
+                                <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group dropdown-toggle">
+                                <select name="isIranian" id="isIranian" class="selectpicker" data-style="btn btn-primary btn-round" required>
+                                    <option value="true" selected>بیمار ایرانی است</option>
+                                    <option value="false">بیمار ایرانی نیست</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group dropdown-toggle">
                                 @{
                                     var DoctorList = ViewBag.doctorId;
 
                                 }
-                                <select name="doctorId" id="doctorId" class="selectpicker" data-style="btn btn-primary btn-round" title="" required="true" aria-required="true">
+                                <select name="doctorId" id="doctorId" class="selectpicker" data-style="btn btn-primary btn-round" required>
                                     <option disabled="" selected="">* نام پزشک معالج</option>
                                     @foreach (var item in DoctorList)
                                     {
@@ -51,17 +66,8 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="Mobile" class="bmd-label-floating">شماره همراه بیمار </label>
-                                <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
-                            </div>
-                        </div>
-
-                    </div>
+                   
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -83,6 +89,15 @@
 </div>
 
 <script>
+    $('#isIranian').change(function () {
+        var $val = $(this).val();
+        if ($val == 'true') {
+            $('#nationalCodeBox').show(200);
+        }
+        else {
+            $('#nationalCodeBox').hide(200);
+        }
+    });
     function setFormValidation(id) {
       $(id).validate({
         highlight: function(element) {

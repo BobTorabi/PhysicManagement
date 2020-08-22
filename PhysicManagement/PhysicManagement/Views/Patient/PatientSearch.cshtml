@@ -13,58 +13,59 @@
             <div class="card-body table-responsive">
                 <div class="row">
                     <form method="get" style="width:100%;padding:10px 30px;" action="PatientSearch">
-                        <div class="row  gray-bg">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                </div>
+                        <div class="row gray-bg">
+                            <div class="col-md-4 form-group">
+                                <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
-                                    <input type="text" id="LastName" name="LastName" value="" class="form-control">
-                                </div>
+                            <div class="col-md-4 form-group">
+                                <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                <input type="text" id="LastName" name="LastName" value="" class="form-control">
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
-                                    <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
-                                </div>
+                            <div class="col-md-4 form-group">
+                                <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">موبایل </label>
-                                    <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
-                                </div>
+                            <div class="col-md-4 form-group">
+                                <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="SystemCode" class="bmd-label-floating">شماره پرونده سیستم </label>
-                                    <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
-                                </div>
+                            <div class="col-md-4 form-group">
+                                <label for="SystemCode" class="bmd-label-floating">شماره پرونده سیستم </label>
+                                <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
-                                    <input type="text" id="Code" name="Code" value="" class="form-control">
-                                </div>
+                            <div class="col-md-4 form-group">
+                                @Html.EditorPersianDatePicker("RecieptDate", "تاریخ پذیرش", null)
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="DoctorId" class="bmd-label-floating">نام پزشک </label>
+                                @Html.DropDownList("DoctorId", null, "انتخاب کنید", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="ContourState" class="bmd-label-floating">وضعیت کانتور </label>
+                                <select id="ContourState" name="ContourState" class="form-control">
+                                    <option value="">مهم نیست</option>
+                                    <option value="true">کانتور شده</option>
+                                    <option value="false">کانتور نشده</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                                <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-rose pull-left">جستجو</button>
-                        <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
-                        <div class="clearfix"></div>
+                       
                     </form>
                 </div>
                 <table class="table table-hover">
                     <thead class="text-warning">
                         <tr>
                             <th>ردیف</th>
-                            <th>نام</th>
-                            <th>نام خانوادگی</th>
+                            <th>نام بیمار</th>
                             <th>موبایل</th>
                             <th>کد ملی</th>
-                            <th>شناسه بیمار</th>
+                            <th>بیمار ایرانیست؟</th>
                             <th>تاریخ ثبت</th>
                             <th style="width:50px;">امکانات</th>
                         </tr>
@@ -84,11 +85,10 @@
                                 {
                                     <tr>
                                         <td>@Index</td>
-                                        <td>@patient.FirstName</td>
-                                        <td>@patient.LastName</td>
+                                        <td>@patient.FirstName @patient.LastName</td>
                                         <td>@patient.Mobile</td>
                                         <td>@patient.NationalCode</td>
-                                        <td>@patient.Code</td>
+                                        <td>@(patient.IsIranian?"بلی":"خیر")</td>
                                         <td>@Html.DisplayForDateTime(patient.RegisterDate)</td>
 
                                         <td>
@@ -124,4 +124,8 @@
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function () {
+        $('#txtRecieptDate').val(QS('persian_RecieptDate'));
+    })
+</script>

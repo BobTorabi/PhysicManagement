@@ -14,13 +14,15 @@ namespace PhysicManagement.Common
             var Now = DateTime.Now;
             return $"{Now.Year}{Now.Month}{Guid.NewGuid().ToString().Replace("-", "")}"; ;
         }
-        public static int ID(short len)
+        public static string ID(short len)
         {
-            var rnd = new Random(DateTime.Now.Millisecond);
-            int Min = int.Parse("1" + new string('0', len - 1));
-            int Max = int.Parse(new string('9', len));
-            System.Threading.Thread.Sleep(1);
-            return rnd.Next(Min, Max);
+            string guid = 
+                Guid.NewGuid().ToString().Replace("a","").Replace("b", "").Replace("c", "").Replace("d", "").Replace("e", "").Replace("f", "").Replace("-", "") +
+                Guid.NewGuid().ToString().Replace("a", "").Replace("b", "").Replace("c", "").Replace("d", "").Replace("e", "").Replace("f", "").Replace("-", "") +
+                Guid.NewGuid().ToString().Replace("a", "").Replace("b", "").Replace("c", "").Replace("d", "").Replace("e", "").Replace("f", "").Replace("-", "")
+                ;
+
+            return guid.Substring(0, len);
         }
         public static string Scramble(string input)
         {

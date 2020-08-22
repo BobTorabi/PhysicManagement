@@ -16,6 +16,7 @@ namespace PhysicManagement.Controllers
         TreatmentCategoryService TreatmentCategoryService;
         public HomeController()
         {
+            //SMSWebService.SendSMS("09123399113", "نمونه پیامک تستی");
             PatientService = new PatientService();
             ContourService = new ContourService();
             MedicalRecordService = new MedicalRecordService();
@@ -41,7 +42,6 @@ namespace PhysicManagement.Controllers
         public ActionResult CalculatePrint(int kItem,int tcId)
         {
             ViewBag.TreatmentCategoryTitle = TreatmentCategoryService.GetTreatmentCategoryById(tcId).Title;
-            ViewBag.TreatmentCategoryServices = TreatmentCategoryService.GetTreatmentCategoryServiceByTreatmentCategoryId(tcId);
             return View();
         }
         public ActionResult Dashboard()
