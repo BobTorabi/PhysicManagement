@@ -48,12 +48,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group bmd-form-group">
-                                        <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
-                                        <input type="text" id="Code" name="Code" value="" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group bmd-form-group">
                                         <select name="hasContour" class="form-control">
                                             <option value="" disabled selected>انتخاب وضعیت کانتور پرونده</option>
                                             <option value="">نمایش تمام بیماران</option>
@@ -77,9 +71,8 @@
                                 <th>نام بیمار</th>
                                 <th>نام پزشک</th>
                                 <th>کد ملی</th>
-                                <th>شناسه بیمار</th>
                                 <th>اطلاعات کانتور</th>
-                                <th>شماره پرونده سیستم / کد سی‌تی اسکن</th>
+                                <th><span style="text-align:center;display:block;">شماره پرونده سیستم <br /> کد سی‌تی اسکن</span></th>
                                 <th>تاریخ ثبت</th>
                                 <th class="text-center"></th>
                             </tr>
@@ -92,7 +85,6 @@
                                     <td>@mr.Patient.FirstName @mr.Patient.LastName</td>
                                     <td>@mr.DoctorFirstName @mr.DoctorLastName</td>
                                     <td>@mr.Patient.NationalCode</td>
-                                    <td>@mr.Patient.Code</td>
                                     <td>@(mr.Contour.Count==0?"ندارد":"دارد")</td>
                                     <td>@mr.CTCode</td>
                                     <td>@Html.DisplayForDateTime(mr.ReceptionDate)</td>
@@ -134,10 +126,9 @@
                     </tbody>
                 </table>
 
-                <p>سرطان</p>
                 <div class="form-group dropdown-toggle">
-                    <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId" data-style="btn btn-primary btn-round" title="">
-                        <option disabled="" selected="">نوع سرطان را انتخاب کنید</option>
+                    <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId">
+                        <option value="" disabled selected>نوع سرطان را انتخاب کنید</option>
                         @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
                         {
                             <option value="@item.Id">@item.Title</option>
@@ -146,7 +137,7 @@
                 </div>
 
                 <table class="table table-hover small">
-                    <thead class="text-warning"><tr><th class="bg-red">حجم هدف</th><th class="bg-green">بافت سالم</th></tr></thead>
+                    <thead class="text-warning"><tr><th class="bg-green">حجم هدف</th><th class="bg-red">بافت سالم</th></tr></thead>
                     <tbody id="cancerData">
                     </tbody>
                 </table>
@@ -174,9 +165,10 @@
             $('#receptionDate').html(d.ReceptionDate);
             $('#ctDate').html(d.CTDate);
             $('#systemCode').html(d.SystemCode);
-            $('#cancerId').val(d.CancerId).trigger('change');
+            if (d.CancerId != null) {
+                $('#cancerId').val(d.CancerId).trigger('change');
+            }
             $('#cancerData').empty();
-            debugger;
             if (d.Contour == null) {
                 $('.doctor_desc').hide();
             }
@@ -188,7 +180,6 @@
         });
     }
     function loadCancerDetail() {
-
         $('#cancerData').empty();
         var id = $('#cancerId').val();
         if (id == undefined || id == null || id == '') {
@@ -206,10 +197,12 @@
                     var oar = '';
                     if (oars != null && oars[i] != undefined) {
                         oar =
-                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                            `
+                                <div class="col-md-4" style="display:flex;align-items:center;">`+ oars[i].OrganTitle + `</div>
+                                <div class="col-md-2" style="margin: 0;">
                                 <div class="togglebutton"><label><input id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
                                 </div>
-                                <div class="col-md-4" style="padding: 20px 0 0 0;">`+ oars[i].OrganTitle + `</div>
+                                
                                 <div class="col-md-6">
                                 <div class="form-group bmd-form-group">
                                     <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
@@ -220,15 +213,14 @@
                     var target = '';
                     if (targets != null && targets[i] != undefined) {
                         target =
-                            `<div class="col-md-2" style="padding: 20px 0 0 0;margin: 0;">
+                            `
+                            <div class="col-md-4" style="display:flex;align-items:center;">`+ targets[i].Title + `</div>
+                            <div class="col-md-2" style="margin: 0;">
                                 <div class="togglebutton">
-                                    <label>
-                                        <input id="target_check_` + oars[i].Id + `" type="checkbox">
-                                        <span class="toggle"></span>
-                                    </label>
+                                    <label><input id="target_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label>
                                 </div>
                             </div>
-                            <div class="col-md-4" style="padding: 20px 0 0 0;">`+ targets[i].Title + `</div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group bmd-form-group">
                                     <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>

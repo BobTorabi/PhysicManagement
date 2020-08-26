@@ -43,7 +43,8 @@ namespace PhysicManagement.Logic.Services
             {
                 IQueryable<MedicalRecord> QueryableMR =
                     db.MedicalRecord
-                    .Where(t => t.Contour.Any(x=>x.IsAccepted == null))
+                    .Where(t=>t.Patient.IsDeleted == false) // کاربر حذف نشده باشد
+                    .Where(t => t.Contour.Any(x=>x.IsAccepted == null))// کاربر سابقه کانتور تائید نشده داشته باشد
                     .Include(x => x.Patient)
                     .Include(x=>x.Contour);
 

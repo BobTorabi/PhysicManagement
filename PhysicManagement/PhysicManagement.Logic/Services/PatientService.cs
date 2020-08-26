@@ -190,7 +190,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<MedicalRecord> Queryable = db.MedicalRecord;
+                IQueryable<MedicalRecord> Queryable = db.MedicalRecord.Where(x=>x.Patient.IsDeleted == false);
                 if (hasContour.HasValue)
                 {
                     bool HasContour = hasContour.Value;
