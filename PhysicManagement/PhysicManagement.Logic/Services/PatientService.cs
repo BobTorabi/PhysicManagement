@@ -27,7 +27,7 @@ namespace PhysicManagement.Logic.Services
             {
                 IQueryable<Model.MedicalRecord> QueryableMR = 
                     db.MedicalRecord
-                    
+                    .Where(x=>x.Patient.IsDeleted == false)
                     .Include(x => x.Patient);
 
                 if (lastDaysReport.HasValue)
@@ -143,7 +143,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<MedicalRecord> Queryable = db.MedicalRecord;
+                IQueryable<MedicalRecord> Queryable = db.MedicalRecord.Where(x=>x.Patient.IsDeleted == false);
                 if (lastDaysReport.HasValue)
                 {
                     DateTime LastDate = DateTime.Now.Date.AddDays(lastDaysReport.Value * -1);
@@ -290,7 +290,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 
-                IQueryable<Model.Patient> QueryablePatient = db.Patient.Include(x => x.MedicalRecord);
+                IQueryable<Model.Patient> QueryablePatient = db.Patient.Where(x=>x.IsDeleted == false).Include(x => x.MedicalRecord);
                 if (lastDaysReport.HasValue)
                 {
                     DateTime LastDaysReport = DateTime.Now.Date.AddDays(lastDaysReport.GetValueOrDefault()*-1);
@@ -360,6 +360,8 @@ namespace PhysicManagement.Logic.Services
                 };
             }
         }
+
+
         public Model.Patient GetPatientById(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -467,7 +469,7 @@ namespace PhysicManagement.Logic.Services
                 if (Entity == null)
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
 
-                db.Patient.Remove(Entity);
+                Entity.IsDeleted = true;
                 return db.SaveChanges() == 1;
 
             }

@@ -163,6 +163,12 @@ namespace PhysicManagement.Controllers
             ViewBag.TreatmentService = TreatmentService.GetTreatmentDeviceList();
             return View(ViewData);
         }
+
+        public ActionResult DeletePatient(int id)
+        {
+            Service.DeletePatient(id);
+            return Json(new { Status = true }, JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// ثبت اطلاعات فازهای درمانی برای یک پرونده پزشکی
         /// معادل ذخیره سازی فرم شماره 7
@@ -339,9 +345,8 @@ namespace PhysicManagement.Controllers
             int CurrentPage = int.Parse(Request["p"] ?? "1");
             ViewBag.PageSize = 5;
             PagedList<Model.MedicalRecord> MedicalRecord =
-                Service.
-                GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
-            nationalCode, systemCode, code, lastDaysReport, CurrentPage, ViewBag.PageSize);
+                Service.GetPatientListDontHaveMriOrCTScan(firstName, lastName, mobile,
+                   nationalCode, systemCode, code, lastDaysReport, CurrentPage, ViewBag.PageSize);
             ViewBag.TotalRecords = MedicalRecord.TotalRecords;
 
             return View(MedicalRecord);

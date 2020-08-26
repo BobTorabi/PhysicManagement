@@ -11,52 +11,50 @@
                 <div class="card-header card-header-info">
                     <h4 class="card-title">@ViewBag.Title</h4>
                 </div>
-                <div class="row">
-                    <form method="get" style="width:100%;padding:10px 30px;" action="PatientWithNoCTScanOrMRI">
-                        <div class="row  gray-bg">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
-                                    <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
-                                    <input type="text" id="LastName" name="LastName" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
-                                    <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Mobile" class="bmd-label-floating">موبایل </label>
-                                    <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="SystemCode" class="bmd-label-floating">شماره پرونده سیستم </label>
-                                    <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="Code" class="bmd-label-floating">شناسه بیمار </label>
-                                    <input type="text" id="Code" name="Code" value="" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-rose pull-left">جستجو</button>
-                        <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
-                        <div class="clearfix"></div>
-                    </form>
-                </div>
+                
                 <div class="card-body table-responsive">
+                    <div class="row">
+                        <form method="get" style="width:100%;padding:10px 30px;" action="PatientWithNoCTScanOrMRI">
+                            <div class="row  gray-bg">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                        <input type="text" id="FirstName" name="FirstName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="LastName" class="bmd-label-floating">نام خانوادگی بیمار</label>
+                                        <input type="text" id="LastName" name="LastName" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="NationalCode" class="bmd-label-floating">کد ملی</label>
+                                        <input type="text" id="NationalCode" name="NationalCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="Mobile" class="bmd-label-floating">موبایل </label>
+                                        <input type="text" id="Mobile" name="Mobile" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="SystemCode" class="bmd-label-floating">شماره پرونده سیستم </label>
+                                        <input type="text" id="SystemCode" name="SystemCode" value="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-rose pull-left">جستجو</button>
+                                    <button type="reset" class="btn btn-info pull-left">پاک کردن فرم</button>
+                                </div>
+                              
+                            </div>
+
+                        </form>
+                    </div>
                     <table class="table table-hover">
                         <thead class="text-warning">
                             <tr>
@@ -65,7 +63,6 @@
                                 <th> شماره موبایل</th>
                                 <th>کد ملی</th>
                                 <th>نام پزشک</th>
-                                <th>شناسه بیمار</th>
                                 <th>شماره پرونده سیستم</th>
                                 <th>تاریخ پذیرش</th>
                                 <th></th>
@@ -77,22 +74,27 @@
                             }
                             @foreach (var medicalRecord in Model.Records)
                             {
-                            <tr data-id="@medicalRecord.Id">
-                                <td>@Index</td>
-                                <td>@medicalRecord.Patient.FirstName @medicalRecord.Patient.LastName</td>
-                                <td>@medicalRecord.Patient.Mobile</td>
-                                <td>@medicalRecord.Patient.NationalCode</td>
-                                <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
-                                <td>@medicalRecord.Patient.Code</td>
-                                <td>@medicalRecord.SystemCode</td>
-                                <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
-                                <td class="text-center">
-                                    <button type="submit" onclick="LoadPatientData(@medicalRecord.Id)" class="btn btn-info">ثبت اطلاعات تصویربرداری</button>
-                                </td>
-                                <td class="text-center">
-                                    <a href="@Url.Action("PatientWithNoThreatmentPlan","Patient")" class="btn btn-info">اطلاعات تصویر برداری ندارد</a>
-                                </td>
-                            </tr>
+                                <tr data-id="@medicalRecord.Id">
+                                    <td>@Index</td>
+                                    <td>@medicalRecord.Patient.FirstName @medicalRecord.Patient.LastName</td>
+                                    <td>@medicalRecord.Patient.Mobile</td>
+                                    <td>@medicalRecord.Patient.NationalCode</td>
+                                    <td>@medicalRecord.DoctorFirstName @medicalRecord.DoctorLastName</td>
+                                    <td>@medicalRecord.SystemCode</td>
+                                    <td>@Html.DisplayForDateTime(medicalRecord.ReceptionDate)</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                امکانات
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-left">
+                                                <a class="dropdown-item" onclick="LoadPatientData(@medicalRecord.Id)">ثبت اطلاعات تصویربرداری</a>
+                                                <a class="dropdown-item" onclick="showConfirmBox(@medicalRecord.Id)">اطلاعات تصویر برداری ندارد</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             }
 
 
@@ -108,51 +110,62 @@
                     </div>
                 </div>
             </div>
-            <script>
-                function LoadPatientData(id) {
-                    $.getJSON('PatientInfoByMedicalRecordId', { medicalRecordId: id }, function (d) {
-                        $('#setCTMRI').modal('show');
-                        $('.modal [name="FirstName"]').val(d.Data.FirstName);
-                        $('.modal [name="LastName"]').val(d.Data.LastName);
-                        $('.modal [name="SystemCode"]').val(d.Data.SystemCode);
-                        $('.modal [name="CTCode"]').val(d.Data.CTCode);
-                        $('.modal [name="MRICode"]').val(d.Data.MRICode);
-                        $('.modal [name="CTDescription"]').val(d.Data.CTDescription);
-                        $('.modal [name="medicalRecordId"]').val(d.Data.MedicalRecordId);
-                        $('.modal [name="PatientId"]').val(d.Data.PatientId);
-                        setTimeout(function () { $('[name="CTCode"]').focus(); }, 2000);
-                    });
-                }
-                function setData() {
-
-                    var cTScanCode = $('[name="CTCode"]').val();
-                    var cTScanDescription = $('[name="CTDescription"]').val();
-                    var mRICode = $('[name="MRICode"]').val();
-                    if (cTScanCode == '') {
-                        $('[name="CTCode"]').focus();
-                        return;
-                    }
-                    if (mRICode == '') {
-                        $('[name="MRICode"]').focus();
-                        return;
-                    }
-                    if (cTScanDescription == '') {
-                        $('[name="CTDescription"]').focus();
-                        return;
-                    }
-                    var mId = $('[name="medicalRecordId"]').val();
-                    $.post('SetCTAndMIRDataForMedicalRecord', { medicalRecordId: mId, cTScanCode: cTScanCode, cTScanDescription: cTScanDescription, mRICode: mRICode }, function (d) {
-                        $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
-                        $('#setCTMRI').modal('hide');
-                        scrollTop();
-                        alert('ثبت اطلاعات با موفقیت انجام شد.');
-                    });
-                }
-            </script>
+            
         </div>
     </div>
 </div>
+<script>
+    var mrId = 0;
+    function LoadPatientData(id) {
+        $.getJSON('PatientInfoByMedicalRecordId', { medicalRecordId: id }, function (d) {
+            $('#setCTMRI').modal('show');
+            $('.modal [name="FirstName"]').val(d.Data.FirstName);
+            $('.modal [name="LastName"]').val(d.Data.LastName);
+            $('.modal [name="SystemCode"]').val(d.Data.SystemCode);
+            $('.modal [name="CTCode"]').val(d.Data.CTCode);
+            $('.modal [name="MRICode"]').val(d.Data.MRICode);
+            $('.modal [name="CTDescription"]').val(d.Data.CTDescription);
+            $('.modal [name="medicalRecordId"]').val(d.Data.MedicalRecordId);
+            $('.modal [name="PatientId"]').val(d.Data.PatientId);
+            setTimeout(function () { $('[name="CTCode"]').focus(); }, 2000);
+        });
+    }
+    function setData() {
 
+        var cTScanCode = $('[name="CTCode"]').val();
+        var cTScanDescription = $('[name="CTDescription"]').val();
+        var mRICode = $('[name="MRICode"]').val();
+        if (cTScanCode == '') {
+            $('[name="CTCode"]').focus();
+            return;
+        }
+        if (mRICode == '') {
+            $('[name="MRICode"]').focus();
+            return;
+        }
+        if (cTScanDescription == '') {
+            $('[name="CTDescription"]').focus();
+            return;
+        }
+        var mId = $('[name="medicalRecordId"]').val();
+        $.post('SetCTAndMIRDataForMedicalRecord', { medicalRecordId: mId, cTScanCode: cTScanCode, cTScanDescription: cTScanDescription, mRICode: mRICode }, function (d) {
+            $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
+            $('#setCTMRI').modal('hide');
+            scrollTop();
+            alert('ثبت اطلاعات با موفقیت انجام شد.');
+        });
+    }
+    function showConfirmBox(id) {
+        mrId = id;
+        $('#confirmNoData').modal('show');
+    }
+    function setAsNoData() {
+        $('#confirmNoData').modal('hide');
+        $.post('../MedicalRecord/SetNoDataForMedicalRecord', { mrId: mrId }, function () {
+            window.location.reload();
+        });
+    }
+</script>
 <!-- Modal -->
 <div class="modal fade" id="setCTMRI" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -217,6 +230,22 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
                 <button type="button" onclick="setData()" class="btn btn-rose pull-right">ثبت</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmNoData" tabindex="-1" role="dialog" aria-labelledby="confirmNoData" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModal">بیمار اطلاعات تصویر برداری ندارد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body"><div>آیا تائید می کنید که اطلاعات تصویر برداری برای این پرونده وجود ندارد؟</div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر</button>
+                <button type="button" onclick="setAsNoData()" class="btn btn-rose pull-right">بلی</button>
             </div>
         </div>
     </div>

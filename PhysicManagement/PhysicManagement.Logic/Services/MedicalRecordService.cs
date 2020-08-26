@@ -23,7 +23,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.MedicalRecord.Include("Patient").Where(x=>x.Id == entityId).FirstOrDefault();
+                var Entity = db.MedicalRecord.Include("Patient").Where(x => x.Id == entityId).FirstOrDefault();
                 return Entity;
             }
         }
@@ -194,13 +194,13 @@ namespace PhysicManagement.Logic.Services
                     {
                         MedicalRecordContourObject.IsAccepted = null;
                         MedicalRecordContourObject.ModifyDate = DateTime.Now;
-                    
+
                         MedicalRecordContourObject.ActionDate = DateTime.Now;
                         MedicalRecordContourObject.Description = "";
                         var Contour = new Services.ContourService();
                         Contour.UpdateContour(MedicalRecordContourObject);
 
-                        var Details =  Contour.GetContourDetailsByMedicalRecordId(medicalRecordId);
+                        var Details = Contour.GetContourDetailsByMedicalRecordId(medicalRecordId);
                         foreach (var item in Details)
                         {
                             Contour.DeleteContourDetails(item.Id);
@@ -259,7 +259,16 @@ namespace PhysicManagement.Logic.Services
             }
         }
         #endregion
-
+        public void SetNoCTScanDataForMedicalRecord(long mrId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var medicalRecordEntity = db.MedicalRecord.Find(mrId);
+                medicalRecordEntity.CTEnterDate = DateTime.Now;
+                medicalRecordEntity.MRIEnterDate = DateTime.Now;
+                db.SaveChanges();
+            }
+        }
         public Model.MedicalRecord AddMedicalRecordCTCode(string mriCode, string ctDescription, long medicalRecordId)
         {
             MedicalRecordService medicalRecordService = new MedicalRecordService();

@@ -13,6 +13,7 @@ namespace PhysicManagement.Controllers
             Service = new MedicalRecordService();
             ContourService = new ContourService();
         }
+
         // GET: MedicalRecord
         public ActionResult PatientMedicalRecord(int id)
         {
@@ -29,7 +30,12 @@ namespace PhysicManagement.Controllers
         //        new MegaViewModel<bool> { Status = MegaStatus.Successfull },
         //        JsonRequestBehavior.AllowGet);
         //}
+        public ActionResult SetNoDataForMedicalRecord(long mrId)
+        {
+            Service.SetNoCTScanDataForMedicalRecord(mrId);
+            return Json(new { Status = true }, JsonRequestBehavior.AllowGet);
 
+        }
         public JsonResult GetMedicalRecordData(int medicalRecordId)
         {
             var medicalRecordData = Service.GetMedicalRecordById(medicalRecordId);
