@@ -48,7 +48,7 @@ namespace PhysicManagement.Controllers
             var CountourData = Service.GetContourByMedicalRecordId(medicalRecordId);
             CountourData.DoctorFullName = UserData.FullName;
             CountourData.DoctorUserId = UserData.UserId.GetValueOrDefault().ToString();
-            CountourData.Description = Description;
+            CountourData.DoctorDescription = Description;
             CountourData.IsAccepted = false;
             CountourData.ModifyDate = DateTime.Now;
             Service.UpdateContour(CountourData);
@@ -61,7 +61,7 @@ namespace PhysicManagement.Controllers
             var CountourData = Service.GetContourByMedicalRecordId(medicalRecordId);
             CountourData.DoctorFullName = UserData.FullName;
             CountourData.DoctorUserId = UserData.UserId.GetValueOrDefault().ToString();
-            CountourData.Description = Description;
+            CountourData.DoctorDescription = Description;
             CountourData.IsAccepted = true;
             CountourData.ModifyDate = DateTime.Now;
             Service.UpdateContour(CountourData);
@@ -71,7 +71,7 @@ namespace PhysicManagement.Controllers
 
         public JsonResult SetCountorForMediacalRecord(CountorDataForMedicalRecordVM data)
         {
-            var ContourSet = MedicalRecordService.SetCancerForMR(data.MedicalRecordId, data.CancerId);
+            var ContourSet = MedicalRecordService.SetCancerForMR(data.MedicalRecordId, data.CancerId,data.DoctorDescription,data.ResidentDescription);
             var ContourData = Service.GetContourByMedicalRecordId(data.MedicalRecordId);
 
             if (data.OARs != null && data.OARs.Count != 0)

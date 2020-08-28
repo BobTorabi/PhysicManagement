@@ -112,10 +112,10 @@
             <div class="modal-body">
                 <table class="table table-hover">
                     <thead>
-                        <tr><th>نام</th><th>نام خانوادگی</th><th>نام پزشک</th><th>تاریخ پذیرش</th><th>تاریخ CT</th><th>شماره پرونده سیستم</th></tr>
+                        <tr><th>نام</th><th>نام خانوادگی</th><th>نام پزشک</th><th>تاریخ پذیرش</th><th>تاریخ CT</th><th>شماره پرونده </th></tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr style="font-size:14px;">
                             <td id="patientName"></td>
                             <td id="patientLatName"></td>
                             <td id="doctorName"></td>
@@ -127,6 +127,7 @@
                 </table>
 
                 <div class="form-group dropdown-toggle">
+                    <label for="cancerId">سرطان</label>
                     <select class="selectpicker" onchange="loadCancerDetail()" id="cancerId">
                         <option value="" disabled selected>نوع سرطان را انتخاب کنید</option>
                         @foreach (PhysicManagement.Model.Cancer item in ViewBag.CancerList)
@@ -137,12 +138,16 @@
                 </div>
 
                 <table class="table table-hover small">
-                    <thead class="text-warning"><tr><th class="bg-green">حجم هدف</th><th class="bg-red">بافت سالم</th></tr></thead>
+                    <thead class="text-warning"><tr><th class="bg-green">بافت سالم</th><th class="bg-red">حجم هدف</th></tr></thead>
                     <tbody id="cancerData">
                     </tbody>
                 </table>
+
+                <div class="form-group resident_desc">
+                    <textarea placeholder="توضیحات رزیدنت" class="form-control" rows="5" id="res_des"></textarea>
+                </div>
                 <div class="form-group doctor_desc">
-                    <textarea placeholder="توضیحات پزشک" readonly class="form-control" rows="5" id="des"></textarea>
+                    <textarea placeholder="توضیحات دکتر" readonly class="form-control" rows="5" id="doc_des"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -193,6 +198,7 @@
                 var oars = j.OARs;
                 var targets = j.Targets;
                 var max = oars.length > targets.length ? oars.length : targets.length;
+                debugger;
                 for (var i = 0; i < max; i++) {
                     var oar = '';
                     if (oars != null && oars[i] != undefined) {
@@ -241,7 +247,7 @@
         );
     }
     function setCancerData() {
-        var Data = { CancerId: 0, Description: $('#des').val(), MedicalRecordId: med_id, oars: [], targets: [] };
+        var Data = { CancerId: 0, ResidentDescription: $('#res_des').val(), MedicalRecordId: med_id, oars: [], targets: [] };
         var cancerId = $('#cancerId').val();
         if (cancerId == '') {
             alert('لطفا یکی از انواع سرطان را انتخاب کنید.');

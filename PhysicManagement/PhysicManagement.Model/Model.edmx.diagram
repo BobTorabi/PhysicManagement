@@ -16,12 +16,9 @@
         <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
         <EntityTypeShape EntityType="PhysicManagementModel.CancerTarget" Width="1.5" PointX="16.75" PointY="7.5" FillColor="DarkRed" />
         <AssociationConnector Association="PhysicManagementModel.FK_CancerTargets_Cancer" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="5.25" PointY="26" />
         <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="7.5" PointY="26.125" />
         <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="3" PointY="22.5" />
         <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
         <EntityTypeShape EntityType="PhysicManagementModel.KFactor" Width="1.5" PointX="3.875" PointY="0.625" />
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategory" Width="2.25" PointX="13.25" PointY="10.5" FillColor="192, 192, 0" />
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategoryService" Width="1.5" PointX="15.875" PointY="10.75" FillColor="192, 192, 0" />
@@ -36,6 +33,9 @@
         <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhaseDetail" Width="2.125" PointX="13.25" PointY="14.5" FillColor="255, 128, 0" />
         <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.75" PointY="25.625" />
         <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.75" PointX="5.25" PointY="25.875" />
+        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
+        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

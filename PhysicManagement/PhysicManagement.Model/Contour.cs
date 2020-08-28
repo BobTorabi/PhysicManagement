@@ -23,7 +23,8 @@ namespace PhysicManagement.Model
         public long Id { get; set; }
         public Nullable<long> MedicalRecordId { get; set; }
         public Nullable<System.DateTime> ActionDate { get; set; }
-        public string Description { get; set; }
+        public string DoctorDescription { get; set; }
+        public string ResidentDescription { get; set; }
         public Nullable<System.DateTime> ModifyDate { get; set; }
         public string DoctorFullName { get; set; }
         public string DoctorUserId { get; set; }

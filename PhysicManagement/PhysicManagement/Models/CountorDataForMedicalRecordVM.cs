@@ -11,7 +11,8 @@ namespace PhysicManagement.Models
         public int CancerId { get; set; }
         public List<Data> OARs { get; set; } = new List<Data>();
         public List<Data> Targets { get; set; } = new List<Data>();
-
+        public string ResidentDescription { get; set; }
+        public string DoctorDescription { get; set; }
 
         public class Data
         {

@@ -153,7 +153,7 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
-        public bool SetCancerForMR(long medicalRecordId, int cancerId)
+        public bool SetCancerForMR(long medicalRecordId, int cancerId,string doctorDescription,string residentDescription)
         {
             var UserData = AuthenticatedUserService.GetUserId();
             try
@@ -174,7 +174,7 @@ namespace PhysicManagement.Logic.Services
                     Entity.ContourAcceptUserId = UserData.UserId.GetValueOrDefault().ToString();
                     Entity.ContourAcceptUserFullName = UserData.FullName;
                     Entity.ContourAcceptUserRole = UserData.RoleName;
-
+                    
                     Entity.TreatmentProcessId = 2; //کانتورینگ
                     Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                     var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
@@ -186,7 +186,8 @@ namespace PhysicManagement.Logic.Services
                             DoctorFullName = null,
                             DoctorUserId = null,
                             ActionDate = DateTime.Now,
-                            Description = "",
+                            DoctorDescription = doctorDescription,
+                            ResidentDescription = residentDescription,
                             MedicalRecordId = medicalRecordId
                         });
                     }
@@ -196,7 +197,8 @@ namespace PhysicManagement.Logic.Services
                         MedicalRecordContourObject.ModifyDate = DateTime.Now;
 
                         MedicalRecordContourObject.ActionDate = DateTime.Now;
-                        MedicalRecordContourObject.Description = "";
+                        MedicalRecordContourObject.DoctorDescription = doctorDescription;
+                        MedicalRecordContourObject.ResidentDescription = residentDescription;
                         var Contour = new Services.ContourService();
                         Contour.UpdateContour(MedicalRecordContourObject);
 

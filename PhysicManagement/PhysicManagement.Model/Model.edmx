@@ -107,7 +107,8 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MedicalRecordId" Type="bigint" />
           <Property Name="ActionDate" Type="datetime" />
-          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DoctorDescription" Type="nvarchar(max)" />
+          <Property Name="ResidentDescription" Type="nvarchar(max)" />
           <Property Name="ModifyDate" Type="datetime" />
           <Property Name="DoctorFullName" Type="nvarchar" MaxLength="50" />
           <Property Name="DoctorUserId" Type="nvarchar" MaxLength="50" />
@@ -623,20 +624,11 @@
             <End Role="Cancer" EntitySet="Cancer" />
             <End Role="CancerTarget" EntitySet="CancerTarget" />
           </AssociationSet>
-          <EntitySet Name="Contour" EntityType="PhysicManagementModel.Contour" />
           <EntitySet Name="ContourDetails" EntityType="PhysicManagementModel.ContourDetails" />
           <EntitySet Name="MedicalRecord" EntityType="PhysicManagementModel.MedicalRecord" />
           <AssociationSet Name="FK_Calendar_MedicalRecord" Association="PhysicManagementModel.FK_Calendar_MedicalRecord">
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
             <End Role="Calendar" EntitySet="Calendar" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Contour_MedicalRecord" Association="PhysicManagementModel.FK_Contour_MedicalRecord">
-            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
-            <End Role="Contour" EntitySet="Contour" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ContourDetails_Contour" Association="PhysicManagementModel.FK_ContourDetails_Contour">
-            <End Role="Contour" EntitySet="Contour" />
-            <End Role="ContourDetails" EntitySet="ContourDetails" />
           </AssociationSet>
           <EntitySet Name="KFactor" EntityType="PhysicManagementModel.KFactor" />
           <EntitySet Name="TreatmentCategory" EntityType="PhysicManagementModel.TreatmentCategory" />
@@ -660,6 +652,15 @@
           <AssociationSet Name="FK_MedicalRecord_MedicalRecord" Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <EntitySet Name="Contour" EntityType="PhysicManagementModel.Contour" />
+          <AssociationSet Name="FK_Contour_MedicalRecord" Association="PhysicManagementModel.FK_Contour_MedicalRecord">
+            <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+            <End Role="Contour" EntitySet="Contour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContourDetails_Contour" Association="PhysicManagementModel.FK_ContourDetails_Contour">
+            <End Role="Contour" EntitySet="Contour" />
+            <End Role="ContourDetails" EntitySet="ContourDetails" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="PhysicUser">
@@ -742,21 +743,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Contour">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MedicalRecordId" Type="Int64" />
-          <Property Name="ActionDate" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
-          <Property Name="DoctorFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DoctorUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsAccepted" Type="Boolean" />
-          <NavigationProperty Name="MedicalRecord" Relationship="PhysicManagementModel.FK_Contour_MedicalRecord" FromRole="Contour" ToRole="MedicalRecord" />
-          <NavigationProperty Name="ContourDetails" Relationship="PhysicManagementModel.FK_ContourDetails_Contour" FromRole="Contour" ToRole="ContourDetails" />
-        </EntityType>
         <EntityType Name="ContourDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -818,8 +804,8 @@
           <Property Name="Phase4TreatmentDeviceTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="TreatmentDeviceIsQueued" Type="Boolean" />
           <NavigationProperty Name="Calendar" Relationship="PhysicManagementModel.FK_Calendar_MedicalRecord" FromRole="MedicalRecord" ToRole="Calendar" />
-          <NavigationProperty Name="Contour" Relationship="PhysicManagementModel.FK_Contour_MedicalRecord" FromRole="MedicalRecord" ToRole="Contour" />
           <NavigationProperty Name="Patient" Relationship="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" FromRole="MedicalRecord" ToRole="Patient" />
+          <NavigationProperty Name="Contour" Relationship="PhysicManagementModel.FK_Contour_MedicalRecord" FromRole="MedicalRecord" ToRole="Contour" />
         </EntityType>
         <Association Name="FK_Calendar_MedicalRecord">
           <End Type="PhysicManagementModel.MedicalRecord" Role="MedicalRecord" Multiplicity="0..1" />
@@ -830,30 +816,6 @@
             </Principal>
             <Dependent Role="Calendar">
               <PropertyRef Name="MedicalRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Contour_MedicalRecord">
-          <End Type="PhysicManagementModel.MedicalRecord" Role="MedicalRecord" Multiplicity="0..1" />
-          <End Type="PhysicManagementModel.Contour" Role="Contour" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedicalRecord">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Contour">
-              <PropertyRef Name="MedicalRecordId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ContourDetails_Contour">
-          <End Type="PhysicManagementModel.Contour" Role="Contour" Multiplicity="1" />
-          <End Type="PhysicManagementModel.ContourDetails" Role="ContourDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contour">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ContourDetails">
-              <PropertyRef Name="ContourId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1079,6 +1041,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Contour">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="DoctorDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ResidentDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyDate" Type="DateTime" Precision="3" />
+          <Property Name="DoctorFullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoctorUserId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAccepted" Type="Boolean" />
+          <NavigationProperty Name="MedicalRecord" Relationship="PhysicManagementModel.FK_Contour_MedicalRecord" FromRole="Contour" ToRole="MedicalRecord" />
+          <NavigationProperty Name="ContourDetails" Relationship="PhysicManagementModel.FK_ContourDetails_Contour" FromRole="Contour" ToRole="ContourDetails" />
+        </EntityType>
+        <Association Name="FK_Contour_MedicalRecord">
+          <End Type="PhysicManagementModel.MedicalRecord" Role="MedicalRecord" Multiplicity="0..1" />
+          <End Type="PhysicManagementModel.Contour" Role="Contour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Contour">
+              <PropertyRef Name="MedicalRecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContourDetails_Contour">
+          <End Type="PhysicManagementModel.Contour" Role="Contour" Multiplicity="1" />
+          <End Type="PhysicManagementModel.ContourDetails" Role="ContourDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contour">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ContourDetails">
+              <PropertyRef Name="ContourId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1210,20 +1212,6 @@
                 <ScalarProperty Name="Optimum" ColumnName="Optimum" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="CancerId" ColumnName="CancerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contour">
-            <EntityTypeMapping TypeName="PhysicManagementModel.Contour">
-              <MappingFragment StoreEntitySet="Contour">
-                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
-                <ScalarProperty Name="DoctorUserId" ColumnName="DoctorUserId" />
-                <ScalarProperty Name="DoctorFullName" ColumnName="DoctorFullName" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1478,6 +1466,21 @@
                 <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contour">
+            <EntityTypeMapping TypeName="PhysicManagementModel.Contour">
+              <MappingFragment StoreEntitySet="Contour">
+                <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
+                <ScalarProperty Name="DoctorUserId" ColumnName="DoctorUserId" />
+                <ScalarProperty Name="DoctorFullName" ColumnName="DoctorFullName" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="ResidentDescription" ColumnName="ResidentDescription" />
+                <ScalarProperty Name="DoctorDescription" ColumnName="DoctorDescription" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

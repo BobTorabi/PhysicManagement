@@ -140,7 +140,8 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.Contour.Find(entity.Id);
-                Entity.Description = entity.Description;
+                Entity.DoctorDescription = entity.DoctorDescription;
+                Entity.ResidentDescription = entity.ResidentDescription;
                 Entity.DoctorFullName= entity.DoctorFullName;
                 Entity.ActionDate= entity.ActionDate;
                 Entity.DoctorUserId = entity.DoctorUserId;

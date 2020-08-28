@@ -54,7 +54,8 @@ namespace PhysicManagement.Controllers
                     Contour = new
                     {
                         IsAccepted = Contour?.IsAccepted,
-                        Description = Contour?.Description,
+                        Description = Contour?.DoctorDescription,
+                        ResidentDescription = Contour?.ResidentDescription,
                         ActionDate = Common.DateUtility.GetPersianDateTime(Contour?.ActionDate)
                     },
                     ContourDetail = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId)
