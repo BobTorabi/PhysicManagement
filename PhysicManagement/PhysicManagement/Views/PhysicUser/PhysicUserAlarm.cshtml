@@ -1,6 +1,7 @@
-﻿
+﻿@model PhysicManagement.Model.PhysicUserAlarm
+
 @{
-    ViewBag.Title = "ResidentAlarm";
+    ViewBag.Title = "PhysicUserAlarm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,15 +13,15 @@
                 <div class="card-icon">
                     <i class="material-icons">mail_outline</i>
                 </div>
-                <h4 class="card-title">تنظیمات پیامکی رزیدنت</h4>
+                <h4 class="card-title">تنظیمات پیامکی فیزیست</h4>
             </div>
             <div class="card-body">
                 <form id="FormValidation" method="post">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="patientFirstName" class="bmd-label-floating"> * نام رزیدنت</label>
-                                @ViewBag.ResidentName
+                                <label for="patientFirstName" class="bmd-label-floating"> * نام فیزیست</label>
+                                @ViewBag.PhysicUserName
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -31,8 +32,6 @@
 
                             </div>
                         </div>
-
-
                     </div>
 
                     <button type="submit" class="btn btn-rose pull-right">ثبت </button>
@@ -42,4 +41,5 @@
         </div>
     </div>
 </div>
+
 

@@ -44,4 +44,18 @@ namespace PhysicManagement.Logic.Validations
     }
     #endregion
 
+    #region PhysicUserAlarmValidation
+    public class PhysicUserAlarmValidation
+    {
+
+        public class PhysicUserAlarmEntityValidate : AbstractValidator<Model.PhysicUserAlarm>
+        {
+            public PhysicUserAlarmEntityValidate()
+            {
+
+            }
+        }
+    }
+    #endregion
+
 }
