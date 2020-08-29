@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using PhysicManagement.Logic.Enums;
+using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -115,6 +116,21 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+
+        public Model.DoctorAlarm GetDoctorAlarmByDoctorId(int entityId)
+        {
+            DoctorAlarm doctorAlarm;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var doctor = db.Doctor.Find(entityId);
+                if (doctor != null)
+                    doctorAlarm = db.DoctorAlarms.Where(x => x.DoctorId == doctor.Id).FirstOrDefault();
+                else
+                    return null;
+                return doctorAlarm;
+            }
+        }
+
         public bool AddDoctorAlarm(Model.DoctorAlarm entity)
         {
             var validation = new DoctorAlarmValidation.DoctorAlarmEntityValidate().Validate(entity);
@@ -123,6 +139,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.ChangeDate = DateTime.Now;
                 db.DoctorAlarms.Add(entity);
                 return db.SaveChanges() == 1;
             }
@@ -158,6 +175,16 @@ namespace PhysicManagement.Logic.Services
                 db.DoctorAlarms.Remove(Entity);
                 return db.SaveChanges() == 1;
             }
+        }
+
+        public bool SetDoctorAlarm(DoctorAlarm doctorAlarm)
+        {
+            var retrievedDoctorAlarm = GetDoctorAlarmByDoctorId((int)doctorAlarm.DoctorId);
+            if (retrievedDoctorAlarm == null)
+                return AddDoctorAlarm(doctorAlarm);
+            else
+                doctorAlarm.Id = retrievedDoctorAlarm.Id;
+                return UpdateDoctorAlarm(doctorAlarm);
         }
 
         #endregion

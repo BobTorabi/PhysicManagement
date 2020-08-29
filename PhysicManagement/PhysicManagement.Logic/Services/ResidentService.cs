@@ -280,6 +280,15 @@ namespace PhysicManagement.Logic.Services
                 };
             }
         }
+
+        public List<Resident> GetResidentList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.ToList(); ;
+            }
+        }
+
         public Model.Resident GetResidentById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -328,6 +337,14 @@ namespace PhysicManagement.Logic.Services
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
                 db.Resident.Remove(Entity);
                 return db.SaveChanges() == 1;
+            }
+        }
+
+        public List<ViewModels.IdName> GetIdNameFromResidentList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.Select(x => new ViewModels.IdName { Id = x.Id, Name = x.FirstName + " " + x.LastName }).OrderBy(x => x.Name).ToList();
             }
         }
         #endregion
