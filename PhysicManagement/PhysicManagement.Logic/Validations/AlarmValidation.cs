@@ -2,10 +2,10 @@
 
 namespace PhysicManagement.Logic.Validations
 {
+    #region AlarmValidation
     public class AlarmValidation
     {
-      
-        #region AlarmValidation
+        
         public class AlarmEntityValidate : AbstractValidator<Model.Alarm>
         {
             public AlarmEntityValidate()
@@ -13,6 +13,22 @@ namespace PhysicManagement.Logic.Validations
                 
             }
         }
-        #endregion
     }
+    #endregion
+
+    #region DoctorAlarmValidation
+    public class DoctorAlarmValidation
+    {
+
+        public class DoctorAlarmEntityValidate : AbstractValidator<Model.DoctorAlarm>
+        {
+            public DoctorAlarmEntityValidate()
+            {
+
+            }
+        }
+    }
+    #endregion
+
+
 }

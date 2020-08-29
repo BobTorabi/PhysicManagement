@@ -98,5 +98,68 @@ namespace PhysicManagement.Logic.Services
         }
         #endregion
 
+        #region DoctorAlarm
+
+        public List<Model.DoctorAlarm> GetDoctorAlarmList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.DoctorAlarms.OrderBy(x => x.Id).ToList();
+            }
+        }
+        public Model.DoctorAlarm GetDoctorAlarmById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.DoctorAlarms.Find(entityId);
+                return Entity;
+            }
+        }
+        public bool AddDoctorAlarm(Model.DoctorAlarm entity)
+        {
+            var validation = new DoctorAlarmValidation.DoctorAlarmEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                db.DoctorAlarms.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool UpdateDoctorAlarm(Model.DoctorAlarm entity)
+        {
+            var validation = new DoctorAlarmValidation.DoctorAlarmEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.DoctorAlarms.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                Entity.DoctorId = entity.DoctorId;
+                Entity.IsSmsRecieveActive = entity.IsSmsRecieveActive;
+                Entity.ReplacementResidentId = entity.ReplacementResidentId;
+                Entity.ChangeDate = DateTime.Now;
+
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteDoctorAlarm(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.DoctorAlarms.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.DoctorAlarms.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+
+        #endregion
     }
 }
