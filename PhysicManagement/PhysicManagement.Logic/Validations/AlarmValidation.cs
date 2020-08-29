@@ -30,5 +30,18 @@ namespace PhysicManagement.Logic.Validations
     }
     #endregion
 
+    #region ResidentAlarmValidation
+    public class ResidentAlarmValidation
+    {
+
+        public class ResidentAlarmEntityValidate : AbstractValidator<Model.ResidentAlarm>
+        {
+            public ResidentAlarmEntityValidate()
+            {
+
+            }
+        }
+    }
+    #endregion
 
 }

@@ -188,5 +188,94 @@ namespace PhysicManagement.Logic.Services
         }
 
         #endregion
+
+        #region ResidentAlarm
+
+        public List<Model.ResidentAlarm> GetResidentAlarmList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.ResidentAlarms.OrderBy(x => x.Id).ToList();
+            }
+        }
+        public Model.ResidentAlarm GetResidentAlarmById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.ResidentAlarms.Find(entityId);
+                return Entity;
+            }
+        }
+
+        public Model.ResidentAlarm GetResidentAlarmByResidentId(int entityId)
+        {
+            ResidentAlarm ResidentAlarm;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Resident = db.Resident.Find(entityId);
+                if (Resident != null)
+                    ResidentAlarm = db.ResidentAlarms.Where(x => x.ResidentId == Resident.Id).FirstOrDefault();
+                else
+                    return null;
+                return ResidentAlarm;
+            }
+        }
+
+        public bool AddResidentAlarm(Model.ResidentAlarm entity)
+        {
+            var validation = new ResidentAlarmValidation.ResidentAlarmEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                entity.ChangeDate = DateTime.Now;
+                db.ResidentAlarms.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool UpdateResidentAlarm(Model.ResidentAlarm entity)
+        {
+            var validation = new ResidentAlarmValidation.ResidentAlarmEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.ResidentAlarms.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                Entity.ResidentId = entity.ResidentId;
+                Entity.IsSmsRecieveActive = entity.IsSmsRecieveActive;
+                Entity.ChangeDate = DateTime.Now;
+
+                return db.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteResidentAlarm(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.ResidentAlarms.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.ResidentAlarms.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+
+        public bool SetResidentAlarm(ResidentAlarm ResidentAlarm)
+        {
+            var retrievedResidentAlarm = GetResidentAlarmByResidentId((int)ResidentAlarm.ResidentId);
+            if (retrievedResidentAlarm == null)
+                return AddResidentAlarm(ResidentAlarm);
+            else
+                ResidentAlarm.Id = retrievedResidentAlarm.Id;
+            return UpdateResidentAlarm(ResidentAlarm);
+        }
+
+        #endregion
     }
 }
