@@ -18,7 +18,6 @@ namespace PhysicManagement.Controllers
         readonly CalendarService CalendarService;
         readonly DoctorService DoctorService;
 
-
         public PatientController()
         {
             Service = new PatientService();
@@ -246,9 +245,7 @@ namespace PhysicManagement.Controllers
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return Redirect("~/TreatmentPhase/List");
         }
-        public ActionResult
-            PatientSearch
-            (string firstName, string lastName, string mobile, string nationalCode,
+        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode,
             string caseCode, string code, int? lastDaysReport,
             bool? ContourState, int? DoctorId, string RecieptDate
             )
@@ -315,6 +312,8 @@ namespace PhysicManagement.Controllers
             var PatientObject = 
                 Service.RegisterPatient
                 (patientFirstName, patientLastName, nationalCode, doctorId, mobile, description, isIranian);
+            //SMS
+            new NotificationService().SendSMSAlarm((int)PatientObject.Id, Logic.Enums.AlarmEventType.MedicalRecordAdded);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)

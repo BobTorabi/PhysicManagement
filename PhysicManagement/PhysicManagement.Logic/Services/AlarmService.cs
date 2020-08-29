@@ -367,5 +367,105 @@ namespace PhysicManagement.Logic.Services
 
         #endregion
 
+
+        #region AlarmConfig
+
+        public List<Model.AlarmConfig> GetAlarmConfigList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.AlarmConfig.OrderBy(x => x.Id).ToList();
+            }
+        }
+
+        public Model.AlarmConfig GetAlarmConfigById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmConfig.Find(entityId);
+                return Entity;
+            }
+        }
+
+        public bool AddAlarmConfig(Model.AlarmConfig entity)
+        {
+            var validation = new AlarmConfigValidation.AlarmConfigEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                db.AlarmConfig.Add(entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+
+        public bool UpdateAlarmConfig(Model.AlarmConfig entity)
+        {
+            var validation = new AlarmConfigValidation.AlarmConfigEntityValidate().Validate(entity);
+            if (!validation.IsValid)
+                throw new ValidationException(validation.Errors);
+
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmConfig.Find(entity.Id);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
+
+                Entity.AlarmEventTypeId = entity.AlarmEventTypeId;
+                Entity.SendDoctorSMS = entity.SendDoctorSMS;
+                Entity.SendPhysictSMS = entity.SendPhysictSMS;
+                Entity.SendAdminSMS = entity.SendAdminSMS;
+                Entity.SendAggregateSMS = entity.SendAggregateSMS;
+                Entity.SendResidentSMS = entity.SendResidentSMS;
+                Entity.LastModifiedDate = DateTime.Now;
+                
+                return db.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteAlarmConfig(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmConfig.Find(entityId);
+                if (Entity == null)
+                    throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
+
+                db.AlarmConfig.Remove(Entity);
+                return db.SaveChanges() == 1;
+            }
+        }
+
+        public Model.AlarmConfig GetAlarmConfigByEventTypeId(Enums.AlarmEventType alarmEventType)
+        {
+            int EventTypeId = (int)alarmEventType;
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmConfig.Where(x=>x.AlarmEventTypeId == EventTypeId).FirstOrDefault();
+                return Entity;
+            }
+        }
+        #endregion 
+
+        #region AlarmEventType
+
+        public List<Model.AlarmEventType> GetAlarmEventTypeList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.AlarmEventType.OrderBy(x => x.Id).ToList();
+            }
+        }
+        public Model.AlarmEventType GetAlarmEventTypeById(int entityId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmEventType.Find(entityId);
+                return Entity;
+            }
+        }
+
+        #endregion
     }
 }

@@ -58,4 +58,18 @@ namespace PhysicManagement.Logic.Validations
     }
     #endregion
 
+    #region AlarmConfigValidation
+    public class AlarmConfigValidation
+    {
+
+        public class AlarmConfigEntityValidate : AbstractValidator<Model.AlarmConfig>
+        {
+            public AlarmConfigEntityValidate()
+            {
+
+            }
+        }
+    }
+    #endregion
+
 }

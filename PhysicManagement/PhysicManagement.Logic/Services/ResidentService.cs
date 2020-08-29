@@ -297,6 +297,16 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+
+        public List<Resident> GetResidentsByDoctorId(int doctorId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.Where(x=>x.DoctorId == doctorId).ToList();
+            }
+        }
+
+
         public bool AddResident(Model.Resident entity)
         {
             var vallidtion = new ResidentValidation.ResidentEntityValidation().Validate(entity);
