@@ -38,13 +38,7 @@
                             <div class="form-group dropdown-toggle">
 
                                 @Html.DropDownListFor(x=>x.ReplacementResidentId, (IEnumerable<SelectListItem>)ViewBag.ResidentList)
-                                @*<select name="ReplacementResidentId" id="ReplacementResidentId" class="selectpicker" data-style="btn btn-primary btn-round" disabled="disabled">
-                                    <option selected="">رزیدنت جایگزین</option>
-                                    @foreach (var item in ViewBag.ResidentList)
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                </select>*@
+                  
                             </div>
                         </div>
 

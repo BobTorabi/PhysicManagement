@@ -78,6 +78,7 @@ namespace PhysicManagement.Controllers
             }
         }
 
+        #region Alarm
         public ActionResult DoctorAlarm(int? doctorId)
         {
             if (doctorId == null)
@@ -124,5 +125,7 @@ namespace PhysicManagement.Controllers
             bool result = alarmService.SetDoctorAlarm(entity);
             return RedirectToAction("List", "Doctor");
         }
+
+        #endregion
     }
 }
