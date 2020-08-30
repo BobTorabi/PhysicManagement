@@ -313,7 +313,10 @@ namespace PhysicManagement.Controllers
                 Service.RegisterPatient
                 (patientFirstName, patientLastName, nationalCode, doctorId, mobile, description, isIranian);
             //SMS
-            new NotificationService().SendSMSAlarm((int)PatientObject.Id, Logic.Enums.AlarmEventType.MedicalRecordAdded);
+            //new NotificationService().SendSMSAlarm((int)PatientObject.Id, Logic.Enums.AlarmEventType.MedicalRecordAdded);
+            
+            //Setting default valuse at the moment
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.MedicalRecordAdded, (int)PatientObject.Id, true, true, true);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)

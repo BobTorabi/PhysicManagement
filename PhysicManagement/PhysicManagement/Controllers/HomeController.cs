@@ -16,7 +16,7 @@ namespace PhysicManagement.Controllers
         TreatmentCategoryService TreatmentCategoryService;
         public HomeController()
         {
-            //SMSWebService.SendSMS("09123399113", "نمونه پیامک تستی");
+            //SMSWebService.SendSMS("09122863082", "نمونه پیامک تستی");
             PatientService = new PatientService();
             ContourService = new ContourService();
             MedicalRecordService = new MedicalRecordService();
