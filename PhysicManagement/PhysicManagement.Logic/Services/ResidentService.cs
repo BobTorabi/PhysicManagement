@@ -253,7 +253,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.Resident> QueryableResident = db.Resident;
+                IQueryable<Model.Resident> QueryableResident = db.Resident.OrderByDescending(x => x.Id);
 
                 if (!string.IsNullOrEmpty(firstName))
                 {
@@ -302,7 +302,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.Resident.Where(x=>x.DoctorId == doctorId).ToList();
+                return db.Resident.Where(x => x.DoctorId == doctorId).ToList();
             }
         }
 
