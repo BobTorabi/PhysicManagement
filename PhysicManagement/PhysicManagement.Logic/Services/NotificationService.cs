@@ -23,7 +23,7 @@ namespace PhysicManagement.Logic.Services
 
         #region SMSandNotification
 
-        public void SendSMSAlarm(long? medicalRecordId, Enums.AlarmEventType alarmEventType)
+        private void SendSMSAlarm(long? medicalRecordId, Enums.AlarmEventType alarmEventType)
         {
             if (medicalRecordId == null)
                 return;
@@ -41,7 +41,7 @@ namespace PhysicManagement.Logic.Services
 
         }
 
-        public void SendSMSAlarm(int? patientId, Enums.AlarmEventType alarmEventType)
+        private void SendSMSAlarm(int? patientId, Enums.AlarmEventType alarmEventType)
         {
             if (patientId == null)
                 return;
@@ -55,8 +55,6 @@ namespace PhysicManagement.Logic.Services
 
 
             var alarmConfig = alarmService.GetAlarmConfigByEventTypeId(alarmEventType);
-
-
 
             var hasDoctorSMS = alarmConfig.SendDoctorSMS;
             if ((bool)hasDoctorSMS)
@@ -233,6 +231,9 @@ namespace PhysicManagement.Logic.Services
                 }
             }
 
+
+            //SMS Part
+            SendSMSAlarm((int)patientId, alarmEventType);
 
         }
 
