@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using PhysicManagement.Logic.Enums;
 using PhysicManagement.Model;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -443,6 +444,15 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.AlarmConfig.Where(x=>x.AlarmEventTypeId == EventTypeId).FirstOrDefault();
+                return Entity;
+            }
+        }
+
+        public Model.AlarmConfig GetAlarmConfigByEventTypeId(int alarmEventTypeId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.AlarmConfig.Where(x => x.AlarmEventTypeId == alarmEventTypeId).FirstOrDefault();
                 return Entity;
             }
         }

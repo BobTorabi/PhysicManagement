@@ -52,19 +52,11 @@ namespace PhysicManagement.Logic.Services
 
             var doctorId = (int)correspondentMedicalRecord.DoctorId;
             var doctor = new DoctorService().GetDoctorById(doctorId);
-            var eventTypeObj = alarmService.GetAlarmEventTypeById((int)alarmEventType);
+
 
             var alarmConfig = alarmService.GetAlarmConfigByEventTypeId(alarmEventType);
 
-            alarmService.AddAlarm(new Alarm()
-            {
-                AlarmEventTypeId = Convert.ToInt32(alarmEventType),
-                DoctorId = doctorId,
-                Title = eventTypeObj.Title,
-                IsDelivered =false,
-                SendDate = DateTime.Now
-                
-            });
+
 
             var hasDoctorSMS = alarmConfig.SendDoctorSMS;
             if ((bool)hasDoctorSMS)
@@ -111,6 +103,136 @@ namespace PhysicManagement.Logic.Services
                     }
                 }
             }
+
+        }
+
+        public void AddAlarm(Enums.AlarmEventType alarmEventType, long medicalRecordId, bool NeedSendToDoctor, bool NeedSendToResident, bool NeedSendToPhysist)
+        {
+            var eventTypeObj = alarmService.GetAlarmEventTypeById((int)alarmEventType);
+            var medicalRecord = MedicalRecordService.GetMedicalRecordById(medicalRecordId);
+            var alarmTitle = eventTypeObj.Title + " " + medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName + " " + Common.DateUtility.GetPersianDate(DateTime.Now);
+            var alarmBody = alarmTitle + '\n' + " پزشک معالج" + medicalRecord.DoctorLastName + " نوع بیماری" + medicalRecord.CancerTitle;
+
+            if (NeedSendToDoctor)
+            {
+                alarmService.AddAlarm(new Alarm()
+                {
+                    AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                    DoctorId = medicalRecord.DoctorId,
+                    Title = alarmTitle,
+                    Body = alarmBody,
+                    IsDelivered = false,
+                    SendDate = DateTime.Now
+                });
+            }
+            if (NeedSendToResident)
+            {
+                var residentList = residentService.GetResidentsByDoctorId((int)medicalRecord.DoctorId);
+
+                foreach (var item in residentList)
+                {
+                    alarmService.AddAlarm(new Alarm()
+                    {
+                        AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                        ResidentId = item.Id,
+                        Title = alarmTitle,
+                        Body = alarmBody,
+                        IsDelivered = false,
+                        SendDate = DateTime.Now
+                    });
+                }
+            }
+            if (NeedSendToPhysist)
+            {
+                var physictList = physicUserService.GetPhysicUsers();
+                foreach (var item in physictList)
+                {
+                    alarmService.AddAlarm(new Alarm()
+                    {
+                        AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                        PhysicUserId = item.Id,
+                        Title = alarmTitle,
+                        Body = alarmBody,
+                        IsDelivered = false,
+                        SendDate = DateTime.Now
+                    });
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// الآن وضعیت ارسال آلارم به این صورت است که وقتی یک پرونده ارائه شود متناسب با مرحله ای که بیمار در آن قرار گرفته است و پارامترهایی که به این متد ارسال می شود آلارم برای پزشکان، کارشناسان بخش فیزیک و رزیدنت های مرتبط با پزشک پرونده ارسال می شود
+        /// </summary>
+        /// <param name="alarmEventType">از جدول AlarmEventType</param>
+        /// <param name="patientId">کد بیمار در بانک اطلاعاتی یا همان آیدی بیمار</param>
+        /// <param name="NeedSendToDoctor">لازم است به دکتر پرونده آلارم داده شود؟</param>
+        /// <param name="NeedSendToResident">لازم است به رزیدنت های پزشک مربوطه آلارم ارسال شود؟</param>
+        /// <param name="NeedSendToPhysist">آیا به کل کارشناسان فیزیک لازم است آلارم ارسال شود؟</param>
+        public void AddAlarm(Enums.AlarmEventType alarmEventType, int patientId, bool NeedSendToDoctor, bool NeedSendToResident, bool NeedSendToPhysist)
+        {
+            var eventTypeObj = alarmService.GetAlarmEventTypeById((int)alarmEventType);
+            var medicalRecord = MedicalRecordService.GetMedicalRecordByPatientId(patientId).Last();
+            var alarmTitle = eventTypeObj.Title + " - " + medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName + " " + Common.DateUtility.GetPersianDate(DateTime.Now);
+            var alarmBody = alarmTitle + '\n' + " پزشک معالج: " + medicalRecord.DoctorLastName + (string.IsNullOrEmpty(medicalRecord.CancerTitle) ? " " : " نوع بیماری" + medicalRecord.CancerTitle);
+
+            if (NeedSendToDoctor)
+            {
+                alarmService.AddAlarm(new Alarm()
+                {
+                    AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                    DoctorId = medicalRecord.DoctorId,
+                    Title = alarmTitle,
+                    Body = alarmBody,
+                    IsDelivered = false,
+                    IsSMS = false,
+                    PatientFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName,
+                    TreatmentProcessId = medicalRecord.TreatmentProcessId,
+                    SendDate = DateTime.Now
+                }); 
+            }
+
+            if (NeedSendToResident)
+            {
+                var residentList = residentService.GetResidentsByDoctorId((int)medicalRecord.DoctorId);
+
+                foreach (var item in residentList)
+                {
+                    alarmService.AddAlarm(new Alarm()
+                    {
+                        AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                        ResidentId = item.Id,
+                        Title = alarmTitle,
+                        Body = alarmBody,
+                        IsDelivered = false,
+                        IsSMS = false,
+                        PatientFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName,
+                        TreatmentProcessId = medicalRecord.TreatmentProcessId,
+                        SendDate = DateTime.Now
+                    }); 
+                }
+            }
+            if (NeedSendToPhysist)
+            {
+                var physictList = physicUserService.GetPhysicUsers();
+                foreach (var item in physictList)
+                {
+                    alarmService.AddAlarm(new Alarm()
+                    {
+                        AlarmEventTypeId = Convert.ToInt32(alarmEventType),
+                        PhysicUserId = item.Id,
+                        Title = alarmTitle,
+                        Body = alarmBody,
+                        IsDelivered = false,
+                        IsSMS = false,
+                        PatientFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName,
+                        TreatmentProcessId = medicalRecord.TreatmentProcessId,
+                        SendDate = DateTime.Now
+                    });
+                }
+            }
+
 
         }
 
