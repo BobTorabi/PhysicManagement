@@ -120,7 +120,9 @@ namespace PhysicManagement.Logic.Services
                     Title = alarmTitle,
                     Body = alarmBody,
                     IsDelivered = false,
-                    SendDate = DateTime.Now
+                    SendDate = DateTime.Now,
+                    TreatmentProcessId = eventTypeObj.TreatmentProcessStepId
+
                 });
             }
             if (NeedSendToResident)
@@ -136,7 +138,8 @@ namespace PhysicManagement.Logic.Services
                         Title = alarmTitle,
                         Body = alarmBody,
                         IsDelivered = false,
-                        SendDate = DateTime.Now
+                        SendDate = DateTime.Now,
+                        TreatmentProcessId = eventTypeObj.TreatmentProcessStepId
                     });
                 }
             }
@@ -152,7 +155,8 @@ namespace PhysicManagement.Logic.Services
                         Title = alarmTitle,
                         Body = alarmBody,
                         IsDelivered = false,
-                        SendDate = DateTime.Now
+                        SendDate = DateTime.Now,
+                        TreatmentProcessId = eventTypeObj.TreatmentProcessStepId
                     });
                 }
             }

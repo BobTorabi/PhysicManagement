@@ -72,7 +72,7 @@ namespace PhysicManagement.Controllers
 
         public JsonResult SetCountorForMediacalRecord(CountorDataForMedicalRecordVM data)
         {
-            var ContourSet = MedicalRecordService.SetCancerForMR(data.MedicalRecordId, data.CancerId,data.DoctorDescription,data.ResidentDescription);
+            var ContourSet = MedicalRecordService.SetCancerForMR(data.MedicalRecordId, data.CancerId, data.DoctorDescription, data.ResidentDescription);
             var ContourData = Service.GetContourByMedicalRecordId(data.MedicalRecordId);
 
             if (data.OARs != null && data.OARs.Count != 0)
@@ -115,6 +115,7 @@ namespace PhysicManagement.Controllers
                 }
             }
 
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.ContourAdded, (long)data.MedicalRecordId, true, true, true);
             return Json(new { location = "" }, JsonRequestBehavior.AllowGet);
         }
         //[HttpPost]

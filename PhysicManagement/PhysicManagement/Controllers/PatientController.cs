@@ -360,6 +360,7 @@ namespace PhysicManagement.Controllers
         public ActionResult SetCTAndMIRDataForMedicalRecord(int medicalRecordId, string cTScanCode, string cTScanDescription, string mRICode)
         {
             var Data = Service.SetPatientMediacalRecordCTScanData(medicalRecordId, cTScanCode, cTScanDescription, mRICode);
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.CTCodeAdded, (long)medicalRecordId, true, true, true);
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 
@@ -380,6 +381,7 @@ namespace PhysicManagement.Controllers
         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
         {
             var Data = Service.SetPatientMediacalRecordCPAndFusion(medicalRecordId, TPDescription, needFusion);
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.TPSofwareSelected, (long)medicalRecordId, true, true, true);
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 

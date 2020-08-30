@@ -19,7 +19,7 @@
                             <th>ردیف</th>
                             <th>پیام</th>
                             <th>تاریخ ارسال</th>
-                            <th>بیمار</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -77,7 +77,7 @@
                             <th>ردیف</th>
                             <th>پیام</th>
                             <th>تاریخ ارسال</th>
-                            <th>بیمار</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -97,7 +97,7 @@
                                         @Html.DisplayForDateTime(item.SendDate)
                                     </td>
                                     <td>
-                                        @item.PatientFullName
+                                        
                                     </td>
                                     <td>
                                         <div class="togglebutton">
@@ -135,7 +135,6 @@
         function setAsRead(alarmId) {
             var alarmArray = new Array();
             alarmArray.push(alarmId);
-            alert(JSON.stringify(alarmArray));
             $.ajax({
                 type: "POST",
                 url: "/Alarm/SetAlarmAsRead",
@@ -145,6 +144,7 @@
                 traditional: true
             });
             alert('بروزرسانی با موفقیت انجام شد');
+            location.reload();
         }
     });
 </script>
