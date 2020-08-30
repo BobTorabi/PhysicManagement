@@ -86,25 +86,17 @@ namespace PhysicManagement.Controllers
             return View(unreadAlarms);
         }
 
-        [HttpPost]
-        public JsonResult SetAlarmAsRead(int id)
+        public ActionResult SetAlarmAsRead(string[] ids)
         {
-            var AlarmData = Service.GetAlarmById(id);
-            AlarmData.IsDelivered = true;
-            bool IsDone = Service.UpdateAlarm(AlarmData);
-            var Result = new MegaViewModel<bool>();
-            if (IsDone)
+            if (ids.Length > 0)
             {
-                Result.Data = true;
-                Result.Status = MegaStatus.Successfull;
+                foreach (var alarmId in ids)
+                {
+                    Service.DeliverAlarm(Convert.ToInt32(alarmId));
+                }
             }
-            else
-            {
-                Result.Data = false;
-                Result.Status = MegaStatus.Failed;
-                Result.Messages.Add("خطا در خواندن پیام");
-            }
-            return Json(Result, JsonRequestBehavior.AllowGet);
+            
+            return RedirectToAction("Inbox","Alarm");
         }
 
 
