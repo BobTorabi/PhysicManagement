@@ -64,6 +64,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+
         public bool DeleteAlarm(long entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -76,6 +77,7 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+
         public List<Model.Alarm> GetUnreadAlarmListByUserType(UserType userType, int entityId)
         {
             if (entityId == 0)
@@ -97,6 +99,16 @@ namespace PhysicManagement.Logic.Services
                         return null;
                 }
             }
+        }
+
+        public bool DeliverAlarm(long alarmId)
+        {
+            var alarmEntity = GetAlarmById(alarmId);
+            if (alarmEntity == null)
+                return false;
+            alarmEntity.IsDelivered = true;
+            alarmEntity.DeliverDate = DateTime.Now;
+            return UpdateAlarm(alarmEntity);
         }
         #endregion
 
