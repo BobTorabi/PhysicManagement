@@ -36,6 +36,8 @@
         <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.75" PointX="5.25" PointY="25.875" />
         <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
         <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" Width="1.5" PointX="2.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -107,6 +107,12 @@
     <Compile Include="Patient.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="PhysicTreatmentPlan.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PhysicTreatmentPlanDetail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="PhysicTreatmentPlanHistory.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

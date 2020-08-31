@@ -219,6 +219,41 @@
           <Property Name="IsIranian" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="PhysicTreatmentPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlanNo" Type="int" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="bigint" Nullable="false" />
+          <Property Name="PhysicId" Type="int" Nullable="false" />
+          <Property Name="PhysicFullName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PhysicApplyDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PhysicComment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsApprovedByDoctor" Type="bit" />
+          <Property Name="DoctorId" Type="int" />
+          <Property Name="DoctorFullName" Type="nchar" MaxLength="10" />
+          <Property Name="DoctorComment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Fields" Type="int" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlanDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhysicTreatmentPlanId" Type="int" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="bigint" />
+          <Property Name="PatientFirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PatientLastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CancerOARId" Type="int" />
+          <Property Name="CancerOARIdValue" Type="nvarchar(max)" />
+          <Property Name="CancerOARTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="CancerOARTolerance" Type="nvarchar" MaxLength="500" />
+          <Property Name="CancerTargetId" Type="int" />
+          <Property Name="CancerTargetTitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="CancerTargetValue" Type="nvarchar(max)" />
+          <Property Name="CancerTargetOptimum" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="PhysicTreatmentPlanHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -490,6 +525,8 @@
           <EntitySet Name="KFactor" EntityType="Self.KFactor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicTreatmentPlan" EntityType="Self.PhysicTreatmentPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicTreatmentPlanDetail" EntityType="Self.PhysicTreatmentPlanDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicTreatmentPlanHistory" EntityType="Self.PhysicTreatmentPlanHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicUser" EntityType="Self.PhysicUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resident" EntityType="Self.Resident" Schema="dbo" store:Type="Tables" />
@@ -662,6 +699,8 @@
             <End Role="Contour" EntitySet="Contour" />
             <End Role="ContourDetails" EntitySet="ContourDetails" />
           </AssociationSet>
+          <EntitySet Name="PhysicTreatmentPlan" EntityType="PhysicManagementModel.PhysicTreatmentPlan" />
+          <EntitySet Name="PhysicTreatmentPlanDetail" EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" />
           </EntityContainer>
         <EntityType Name="PhysicUser">
           <Key>
@@ -1081,6 +1120,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PhysicTreatmentPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanNo" Type="Int32" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
+          <Property Name="PhysicId" Type="Int32" Nullable="false" />
+          <Property Name="PhysicFullName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PhysicApplyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PhysicComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsApprovedByDoctor" Type="Boolean" />
+          <Property Name="DoctorId" Type="Int32" />
+          <Property Name="DoctorFullName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DoctorComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Fields" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PhysicTreatmentPlanDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhysicTreatmentPlanId" Type="Int32" Nullable="false" />
+          <Property Name="MedicalRecordId" Type="Int64" />
+          <Property Name="PatientFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PatientLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CancerOARId" Type="Int32" />
+          <Property Name="CancerOARIdValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CancerOARTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CancerOARTolerance" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CancerTargetId" Type="Int32" />
+          <Property Name="CancerTargetTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CancerTargetValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CancerTargetOptimum" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1481,6 +1555,43 @@
                 <ScalarProperty Name="DoctorDescription" ColumnName="DoctorDescription" />
                 <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
                 <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatmentPlan">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlan">
+              <MappingFragment StoreEntitySet="PhysicTreatmentPlan">
+                <ScalarProperty Name="Fields" ColumnName="Fields" />
+                <ScalarProperty Name="DoctorComment" ColumnName="DoctorComment" />
+                <ScalarProperty Name="DoctorFullName" ColumnName="DoctorFullName" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="IsApprovedByDoctor" ColumnName="IsApprovedByDoctor" />
+                <ScalarProperty Name="PhysicComment" ColumnName="PhysicComment" />
+                <ScalarProperty Name="PhysicApplyDate" ColumnName="PhysicApplyDate" />
+                <ScalarProperty Name="PhysicFullName" ColumnName="PhysicFullName" />
+                <ScalarProperty Name="PhysicId" ColumnName="PhysicId" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PlanNo" ColumnName="PlanNo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicTreatmentPlanDetail">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlanDetail">
+              <MappingFragment StoreEntitySet="PhysicTreatmentPlanDetail">
+                <ScalarProperty Name="CancerTargetOptimum" ColumnName="CancerTargetOptimum" />
+                <ScalarProperty Name="CancerTargetValue" ColumnName="CancerTargetValue" />
+                <ScalarProperty Name="CancerTargetTitle" ColumnName="CancerTargetTitle" />
+                <ScalarProperty Name="CancerTargetId" ColumnName="CancerTargetId" />
+                <ScalarProperty Name="CancerOARTolerance" ColumnName="CancerOARTolerance" />
+                <ScalarProperty Name="CancerOARTitle" ColumnName="CancerOARTitle" />
+                <ScalarProperty Name="CancerOARIdValue" ColumnName="CancerOARIdValue" />
+                <ScalarProperty Name="CancerOARId" ColumnName="CancerOARId" />
+                <ScalarProperty Name="PatientLastName" ColumnName="PatientLastName" />
+                <ScalarProperty Name="PatientFirstName" ColumnName="PatientFirstName" />
+                <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />
+                <ScalarProperty Name="PhysicTreatmentPlanId" ColumnName="PhysicTreatmentPlanId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
