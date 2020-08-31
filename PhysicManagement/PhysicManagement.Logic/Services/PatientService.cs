@@ -556,6 +556,8 @@ namespace PhysicManagement.Logic.Services
                 TreatmentProcessId = 1, // پذیرش شده
                 LastTreatmentProcessChangeDate = DateTime.Now,
             });
+
+           
             if (!IsMedicalRecordInserted)
                 throw Common.MegaException.ThrowException("امکان ثبت این کاربر وجود ندارد.لطفا با واحد فنی تماس بگیرید.");
 

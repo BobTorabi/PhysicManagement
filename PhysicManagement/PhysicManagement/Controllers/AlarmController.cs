@@ -1,6 +1,10 @@
 ﻿using PhysicManagement.Logic.Services;
+using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Model;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects.DataClasses;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -82,23 +86,94 @@ namespace PhysicManagement.Controllers
             return View(unreadAlarms);
         }
 
-        [HttpPost]
-        public JsonResult SetAlarmAsRead(int id) {
-            var AlarmData = Service.GetAlarmById(id);
-            AlarmData.IsDelivered = true;
-            bool IsDone = Service.UpdateAlarm(AlarmData);
-            var Result = new MegaViewModel<bool>();
-            if (IsDone)
+        public ActionResult SetAlarmAsRead(string[] ids)
+        {
+            if (ids.Length > 0)
             {
-                Result.Data = true;
-                Result.Status = MegaStatus.Successfull;
+                foreach (var alarmId in ids)
+                {
+                    Service.DeliverAlarm(Convert.ToInt32(alarmId));
+                }
             }
-            else {
-                Result.Data = false;
-                Result.Status = MegaStatus.Failed;
-                Result.Messages.Add("خطا در خواندن پیام");
-            }
-            return Json(Result, JsonRequestBehavior.AllowGet);
+            
+            return RedirectToAction("Inbox","Alarm");
         }
+
+
+        #region SMSConfig
+        public ActionResult SMSConfig()
+        {
+            return View(Service.GetAlarmConfigList());
+        }
+
+        [HttpPost]
+        public ActionResult DoctorSMSConfig(int[] alarmEventTypeIds)
+        {
+            if (alarmEventTypeIds.Length > 0)
+            {
+                var allrecords = Service.GetAlarmConfigList();
+
+                foreach (var item in allrecords)
+                {
+                    if (alarmEventTypeIds.Contains((int)item.AlarmEventTypeId))
+                    {
+                        item.SendDoctorSMS = true;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                    else
+                    {
+                        item.SendDoctorSMS = false;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                }
+            }
+            return View();
+        }
+
+        public ActionResult ResidentSMSConfig(int[] alarmEventTypeIds)
+        {
+            if (alarmEventTypeIds.Length > 0)
+            {
+                var allrecords = Service.GetAlarmConfigList();
+
+                foreach (var item in allrecords)
+                {
+                    if (alarmEventTypeIds.Contains((int)item.AlarmEventTypeId))
+                    {
+                        item.SendResidentSMS = true;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                    else
+                    {
+                        item.SendResidentSMS = false;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                }
+            }
+            return View();
+        }
+        public ActionResult PhysistSMSConfig(int[] alarmEventTypeIds)
+        {
+            if (alarmEventTypeIds.Length > 0)
+            {
+                var allrecords = Service.GetAlarmConfigList();
+
+                foreach (var item in allrecords)
+                {
+                    if (alarmEventTypeIds.Contains((int)item.AlarmEventTypeId))
+                    {
+                        item.SendPhysictSMS = true;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                    else
+                    {
+                        item.SendPhysictSMS = false;
+                        Service.UpdateAlarmConfig(item);
+                    }
+                }
+            }
+            return View();
+        }
+        #endregion
     }
 }

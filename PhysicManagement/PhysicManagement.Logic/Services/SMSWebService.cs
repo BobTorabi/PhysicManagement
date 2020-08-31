@@ -1,8 +1,4 @@
-﻿using System;
-using NikSms.Library.Net.ViewModels;
-using NikSms.Library.Net.WebServiceV1;
-
-namespace PhysicManagement.Logic.Services
+﻿namespace PhysicManagement.Logic.Services
 {
     public class SMSWebService
     {

@@ -1,8 +1,5 @@
 ﻿using PhysicManagement.Logic.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -16,7 +13,7 @@ namespace PhysicManagement.Controllers
         TreatmentCategoryService TreatmentCategoryService;
         public HomeController()
         {
-            //SMSWebService.SendSMS("09123399113", "نمونه پیامک تستی");
+            //SMSWebService.SendSMS("09122863082", "نمونه پیامک تستی");
             PatientService = new PatientService();
             ContourService = new ContourService();
             MedicalRecordService = new MedicalRecordService();

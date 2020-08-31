@@ -18,7 +18,6 @@ namespace PhysicManagement.Controllers
         readonly CalendarService CalendarService;
         readonly DoctorService DoctorService;
 
-
         public PatientController()
         {
             Service = new PatientService();
@@ -246,9 +245,7 @@ namespace PhysicManagement.Controllers
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return Redirect("~/TreatmentPhase/List");
         }
-        public ActionResult
-            PatientSearch
-            (string firstName, string lastName, string mobile, string nationalCode,
+        public ActionResult PatientSearch(string firstName, string lastName, string mobile, string nationalCode,
             string caseCode, string code, int? lastDaysReport,
             bool? ContourState, int? DoctorId, string RecieptDate
             )
@@ -315,6 +312,11 @@ namespace PhysicManagement.Controllers
             var PatientObject = 
                 Service.RegisterPatient
                 (patientFirstName, patientLastName, nationalCode, doctorId, mobile, description, isIranian);
+            //SMS
+            //new NotificationService().SendSMSAlarm((int)PatientObject.Id, Logic.Enums.AlarmEventType.MedicalRecordAdded);
+            
+            //Setting default valuse at the moment
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.MedicalRecordAdded, (int)PatientObject.Id, true, true, true);
             return Json(new { location = "PatientInfo?patientId=" + PatientObject.Id }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult PatientInfo(long patientId)
@@ -358,6 +360,7 @@ namespace PhysicManagement.Controllers
         public ActionResult SetCTAndMIRDataForMedicalRecord(int medicalRecordId, string cTScanCode, string cTScanDescription, string mRICode)
         {
             var Data = Service.SetPatientMediacalRecordCTScanData(medicalRecordId, cTScanCode, cTScanDescription, mRICode);
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.CTCodeAdded, (long)medicalRecordId, true, true, true);
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 
@@ -378,6 +381,7 @@ namespace PhysicManagement.Controllers
         public ActionResult SetPatientMediacalRecordCPAndFusion(int medicalRecordId, string TPDescription, bool needFusion)
         {
             var Data = Service.SetPatientMediacalRecordCPAndFusion(medicalRecordId, TPDescription, needFusion);
+            new NotificationService().AddAlarm(Logic.Enums.AlarmEventType.TPSofwareSelected, (long)medicalRecordId, true, true, true);
             return Json(new MegaViewModel<bool>() { Data = Data }, JsonRequestBehavior.AllowGet);
         }
 

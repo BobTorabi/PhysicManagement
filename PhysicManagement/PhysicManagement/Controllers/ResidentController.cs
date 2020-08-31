@@ -1,4 +1,5 @@
 ﻿using PhysicManagement.Logic.Services;
+using PhysicManagement.Model;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -8,10 +9,12 @@ namespace PhysicManagement.Controllers
     {
         ResidentService Service;
         DoctorService DoctorService;
+        AlarmService alarmService;
         public ResidentController()
         {
             Service = new ResidentService();
             DoctorService = new DoctorService();
+            alarmService = new AlarmService();
         }
         public ActionResult Index()
         {
@@ -79,5 +82,28 @@ namespace PhysicManagement.Controllers
             Service.DeleteResident(ResidentData.Id);
             return RedirectToAction("List");
         }
+
+        #region Alarm
+        public ActionResult ResidentAlarm(int? ResidentId)
+        {
+            if (ResidentId == null)
+                return View(new Model.Resident());
+
+            var ResidentEntity = Service.GetResidentById((int)ResidentId);
+            var ResidentAlarmEntity = alarmService.GetResidentAlarmByResidentId(ResidentEntity.Id);
+
+            ViewBag.ResidentName = ResidentEntity.FirstName + " " + ResidentEntity.LastName;
+            return View(ResidentAlarmEntity);
+        }
+
+
+        [HttpPost]
+        public ActionResult ResidentAlarm(ResidentAlarm entity)
+        {
+            bool result = alarmService.SetResidentAlarm(entity);
+            return RedirectToAction("List", "Resident");
+        }
+
+        #endregion
     }
 }

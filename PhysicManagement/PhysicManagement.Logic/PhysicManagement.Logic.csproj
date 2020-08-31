@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AlarmEventType.cs" />
     <Compile Include="Enums\SortType.cs" />
     <Compile Include="Enums\TreatmentProcessType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Services\DoctorService.cs" />
     <Compile Include="Services\kFactorService.cs" />
     <Compile Include="Services\MedicalRecordService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />

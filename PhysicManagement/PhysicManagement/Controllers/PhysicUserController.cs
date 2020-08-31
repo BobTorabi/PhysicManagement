@@ -1,5 +1,5 @@
 ﻿using PhysicManagement.Logic.Services;
-using System.Collections.Generic;
+using PhysicManagement.Model;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -7,9 +7,11 @@ namespace PhysicManagement.Controllers
     public class PhysicUserController : BaseController
     {
         PhysicUserService Service;
+        AlarmService alarmService;
         public PhysicUserController()
         {
             Service = new PhysicUserService();
+            alarmService = new AlarmService();
         }
         public ActionResult Index()
         {
@@ -74,5 +76,28 @@ namespace PhysicManagement.Controllers
             Service.DeletePhysicUser(PhysicUserData.Id);
             return RedirectToAction("List");
         }
+
+        #region Alarm
+        public ActionResult PhysicUserAlarm(int? PhysicUserId)
+        {
+            if (PhysicUserId == null)
+                return View(new Model.PhysicUser());
+
+            var PhysicUserEntity = Service.GetPhysicUserById((int)PhysicUserId);
+            var PhysicUserAlarmEntity = alarmService.GetPhysicUserAlarmByPhysicUserId(PhysicUserEntity.Id);
+
+            ViewBag.PhysicUserName = PhysicUserEntity.FirstName + " " + PhysicUserEntity.LastName;
+            return View(PhysicUserAlarmEntity);
+        }
+
+
+        [HttpPost]
+        public ActionResult PhysicUserAlarm(PhysicUserAlarm entity)
+        {
+            bool result = alarmService.SetPhysicUserAlarm(entity);
+            return RedirectToAction("List", "PhysicUser");
+        }
+
+        #endregion
     }
 }

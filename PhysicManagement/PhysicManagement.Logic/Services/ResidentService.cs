@@ -253,7 +253,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                IQueryable<Model.Resident> QueryableResident = db.Resident;
+                IQueryable<Model.Resident> QueryableResident = db.Resident.OrderByDescending(x => x.Id);
 
                 if (!string.IsNullOrEmpty(firstName))
                 {
@@ -280,6 +280,15 @@ namespace PhysicManagement.Logic.Services
                 };
             }
         }
+
+        public List<Resident> GetResidentList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.ToList(); ;
+            }
+        }
+
         public Model.Resident GetResidentById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -288,6 +297,16 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+
+        public List<Resident> GetResidentsByDoctorId(int doctorId)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.Where(x => x.DoctorId == doctorId).ToList();
+            }
+        }
+
+
         public bool AddResident(Model.Resident entity)
         {
             var vallidtion = new ResidentValidation.ResidentEntityValidation().Validate(entity);
@@ -330,7 +349,14 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
-        #endregion
 
+        public List<ViewModels.IdName> GetIdNameFromResidentList()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.Resident.Select(x => new ViewModels.IdName { Id = x.Id, Name = x.FirstName + " " + x.LastName }).OrderBy(x => x.Name).ToList();
+            }
+        }
+        #endregion
     }
 }
