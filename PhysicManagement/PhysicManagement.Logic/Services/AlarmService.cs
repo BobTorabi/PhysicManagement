@@ -118,14 +118,14 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.DoctorAlarms.OrderBy(x => x.Id).ToList();
+                return db.DoctorAlarm.OrderBy(x => x.Id).ToList();
             }
         }
         public Model.DoctorAlarm GetDoctorAlarmById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.DoctorAlarms.Find(entityId);
+                var Entity = db.DoctorAlarm.Find(entityId);
                 return Entity;
             }
         }
@@ -137,7 +137,7 @@ namespace PhysicManagement.Logic.Services
             {
                 var doctor = db.Doctor.Find(entityId);
                 if (doctor != null)
-                    doctorAlarm = db.DoctorAlarms.Where(x => x.DoctorId == doctor.Id).FirstOrDefault();
+                    doctorAlarm = db.DoctorAlarm.Where(x => x.DoctorId == doctor.Id).FirstOrDefault();
                 else
                     return null;
                 return doctorAlarm;
@@ -153,7 +153,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 entity.ChangeDate = DateTime.Now;
-                db.DoctorAlarms.Add(entity);
+                db.DoctorAlarm.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -165,7 +165,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.DoctorAlarms.Find(entity.Id);
+                var Entity = db.DoctorAlarm.Find(entity.Id);
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
@@ -181,11 +181,11 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.DoctorAlarms.Find(entityId);
+                var Entity = db.DoctorAlarm.Find(entityId);
                 if (Entity == null)
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
 
-                db.DoctorAlarms.Remove(Entity);
+                db.DoctorAlarm.Remove(Entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -208,14 +208,14 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.ResidentAlarms.OrderBy(x => x.Id).ToList();
+                return db.ResidentAlarm.OrderBy(x => x.Id).ToList();
             }
         }
         public Model.ResidentAlarm GetResidentAlarmById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.ResidentAlarms.Find(entityId);
+                var Entity = db.ResidentAlarm.Find(entityId);
                 return Entity;
             }
         }
@@ -227,7 +227,7 @@ namespace PhysicManagement.Logic.Services
             {
                 var Resident = db.Resident.Find(entityId);
                 if (Resident != null)
-                    ResidentAlarm = db.ResidentAlarms.Where(x => x.ResidentId == Resident.Id).FirstOrDefault();
+                    ResidentAlarm = db.ResidentAlarm.Where(x => x.ResidentId == Resident.Id).FirstOrDefault();
                 else
                     return null;
                 return ResidentAlarm;
@@ -243,7 +243,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 entity.ChangeDate = DateTime.Now;
-                db.ResidentAlarms.Add(entity);
+                db.ResidentAlarm.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -255,7 +255,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.ResidentAlarms.Find(entity.Id);
+                var Entity = db.ResidentAlarm.Find(entity.Id);
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
@@ -270,11 +270,11 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.ResidentAlarms.Find(entityId);
+                var Entity = db.ResidentAlarm.Find(entityId);
                 if (Entity == null)
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
 
-                db.ResidentAlarms.Remove(Entity);
+                db.ResidentAlarm.Remove(Entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -297,14 +297,14 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.PhysicUserAlarms.OrderBy(x => x.Id).ToList();
+                return db.PhysicUserAlarm.OrderBy(x => x.Id).ToList();
             }
         }
         public Model.PhysicUserAlarm GetPhysicUserAlarmById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.PhysicUserAlarms.Find(entityId);
+                var Entity = db.PhysicUserAlarm.Find(entityId);
                 return Entity;
             }
         }
@@ -316,7 +316,7 @@ namespace PhysicManagement.Logic.Services
             {
                 var PhysicUser = db.PhysicUser.Find(entityId);
                 if (PhysicUser != null)
-                    PhysicUserAlarm = db.PhysicUserAlarms.Where(x => x.PhysicUserId == PhysicUser.Id).FirstOrDefault();
+                    PhysicUserAlarm = db.PhysicUserAlarm.Where(x => x.PhysicUserId == PhysicUser.Id).FirstOrDefault();
                 else
                     return null;
                 return PhysicUserAlarm;
@@ -332,7 +332,7 @@ namespace PhysicManagement.Logic.Services
             using (var db = new Model.PhysicManagementEntities())
             {
                 entity.ChangeDate = DateTime.Now;
-                db.PhysicUserAlarms.Add(entity);
+                db.PhysicUserAlarm.Add(entity);
                 return db.SaveChanges() == 1;
             }
         }
@@ -344,7 +344,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.PhysicUserAlarms.Find(entity.Id);
+                var Entity = db.PhysicUserAlarm.Find(entity.Id);
                 if (Entity == null)
                     throw Common.MegaException.ThrowException("این رکورد در پایگاه داده پیدا نشد.");
 
@@ -359,11 +359,11 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.PhysicUserAlarms.Find(entityId);
+                var Entity = db.PhysicUserAlarm.Find(entityId);
                 if (Entity == null)
                     throw new ValidationException("این رکورد در پایگاه داده وجود ندارد");
 
-                db.PhysicUserAlarms.Remove(Entity);
+                db.PhysicUserAlarm.Remove(Entity);
                 return db.SaveChanges() == 1;
             }
         }

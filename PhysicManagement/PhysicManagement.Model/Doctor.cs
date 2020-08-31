@@ -17,7 +17,7 @@ namespace PhysicManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Doctor()
         {
-            this.DoctorAlarms = new HashSet<DoctorAlarm>();
+            this.DoctorAlarm = new HashSet<DoctorAlarm>();
         }
     
         public int Id { get; set; }
@@ -27,13 +27,13 @@ namespace PhysicManagement.Model
         public string Code { get; set; }
         public string Gender { get; set; }
         public string Degree { get; set; }
-        public string Description { get; set; }
         public string ExpertiseMajor { get; set; }
+        public string Description { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DoctorAlarm> DoctorAlarms { get; set; }
+        public virtual ICollection<DoctorAlarm> DoctorAlarm { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace PhysicManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Resident()
         {
-            this.ResidentAlarms = new HashSet<ResidentAlarm>();
+            this.ResidentAlarm = new HashSet<ResidentAlarm>();
         }
     
         public int Id { get; set; }
@@ -33,6 +33,6 @@ namespace PhysicManagement.Model
         public Nullable<int> DoctorId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ResidentAlarm> ResidentAlarms { get; set; }
+        public virtual ICollection<ResidentAlarm> ResidentAlarm { get; set; }
     }
 }

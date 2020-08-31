@@ -4,43 +4,43 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f7cfb5f41c3a4473a9d43751401ba37a" Name="Diagram1" ZoomLevel="83">
-        <EntityTypeShape EntityType="PhysicManagementModel.Calendar" Width="1.875" PointX="8.5" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Cancer" Width="1.5" PointX="14.5" PointY="5.5" IsExpanded="true" FillColor="192, 0, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.CancerOAR" Width="1.5" PointX="16.75" PointY="4" IsExpanded="true" FillColor="192, 0, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Doctor" Width="1.5" PointX="0.625" PointY="12" IsExpanded="true" />
+      <Diagram DiagramId="41d846b3c9d7420baccdc8030942c150" Name="Diagram1" ZoomLevel="69">
+        <EntityTypeShape EntityType="PhysicManagementModel.Alarm" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.AlarmConfig" Width="1.5" PointX="8" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.AlarmEventType" Width="1.5" PointX="5.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Calendar" Width="1.5" PointX="5.25" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Cancer" Width="1.5" PointX="9.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.CancerOAR" Width="1.5" PointX="12" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.CancerTarget" Width="1.5" PointX="12" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Doctor" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.KFactor" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="12.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanHistory" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicUser" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.Resident" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategory" Width="1.5" PointX="9.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategoryService" Width="1.5" PointX="12" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentDevice" Width="1.5" PointX="2.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhase" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhaseDetail" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentProcess" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="PhysicManagementModel.FK_AlarmConfig_AlarmEventType" ManuallyRouted="false" />
+        <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" ManuallyRouted="false" />
         <AssociationConnector Association="PhysicManagementModel.FK_CancerOAR_Cancer" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicUser" Width="1.5" PointX="12.75" PointY="0.5" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Resident" Width="1.5" PointX="10.875" PointY="0.5" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentDevice" Width="2" PointX="6.5" PointY="0.625" />
-        <EntityTypeShape EntityType="PhysicManagementModel.User" Width="1.5" PointX="11.375" PointY="4.75" />
-        <EntityTypeShape EntityType="PhysicManagementModel.CancerTarget" Width="1.5" PointX="16.75" PointY="7.5" FillColor="DarkRed" />
-        <AssociationConnector Association="PhysicManagementModel.FK_CancerTargets_Cancer" />
-        <EntityTypeShape EntityType="PhysicManagementModel.ContourDetails" Width="1.5" PointX="7.5" PointY="26.125" />
-        <EntityTypeShape EntityType="PhysicManagementModel.MedicalRecord" Width="1.5" PointX="3" PointY="22.5" />
-        <AssociationConnector Association="PhysicManagementModel.FK_Calendar_MedicalRecord" />
-        <EntityTypeShape EntityType="PhysicManagementModel.KFactor" Width="1.5" PointX="3.875" PointY="0.625" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategory" Width="2.25" PointX="13.25" PointY="10.5" FillColor="192, 192, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentCategoryService" Width="1.5" PointX="15.875" PointY="10.75" FillColor="192, 192, 0" />
-        <AssociationConnector Association="PhysicManagementModel.FK_TreatmentCategoryService_TreatmentCategory" />
-        <EntityTypeShape EntityType="PhysicManagementModel.AlarmConfig" Width="1.5" PointX="5.5" PointY="19" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.AlarmEventType" Width="1.5" PointX="5.5" PointY="16.25" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentProcess" Width="2.125" PointX="0.75" PointY="0.75" />
-        <AssociationConnector Association="PhysicManagementModel.FK_AlarmConfig_AlarmEventType" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Alarm" Width="1.5" PointX="3.375" PointY="14.75" FillColor="0, 64, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanHistory" Width="2.75" PointX="16" PointY="14.5" FillColor="255, 128, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhase" Width="2.125" PointX="10.5" PointY="14.5" FillColor="255, 128, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.TreatmentPhaseDetail" Width="2.125" PointX="13.25" PointY="14.5" FillColor="255, 128, 0" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Patient" Width="1.5" PointX="0.75" PointY="25.625" />
-        <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" />
-        <EntityTypeShape EntityType="PhysicManagementModel.Contour" Width="1.75" PointX="5.25" PointY="25.875" />
-        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" />
-        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="PhysicManagementModel.DoctorAlarm" Width="1.5" PointX="2.875" PointY="11.625" />
-        <EntityTypeShape EntityType="PhysicManagementModel.PhysicUserAlarm" Width="1.5" PointX="15" PointY="1.125" />
-        <EntityTypeShape EntityType="PhysicManagementModel.ResidentAlarm" Width="1.5" PointX="13.125" PointY="22.125" />
+        <AssociationConnector Association="PhysicManagementModel.FK_CancerTargets_Cancer" ManuallyRouted="false" />
+        <AssociationConnector Association="PhysicManagementModel.FK_Contour_MedicalRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" ManuallyRouted="false" />
+        <AssociationConnector Association="PhysicManagementModel.FK_MedicalRecord_MedicalRecord" ManuallyRouted="false" />
+        <AssociationConnector Association="PhysicManagementModel.FK_TreatmentCategoryService_TreatmentCategory" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PhysicManagementModel.DoctorAlarm" Width="1.5" PointX="3" PointY="22.375" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicUserAlarm" Width="1.5" PointX="17" PointY="10.375" />
+        <EntityTypeShape EntityType="PhysicManagementModel.ResidentAlarm" Width="1.5" PointX="17" PointY="14.375" />
         <AssociationConnector Association="PhysicManagementModel.FK_DoctorAlarm_Doctor" />
         <AssociationConnector Association="PhysicManagementModel.FK_PhysicUserAlarm_PhysicUser" />
         <AssociationConnector Association="PhysicManagementModel.FK_ResidentAlarm_Resident" />

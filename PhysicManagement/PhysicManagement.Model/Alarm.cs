@@ -20,6 +20,7 @@ namespace PhysicManagement.Model
         public string Body { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> DoctorId { get; set; }
+        public Nullable<int> ResidentId { get; set; }
         public Nullable<int> PhysicUserId { get; set; }
         public Nullable<bool> IsSystemAlarm { get; set; }
         public Nullable<bool> IsDelivered { get; set; }
@@ -28,7 +29,6 @@ namespace PhysicManagement.Model
         public Nullable<bool> IsArchived { get; set; }
         public Nullable<bool> IsSMS { get; set; }
         public string PhoneNumber { get; set; }
-        public Nullable<int> ResidentId { get; set; }
         public Nullable<int> TreatmentProcessId { get; set; }
         public string TreatmentProcessTitle { get; set; }
         public string PatientFullName { get; set; }

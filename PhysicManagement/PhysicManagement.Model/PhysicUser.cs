@@ -17,7 +17,7 @@ namespace PhysicManagement.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PhysicUser()
         {
-            this.PhysicUserAlarms = new HashSet<PhysicUserAlarm>();
+            this.PhysicUserAlarm = new HashSet<PhysicUserAlarm>();
         }
     
         public int Id { get; set; }
@@ -33,6 +33,6 @@ namespace PhysicManagement.Model
         public string Gender { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhysicUserAlarm> PhysicUserAlarms { get; set; }
+        public virtual ICollection<PhysicUserAlarm> PhysicUserAlarm { get; set; }
     }
 }
