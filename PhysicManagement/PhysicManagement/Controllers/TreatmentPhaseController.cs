@@ -12,11 +12,13 @@ namespace PhysicManagement.Controllers
         readonly TreatmentService Service;
         readonly MedicalRecordService MedicalService;
         readonly CancerService CancerService;
+        readonly ContourService ContourService;
         public TreatmentPhaseController()
         {
             Service = new TreatmentService();
             MedicalService = new MedicalRecordService();
             CancerService = new CancerService();
+            ContourService = new ContourService();
         }
         public ActionResult Index()
         {
@@ -48,26 +50,27 @@ namespace PhysicManagement.Controllers
         }
         public ActionResult SetPhaseAsPlanned(long medicalRecordId)
         {
-            ViewBag.MedicalRecordId = medicalRecordId;
-            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
-            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
-            ViewBag.CancerOARList = CancerService.GetCancerOARListByCancerId(MedicalRecordData.CancerId.GetValueOrDefault());
-            ViewBag.CancerOARData = PhaseDetails.Where(t => t.CancerOARId != null).Select(t => t.CancerOARId.Value).ToArray();
-            ViewBag.PhaseDetails = PhaseDetails;
+            
+            ViewBag.MedicalRecordId = medicalRecordId;
+            ViewBag.MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            ViewBag.ContourDetailList = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId);
+            ViewBag.CancerTargetList = CancerService.GetCancerTargetList();
+            ViewBag.CancerOARList = CancerService.GetCancerOARList();
+
             return View(Phases);
         }
 
         public ActionResult SetPhaseAsApproved(long medicalRecordId)
         {
-            ViewBag.MedicalRecordId = medicalRecordId;
-            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
-            var PhaseIds = Phases.Select(x => x.Id).ToArray();
-            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByPhaseIds(PhaseIds);
-            ViewBag.CancerOARList = CancerService.GetCancerOARListByCancerId(MedicalRecordData.CancerId.GetValueOrDefault());
-            ViewBag.CancerOARData = PhaseDetails.Where(t => t.CancerOARId != null).Select(t => t.CancerOARId.Value).ToArray();
-            ViewBag.PhaseDetails = PhaseDetails;
+
+            ViewBag.MedicalRecordId = medicalRecordId;
+            ViewBag.MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            ViewBag.ContourDetailList = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId);
+            ViewBag.CancerTargetList = CancerService.GetCancerTargetList();
+            ViewBag.CancerOARList = CancerService.GetCancerOARList();
+
             return View(Phases);
         }
 

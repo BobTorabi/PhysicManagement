@@ -19,9 +19,10 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                var MRList = GetMedicalRecordsNotApprovedByDoctor();
+                //var MRList = GetMedicalRecordsNotApprovedByDoctor();
+                int ProcessId = (int)Enums.TreatmentProcessType.PrescribeTreatment;
                 IQueryable<Model.MedicalRecord> QueryableMR =
-                    db.MedicalRecord.Where(t => MRList.Contains(t.Id)).Include(x => x.Patient);
+                    db.MedicalRecord.Where(t => t.TreatmentProcessId == ProcessId).Include(x => x.Patient);
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -417,6 +418,8 @@ namespace PhysicManagement.Logic.Services
                 return db.SaveChanges() == 1;
             }
         }
+
+        
         #endregion
         #region TreatmentDevice Section
         public List<Model.TreatmentDevice> GetTreatmentDeviceList()

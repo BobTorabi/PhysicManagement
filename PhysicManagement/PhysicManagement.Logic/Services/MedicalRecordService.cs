@@ -93,7 +93,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.TPDescription = entity.TPDescription;
                 Entity.MRICode = entity.MRICode;
                 Entity.CancerTitle = entity.CancerTitle;
-
+                Entity.TreatmentProcessId = entity.TreatmentProcessId;
                 Entity.Phase1TreatmentDeviceId = entity.Phase1TreatmentDeviceId;
                 Entity.Phase1TreatmentDeviceTitle = entity.Phase1TreatmentDeviceTitle;
                 Entity.Phase2TreatmentDeviceId = entity.Phase2TreatmentDeviceId;
@@ -175,7 +175,7 @@ namespace PhysicManagement.Logic.Services
                     Entity.ContourAcceptUserFullName = UserData.FullName;
                     Entity.ContourAcceptUserRole = UserData.RoleName;
                     
-                    Entity.TreatmentProcessId = 2; //کانتورینگ
+                    Entity.TreatmentProcessId = (int)Enums.TreatmentProcessType.Contouring; //کانتورینگ
                     Entity.LastTreatmentProcessChangeDate = DateTime.Now;
                     var MedicalRecordContourObject = new ContourService().GetContourByMedicalRecordId(medicalRecordId);
                     if (MedicalRecordContourObject == null)
@@ -268,6 +268,10 @@ namespace PhysicManagement.Logic.Services
                 var medicalRecordEntity = db.MedicalRecord.Find(mrId);
                 medicalRecordEntity.CTEnterDate = DateTime.Now;
                 medicalRecordEntity.MRIEnterDate = DateTime.Now;
+                medicalRecordEntity.CTCode = null;
+                medicalRecordEntity.MRICode = null;
+                medicalRecordEntity.CTDescription = null;
+                medicalRecordEntity.TreatmentProcessId = (int)Enums.TreatmentProcessType.CTScanMRIEntry;
                 db.SaveChanges();
             }
         }

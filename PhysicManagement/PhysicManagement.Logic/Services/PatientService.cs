@@ -43,7 +43,10 @@ namespace PhysicManagement.Logic.Services
                 }
                 else
                 {
-                    QueryableMR = QueryableMR.Where(t => t.CTEnterDate == null && t.MRIEnterDate == null);
+                    /// عدد یک به معنی پذیرش شده می باشد
+                    /// هر کسی که به مرحله ی تصویر برداری برود با کد دیگری مواجه می شود
+                    int ProcessId = (int)Enums.TreatmentProcessType.Reciption;
+                    QueryableMR = QueryableMR.Where(t => t.TreatmentProcessId == ProcessId);
                 }
                 if (!string.IsNullOrEmpty(firstName))
                 {
@@ -151,7 +154,9 @@ namespace PhysicManagement.Logic.Services
                 }
                 else
                 {
-                    Queryable = Queryable.Where(t => t.NeedsFusion == null);
+                    /// تنها پرونده هایی می توانند انتخاب نرم افزار شوند که در مرحله ی ثبت اطلاعات سی تس ایکن هستند
+                    int ProcessId = (int)Enums.TreatmentProcessType.CTScanMRIEntry;
+                    Queryable = Queryable.Where(t => t.TreatmentProcessId == ProcessId);
                 }
                 if (!string.IsNullOrEmpty(firstName))
                 {
@@ -196,11 +201,16 @@ namespace PhysicManagement.Logic.Services
                     bool HasContour = hasContour.Value;
                     if (HasContour)
                     {
-                        Queryable = Queryable.Where(x => x.Contour.Any(t=>t.IsAccepted == false));
+                        /// تنها بیمارانی نمایش داده می شوند که در مرحله کانتور هستند
+                        /// ولی اطلاعات کانتور آنها تائید نشده باشد
+                        int ConourProcessId = (int)Enums.TreatmentProcessType.Contouring;
+                        Queryable = Queryable.Where(x => x.TreatmentProcessId == ConourProcessId &&  x.Contour.Any(t=>t.IsAccepted == false));
                     }
                     else
                     {
-                        Queryable = Queryable.Where(x => x.Contour.Count == 0);
+                        /// تنها بیمارانی نمایش داده می شوند که در مرحله ی تکمیل ثبت نرم افزار باشند
+                        int SoftwareEntryProcessId = (int)Enums.TreatmentProcessType.SoftwareEntry;
+                        Queryable = Queryable.Where(x => x.TreatmentProcessId == SoftwareEntryProcessId);
                     }
                 }
                 if (!string.IsNullOrEmpty(firstName))
@@ -252,6 +262,8 @@ namespace PhysicManagement.Logic.Services
                     MedicalRecordData.MRICode = MRICode;
                     MedicalRecordData.IsOnGoing = true;
                     MedicalRecordData.IsOnCalendar = false;
+                    /// پرونده به وضعیت ثبت شده ی اطلاعات سی تی اسکن منتقل می گردد
+                    MedicalRecordData.TreatmentProcessId = (int)Enums.TreatmentProcessType.CTScanMRIEntry;
                     db.SaveChanges();
                     return true;
                 }
@@ -273,6 +285,7 @@ namespace PhysicManagement.Logic.Services
                     MedicalRecordData.TPDescription = TPDescription;
                     MedicalRecordData.TPCode = TPDescription;
                     MedicalRecordData.TPEnterDate = DateTime.Now;
+                    MedicalRecordData.TreatmentProcessId = (int)Enums.TreatmentProcessType.SoftwareEntry;
                     db.SaveChanges();
                     return true;
                 }

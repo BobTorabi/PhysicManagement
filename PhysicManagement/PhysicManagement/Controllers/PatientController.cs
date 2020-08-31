@@ -159,7 +159,8 @@ namespace PhysicManagement.Controllers
             ViewBag.MedicalRecordData = MedicalRecordData;
             ViewBag.PatientData = PatientData;
             ViewBag.CancerOARList = CancerService.GetCancerOARList();
-            ViewBag.ContourDetails = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId).Where(x => x.CancerOARId != null).ToList();
+            ViewBag.CancerTargetList = CancerService.GetCancerTargetList();
+            ViewBag.ContourDetails = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId).Where(x => x.CancerTargetId != null).ToList();
             ViewBag.TreatmentService = TreatmentService.GetTreatmentDeviceList();
             return View(ViewData);
         }
@@ -209,6 +210,7 @@ namespace PhysicManagement.Controllers
                 CurrentTreatmentPhase.TreatmentDeviceTitle = Device.Title;
                 CurrentTreatmentPhase.Fraction = item.Fraction;
                 CurrentTreatmentPhase.IsPrescribedByDoctor = true;
+                ///  با تعیین تعداد فاز درمان و انتخاب دستگاه و دوز دارو به مرحله ی تائید پلن میریم
                 TreatmentService.UpdateTreatmentPhase(CurrentTreatmentPhase);
 
                 foreach (var oar in item.cancerAORs)
@@ -239,6 +241,7 @@ namespace PhysicManagement.Controllers
                 }
 
             }
+                MedicalRecordData.TreatmentProcessId = (int)Logic.Enums.TreatmentProcessType.PrescribeTreatment;
             MedicalRecordData.TreatmentDeviceIsQueued = false;
             MedicalService.UpdateMedicalRecord(MedicalRecordData);
             return Redirect("~/TreatmentPhase/List");

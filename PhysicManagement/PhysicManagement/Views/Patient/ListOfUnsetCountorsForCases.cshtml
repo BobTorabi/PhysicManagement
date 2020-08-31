@@ -3,7 +3,9 @@
     ViewBag.Title = "ثبت کانتور";
     int Index = 1;
 }
-
+<style>
+    .toggle{margin-top:15px !important;}
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -138,7 +140,7 @@
                 </div>
 
                 <table class="table table-hover small">
-                    <thead class="text-warning"><tr><th class="bg-green">بافت سالم</th><th class="bg-red">حجم هدف</th></tr></thead>
+                    <thead class="text-warning"><tr><th class="bg-red">حجم هدف</th><th class="bg-green">بافت سالم</th></tr></thead>
                     <tbody id="cancerData">
                     </tbody>
                 </table>
@@ -200,6 +202,24 @@
                 var max = oars.length > targets.length ? oars.length : targets.length;
                 debugger;
                 for (var i = 0; i < max; i++) {
+                    var target = '';
+                    if (targets != null && targets[i] != undefined) {
+                        target =
+                            `
+                            <div class="col-md-4" style="display:flex;align-items:center;">`+ targets[i].Title + `</div>
+                            <div class="col-md-2" style="margin: 0;">
+                                <div class="togglebutton">
+                                    <label><input  autocomplete="off" id="target_check_` + targets[i].Id + `" type="checkbox"><span class="toggle"></span></label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating" for="target_` + targets[i].Id + `" ></label>
+                                    <input  autocomplete="off" data-target-id='`+ targets[i].Id + `' id="target_` + targets[i].Id + `" type="text" class="form-control">
+                                </div>
+                         </div>`;
+                    }
                     var oar = '';
                     if (oars != null && oars[i] != undefined) {
                         oar =
@@ -208,7 +228,7 @@
                                 <div class="col-md-2" style="margin: 0;">
                                 <div class="togglebutton"><label><input id="ora_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label></div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                 <div class="form-group bmd-form-group">
                                     <label id="target_` + oars[i].Id + `" class="bmd-label-floating"></label>
@@ -216,28 +236,11 @@
                                 </div>
                             </div>`;
                     }
-                    var target = '';
-                    if (targets != null && targets[i] != undefined) {
-                        target =
-                            `
-                            <div class="col-md-4" style="display:flex;align-items:center;">`+ targets[i].Title + `</div>
-                            <div class="col-md-2" style="margin: 0;">
-                                <div class="togglebutton">
-                                    <label><input id="target_check_` + oars[i].Id + `" type="checkbox"><span class="toggle"></span></label>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="form-group bmd-form-group">
-                                    <label class="bmd-label-floating" for="target_` + oars[i].Id + `" ></label>
-                                    <input data-target-id='`+ oars[i].Id + `' id="target_` + oars[i].Id + `" type="text" class="form-control">
-                                </div>
-                         </div>`;
-                    }
+
                     var tmp =
                         `<tr data-row='` + i + `'>
-                        <td style="width:50%" class="oar"><div class="row">`+ oar + `</div></td>
                         <td style="width:50%" class="target"><div class="row">`+ target + `</div></td>
+                        <td style="width:50%" class="oar"><div class="row">`+ oar + `</div></td>
                     </tr>`;
                     $(tmp).appendTo('#cancerData');
                 }
@@ -284,6 +287,7 @@
         $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: mdId }, function (d) {
             if (d.ContourDetail !== undefined) {
                 if (d.ContourDetail.length > 0) {
+                    debugger;
                     for (var i = 0; i < d.ContourDetail.length; i++) {
                         if (d.ContourDetail[i].CancerOARId != null) {
                             $('#ora_check_' + d.ContourDetail[i].CancerOARId).attr('checked', 'checked');
@@ -292,8 +296,11 @@
                         if (d.ContourDetail[i].CancerTargetId != null) {
                             $('#target_check_' + d.ContourDetail[i].CancerTargetId).attr('checked', 'checked');
                             $('#target_desc_' + d.ContourDetail[i].CancerTargetId).val(d.ContourDetail[i].Description);
+                            $('#target_' + d.ContourDetail[i].CancerTargetId).val(d.ContourDetail[i].Description);
                         }
                     }
+                    $('#res_des').val(d.Contour.ResidentDescription);
+                    $('#doc_des').val(d.Contour.Description);
                 }
             }
         });

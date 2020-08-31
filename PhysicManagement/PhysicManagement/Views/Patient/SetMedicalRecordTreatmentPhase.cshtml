@@ -5,6 +5,7 @@
     PhysicManagement.Model.MedicalRecord medicalRecord = ViewBag.MedicalRecordData;
     List<PhysicManagement.Model.ContourDetails> contourDetails = ViewBag.ContourDetails;
     List<PhysicManagement.Model.CancerOAR> cancerOARList = ViewBag.CancerOARList;
+    List<PhysicManagement.Model.CancerTarget> cancerTargetList = ViewBag.CancerTargetList;
     List<PhysicManagement.Model.TreatmentDevice> TreatmentService = ViewBag.TreatmentService;
     int Index = 1;
 }
@@ -84,10 +85,10 @@
                                                     <tbody>
                                                         @foreach (var item in contourDetails)
                                                         {
-                                                            var CurrentOAR = cancerOARList.FirstOrDefault(x => x.Id == item.CancerOARId);
+                                                            var CurrentOAR = cancerTargetList.FirstOrDefault(x => x.Id == item.CancerTargetId);
                                                             <tr>
-                                                                <td><div class="form-group">@CurrentOAR.OrganTitle</div></td>
-                                                                <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerOARId" name="dose_@item.CancerOARId" /></div></td>
+                                                                <td><div class="form-group">@CurrentOAR.Title</div></td>
+                                                                <td><div class="form-group bmd-form-group"><input type="text" class="form-control" data-value="@item.CancerTargetId" name="dose_@item.CancerTargetId" /></div></td>
 
                                                             </tr>
                                                         }

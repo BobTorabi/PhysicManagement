@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "طراحی درمان";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhysicManagement.Model.ContourDetails> ContourDetailList = ViewBag.ContourDetailList;
+    List<PhysicManagement.Model.CancerOAR> CancerOARList = ViewBag.CancerOARList;
+    List<PhysicManagement.Model.CancerTarget> CancerTargetList = ViewBag.CancerTargetList;
 }
 <div class="row">
     <div class="col-md-12">
@@ -14,65 +17,142 @@
                 <h4 class="card-title">تائید درمان</h4>
             </div>
             <div class="card-body">
-
-                <table class="table data table-hover center table-striped">
+                <table dir="ltr" class="table table-hover center table-striped">
                     <thead class="text-warning">
                         <tr>
                             <th>Organ</th>
                             <th>Tolerance</th>
-
-                            @foreach (var item in Model)
-                            {
-                                <th>Evaluation(P@(item.PhaseNumber))</th>
-                                <th width="140">Planned Dose (P@(item.PhaseNumber))</th>
-                            }
-
+                            <th>Planned Dose (P1)</th>
+                            <th>Planned Dose (P2)</th>
+                            <th>Planned Dose (P3)</th>
+                            <th>Evaluation</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr><td colspan="6" class="bg-green">بافت سالم</td></tr>
                         @{
-                            List<PhysicManagement.Model.TreatmentPhaseDetail> PHDetails = ViewBag.PhaseDetails;
-                            List<PhysicManagement.Model.CancerOAR> CancerOARList = ViewBag.CancerOARList;
-                            foreach (var CancerOAR in CancerOARList)
+                            var OARData = ContourDetailList.Where(x => x.CancerOARId != null).ToList();
+                            foreach (var oar in OARData)
                             {
-                                var HasOARInDetail = PHDetails.Count(x => x.CancerOARId == CancerOAR.Id) != 0;
-
-                                                <tr>
-                                                    <td><div class="form-group">@CancerOAR.OrganTitle</div></td>
-                                                    <td><div class="form-group">Max Dose &lt; @CancerOAR.Tolerance</div></td>
-
-                                                    @foreach (var Phase in Model)
-                                                    {
-                                                        var PHDetail = PHDetails.Where(x => x.TreatmentPhaseId == Phase.Id && x.CancerOARId == CancerOAR.Id).FirstOrDefault();
-                                                        <td>
-                                                            @if (HasOARInDetail)
-                                                            {
-                                                                <div class="form-group bmd-form-group">
-                                                                    <label class="bmd-label-floating"></label>
-                                                                    <input type="text" value="@PHDetail.PlannedDose" class="form-control eval" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="evaluation-@Phase.Id">
-                                                                </div>
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @if (HasOARInDetail)
-                                                            {
-                                                                <div class="form-group bmd-form-group">
-                                                                    <label class="bmd-label-floating"></label>
-                                                                    <input type="text" value="@PHDetail.Evaluation" class="form-control dose" data-cancerOARId="@CancerOAR.Id" data-phaseDetailId="@PHDetail.Id" data-phaseId="@Phase.Id" name="plannedDose-@Phase.Id">
-                                                                </div>
-                                                            }
-                                                        </td>
-                                                    }
-
-
-                                                </tr>
+                                var OARDetail = CancerOARList.FirstOrDefault(t => t.Id == oar.CancerOARId.Value);
+                                <tr class="bg-green-light" data-oar="@oar.CancerOARId" data-cd="@oar.Id">
+                                    <td class="left">
+                                        <div class="form-group">@OARDetail.OrganTitle</div>
+                                    </td>
+                                    <td class="left">
+                                        <div class="form-group">@OARDetail.Tolerance</div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="2" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="3" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="eval" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                </tr>
                             }
                         }
 
+
+                        <tr><td colspan="6" class="bg-red">حجم هدف</td></tr>
+                        @{
+                            var TargetData = ContourDetailList.Where(x => x.CancerTargetId != null).ToList();
+                            foreach (var target in TargetData)
+                            {
+                                var TargetDetail = CancerTargetList.FirstOrDefault(t => t.Id == target.CancerTargetId.Value);
+                                <tr class="bg-red-light" data-target="@target.CancerTargetId" data-cd="@target.Id">
+                                    <td class="left"><div class="form-group">@TargetDetail.Title</div></td>
+                                    <td class="left"><div class="form-group">@TargetDetail.Optimum</div></td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="2" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="3" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="form-group bmd-form-group">
+                                            <label class="bmd-label-floating"></label><input data-phase="eval" type="text" class="form-control" name="">
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="form-group">تعداد فیلد</div>
+                            </td>
+                            <td>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" readonly class="form-control" name=""></div>
+                            </td>
+                            <td>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" readonly class="form-control" name=""></div>
+                            </td>
+                            <td>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" readonly class="form-control" name=""></div>
+                            </td>
+                            <td></td>
+                        </tr>
                     </tbody>
+                    <tfoot class="text-warning">
+                        <tr>
+                            <th></th>
+                            <th>توضیحات فیزیسیست</th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea readonly class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea readonly class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea readonly class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th></th>
+
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>توضیحات پزشک</th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th>
+                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                            </th>
+                            <th></th>
+
+                        </tr>
+                    </tfoot>
                 </table>
+
                 <div class="form-group">
-                    <button type="button" onclick="SetData()" class="btn btn-rose subm">ثبت</button>
+                    <button type="button" onclick="SetData()" class="btn btn-rose">ثبت</button>
                 </div>
             </div>
         </div>

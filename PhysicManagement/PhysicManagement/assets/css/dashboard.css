@@ -8,7 +8,17 @@
 *::after {
   box-sizing: border-box;
 }
-
+.bg-green-light {
+    background: #e5ffe5 !important;
+    color: #004d13 !important;
+}
+.bg-red-light {
+    background: #fee !important;
+    color: #f00 !important;
+}
+.table .bg-red-light .form-group .form-control, .table .bg-green-light .form-group .form-control {
+    background-color: #fdfdfd;
+}
 html {
   font-family: sans-serif;
   line-height: 1.15;

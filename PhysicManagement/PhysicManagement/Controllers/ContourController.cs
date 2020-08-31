@@ -65,6 +65,7 @@ namespace PhysicManagement.Controllers
             CountourData.IsAccepted = true;
             CountourData.ModifyDate = DateTime.Now;
             Service.UpdateContour(CountourData);
+          
             return Json(new { location = "../Patient/SetMedicalRecordPhases?medicalRecordId=" + medicalRecordId }, JsonRequestBehavior.AllowGet);
         }
 

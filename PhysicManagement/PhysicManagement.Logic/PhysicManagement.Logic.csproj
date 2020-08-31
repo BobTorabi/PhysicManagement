@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SortType.cs" />
+    <Compile Include="Enums\TreatmentProcessType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlarmService.cs" />
     <Compile Include="Services\AuthenticatedUserService.cs" />
