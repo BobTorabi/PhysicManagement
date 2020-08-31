@@ -50,5 +50,8 @@ namespace PhysicManagement.Model
         public virtual DbSet<Contour> Contour { get; set; }
         public virtual DbSet<PhysicTreatmentPlan> PhysicTreatmentPlan { get; set; }
         public virtual DbSet<PhysicTreatmentPlanDetail> PhysicTreatmentPlanDetail { get; set; }
+        public virtual DbSet<DoctorAlarm> DoctorAlarms { get; set; }
+        public virtual DbSet<PhysicUserAlarm> PhysicUserAlarms { get; set; }
+        public virtual DbSet<ResidentAlarm> ResidentAlarms { get; set; }
     }
 }

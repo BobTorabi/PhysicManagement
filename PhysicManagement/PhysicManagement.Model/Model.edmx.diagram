@@ -38,6 +38,12 @@
         <AssociationConnector Association="PhysicManagementModel.FK_ContourDetails_Contour" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlan" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PhysicManagementModel.DoctorAlarm" Width="1.5" PointX="2.875" PointY="11.625" />
+        <EntityTypeShape EntityType="PhysicManagementModel.PhysicUserAlarm" Width="1.5" PointX="15" PointY="1.125" />
+        <EntityTypeShape EntityType="PhysicManagementModel.ResidentAlarm" Width="1.5" PointX="13.125" PointY="22.125" />
+        <AssociationConnector Association="PhysicManagementModel.FK_DoctorAlarm_Doctor" />
+        <AssociationConnector Association="PhysicManagementModel.FK_PhysicUserAlarm_PhysicUser" />
+        <AssociationConnector Association="PhysicManagementModel.FK_ResidentAlarm_Resident" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

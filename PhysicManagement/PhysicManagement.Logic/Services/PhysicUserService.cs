@@ -280,6 +280,15 @@ namespace PhysicManagement.Logic.Services
                 };
             }
         }
+
+        public List<PhysicUser> GetPhysicUsers()
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return db.PhysicUser.OrderByDescending(x=>x.Id).ToList();
+            }
+        }
+
         public Model.PhysicUser GetPhysicUserById(int entityId)
         {
             using (var db = new Model.PhysicManagementEntities())
@@ -288,6 +297,7 @@ namespace PhysicManagement.Logic.Services
                 return Entity;
             }
         }
+
         public bool AddPhysicUser(Model.PhysicUser entity)
         {
             var vallidtion = new PhysicUserValidation.PhysicUserEntityValidation().Validate(entity);

@@ -143,6 +143,16 @@
           <Property Name="Password" Type="nvarchar" MaxLength="150" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="DoctorAlarm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorId" Type="int" />
+          <Property Name="IsSmsRecieveActive" Type="bit" />
+          <Property Name="ReplacementResidentId" Type="int" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="KFactor">
           <Key>
             <PropertyRef Name="Id" />
@@ -282,6 +292,15 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="PhysicUserAlarm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhysicUserId" Type="int" />
+          <Property Name="IsSmsRecieveActive" Type="bit" />
+          <Property Name="ChangeDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Resident">
           <Key>
             <PropertyRef Name="Id" />
@@ -297,6 +316,15 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="550" />
           <Property Name="DoctorId" Type="int" />
+        </EntityType>
+        <EntityType Name="ResidentAlarm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ResidentId" Type="int" />
+          <Property Name="IsSmsRecieveActive" Type="bit" />
+          <Property Name="ChangeDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TreatmentCategory">
           <Key>
@@ -487,6 +515,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DoctorAlarm_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+          <End Role="DoctorAlarm" Type="Self.DoctorAlarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DoctorAlarm">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MedicalRecord_MedicalRecord">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="MedicalRecord" Type="Self.MedicalRecord" Multiplicity="*" />
@@ -496,6 +536,30 @@
             </Principal>
             <Dependent Role="MedicalRecord">
               <PropertyRef Name="PatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicUserAlarm_PhysicUser">
+          <End Role="PhysicUser" Type="Self.PhysicUser" Multiplicity="0..1" />
+          <End Role="PhysicUserAlarm" Type="Self.PhysicUserAlarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhysicUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhysicUserAlarm">
+              <PropertyRef Name="PhysicUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResidentAlarm_Resident">
+          <End Role="Resident" Type="Self.Resident" Multiplicity="0..1" />
+          <End Role="ResidentAlarm" Type="Self.ResidentAlarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resident">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ResidentAlarm">
+              <PropertyRef Name="ResidentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -522,6 +586,7 @@
           <EntitySet Name="Contour" EntityType="Self.Contour" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContourDetails" EntityType="Self.ContourDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DoctorAlarm" EntityType="Self.DoctorAlarm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KFactor" EntityType="Self.KFactor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalRecord" EntityType="Self.MedicalRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
@@ -529,7 +594,9 @@
           <EntitySet Name="PhysicTreatmentPlanDetail" EntityType="Self.PhysicTreatmentPlanDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicTreatmentPlanHistory" EntityType="Self.PhysicTreatmentPlanHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicUser" EntityType="Self.PhysicUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicUserAlarm" EntityType="Self.PhysicUserAlarm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resident" EntityType="Self.Resident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResidentAlarm" EntityType="Self.ResidentAlarm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentCategory" EntityType="Self.TreatmentCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentCategoryService" EntityType="Self.TreatmentCategoryService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TreatmentDevice" EntityType="Self.TreatmentDevice" Schema="dbo" store:Type="Tables" />
@@ -561,9 +628,21 @@
             <End Role="Contour" EntitySet="Contour" />
             <End Role="ContourDetails" EntitySet="ContourDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_DoctorAlarm_Doctor" Association="Self.FK_DoctorAlarm_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="DoctorAlarm" EntitySet="DoctorAlarm" />
+          </AssociationSet>
           <AssociationSet Name="FK_MedicalRecord_MedicalRecord" Association="Self.FK_MedicalRecord_MedicalRecord">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="MedicalRecord" EntitySet="MedicalRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicUserAlarm_PhysicUser" Association="Self.FK_PhysicUserAlarm_PhysicUser">
+            <End Role="PhysicUser" EntitySet="PhysicUser" />
+            <End Role="PhysicUserAlarm" EntitySet="PhysicUserAlarm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResidentAlarm_Resident" Association="Self.FK_ResidentAlarm_Resident">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="ResidentAlarm" EntitySet="ResidentAlarm" />
           </AssociationSet>
           <AssociationSet Name="FK_TreatmentCategoryService_TreatmentCategory" Association="Self.FK_TreatmentCategoryService_TreatmentCategory">
             <End Role="TreatmentCategory" EntitySet="TreatmentCategory" />
@@ -630,6 +709,7 @@
           <Property Name="Username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="DoctorAlarms" Relationship="PhysicManagementModel.FK_DoctorAlarm_Doctor" FromRole="Doctor" ToRole="DoctorAlarm" />
         </EntityType>
         <Association Name="FK_CancerOAR_Cancer">
           <End Role="Cancer" Type="Self.Cancer" Multiplicity="0..1" />
@@ -701,6 +781,21 @@
           </AssociationSet>
           <EntitySet Name="PhysicTreatmentPlan" EntityType="PhysicManagementModel.PhysicTreatmentPlan" />
           <EntitySet Name="PhysicTreatmentPlanDetail" EntityType="PhysicManagementModel.PhysicTreatmentPlanDetail" />
+          <EntitySet Name="DoctorAlarms" EntityType="PhysicManagementModel.DoctorAlarm" />
+          <EntitySet Name="PhysicUserAlarms" EntityType="PhysicManagementModel.PhysicUserAlarm" />
+          <EntitySet Name="ResidentAlarms" EntityType="PhysicManagementModel.ResidentAlarm" />
+          <AssociationSet Name="FK_DoctorAlarm_Doctor" Association="PhysicManagementModel.FK_DoctorAlarm_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="DoctorAlarm" EntitySet="DoctorAlarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicUserAlarm_PhysicUser" Association="PhysicManagementModel.FK_PhysicUserAlarm_PhysicUser">
+            <End Role="PhysicUser" EntitySet="PhysicUser" />
+            <End Role="PhysicUserAlarm" EntitySet="PhysicUserAlarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResidentAlarm_Resident" Association="PhysicManagementModel.FK_ResidentAlarm_Resident">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="ResidentAlarm" EntitySet="ResidentAlarms" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PhysicUser">
           <Key>
@@ -717,6 +812,7 @@
           <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PhysicUserAlarms" Relationship="PhysicManagementModel.FK_PhysicUserAlarm_PhysicUser" FromRole="PhysicUser" ToRole="PhysicUserAlarm" />
         </EntityType>
         <EntityType Name="Resident">
           <Key>
@@ -733,6 +829,7 @@
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
           <Property Name="DoctorId" Type="Int32" />
+          <NavigationProperty Name="ResidentAlarms" Relationship="PhysicManagementModel.FK_ResidentAlarm_Resident" FromRole="Resident" ToRole="ResidentAlarm" />
         </EntityType>
         <EntityType Name="TreatmentDevice">
           <Key>
@@ -1120,41 +1217,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PhysicTreatmentPlan">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PlanNo" Type="Int32" Nullable="false" />
-          <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
-          <Property Name="PhysicId" Type="Int32" Nullable="false" />
-          <Property Name="PhysicFullName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PhysicApplyDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="PhysicComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsApprovedByDoctor" Type="Boolean" />
-          <Property Name="DoctorId" Type="Int32" />
-          <Property Name="DoctorFullName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="DoctorComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Fields" Type="Int32" />
-        </EntityType>
-        <EntityType Name="PhysicTreatmentPlanDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PhysicTreatmentPlanId" Type="Int32" Nullable="false" />
-          <Property Name="MedicalRecordId" Type="Int64" />
-          <Property Name="PatientFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PatientLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CancerOARId" Type="Int32" />
-          <Property Name="CancerOARIdValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CancerOARTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CancerOARTolerance" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CancerTargetId" Type="Int32" />
-          <Property Name="CancerTargetTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="CancerTargetValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CancerTargetOptimum" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1596,6 +1658,37 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DoctorAlarms">
+            <EntityTypeMapping TypeName="PhysicManagementModel.DoctorAlarm">
+              <MappingFragment StoreEntitySet="DoctorAlarm">
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="ReplacementResidentId" ColumnName="ReplacementResidentId" />
+                <ScalarProperty Name="IsSmsRecieveActive" ColumnName="IsSmsRecieveActive" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhysicUserAlarms">
+            <EntityTypeMapping TypeName="PhysicManagementModel.PhysicUserAlarm">
+              <MappingFragment StoreEntitySet="PhysicUserAlarm">
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="IsSmsRecieveActive" ColumnName="IsSmsRecieveActive" />
+                <ScalarProperty Name="PhysicUserId" ColumnName="PhysicUserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResidentAlarms">
+            <EntityTypeMapping TypeName="PhysicManagementModel.ResidentAlarm">
+              <MappingFragment StoreEntitySet="ResidentAlarm">
+                <ScalarProperty Name="ChangeDate" ColumnName="ChangeDate" />
+                <ScalarProperty Name="IsSmsRecieveActive" ColumnName="IsSmsRecieveActive" />
+                <ScalarProperty Name="ResidentId" ColumnName="ResidentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1610,7 +1703,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
