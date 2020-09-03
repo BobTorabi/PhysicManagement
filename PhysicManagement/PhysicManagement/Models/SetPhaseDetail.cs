@@ -12,6 +12,7 @@ namespace PhysicManagement.Models
         public string Evaluation { get; set; }
         public string PlannedDose { get; set; }
         public string CancerOARId { get; set; }
+        public string TargetOARId { get; set; }
     }
 
 }

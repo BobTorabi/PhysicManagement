@@ -61,6 +61,21 @@ namespace PhysicManagement.Controllers
             return View(Phases);
         }
 
+        public ActionResult SetPhysicPlan(long medicalRecordId)
+        {
+            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
+
+            ViewBag.MedicalRecordId = medicalRecordId;
+            ViewBag.MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            ViewBag.ContourDetailList = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId);
+            ViewBag.CancerTargetList = CancerService.GetCancerTargetList();
+            ViewBag.CancerOARList = CancerService.GetCancerOARList();
+
+            return View(Phases);
+        }
+
+
+
         public ActionResult SetPhaseAsApproved(long medicalRecordId)
         {
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
@@ -101,8 +116,8 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        [Authorization(Roles = "doctor")]
-        public ActionResult SetPhaseAsPlanned(List<SetPhaseDetail> Data, long medicalRecordId)
+        //[Authorization(Roles = "doctor")]
+        public ActionResult SetPhaseAsPlanned(List<SetPhaseDetail> Data, List<PlanFieldAndComment> FieldCommentData, long medicalRecordId)
         {
             var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
             ViewBag.MedicalRecordId = medicalRecordId;

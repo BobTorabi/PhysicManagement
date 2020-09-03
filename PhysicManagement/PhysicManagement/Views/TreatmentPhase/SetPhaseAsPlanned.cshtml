@@ -17,10 +17,15 @@
                 <h4 class="card-title">طراحی درمان</h4>
             </div>
             <div class="card-body">
-                <table dir="ltr" class="table table-hover center table-striped">
+                <table dir="ltr" id="physicTbl" class="table table-hover center table-striped">
                     <thead class="text-warning">
                         <tr>
-                            <th>Organ</th><th>Tolerance</th><th>Planned Dose (P1)</th><th>Planned Dose (P2)</th><th>Planned Dose (P3)</th><th>Evaluation</th>
+                            <th>Organ</th>
+                            <th>Tolerance</th>
+                            <th>Planned Dose (P1)</th>
+                            <th>Planned Dose (P2)</th>
+                            <th>Planned Dose (P3)</th>
+                            <th>Evaluation</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,7 +35,7 @@
                             foreach (var oar in OARData)
                             {
                                 var OARDetail = CancerOARList.FirstOrDefault(t => t.Id == oar.CancerOARId.Value);
-                                <tr class="bg-green-light" data-oar="@oar.CancerOARId" data-cd="@oar.Id">
+                                <tr class="bg-green-light oarPart" data-oar="@oar.CancerOARId" data-cd="@oar.Id">
                                     <td class="left">
                                         <div class="form-group">@OARDetail.OrganTitle</div>
                                     </td>
@@ -39,22 +44,26 @@
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="1" type="text" class="form-control dose" name="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="2" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="2" type="text" class="form-control dose" name="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="3" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="3" type="text" class="form-control dose" name="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="eval" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="eval" type="text" class="form-control dose" name="">
                                         </div>
                                     </td>
                                 </tr>
@@ -68,28 +77,32 @@
                             foreach (var target in TargetData)
                             {
                                 var TargetDetail = CancerTargetList.FirstOrDefault(t => t.Id == target.CancerTargetId.Value);
-                                <tr class="bg-red-light" data-target="@target.CancerTargetId" data-cd="@target.Id">
+                                <tr class="bg-red-light targetPart" data-target="@target.CancerTargetId" data-cd="@target.Id">
                                     <td class="left"><div class="form-group">@TargetDetail.Title</div></td>
                                     <td class="left"><div class="form-group">@TargetDetail.Optimum</div></td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="1" type="text" class="form-control dose1" name="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="2" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="2" type="text" class="form-control dose1" name="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="3" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="3" type="text" class="form-control dose1" name="">
                                         </div>
                                     </td>
 
                                     <td>
                                         <div class="form-group bmd-form-group">
-                                            <label class="bmd-label-floating"></label><input data-phase="eval" type="text" class="form-control" name="">
+                                            <label class="bmd-label-floating"></label>
+                                            <input data-phase="eval" type="text" class="form-control dose1" name="">
                                         </div>
                                     </td>
                                 </tr>
@@ -101,13 +114,16 @@
                                 <div class="form-group">تعداد فیلد</div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
+                                <input id="p1field" type="text" class="form-control" name=""></div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
+                                <input id="p2field" type="text" class="form-control" name=""></div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label><input type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
+                                <input id="p3field" type="text" class="form-control" name=""></div>
                             </td>
                             <td></td>
                         </tr>
@@ -117,13 +133,16 @@
                             <th></th>
                             <th>توضیحات فیزیسیست</th>
                             <th>
-                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                                <div class="form-group bmd-form-group">
+                                <textarea id="p1comment" class="form-control" rows="5"></textarea></div>
                             </th>
                             <th>
-                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                                <div class="form-group bmd-form-group">
+                                <textarea id="p2comment"  class="form-control" rows="5"></textarea></div>
                             </th>
                             <th>
-                                <div class="form-group bmd-form-group"><textarea class="form-control" rows="5"></textarea></div>
+                                <div class="form-group bmd-form-group">
+                                <textarea id="p3comment"  class="form-control" rows="5"></textarea></div>
                             </th>
                             <th></th>
 
@@ -134,6 +153,10 @@
                 <div class="form-group">
                     <button type="button" onclick="SetData()" class="btn btn-rose">ثبت</button>
                 </div>
+
+                <div class="form-group">
+                    <button type="button" onclick="setPhase1()" class="btn btn-rose">تنظیم فاز اول</button>
+                </div>
             </div>
         </div>
 
@@ -141,23 +164,164 @@
 </div>
 <script type="text/javascript">
     function SetData() {
-        var Data = [];
-        $('.data>tbody>tr').each(function () {
-            debugger;
+        var DataPhase = [];
+        var FieldAndComment = [];
+
+        $('#physicTbl>tbody>tr.oarPart').each(function () {
+
+            var contourDetail = $(this).attr('data-cd');
+            var oar = $(this).attr('data-oar');
+            var Detail = { phaseId: 0, phaseDetailId: 0, evaluation: '', plannedDose: '', cancerOARId: 0, targetOARId: 0 };
+
             $(this).find('input.dose').each(function () {
-                var Detail = { phaseId: 0, phaseDetailId: 0, evaluation: '', plannedDose: '', cancerOARId: 0 };
-                Detail.phaseId = $(this).attr('data-phaseid');
-                Detail.cancerOARId = $(this).attr('data-canceroarid');
-                Detail.phaseDetailId = $(this).attr('data-phaseDetailId');
-                Detail.plannedDose = $(this).val();
-                Detail.evaluation = $('input[data-canceroarid="' + Detail.cancerOARId+'"][data-phaseid="' + Detail.phaseId+'"][data-phaseDetailId="' + Detail.phaseDetailId+'"]').val();
-                Data.push(Detail);
+                var prop = $(this).attr('data-phase');
+               var plannedDose = $(this).val();
+                if (prop != null || prop != 0)
+                {
+                    
+                    if (plannedDose.trim().length !== 0 && prop == 1) {
+
+                        Detail.phaseId = 1;
+                        Detail.cancerOARId = oar;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (plannedDose.trim().length !== 0 && prop == 2) {
+                        Detail.phaseId = 2;
+                        Detail.cancerOARId = oar;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (plannedDose.trim().length !== 0 && prop == 3) {
+                        Detail.phaseId = 3;
+                        Detail.cancerOARId = oar;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (plannedDose.trim().length !== 0 && prop == 'eval') {
+                        Detail.phaseId = 3;
+                        Detail.cancerOARId = oar;
+                        Detail.phaseDetailId = contourDetail;
+                        Detail.evaluation = plannedDose;
+                        DataPhase.push(Detail);
+                        alert('Eval:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+
+                }
+
             });
 
         });
-        console.log(Data);
-        $.post('SetPhaseAsPlanned', { Data: Data, medicalRecordId : @ViewBag.MedicalRecordId }, function (d) {
-            window.location = "../../treatmentPhase/List";
-        })
+
+
+        $('#physicTbl>tbody>tr.targetPart').each(function () {
+
+            var contourDetail = $(this).attr('data-cd');
+            var targetId = $(this).attr('data-target');
+            var Detail = { phaseId: 0, phaseDetailId: 0, evaluation: '', plannedDose: '', cancerOARId: 0, targetOARId: 0 };
+
+            //alert('targetPart found ' + targetId  +' countorDetail ' + contourDetail);
+            $(this).find('input.dose1').each(function () {
+
+                var prop = $(this).attr('data-phase');
+                var plannedDose = $(this).val();
+
+                if (plannedDose.trim().length !== 0) {
+
+                    if (prop == 1) {
+
+                        Detail.phaseId = 1;
+                        Detail.targetOARId = targetId;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (prop == 2) {
+                        Detail.phaseId = 2;
+                        Detail.targetOARId = targetId;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (prop == 3) {
+                        Detail.phaseId = 3;
+                        Detail.targetOARId = targetId;
+                        Detail.plannedDose = plannedDose;
+                        Detail.phaseDetailId = contourDetail;
+                        DataPhase.push(Detail);
+                        alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                    else if (prop == 'eval') {
+                        Detail.phaseId = 3;
+                        Detail.targetOARId = targetId;
+                        Detail.phaseDetailId = contourDetail;
+                        Detail.evaluation = plannedDose;
+                        DataPhase.push(Detail);
+                        alert('Eval:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                    }
+                }
+            });
+
+        });
+
+        //Reading p1 Field and Comment
+        
+        var p1field = $('#p1field').val();
+        if (p1field != null || p1field != '') {
+            var fieldAndCommentObj = { field: 0, plan: 0, comment: '' };
+            var p1comment = $('#p1comment').val();
+            fieldAndCommentObj.field = p1field;
+            fieldAndCommentObj.comment = p1comment;
+            FieldAndComment.push(fieldAndCommentObj);
+        }
+
+        //Reading p2 Field and Comment
+        
+        var p2field = $('#p2field').val();
+        if (p2field != null || p1field != '') {
+            var fieldAndCommentObj = { field: 0, plan: 0, comment: '' };
+            var p2comment = $('#p2comment').val();
+            fieldAndCommentObj.field = p2field;
+            fieldAndCommentObj.comment = p2comment;
+            FieldAndComment.push(fieldAndCommentObj);
+        }
+
+        //Reading p3 Field and Comment
+        var p3field = $('#p3field').val();
+        if (p3field != null || p1field != '') {
+            var fieldAndCommentObj = { field: 0, plan: 0, comment: '' };
+            var p3comment = $('#p3comment').val();
+            fieldAndCommentObj.field = p3field;
+            fieldAndCommentObj.comment = p3comment;
+            FieldAndComment.push(fieldAndCommentObj);
+        }
+
+        alert('before post');
+        $.post('SetPhaseAsPlanned', { Data: DataPhase, FieldCommentData: FieldAndComment ,medicalRecordId: @ViewBag.MedicalRecordId }, function (d) {
+            window.location = "../../treatmentPhase/List"
+        });
+    }
+
+
+    function setPhase1() {
+        $('#oar>tbody>tr').each(function () {
+
+            $(this).find('input.dose').each(function () {
+                var prop = $(this).attr('data-phase');
+                if (prop == 1) {
+                    $(this).attr('disabled', 'disabled');
+                }
+
+            });
+
+        });
     }
 </script>
