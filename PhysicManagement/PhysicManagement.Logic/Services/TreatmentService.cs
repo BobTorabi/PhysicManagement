@@ -166,7 +166,7 @@ namespace PhysicManagement.Logic.Services
                 var MedicalRecordObject = md.GetMedicalRecordById(entity.MedicalRecordId.GetValueOrDefault());
                 if (MedicalRecordObject == null)
                     throw MegaException.ThrowException("شناسه پرونده پزشکی وارد شده در پایگاه داده وجود ندارد.");
-                entity.MedicalRecordId = Convert.ToInt64(MedicalRecordObject.MRICode);
+                //entity.MedicalRecordId = Convert.ToInt64(MedicalRecordObject.MRICode);
 
                 Entity.PhaseNumber = entity.PhaseNumber;
                 Entity.PhaseText = entity.PhaseText;
