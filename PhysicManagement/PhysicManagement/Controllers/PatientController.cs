@@ -115,6 +115,7 @@ namespace PhysicManagement.Controllers
         {
             var UserData = AuthenticatedUserService.GetUserId();
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+            //if this user has treatment phase records without acceptance we need to update it instead of inserting it
             for (int i = 1; i <= Phases; i++)
             {
                 TreatmentService.AddTreatmentPhase(new Model.TreatmentPhase
