@@ -139,14 +139,14 @@
             $('[name="CTCode"]').focus();
             return;
         }
-        if (mRICode == '') {
-            $('[name="MRICode"]').focus();
-            return;
-        }
-        if (cTScanDescription == '') {
-            $('[name="CTDescription"]').focus();
-            return;
-        }
+        //if (mRICode == '') {
+        //    $('[name="MRICode"]').focus();
+        //    return;
+        //}
+        //if (cTScanDescription == '') {
+        //    $('[name="CTDescription"]').focus();
+        //    return;
+        //}
         var mId = $('[name="medicalRecordId"]').val();
         $.post('SetCTAndMIRDataForMedicalRecord', { medicalRecordId: mId, cTScanCode: cTScanCode, cTScanDescription: cTScanDescription, mRICode: mRICode }, function (d) {
             $('tr[data-id="' + mId + '"]').fadeOut(500, function () { $(this).remove() });
