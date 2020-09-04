@@ -263,6 +263,7 @@
           <Property Name="CancerTargetTitle" Type="nvarchar" MaxLength="150" />
           <Property Name="CancerTargetValue" Type="nvarchar(max)" />
           <Property Name="CancerTargetOptimum" Type="nvarchar" MaxLength="150" />
+          <Property Name="PlanNo" Type="int" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanHistory">
           <Key>
@@ -916,6 +917,7 @@
           <Property Name="CancerTargetTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="CancerTargetValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CancerTargetOptimum" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PlanNo" Type="Int32" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanHistory">
           <Key>
@@ -1573,6 +1575,7 @@
           <EntitySetMapping Name="PhysicTreatmentPlanDetail">
             <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlanDetail">
               <MappingFragment StoreEntitySet="PhysicTreatmentPlanDetail">
+                <ScalarProperty Name="PlanNo" ColumnName="PlanNo" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PhysicTreatmentPlanId" ColumnName="PhysicTreatmentPlanId" />
                 <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />

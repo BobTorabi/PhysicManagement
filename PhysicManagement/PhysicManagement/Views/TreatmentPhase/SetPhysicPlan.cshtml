@@ -1,0 +1,228 @@
+﻿@model List<PhysicManagement.Model.TreatmentPhase>
+
+@{
+    ViewBag.Title = "تنظیم پلن فیزیک";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PhysicManagement.Model.ContourDetails> ContourDetailList = ViewBag.ContourDetailList;
+    List<PhysicManagement.Model.CancerOAR> CancerOARList = ViewBag.CancerOARList;
+    List<PhysicManagement.Model.CancerTarget> CancerTargetList = ViewBag.CancerTargetList;
+    var medicalRecord = (MedicalRecord)ViewBag.MedicalRecordData;
+    var patienFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName;
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="card">
+            <div class="card-header card-header-info">
+                <h4 class="card-title">@ViewBag.Title</h4>
+            </div>
+
+            <div class="card-body table-responsive">
+                <div class="row">
+                    <form method="get" style="width:100%;padding:10px 30px;" action="">
+                        <div class="row  gray-bg">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="FirstName" class="bmd-label-floating">نام بیمار</label>
+                                    <input type="text" value="@patienFullName" disabled="disabled" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="LastName" class="bmd-label-floating">شماره CT</label>
+                                    <input type="text" value="@medicalRecord.CTCode" disabled="disabled" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="Mobile" class="bmd-label-floating">سرطان </label>
+                                    <input type="text" value="@medicalRecord.CancerTitle" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="NationalCode" class="bmd-label-floating">تاریخ تایید کانتور</label>
+                                    <input type="text" value="@PhysicManagement.Common.DateUtility.GetPersianDate(medicalRecord.ContourAcceptDate)" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">بافت سالم</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-body">
+                    <table dir="ltr" class="table table-hover center table-striped" id="tblOAR">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>Organ</th>
+                                <th>Tolerance</th>
+                                <th>Planned Dose</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var OARData = ContourDetailList.Where(x => x.CancerOARId != null).ToList();
+                                foreach (var oar in OARData)
+                                {
+                                    var OARDetail = CancerOARList.FirstOrDefault(t => t.Id == oar.CancerOARId.Value);
+                                    <tr class="bg-green-light" data-oar="@oar.CancerOARId" data-cd="@oar.Id">
+                                        <td class="left">
+                                            <div class="form-group">@OARDetail.OrganTitle</div>
+                                        </td>
+                                        <td class="left">
+                                            <div class="form-group">@OARDetail.Tolerance</div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group bmd-form-group">
+                                                <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control dose" name="">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">ارگان های در خطر</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-body">
+                    <table dir="ltr" class="table table-hover center table-striped">
+                        <thead class="text-warning">
+                            <tr>
+                                <th>Organ</th>
+                                <th>Tolerance</th>
+                                <th>Planned Dose</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var TargetData = ContourDetailList.Where(x => x.CancerTargetId != null).ToList();
+                                foreach (var target in TargetData)
+                                {
+                                    var TargetDetail = CancerTargetList.FirstOrDefault(t => t.Id == target.CancerTargetId.Value);
+                                    <tr class="bg-red-light" data-target="@target.CancerTargetId" data-cd="@target.Id">
+                                        <td class="left"><div class="form-group">@TargetDetail.Title</div></td>
+                                        <td class="left"><div class="form-group">@TargetDetail.Optimum</div></td>
+                                        <td>
+                                            <div class="form-group bmd-form-group">
+                                                <label class="bmd-label-floating"></label><input data-phase="1" type="text" class="form-control" name="">
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title">سایر اطلاعات</h4>
+            </div>
+            <div class="card-body">
+                <div class="card-body table-responsive">
+                    <div class="row" style="width:100%;padding:10px 30px;">
+
+                        <div class="row  gray-bg">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">تعداد فیلد</label>
+                                    <input type="text" value="" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">توضیحات</label>
+                                    <input type="text" value="" class="form-control">
+                                </div>
+                            </div>
+                            <button type="submit" id="btnSubmit" class="btn btn-rose pull-right">ثبت </button>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnSubmit').click(function () {
+
+            //var rows = $('#tblOAR>tbody>tr');
+            //rows.find('input.dose').each(function () {
+            //    var data = $()
+            //});
+            getAllValues();
+
+        });
+
+
+
+        function getAllValues() {
+            var allVal = '';
+            $("#tblOAR>tbody>tr > input.dose").each(function () {
+                allVal +=  $(this).val();
+            });
+            alert(allVal);
+        }
+
+
+
+    });
+
+</script>
+

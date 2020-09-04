@@ -27,5 +27,6 @@ namespace PhysicManagement.Model
         public string CancerTargetTitle { get; set; }
         public string CancerTargetValue { get; set; }
         public string CancerTargetOptimum { get; set; }
+        public Nullable<int> PlanNo { get; set; }
     }
 }

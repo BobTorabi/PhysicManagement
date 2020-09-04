@@ -1,6 +1,7 @@
 ﻿using PhysicManagement.Logic.Services;
 using PhysicManagement.Logic.ViewModels;
 using PhysicManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,12 +14,14 @@ namespace PhysicManagement.Controllers
         readonly MedicalRecordService MedicalService;
         readonly CancerService CancerService;
         readonly ContourService ContourService;
+        readonly PhysicTreatmentPlanService physicTreatmentPlanService;
         public TreatmentPhaseController()
         {
             Service = new TreatmentService();
             MedicalService = new MedicalRecordService();
             CancerService = new CancerService();
             ContourService = new ContourService();
+            physicTreatmentPlanService = new PhysicTreatmentPlanService();
         }
         public ActionResult Index()
         {
@@ -51,12 +54,14 @@ namespace PhysicManagement.Controllers
         public ActionResult SetPhaseAsPlanned(long medicalRecordId)
         {
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
-            
+
             ViewBag.MedicalRecordId = medicalRecordId;
             ViewBag.MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             ViewBag.ContourDetailList = ContourService.GetContourDetailsByMedicalRecordId(medicalRecordId);
             ViewBag.CancerTargetList = CancerService.GetCancerTargetList();
             ViewBag.CancerOARList = CancerService.GetCancerOARList();
+            ViewBag.PhysicTreatmentPlanList = physicTreatmentPlanService.GetPhysicTreatmentPlanList();
+            ViewBag.PhysicTreatmentPlanDetailList = physicTreatmentPlanService.GetPhysicTreatmentPlanDetailList();
 
             return View(Phases);
         }
@@ -90,7 +95,8 @@ namespace PhysicManagement.Controllers
         }
 
         [HttpPost]
-        public JsonResult SetPhaseAsApprovedByPhysicst(long medicalRecordId) {
+        public JsonResult SetPhaseAsApprovedByPhysicst(long medicalRecordId)
+        {
 
             var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
@@ -124,25 +130,70 @@ namespace PhysicManagement.Controllers
             var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
             var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
             var PhaseDetails = Service.GetTreatmentPhaseDetatilssByMedicalRecordId(medicalRecordId);
-            foreach (var Phase in Phases)
-            {
-                Phase.IsPrescribedByDoctor = true;
-                Phase.PrescribesdUserId = UserData.UserId.ToString();
-                Phase.PrescribedUserRole = UserData.RoleName;
-                Phase.PrescribesdUserFullName = UserData.FullName;
-                Service.UpdateTreatmentPhase(Phase);
 
+            if (UserData.RoleName == "doctor")
+            {
+                //No need to insert or update database
             }
+
+            if (Data == null)
+                Json(new { location = "" }, JsonRequestBehavior.AllowGet);
+
+            List<int> plansCount = new List<int>();
             foreach (var item in Data)
             {
-                var PHD = PhaseDetails.Where(x => x.Id == item.PhaseDetailId).FirstOrDefault();
-                PHD.PlannedDose = item.PlannedDose;
-                PHD.Evaluation = item.Evaluation;
-                PHD.HadContour = true;
-                Service.UpdateTreatmentPhaseDetail(PHD);
+                if (!plansCount.Contains(item.PhaseId))
+                {
+                    plansCount.Add(item.PhaseId);
+                }
             }
 
-            return Json(new { location = ""},JsonRequestBehavior.AllowGet);
+            var physicTreatmentPlanList = physicTreatmentPlanService.GetPhysicTreatmentPlanList();
+            var physicTreatmentPlanDetails = physicTreatmentPlanService.GetPhysicTreatmentPlanDetailList();
+            foreach (var planId in plansCount)
+            {
+                var eachPlanList = Data.Where(x => x.PhaseId == planId).ToList();
+                var physicTreatmentPlanInDb = physicTreatmentPlanList.Where(x => x.PlanNo == planId && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                if (physicTreatmentPlanInDb == null || physicTreatmentPlanInDb.Id == 0)
+                {
+                    var filedId = FieldCommentData.Where(x => x.Plan == planId).FirstOrDefault().Field;
+                    var comment = FieldCommentData.Where(x => x.Plan == planId).FirstOrDefault().Comment;
+                    //Insert into physicTreatmentPlan
+                    physicTreatmentPlanInDb = physicTreatmentPlanService.AddPhysicTreatmentPlan(new Model.PhysicTreatmentPlan() { MedicalRecordId = medicalRecordId, PhysicId = (int)UserData.UserId, PhysicFullName = UserData.FullName, PlanNo = planId, Fields = filedId, PhysicComment = comment, PhysicApplyDate = System.DateTime.Now });
+
+                }
+
+                foreach (var item in eachPlanList)
+                {
+                    if (!string.IsNullOrEmpty(item.CancerOARId) && Convert.ToInt32(item.CancerOARId) != 0)
+                    {
+                        var inserted = physicTreatmentPlanService.AddPhysicTreatmentPlanDetail(new Model.PhysicTreatmentPlanDetail()
+                        {
+                            MedicalRecordId = medicalRecordId,
+                            PhysicTreatmentPlanId = physicTreatmentPlanInDb.Id,
+                            CancerOARId = Convert.ToInt32(item.CancerOARId),
+                            CancerOARIdValue = item.PlannedDose,
+                            PlanNo = planId
+                        }) ;
+                    }
+                    else if (!string.IsNullOrEmpty(item.TargetOARId) || Convert.ToInt32(item.TargetOARId) != 0)
+                    {
+                        var inserted = physicTreatmentPlanService.AddPhysicTreatmentPlanDetail(new Model.PhysicTreatmentPlanDetail()
+                        {
+                            MedicalRecordId = medicalRecordId,
+                            PhysicTreatmentPlanId = physicTreatmentPlanInDb.Id,
+                            CancerTargetId = Convert.ToInt32(item.TargetOARId),
+                            CancerTargetValue = item.PlannedDose,
+                            PlanNo = planId
+                        });
+
+                    }
+                    
+
+                }
+            }
+
+            return Json(new { location = "" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -5,6 +5,18 @@
     List<PhysicManagement.Model.ContourDetails> ContourDetailList = ViewBag.ContourDetailList;
     List<PhysicManagement.Model.CancerOAR> CancerOARList = ViewBag.CancerOARList;
     List<PhysicManagement.Model.CancerTarget> CancerTargetList = ViewBag.CancerTargetList;
+    List<PhysicManagement.Model.PhysicTreatmentPlan> physicTreatmentPlans = ViewBag.PhysicTreatmentPlanList;
+    List<PhysicManagement.Model.PhysicTreatmentPlanDetail> physicTreatmentPlanDetails = ViewBag.PhysicTreatmentPlanDetailList;
+    var medicalRecordId = ViewBag.MedicalRecordId;
+    var oldPhysicPlans = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId).ToList();
+    List<int> oldPlanList = new List<int>();
+    foreach (var rec in oldPhysicPlans)
+    {
+        if (!oldPlanList.Contains(rec.PlanNo))
+        {
+            oldPlanList.Add(rec.PlanNo);
+        }
+    }
 }
 <div class="row">
     <div class="col-md-12">
@@ -32,9 +44,13 @@
                         <tr><td colspan="6" class="bg-green">بافت سالم</td></tr>
                         @{
                             var OARData = ContourDetailList.Where(x => x.CancerOARId != null).ToList();
+
+
                             foreach (var oar in OARData)
                             {
                                 var OARDetail = CancerOARList.FirstOrDefault(t => t.Id == oar.CancerOARId.Value);
+                                var plannedOARDetail = physicTreatmentPlanDetails.Where(x => x.MedicalRecordId == medicalRecordId && x.CancerOARId != null).ToList();
+
                                 <tr class="bg-green-light oarPart" data-oar="@oar.CancerOARId" data-cd="@oar.Id">
                                     <td class="left">
                                         <div class="form-group">@OARDetail.OrganTitle</div>
@@ -45,19 +61,46 @@
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="1" type="text" class="form-control dose" name="">
+
+                                            @{
+                                                string oarP1 = "";
+                                                var hasP1 = plannedOARDetail.Where(x => x.PlanNo == 1 && x.CancerOARId == oar.CancerOARId).FirstOrDefault();
+                                                if (hasP1 != null)
+                                                {
+                                                    oarP1 = hasP1.CancerOARIdValue;
+                                                }
+                                            }
+                                            <input data-phase="1" type="text" class="form-control dose" name="" value="@oarP1">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="2" type="text" class="form-control dose" name="">
+                                            @{
+                                                string oarP2 = "";
+                                                var hasP2 = plannedOARDetail.Where(x => x.PlanNo == 2 && x.CancerOARId == oar.CancerOARId).FirstOrDefault();
+                                                if (hasP2 != null)
+                                                {
+                                                    oarP2 = hasP2.CancerOARIdValue;
+                                                }
+                                            }
+
+                                            <input data-phase="2" type="text" class="form-control dose" name="" value="@oarP2">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="3" type="text" class="form-control dose" name="">
+                                            @{
+                                                string oarP3 = "";
+                                                var hasP3 = plannedOARDetail.Where(x => x.PlanNo == 3 && x.CancerOARId == oar.CancerOARId).FirstOrDefault();
+                                                if (hasP3 != null)
+                                                {
+                                                    oarP3 = hasP3.CancerOARIdValue;
+                                                }
+                                            }
+
+                                            <input data-phase="3" type="text" class="form-control dose" name="" value="@oarP3">
                                         </div>
                                     </td>
                                     <td>
@@ -68,6 +111,8 @@
                                     </td>
                                 </tr>
                             }
+
+
                         }
 
 
@@ -77,25 +122,54 @@
                             foreach (var target in TargetData)
                             {
                                 var TargetDetail = CancerTargetList.FirstOrDefault(t => t.Id == target.CancerTargetId.Value);
+                                var plannedTargetDetail = physicTreatmentPlanDetails.Where(x => x.MedicalRecordId == medicalRecordId && x.CancerTargetId != null).ToList();
+
                                 <tr class="bg-red-light targetPart" data-target="@target.CancerTargetId" data-cd="@target.Id">
                                     <td class="left"><div class="form-group">@TargetDetail.Title</div></td>
                                     <td class="left"><div class="form-group">@TargetDetail.Optimum</div></td>
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="1" type="text" class="form-control dose1" name="">
+                                            @{
+                                                string targetP1 = "";
+                                                var hasP1 = plannedTargetDetail.Where(x => x.PlanNo == 1 && x.CancerTargetId == target.CancerTargetId).FirstOrDefault();
+                                                if (hasP1 != null)
+                                                {
+                                                    targetP1 = hasP1.CancerTargetValue;
+                                                }
+
+                                            }
+                                            <input data-phase="1" type="text" class="form-control dose1" name="" value="@targetP1">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="2" type="text" class="form-control dose1" name="">
+                                            @{
+                                                string targetP2 = "";
+                                                var hasP2 = plannedTargetDetail.Where(x => x.PlanNo == 2 && x.CancerTargetId == target.CancerTargetId).FirstOrDefault();
+                                                if (hasP2 != null)
+                                                {
+                                                    targetP2 = hasP2.CancerTargetValue;
+                                                }
+
+                                            }
+                                            <input data-phase="2" type="text" class="form-control dose1" name="" value="@targetP2">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group bmd-form-group">
                                             <label class="bmd-label-floating"></label>
-                                            <input data-phase="3" type="text" class="form-control dose1" name="">
+                                            @{
+                                                string targetP3 = "";
+                                                var hasP3 = plannedTargetDetail.Where(x => x.PlanNo == 3 && x.CancerTargetId == target.CancerTargetId).FirstOrDefault();
+                                                if (hasP3 != null)
+                                                {
+                                                    targetP3 = hasP3.CancerTargetValue;
+                                                }
+
+                                            }
+                                            <input data-phase="3" type="text" class="form-control dose1" name="" value="@targetP3">
                                         </div>
                                     </td>
 
@@ -114,16 +188,46 @@
                                 <div class="form-group">تعداد فیلد</div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
-                                <input id="p1field" type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating"></label>
+                                    @{
+                                        string filedString = "";
+                                        var hasPhysicPlanForP1 = physicTreatmentPlans.Where(x => x.PlanNo == 1 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (hasPhysicPlanForP1 != null)
+                                        {
+                                            filedString = ((int)hasPhysicPlanForP1.Fields).ToString();
+                                        }
+                                    }
+                                    <input id="p1field" type="text" class="form-control" name="" value="@filedString">
+                                </div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
-                                <input id="p2field" type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating"></label>
+                                    @{
+                                        string filed2String = "";
+                                        var hasPhysicPlanForP2 = physicTreatmentPlans.Where(x => x.PlanNo == 2 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (hasPhysicPlanForP2 != null)
+                                        {
+                                            filed2String = ((int)hasPhysicPlanForP2.Fields).ToString();
+                                        }
+                                    }
+                                    <input id="p2field" type="text" class="form-control" name="" value="@filed2String">
+                                </div>
                             </td>
                             <td>
-                                <div class="form-group bmd-form-group"><label class="bmd-label-floating"></label>
-                                <input id="p3field" type="text" class="form-control" name=""></div>
+                                <div class="form-group bmd-form-group">
+                                    <label class="bmd-label-floating"></label>
+                                    @{
+                                        string filed3String = "";
+                                        var hasPhysicPlanForP3 = physicTreatmentPlans.Where(x => x.PlanNo == 3 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (hasPhysicPlanForP3 != null)
+                                        {
+                                            filed3String = ((int)hasPhysicPlanForP3.Fields).ToString();
+                                        }
+                                    }
+                                    <input id="p3field" type="text" class="form-control" name="" value="@filed3String">
+                                </div>
                             </td>
                             <td></td>
                         </tr>
@@ -134,15 +238,50 @@
                             <th>توضیحات فیزیسیست</th>
                             <th>
                                 <div class="form-group bmd-form-group">
-                                <textarea id="p1comment" class="form-control" rows="5"></textarea></div>
+                                    @{
+                                        string Comment1 = "";
+                                        var item = physicTreatmentPlans.Where(x => x.PlanNo == 1 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (item != null)
+                                        {
+                                            Comment1 = item.PhysicComment;
+                                        }
+                                    }
+
+                                    <textarea id="p1comment" class="form-control" rows="5">
+@Comment1
+</textarea>
+                                </div>
                             </th>
                             <th>
                                 <div class="form-group bmd-form-group">
-                                <textarea id="p2comment"  class="form-control" rows="5"></textarea></div>
+                                    @{
+                                        string Comment2 = "";
+                                        var item2 = physicTreatmentPlans.Where(x => x.PlanNo == 2 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (item2 != null)
+                                        {
+                                            Comment2 = item2.PhysicComment;
+                                        }
+                                    }
+
+                                    <textarea id="p2comment" class="form-control" rows="5">
+@Comment2
+</textarea>
+                                </div>
                             </th>
                             <th>
                                 <div class="form-group bmd-form-group">
-                                <textarea id="p3comment"  class="form-control" rows="5"></textarea></div>
+                                    @{
+                                        string Comment3 = "";
+                                        var item3 = physicTreatmentPlans.Where(x => x.PlanNo == 3 && x.MedicalRecordId == medicalRecordId).FirstOrDefault();
+                                        if (item3 != null)
+                                        {
+                                            Comment3 = item3.PhysicComment;
+                                        }
+                                    }
+                                    <textarea id="p3comment" class="form-control" rows="5">
+@Comment3
+</textarea>
+                                </div>
                             </th>
                             <th></th>
 
@@ -163,6 +302,23 @@
     </div>
 </div>
 <script type="text/javascript">
+    var p1IsOld, p2IsOld, p3IsOld;
+    $(document).ready(function () {
+
+        setOldPlanned();
+
+    });
+
+    function setOldPlanned() {
+        var fields_list = @Html.Raw(Json.Encode(oldPlanList));
+        p1IsOld = fields_list.includes(1);
+        p2IsOld = fields_list.includes(2);
+        p3IsOld = fields_list.includes(3);
+        //alert(p1IsOld + ' ' + p2IsOld  + ' ' + p3IsOld );
+    }
+
+
+
     function SetData() {
         var DataPhase = [];
         var FieldAndComment = [];
@@ -178,31 +334,31 @@
                var plannedDose = $(this).val();
                 if (prop != null || prop != 0)
                 {
-                    
-                    if (plannedDose.trim().length !== 0 && prop == 1) {
+
+                    if (plannedDose.trim().length !== 0 && prop == 1 && p1IsOld == false) {
 
                         Detail.phaseId = 1;
                         Detail.cancerOARId = oar;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
-                    else if (plannedDose.trim().length !== 0 && prop == 2) {
+                    else if (plannedDose.trim().length !== 0 && prop == 2 && p2IsOld == false) {
                         Detail.phaseId = 2;
                         Detail.cancerOARId = oar;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
-                    else if (plannedDose.trim().length !== 0 && prop == 3) {
+                    else if (plannedDose.trim().length !== 0 && prop == 3 && p3IsOld == false) {
                         Detail.phaseId = 3;
                         Detail.cancerOARId = oar;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
                     else if (plannedDose.trim().length !== 0 && prop == 'eval') {
                         Detail.phaseId = 3;
@@ -210,7 +366,7 @@
                         Detail.phaseDetailId = contourDetail;
                         Detail.evaluation = plannedDose;
                         DataPhase.push(Detail);
-                        alert('Eval:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Eval:  ' + Detail.phaseId + ' ' + Detail.cancerOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
 
                 }
@@ -234,30 +390,31 @@
 
                 if (plannedDose.trim().length !== 0) {
 
-                    if (prop == 1) {
+                    if (prop == 1 && p1IsOld == false) {
 
                         Detail.phaseId = 1;
                         Detail.targetOARId = targetId;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 1:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
-                    else if (prop == 2) {
+                    else if (prop == 2 && p2IsOld == false) {
                         Detail.phaseId = 2;
                         Detail.targetOARId = targetId;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 2:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
-                    else if (prop == 3) {
+                    else if (prop == 3 && p3IsOld == false) {
+                        //console.log('prop '+prop + ' , targetId='+targetId + ', plannedDose='+plannedDose);
                         Detail.phaseId = 3;
                         Detail.targetOARId = targetId;
                         Detail.plannedDose = plannedDose;
                         Detail.phaseDetailId = contourDetail;
                         DataPhase.push(Detail);
-                        alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Phase 3:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
                     else if (prop == 'eval') {
                         Detail.phaseId = 3;
@@ -265,7 +422,7 @@
                         Detail.phaseDetailId = contourDetail;
                         Detail.evaluation = plannedDose;
                         DataPhase.push(Detail);
-                        alert('Eval:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
+                        //alert('Eval:  ' + Detail.phaseId + ' ' + Detail.targetOARId + ' ' + Detail.phaseDetailId + ' ' + Detail.plannedDose);
                     }
                 }
             });
@@ -273,24 +430,26 @@
         });
 
         //Reading p1 Field and Comment
-        
+
         var p1field = $('#p1field').val();
         if (p1field != null || p1field != '') {
             var fieldAndCommentObj = { field: 0, plan: 0, comment: '' };
             var p1comment = $('#p1comment').val();
             fieldAndCommentObj.field = p1field;
             fieldAndCommentObj.comment = p1comment;
+            fieldAndCommentObj.plan = 1;
             FieldAndComment.push(fieldAndCommentObj);
         }
 
         //Reading p2 Field and Comment
-        
+
         var p2field = $('#p2field').val();
         if (p2field != null || p1field != '') {
             var fieldAndCommentObj = { field: 0, plan: 0, comment: '' };
             var p2comment = $('#p2comment').val();
             fieldAndCommentObj.field = p2field;
             fieldAndCommentObj.comment = p2comment;
+            fieldAndCommentObj.plan = 2;
             FieldAndComment.push(fieldAndCommentObj);
         }
 
@@ -301,13 +460,22 @@
             var p3comment = $('#p3comment').val();
             fieldAndCommentObj.field = p3field;
             fieldAndCommentObj.comment = p3comment;
+            fieldAndCommentObj.plan = 3;
             FieldAndComment.push(fieldAndCommentObj);
         }
 
-        alert('before post');
-        $.post('SetPhaseAsPlanned', { Data: DataPhase, FieldCommentData: FieldAndComment ,medicalRecordId: @ViewBag.MedicalRecordId }, function (d) {
+        //alert(DataPhase.length);
+
+        if (DataPhase.length == 0) {
+            alert('تغییراتی در اطلاعات داده نشده است');
+        }
+        else {
+$.post('SetPhaseAsPlanned', { Data: DataPhase, FieldCommentData: FieldAndComment ,medicalRecordId: @ViewBag.MedicalRecordId }, function (d) {
             window.location = "../../treatmentPhase/List"
         });
+        }
+
+
     }
 
 

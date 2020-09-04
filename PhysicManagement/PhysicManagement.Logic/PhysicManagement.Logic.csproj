@@ -80,6 +80,7 @@
     <Compile Include="Services\MedicalRecordService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PatientService.cs" />
+    <Compile Include="Services\PhysicTreatmentService.cs" />
     <Compile Include="Services\PhysicUserService.cs" />
     <Compile Include="Services\ResidentService.cs" />
     <Compile Include="Services\SMSWebService.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Validations\KFactorValidation.cs" />
     <Compile Include="Validations\MedicalRecordValidation.cs" />
     <Compile Include="Validations\PatientValidation.cs" />
+    <Compile Include="Validations\PhysicTreatmentPlanValidation.cs" />
     <Compile Include="Validations\PhysicUserValidation.cs" />
     <Compile Include="Validations\ResidentValidation.cs" />
     <Compile Include="Validations\TreatmentCategoryValidation.cs" />
