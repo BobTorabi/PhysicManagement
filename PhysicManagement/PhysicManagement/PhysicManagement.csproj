@@ -324,6 +324,7 @@
     <Content Include="Views\Home\CalculatePrint.cshtml" />
     <Content Include="Views\Doctor\DoctorAlarm.cshtml" />
     <Content Include="Views\TreatmentPhase\SetPhysicPlan.cshtml" />
+    <Content Include="Views\Alarm\SMSConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PhysicManagement.Common\PhysicManagement.Common.csproj">
