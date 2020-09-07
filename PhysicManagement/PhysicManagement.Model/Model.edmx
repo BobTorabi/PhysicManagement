@@ -238,14 +238,16 @@
           <Property Name="PlanNo" Type="int" Nullable="false" />
           <Property Name="MedicalRecordId" Type="bigint" Nullable="false" />
           <Property Name="PhysicId" Type="int" Nullable="false" />
-          <Property Name="PhysicFullName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="PhysicApplyDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PhysicFullName" Type="nvarchar" MaxLength="200" />
+          <Property Name="PhysicApplyDate" Type="datetime2" Precision="7" />
           <Property Name="PhysicComment" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsApprovedByDoctor" Type="bit" />
           <Property Name="DoctorId" Type="int" />
-          <Property Name="DoctorFullName" Type="nchar" MaxLength="10" />
+          <Property Name="DoctorFullName" Type="nvarchar" MaxLength="250" />
           <Property Name="DoctorComment" Type="nvarchar" MaxLength="1000" />
           <Property Name="Fields" Type="int" />
+          <Property Name="TreatmentPhaseId" Type="int" />
+          <Property Name="TreatmentPhaseNo" Type="int" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanDetail">
           <Key>
@@ -893,14 +895,16 @@
           <Property Name="PlanNo" Type="Int32" Nullable="false" />
           <Property Name="MedicalRecordId" Type="Int64" Nullable="false" />
           <Property Name="PhysicId" Type="Int32" Nullable="false" />
-          <Property Name="PhysicFullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhysicApplyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PhysicFullName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PhysicApplyDate" Type="DateTime" Precision="7" />
           <Property Name="PhysicComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="IsApprovedByDoctor" Type="Boolean" />
           <Property Name="DoctorId" Type="Int32" />
-          <Property Name="DoctorFullName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DoctorFullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DoctorComment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Fields" Type="Int32" />
+          <Property Name="TreatmentPhaseId" Type="Int32" />
+          <Property Name="TreatmentPhaseNo" Type="Int32" />
         </EntityType>
         <EntityType Name="PhysicTreatmentPlanDetail">
           <Key>
@@ -1560,6 +1564,8 @@
           <EntitySetMapping Name="PhysicTreatmentPlan">
             <EntityTypeMapping TypeName="PhysicManagementModel.PhysicTreatmentPlan">
               <MappingFragment StoreEntitySet="PhysicTreatmentPlan">
+                <ScalarProperty Name="TreatmentPhaseNo" ColumnName="TreatmentPhaseNo" />
+                <ScalarProperty Name="TreatmentPhaseId" ColumnName="TreatmentPhaseId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PlanNo" ColumnName="PlanNo" />
                 <ScalarProperty Name="MedicalRecordId" ColumnName="MedicalRecordId" />

@@ -3,6 +3,7 @@ using PhysicManagement.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,7 +79,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.PhysicFullName = entity.PhysicFullName;
                 Entity.PlanNo = entity.PlanNo;
 
-                return db.SaveChanges() == 1;
+                return db.SaveChanges() == 1;                
             }
         }
 

@@ -35,10 +35,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
+                            <br/>
+                            <label for="" class="bmd-label-floating"> رزیدنت جایگزین</label>
                             <div class="form-group dropdown-toggle">
 
-                                @Html.DropDownListFor(x=>x.ReplacementResidentId, (IEnumerable<SelectListItem>)ViewBag.ResidentList)
-                  
+                                @Html.DropDownListFor(x => x.ReplacementResidentId, (IEnumerable<SelectListItem>)ViewBag.ResidentList)
+
                             </div>
                         </div>
 

@@ -62,7 +62,10 @@ else
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Html.DropDownList("DoctorId", null, "پزشک مربوطه", htmlAttributes: new { @class = "form-control" })
+
+                                <label for="Mobile" class="bmd-label-floating">پزشک مربوطه</label>
+                                <br />
+                                @Html.DropDownList("DoctorId", null, "انتخاب پزشک مربوطه", htmlAttributes: new { @class = "form-control" })
 
                             </div>
                         </div>

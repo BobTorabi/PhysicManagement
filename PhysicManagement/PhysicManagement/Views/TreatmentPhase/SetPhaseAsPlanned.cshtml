@@ -8,6 +8,7 @@
     List<PhysicManagement.Model.PhysicTreatmentPlan> physicTreatmentPlans = ViewBag.PhysicTreatmentPlanList;
     List<PhysicManagement.Model.PhysicTreatmentPlanDetail> physicTreatmentPlanDetails = ViewBag.PhysicTreatmentPlanDetailList;
     var medicalRecordId = ViewBag.MedicalRecordId;
+    var UserData = ViewBag.UserData;
     var oldPhysicPlans = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId).ToList();
     List<int> oldPlanList = new List<int>();
     foreach (var rec in oldPhysicPlans)
@@ -16,6 +17,26 @@
         {
             oldPlanList.Add(rec.PlanNo);
         }
+    }
+    var userP1Name = "";
+    var p1 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 1).FirstOrDefault();
+    if (p1 != null)
+    {
+        userP1Name = p1.PhysicFullName;
+    }
+
+    var userP2Name = "";
+    var p2 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 2).FirstOrDefault();
+    if (p2 != null)
+    {
+        userP2Name = p2.PhysicFullName;
+    }
+
+    var userP3Name = "";
+    var p3 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 3).FirstOrDefault();
+    if (p3 != null)
+    {
+        userP3Name = p3.PhysicFullName;
     }
 }
 <div class="row">
@@ -34,9 +55,36 @@
                         <tr>
                             <th>Organ</th>
                             <th>Tolerance</th>
-                            <th>DVH Parameter (Plan 1)</th>
-                            <th>DVH Parameter (Plan 2)</th>
-                            <th>DVH Parameter (Plan 3)</th>
+                            <th>
+                                DVH Parameter (Plan 1)
+                                @{
+                                    if (!string.IsNullOrEmpty(userP1Name))
+                                    {
+                                        <br />
+                                        @userP1Name
+                                    }
+                                }
+                            </th>
+                            <th>
+                                DVH Parameter (Plan 2)
+                                @{
+                                    if (!string.IsNullOrEmpty(userP2Name))
+                                    {
+                                        <br />
+                                        @userP2Name
+                                    }
+                                }
+                            </th>
+                            <th>
+                                DVH Parameter (Plan 3)
+                                @{
+                                    if (!string.IsNullOrEmpty(userP3Name))
+                                    {
+                                        <br />
+                                        @userP3Name
+                                    }
+                                }
+                            </th>
                             <th>Evaluation</th>
                         </tr>
                     </thead>
@@ -286,6 +334,33 @@
                             <th></th>
 
                         </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                @{ if (!string.IsNullOrEmpty(userP1Name) && ViewBag.IsDoctor)
+                                    {
+                                        <button type="button" onclick="approvep1()" class="btn btn-rose">تایید پلن شماره ۱</button>
+                                    }}
+
+                            </td>
+                            <td>
+                                @{ if (!string.IsNullOrEmpty(userP2Name) && ViewBag.IsDoctor)
+                                    {
+                                        <button type="button" onclick="approvep2()" class="btn btn-rose">تایید پلن شماره ۲</button>
+                                    }}
+
+                            </td>
+                            <td>
+                                @{ if (!string.IsNullOrEmpty(userP3Name) && ViewBag.IsDoctor)
+                                    {
+                                        <button type="button" onclick="approvep3()" class="btn btn-rose">تایید پلن شماره ۳</button>
+                                    }}
+                            </td>
+                            <td></td>
+
+                        </tr>
                     </tfoot>
                 </table>
 
@@ -313,6 +388,35 @@
         //alert(p1IsOld + ' ' + p2IsOld  + ' ' + p3IsOld );
     }
 
+    var approvedId = -1;
+    function approvep1() {
+        if (p1IsOld) {
+            approvedId = @p1.Id;
+            sendApprovedDataToServer(approvedId);
+        }
+    }
+
+    function approvep2() {
+        if (p2IsOld) {
+            approvedId = @p2.Id;
+            sendApprovedDataToServer(approvedId);
+        }
+    }
+
+    function approvep3() {
+        if (p3IsOld) {
+            approvedId = @p3.Id;
+            sendApprovedDataToServer(approvedId);
+        }
+    }
+
+    function sendApprovedDataToServer(approvedId) {
+        alert('تایید با موفقیت انجام شد');
+        $.post('SetPhaseAsApprovedByPhysicst', { physicTreatmentPlanId: approvedId }, function (d) {
+
+            window.location = "../../treatmentPhase/List";
+        });
+            }
 
 
     function SetData() {
@@ -488,4 +592,6 @@ $.post('SetPhaseAsPlanned', { Data: DataPhase, FieldCommentData: FieldAndComment
 
         });
     }
+
+
 </script>
