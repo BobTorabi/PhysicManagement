@@ -19,12 +19,14 @@ namespace PhysicManagement.Model
         public long MedicalRecordId { get; set; }
         public int PhysicId { get; set; }
         public string PhysicFullName { get; set; }
-        public System.DateTime PhysicApplyDate { get; set; }
+        public Nullable<System.DateTime> PhysicApplyDate { get; set; }
         public string PhysicComment { get; set; }
         public Nullable<bool> IsApprovedByDoctor { get; set; }
         public Nullable<int> DoctorId { get; set; }
         public string DoctorFullName { get; set; }
         public string DoctorComment { get; set; }
         public Nullable<int> Fields { get; set; }
+        public Nullable<int> TreatmentPhaseId { get; set; }
+        public Nullable<int> TreatmentPhaseNo { get; set; }
     }
 }

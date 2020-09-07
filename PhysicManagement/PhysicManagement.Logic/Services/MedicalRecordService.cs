@@ -218,6 +218,25 @@ namespace PhysicManagement.Logic.Services
             }
         }
 
+
+        public bool UpdateMedicalRecordForPhysicTreatmentAccepted(long medicalRecordId, string acceptedUserFullName)
+        {
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                var Entity = db.MedicalRecord.Find(medicalRecordId);
+                if (Entity == null)
+                    throw Common.MegaException.ThrowException("");
+
+                Entity.PhysicTreatementAcceptDate = DateTime.Now;
+                Entity.PhysicTreatementAcceptUser = acceptedUserFullName;
+                Entity.TreatmentProcessId = 4; // تایید پلن فیزیک
+                Entity.LastTreatmentProcessChangeDate = DateTime.Now;
+                return db.SaveChanges() == 1;
+            }
+        }
+
+
+
         private Object thisLock = new Object();
 
         /// <summary>

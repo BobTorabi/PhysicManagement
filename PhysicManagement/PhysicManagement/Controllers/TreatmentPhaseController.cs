@@ -62,6 +62,7 @@ namespace PhysicManagement.Controllers
             ViewBag.CancerOARList = CancerService.GetCancerOARList();
             ViewBag.PhysicTreatmentPlanList = physicTreatmentPlanService.GetPhysicTreatmentPlanList();
             ViewBag.PhysicTreatmentPlanDetailList = physicTreatmentPlanService.GetPhysicTreatmentPlanDetailList();
+            ViewBag.IsDoctor = AuthenticatedUserService.GetUserId().RoleName == "doctor";
 
             return View(Phases);
         }
@@ -94,29 +95,53 @@ namespace PhysicManagement.Controllers
             return View(Phases);
         }
 
+        //[HttpPost]
+        //public JsonResult SetPhaseAsApprovedByPhysicst(long medicalRecordId)
+        //{
+
+        //    var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
+        //    var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
+        //    var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
+        //    var PhaseIds = Phases.Select(x => x.Id).ToArray();
+        //    var PhaseDetails = Service.GetTreatmentPhaseDetatilssByPhaseIds(PhaseIds);
+        //    foreach (var Phase in Phases)
+        //    {
+        //        Phase.IsApproved = true;
+        //        Service.UpdateTreatmentPhase(Phase);
+
+        //    }
+        //    foreach (var PHD in PhaseDetails)
+        //    {
+        //        PHD.MedicalRecordId = medicalRecordId;
+        //        PHD.PhysicPlanHasAccepted = true;
+        //        PHD.PhysicUserFullName = UserData.FullName;
+        //        PHD.PresciptionHasApproved = true;
+        //        Service.UpdateTreatmentPhaseDetail(PHD);
+        //    }
+
+        //    return Json(new { location = "" }, JsonRequestBehavior.AllowGet);
+        //}
+
+
         [HttpPost]
-        public JsonResult SetPhaseAsApprovedByPhysicst(long medicalRecordId)
+        public JsonResult SetPhaseAsApprovedByPhysicst(int physicTreatmentPlanId)
         {
 
             var UserData = Logic.Services.AuthenticatedUserService.GetUserId();
-            var MedicalRecordData = MedicalService.GetMedicalRecordById(medicalRecordId);
-            var Phases = Service.GetTreatmentPhasesByMedicalRecordId(medicalRecordId).OrderByDescending(x => x.PhaseNumber).ToList();
-            var PhaseIds = Phases.Select(x => x.Id).ToArray();
-            var PhaseDetails = Service.GetTreatmentPhaseDetatilssByPhaseIds(PhaseIds);
-            foreach (var Phase in Phases)
+            var physicTreatmentPlanObject = physicTreatmentPlanService.GetPhysicTreatmentPlanById(physicTreatmentPlanId);
+            if (physicTreatmentPlanObject == null)
             {
-                Phase.IsApproved = true;
-                Service.UpdateTreatmentPhase(Phase);
+                return Json(new { location = "" }, JsonRequestBehavior.AllowGet); ;
+            }
 
-            }
-            foreach (var PHD in PhaseDetails)
-            {
-                PHD.MedicalRecordId = medicalRecordId;
-                PHD.PhysicPlanHasAccepted = true;
-                PHD.PhysicUserFullName = UserData.FullName;
-                PHD.PresciptionHasApproved = true;
-                Service.UpdateTreatmentPhaseDetail(PHD);
-            }
+            long medicalRecordId = physicTreatmentPlanObject.MedicalRecordId;
+
+            physicTreatmentPlanObject.IsApprovedByDoctor = true;
+            physicTreatmentPlanObject.DoctorFullName = UserData.FullName;
+            physicTreatmentPlanObject.DoctorId = UserData.UserId;
+            physicTreatmentPlanService.UpdatePhysicTreatmentPlan(physicTreatmentPlanObject);
+
+            MedicalService.UpdateMedicalRecordForPhysicTreatmentAccepted(medicalRecordId, UserData.FullName);
 
             return Json(new { location = "" }, JsonRequestBehavior.AllowGet);
         }

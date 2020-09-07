@@ -178,6 +178,11 @@
     </div>
 </div>
 <script type="text/javascript">
+    
+	$('#exampleModal').click(function() {
+		$('html').addClass('perfect-scrollbar-on');
+	});
+  
     var med_id = null;
     function failRequest() {
         $('#failModal').modal('show');
@@ -199,6 +204,8 @@
         });
     }
     function openpanel(id) {
+        $('html').removeClass('perfect-scrollbar-on');
+
         med_id = id;
         $('#patientName,#patientLatName,#doctorName,#receptionDate,#ctDate,#systemCode').val('');
         $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: id }, function (d) {

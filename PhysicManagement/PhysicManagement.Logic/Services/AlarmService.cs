@@ -197,7 +197,7 @@ namespace PhysicManagement.Logic.Services
                 return AddDoctorAlarm(doctorAlarm);
             else
                 doctorAlarm.Id = retrievedDoctorAlarm.Id;
-                return UpdateDoctorAlarm(doctorAlarm);
+            return UpdateDoctorAlarm(doctorAlarm);
         }
 
         #endregion
@@ -432,7 +432,7 @@ namespace PhysicManagement.Logic.Services
                 Entity.SendAggregateSMS = entity.SendAggregateSMS;
                 Entity.SendResidentSMS = entity.SendResidentSMS;
                 Entity.LastModifiedDate = DateTime.Now;
-                
+
                 return db.SaveChanges() == 1;
             }
         }
@@ -455,7 +455,7 @@ namespace PhysicManagement.Logic.Services
             int EventTypeId = (int)alarmEventType;
             using (var db = new Model.PhysicManagementEntities())
             {
-                var Entity = db.AlarmConfig.Where(x=>x.AlarmEventTypeId == EventTypeId).FirstOrDefault();
+                var Entity = db.AlarmConfig.Where(x => x.AlarmEventTypeId == EventTypeId).FirstOrDefault();
                 return Entity;
             }
         }
@@ -485,6 +485,15 @@ namespace PhysicManagement.Logic.Services
             {
                 var Entity = db.AlarmEventType.Find(entityId);
                 return Entity;
+            }
+        }
+
+        public Model.AlarmEventType GetAlarmEventTypeByEventType(Enums.AlarmEventType alarmEventType)
+        {
+            int appropriateEventId = Convert.ToInt32(alarmEventType);
+            using (var db = new Model.PhysicManagementEntities())
+            {
+                return GetAlarmEventTypeById(appropriateEventId);
             }
         }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace PhysicManagement.Logic.Services
 {
@@ -55,6 +56,7 @@ namespace PhysicManagement.Logic.Services
 
 
             var alarmConfig = alarmService.GetAlarmConfigByEventTypeId(alarmEventType);
+            var alarmObject = alarmService.GetAlarmEventTypeByEventType(alarmEventType);
 
             var hasDoctorSMS = alarmConfig.SendDoctorSMS;
             if ((bool)hasDoctorSMS)
@@ -63,7 +65,14 @@ namespace PhysicManagement.Logic.Services
                 if (CheckUserCanRecieveSMS(doctor))
                 {
                     //Send
-                    SMSWebService.SendSMS(doctor.Mobile, "بیمار با نام " + correspondentMedicalRecord.PatientFirstName + " " + correspondentMedicalRecord.PatientLastName + " پذیرش شد" + " " + "تاریخ پذیرش " + Common.DateUtility.GetPersianDate(DateTime.Now));
+                    StringBuilder smsText = new StringBuilder();
+                    smsText.Append("نام بیمار: ");
+                    smsText.AppendLine(correspondentMedicalRecord.PatientFirstName + " " + correspondentMedicalRecord.PatientLastName);
+                    smsText.AppendLine("نوع اقدام: " + alarmObject.ShortTitle);
+                    smsText.AppendLine("تاریخ: " + Common.DateUtility.GetPersianDate(DateTime.Now));
+                    smsText.Append("مرکز رادیوتراپی شهدای تجریش");
+
+                    SMSWebService.SendSMS(doctor.Mobile, smsText.ToString());
                 }
             }
 
@@ -192,7 +201,7 @@ namespace PhysicManagement.Logic.Services
                     PatientFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName,
                     TreatmentProcessId = medicalRecord.TreatmentProcessId,
                     SendDate = DateTime.Now
-                }); 
+                });
             }
 
             if (NeedSendToResident)
@@ -212,7 +221,7 @@ namespace PhysicManagement.Logic.Services
                         PatientFullName = medicalRecord.PatientFirstName + " " + medicalRecord.PatientLastName,
                         TreatmentProcessId = medicalRecord.TreatmentProcessId,
                         SendDate = DateTime.Now
-                    }); 
+                    });
                 }
             }
             if (NeedSendToPhysist)
