@@ -53,6 +53,7 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="TreatmentProcessStepId" Type="int" />
+          <Property Name="ShortTitle" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Calendar">
           <Key>
@@ -704,6 +705,7 @@
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="TreatmentProcessStepId" Type="Int32" />
           <NavigationProperty Name="AlarmConfig" Relationship="Self.FK_AlarmConfig_AlarmEventType" FromRole="AlarmEventType" ToRole="AlarmConfig" />
+          <Property Name="ShortTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Calendar">
           <Key>
@@ -1370,6 +1372,7 @@
           <EntitySetMapping Name="AlarmEventType">
             <EntityTypeMapping TypeName="PhysicManagementModel.AlarmEventType">
               <MappingFragment StoreEntitySet="AlarmEventType">
+                <ScalarProperty Name="ShortTitle" ColumnName="ShortTitle" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="EnglishTitle" ColumnName="EnglishTitle" />
