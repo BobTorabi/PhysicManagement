@@ -72,7 +72,7 @@ namespace PhysicManagement.Logic.Services
             {
                 var MRList = GetMedicalRecordsNotApprovedByPhysist();
                 IQueryable<Model.MedicalRecord> QueryableMR =
-                    db.MedicalRecord.Where(t => MRList.Contains(t.Id)).Include(x => x.Patient);
+                    db.MedicalRecord.Where(t => MRList.Contains(t.Id) && t.PhysicTreatementAcceptDate == null).Include(x => x.Patient);
                 if (!string.IsNullOrEmpty(firstName))
                 {
                     firstName = firstName.Trim().ToPersian();
@@ -293,6 +293,25 @@ namespace PhysicManagement.Logic.Services
                     .Where(x => x.HasValue).Select(x => x.Value).ToArray();
             }
         }
+
+        //public long[] GetMedicalRecordsWithoutPhysicPlan()
+        //{
+        //    using (var db = new Model.PhysicManagementEntities())
+        //    {
+        //        var treatmentPhases = db.TreatmentPhase.Where(x => x.IsPrescribedByDoctor == true).ToList();
+        //        var physicTreatmentPlans = db.PhysicTreatmentPlan.ToList();
+
+
+        //        return
+
+        //            db
+        //            .TreatmentPhase
+        //            .Where(x => x.IsApproved == null && x.IsPrescribedByDoctor == true)
+        //            .OrderBy(x => x.Id)
+        //            .Select(x => x.MedicalRecordId).ToList()
+        //            .Where(x => x.HasValue).Select(x => x.Value).ToArray();
+        //    }
+        //}
 
         public List<Model.TreatmentPhase> GetTreatmentPhasesByMedicalRecordId(long medicalRecordId)
         {
