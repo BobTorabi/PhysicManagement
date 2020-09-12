@@ -10,36 +10,38 @@
     var medicalRecordId = ViewBag.MedicalRecordId;
     var UserData = ViewBag.UserData;
     var oldPhysicPlans = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId).ToList();
-    List<int> oldPlanList = new List<int>();
-    foreach (var rec in oldPhysicPlans)
-    {
-        if (!oldPlanList.Contains(rec.PlanNo))
-        {
-            oldPlanList.Add(rec.PlanNo);
-        }
-    }
+
     var userP1Name = "";
+    var p1Id = -1; 
     var p1 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 1).FirstOrDefault();
     if (p1 != null)
     {
         userP1Name = p1.PhysicFullName;
+        p1Id = p1.Id;
     }
 
     var userP2Name = "";
+    var p2Id = -1;
     var p2 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 2).FirstOrDefault();
     if (p2 != null)
     {
         userP2Name = p2.PhysicFullName;
+        p2Id = p2.Id;
     }
 
     var userP3Name = "";
+    var p3Id = -1;
     var p3 = physicTreatmentPlans.Where(x => x.MedicalRecordId == medicalRecordId && x.PlanNo == 3).FirstOrDefault();
     if (p3 != null)
     {
         userP3Name = p3.PhysicFullName;
+        p3Id = p3.Id;
     }
 }
+
+
 <div class="row">
+
     <div class="col-md-12">
 
         <div class="card">
@@ -341,21 +343,21 @@
                             <td>
                                 @{ if (!string.IsNullOrEmpty(userP1Name) && ViewBag.IsDoctor)
                                     {
-                                        <button type="button" onclick="approvep1()" class="btn btn-rose">تایید پلن شماره ۱</button>
+                                        <button type="button" onclick="sendApprovedDataToServer(@p1.Id)" class="btn btn-rose">تایید پلن شماره ۱</button>
                                     }}
 
                             </td>
                             <td>
                                 @{ if (!string.IsNullOrEmpty(userP2Name) && ViewBag.IsDoctor)
                                     {
-                                        <button type="button" onclick="approvep2()" class="btn btn-rose">تایید پلن شماره ۲</button>
+                                        <button type="button" onclick="sendApprovedDataToServer(@p2.Id)" class="btn btn-rose">تایید پلن شماره ۲</button>
                                     }}
 
                             </td>
                             <td>
                                 @{ if (!string.IsNullOrEmpty(userP3Name) && ViewBag.IsDoctor)
                                     {
-                                        <button type="button" onclick="approvep3()" class="btn btn-rose">تایید پلن شماره ۳</button>
+                                        <button type="button" onclick="sendApprovedDataToServer(@p3.Id)" class="btn btn-rose">تایید پلن شماره ۳</button>
                                     }}
                             </td>
                             <td></td>
@@ -373,48 +375,41 @@
     </div>
 </div>
 <script type="text/javascript">
-    var p1IsOld, p2IsOld, p3IsOld;
-    $(document).ready(function () {
+    var p1IsOld = false;
+    var p2IsOld = false;
+    var p3IsOld = false;
 
+    $(document).ready(function () {
         setOldPlanned();
 
     });
 
+
     function setOldPlanned() {
-        var fields_list = @Html.Raw(Json.Encode(oldPlanList));
-        p1IsOld = fields_list.includes(1);
-        p2IsOld = fields_list.includes(2);
-        p3IsOld = fields_list.includes(3);
-        //alert(p1IsOld + ' ' + p2IsOld  + ' ' + p3IsOld );
+        
+        if (@p1Id != -1) {
+            p1IsOld = true;
+        }
+
+        if (@p2Id != -1) {
+            p2IsOld = true;
+        }
+
+        if (@p3Id != null) {
+            p3IsOld = true;
+        }
+
+        alert(p1IsOld);
     }
 
     var approvedId = -1;
-    function approvep1() {
-        if (p1IsOld) {
-            approvedId = @p1.Id;
-            sendApprovedDataToServer(approvedId);
-        }
-    }
 
-    function approvep2() {
-        if (p2IsOld) {
-            approvedId = @p2.Id;
-            sendApprovedDataToServer(approvedId);
-        }
-    }
-
-    function approvep3() {
-        if (p3IsOld) {
-            approvedId = @p3.Id;
-            sendApprovedDataToServer(approvedId);
-        }
-    }
 
     function sendApprovedDataToServer(approvedId) {
         alert('تایید با موفقیت انجام شد');
         $.post('SetPhaseAsApprovedByPhysicst', { physicTreatmentPlanId: approvedId }, function (d) {
 
-            window.location = "../../treatmentPhase/List";
+            window.location = "../../treatmentPhase/ListForPhysicist";
         });
             }
 
