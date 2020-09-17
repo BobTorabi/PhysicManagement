@@ -14,8 +14,7 @@ namespace PhysicManagement.Logic.Validations
         {
             public TreatmentCategoryEntityValidate()
             {
-                RuleFor(x => x.Title).Length(1, 50).WithMessage("پر کردن عنوان اجباری است ");
-                RuleFor(x => x.EnglishTitle).Length(1, 50).WithMessage("پر کردن عنوان انگلیسی اجباری است ");
+                RuleFor(x => x.Title).Length(1, 250).WithMessage("پر کردن عنوان اجباری است ");
                 RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد");
             }
         }
@@ -25,7 +24,7 @@ namespace PhysicManagement.Logic.Validations
         {
             public TreatmentCategoryServiceEntityValidate()
             {
-                RuleFor(x => x.Title).Length(1, 50).WithMessage("پر کردن عنوان اجباری است ");
+                RuleFor(x => x.Title).Length(1, 250).WithMessage("پر کردن عنوان اجباری است ");
                 RuleFor(x => x.Description).MaximumLength(200).WithMessage("متنی که نوشته اید نمی تواند بیشتر از 200 حرف باشد");
             }
         }
