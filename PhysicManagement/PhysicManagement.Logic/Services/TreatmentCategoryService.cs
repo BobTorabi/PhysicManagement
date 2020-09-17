@@ -47,7 +47,7 @@ namespace PhysicManagement.Logic.Services
             {
                 return
                     db.TreatmentCategoryService
-                    .Where(x => x.TreatmentCategoryId == TreatmentCategoryId)
+                    .Where(x => x.TreatmentCategoryId == TreatmentCategoryId && x.IsActive == true)
                     .ToList();
             }
         }
@@ -68,6 +68,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.IsActive = true;
                 db.TreatmentCategory.Add(entity);
                 return db.SaveChanges() == 1;
             }
@@ -133,6 +134,7 @@ namespace PhysicManagement.Logic.Services
 
             using (var db = new Model.PhysicManagementEntities())
             {
+                entity.IsActive = true;
                 db.TreatmentCategoryService.Add(entity);
                 return db.SaveChanges() == 1;
             }
@@ -148,6 +150,9 @@ namespace PhysicManagement.Logic.Services
                 var Entity = db.TreatmentCategoryService.Find(entity.Id);
                 Entity.Title = entity.Title;
                 Entity.Description = entity.Description;
+                Entity.RelativeValue = entity.RelativeValue;
+                Entity.TreatmentCategoryId = entity.TreatmentCategoryId;
+                Entity.Code = entity.Code;
                 return db.SaveChanges() == 1;
             }
         }
