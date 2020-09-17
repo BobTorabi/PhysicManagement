@@ -1,8 +1,71 @@
-﻿
+﻿@model PhysicManagement.Model.TreatmentCategoryService
+
 @{
-    ViewBag.Title = "Modify";
+    if (Model.Id == 0)
+    {
+        ViewBag.Title = "ثبت جدید";
+    }
+    else
+    {
+        ViewBag.Title = " ویرایش ";
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var TreatmentCategoryId = (int)ViewBag.TreatmentCategoryId;
 }
 
-<h2>Modify</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">mail_outline</i>
+                </div>
+                <h4 class="card-title"> اطلاعات نمایشی دسته بندی درمان</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="TreatmentCategoryId" value="@TreatmentCategoryId" />
+                    <input type="hidden" name="Id" value="@Model.Id" />
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Title" class="bmd-label-floating">عنوان</label>
+                                <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control">
+                            </div>
+                        </div>
+
+                        @*<div class="col-md-6">
+                <div class="form-group">
+                    <label for="Code" class="bmd-label-floating">کد</label>
+                    <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
+                </div>
+            </div>*@
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="RelativeValue" class="bmd-label-floating">ارزش نسبی</label>
+                                <input type="text" id="RelativeValue" name="RelativeValue" value="@Model.RelativeValue" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="Description" class="bmd-label-floating">توضیحات</label>
+                                <textarea id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 

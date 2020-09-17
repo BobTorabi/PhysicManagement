@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace PhysicManagement.Controllers
@@ -18,24 +15,34 @@ namespace PhysicManagement.Controllers
             return RedirectToActionPermanent("List");
         }
         // GET: TreatmentCategoryService
-        public ActionResult List()
+        public ActionResult List(int? id)
         {
-
-            List<Model.TreatmentCategoryService> treatmentCategoryService = Service.GetTreatmentCategoryServiceList();
+            if (id == null)
+            {
+                return RedirectToAction("Index", "TreatmentCategory");
+            }
+            ViewBag.TreatmentCategory = Service.GetTreatmentCategoryById((int)id);
+            List<Model.TreatmentCategoryService> treatmentCategoryService = Service.GetTreatmentCategoryServiceByTreatmentCategoryId((int)id);
             return View(treatmentCategoryService);
         }
 
-        public ActionResult Modify(int? id)
+        public ActionResult Modify(int? id, int? serviceId)
         {
+            if (serviceId == null)
+                return RedirectToAction("Index", "TreatmentCategory");
+            
+            var serviceObject = Service.GetTreatmentCategoryById((int)serviceId);
+            ViewBag.TreatmentCategoryId = serviceObject.Id;
+
             if (id == null)
             {
                 return View(new Model.TreatmentCategoryService());
             }
-            else
-            {
-                var Entity = Service.GetTreatmentCategoryServiceById(id.GetValueOrDefault());
-                return View(Entity);
-            }
+
+            var Entity = Service.GetTreatmentCategoryServiceById(id.GetValueOrDefault());
+
+            return View(Entity);
+
 
         }
         [HttpPost]
@@ -43,19 +50,15 @@ namespace PhysicManagement.Controllers
         {
             bool IsAffected;
             if (entity.Id > 0)
-            {
                 IsAffected = Service.UpdateTreatmentCategoryService(entity);
-            }
             else
-            {
                 IsAffected = Service.AddTreatmentCategoryService(entity);
-            }
+
             if (IsAffected)
-                return RedirectToAction("List");
+                return RedirectToAction("List", "TreatmentCategoryService", new { @id = entity.TreatmentCategoryId });
             else
-            {
                 return View();
-            }
+            
         }
 
         [HttpPost]
