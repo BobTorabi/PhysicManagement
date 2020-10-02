@@ -28,22 +28,27 @@ namespace PhysicManagement.Controllers
         {
             return View();
         }
-        public ActionResult Calculate() {
+        public ActionResult Calculate()
+        {
             string JYear = Common.DateUtility.GetPersianYear(DateTime.Now);
-            
+
             ViewBag.kFactor = TreatmentCategoryService.GetKFaktorByYear(JYear);
             ViewBag.TreatmentCategory = TreatmentCategoryService.GetAllTreatmentCategory();
 
             return View();
         }
-        public ActionResult CalculatePrint(int kItem,int tcId)
+        public ActionResult CalculatePrint(int techKFactor, int profKFactor, int tcId, string name, int percent)
         {
             ViewBag.TreatmentCategoryTitle = TreatmentCategoryService.GetTreatmentCategoryById(tcId).Title;
+            ViewBag.TechnicalKfactor = techKFactor;
+            ViewBag.ProfessionalKFactor = profKFactor;
+            ViewBag.Name = name;
+            ViewBag.Percent = percent;
             return View();
         }
         public ActionResult Dashboard()
         {
-            ViewBag.PatientsStatistics =  PatientService.GetTotalPatientsStatistics();
+            ViewBag.PatientsStatistics = PatientService.GetTotalPatientsStatistics();
             ViewBag.ContoursStatistics = MedicalRecordService.GetTotalContoursStatistics();
             ViewBag.CTCodesStatistics = MedicalRecordService.GetTotalCTCodesStatistics();
             ViewBag.TreatmentPlansStatistics = MedicalRecordService.GetTotalTreatmentPlansStatistics();

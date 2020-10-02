@@ -96,7 +96,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         <input class="form-check-input custom-boutorabi" type="radio" data-name="ضریب  k سایر" name="KFactor" value="2" data-techk="0" data-profk="0" />
-                                               ضریب k سایر
+                                        ضریب k سایر
 
                                         <span class="circle"><span class="check"></span></span>
                                     </label>
@@ -124,7 +124,7 @@
             <div class="card">
                 <div class="card-header card-header-rose card-header-icon">
                     <div class="card-icon"><i class="material-icons">add_box</i></div>
-                    <h4 class="card-title">محاسبه خدمت</h4>
+                    <h4 class="card-title">خدمات</h4>
                 </div>
                 <div id="dataTable" class="card-body">
                     <table class="table table-hover">
@@ -139,12 +139,33 @@
                         </thead>
                         <tbody id="Data"></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon"><i class="material-icons">add_box</i></div>
+                    <h4 class="card-title">محاسبه خدمت</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-6">
+                        <label for="PatientName" class="bmd-label-floating"> * نام بیمار</label>
+                        <input type="text" id="PatientName" name="PatientName" class="form-control" value="بیمار پیش فرض">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="percent" class="bmd-label-floating"> درصد فرانشیز</label>
+                        <input type="text" id="percent" name="percent" class="form-control" value="100">
+                    </div>
                     <div class="col-md-12">
                         <button type="button" onclick="calModal()" class="btn btn-rose pull-left">محاسبه قیمت</button>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 
@@ -159,7 +180,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p class="text-success"> .</p>
+
+                <p class="text-success"> </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
@@ -170,10 +192,16 @@
 </div>
 
 <script type="text/javascript">
+    var technicalKFactor, professionalKFactor, patienName;
+    var percent = 100;
+    var totalAmount = 0;
+
+
     function gotoPrint() {
-        var kfaktor = parseInt($('[name=KFactor]:checked').val());
+        //var kfaktor = parseInt($('[name=KFactor]:checked').val());
         var tcId = $('input[name=treatmentCategories]:checked').val();
-        window.open('CalculatePrint?kItem=' + kfaktor + '&tcId=' + tcId);
+
+        window.open('CalculatePrint?techKFactor=' + technicalKFactor + '&profKFactor=' + professionalKFactor + '&tcId=' + tcId + '&name=' + patienName + '&percent=' + percent);
     }
     function getData() {
         $('#Data').empty();
@@ -203,6 +231,10 @@
 
     });
 
+    function calculateWithPercent() {
+        return numberWithCommas(totalAmount * percent);
+    }
+
     function calculate() {
         var data = 0;
         var pdata = 0;
@@ -218,29 +250,33 @@
 
         debugger;
         if (!isNaN($('.custom-boutorabi:checked').val())) {
-            var customTechK = $('#customtech').val();
-            var customProfK = $('#customprof').val();
-            return numberWithCommas((customTechK * data) + (customProfK * pdata));
+            technicalKFactor = $('#customtech').val();
+            professionalKFactor = $('#customprof').val();
+            totalAmount = (technicalKFactor * data) + (professionalKFactor * pdata);
+            return numberWithCommas(totalAmount);
         }
         else if (isNaN($('[name=KFactor]:checked').val())) {
-            alert('t1');
+            alert('خطایی به وجود آمده است');
         }
         else {
-            var techFactor = parseInt($('[name=KFactor]:checked').attr('data-techk'));
-            var profFactor = parseInt($('[name=KFactor]:checked').attr('data-profk'));
+            technicalKFactor = parseInt($('[name=KFactor]:checked').attr('data-techk'));
+            professionalKFactor = parseInt($('[name=KFactor]:checked').attr('data-profk'));
             //alert("tech: " + techFactor + " , prof: " + profFactor);
-            return numberWithCommas((techFactor * data) + (profFactor * pdata));
+            totalAmount = (technicalKFactor * data) + (professionalKFactor * pdata);
+            return numberWithCommas(totalAmount);
         }
     }
 
     function calModal() {
         var data = calculate();
-
+        patienName = $('#PatientName').val();
         //alert(data);
-
-        $('#exampleModal .modal-body').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + data + ' ريال می باشد');
+        percent = $('#percent').val();
+        var resultInpercent = totalAmount * percent / 100;
+        $('#exampleModal .modal-body').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + data + ' ريال می باشد' + '<br/>بیمار انتخابی :‌ ' + patienName + '<br/> مبلغ محاسبه شده با فرانشیز' + percent + ' درصدی، معادل ' + numberWithCommas(resultInpercent) + ' می‌باشد');
         $('#exampleModal').modal('show');
     }
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
