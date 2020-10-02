@@ -160,8 +160,12 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Year" Type="nvarchar" MaxLength="5" Nullable="false" />
-          <Property Name="GovernmentalFactor" Type="int" Nullable="false" />
-          <Property Name="PrivateFactor" Type="int" Nullable="false" />
+          <Property Name="GovernmentalTechnicalFactor" Type="int" Nullable="false" />
+          <Property Name="GovernmentalProfessionalFactor" Type="int" />
+          <Property Name="GovernmentalFactor" Type="int" />
+          <Property Name="PrivateTechnicalFactor" Type="int" />
+          <Property Name="PrivateProfessionalFactor" Type="int" />
+          <Property Name="PrivateFactor" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MedicalRecord">
@@ -349,7 +353,9 @@
           <Property Name="Code" Type="nvarchar" MaxLength="100" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="RelativeValue" Type="int" Nullable="false" />
+          <Property Name="RelativeTechnicalValue" Type="int" Nullable="false" />
+          <Property Name="RelativeProfessionalValue" Type="int" />
+          <Property Name="RelativeValue" Type="int" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="TreatmentDevice">
@@ -813,9 +819,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Year" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="GovernmentalFactor" Type="Int32" Nullable="false" />
-          <Property Name="PrivateFactor" Type="Int32" Nullable="false" />
+          <Property Name="GovernmentalFactor" Type="Int32" />
+          <Property Name="PrivateFactor" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="GovernmentalTechnicalFactor" Type="Int32" Nullable="false" />
+          <Property Name="GovernmentalProfessionalFactor" Type="Int32" />
+          <Property Name="PrivateTechnicalFactor" Type="Int32" />
+          <Property Name="PrivateProfessionalFactor" Type="Int32" />
         </EntityType>
         <EntityType Name="MedicalRecord">
           <Key>
@@ -991,9 +1001,11 @@
           <Property Name="Code" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RelativeValue" Type="Int32" Nullable="false" />
+          <Property Name="RelativeValue" Type="Int32" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="TreatmentCategory" Relationship="Self.FK_TreatmentCategoryService_TreatmentCategory" FromRole="TreatmentCategoryService" ToRole="TreatmentCategory" />
+          <Property Name="RelativeTechnicalValue" Type="Int32" Nullable="false" />
+          <Property Name="RelativeProfessionalValue" Type="Int32" />
         </EntityType>
         <EntityType Name="TreatmentDevice">
           <Key>
@@ -1485,6 +1497,10 @@
           <EntitySetMapping Name="KFactor">
             <EntityTypeMapping TypeName="PhysicManagementModel.KFactor">
               <MappingFragment StoreEntitySet="KFactor">
+                <ScalarProperty Name="PrivateProfessionalFactor" ColumnName="PrivateProfessionalFactor" />
+                <ScalarProperty Name="PrivateTechnicalFactor" ColumnName="PrivateTechnicalFactor" />
+                <ScalarProperty Name="GovernmentalProfessionalFactor" ColumnName="GovernmentalProfessionalFactor" />
+                <ScalarProperty Name="GovernmentalTechnicalFactor" ColumnName="GovernmentalTechnicalFactor" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="GovernmentalFactor" ColumnName="GovernmentalFactor" />
@@ -1662,6 +1678,8 @@
           <EntitySetMapping Name="TreatmentCategoryService">
             <EntityTypeMapping TypeName="PhysicManagementModel.TreatmentCategoryService">
               <MappingFragment StoreEntitySet="TreatmentCategoryService">
+                <ScalarProperty Name="RelativeProfessionalValue" ColumnName="RelativeProfessionalValue" />
+                <ScalarProperty Name="RelativeTechnicalValue" ColumnName="RelativeTechnicalValue" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TreatmentCategoryId" ColumnName="TreatmentCategoryId" />
                 <ScalarProperty Name="Code" ColumnName="Code" />

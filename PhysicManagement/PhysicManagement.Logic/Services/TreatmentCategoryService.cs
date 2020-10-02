@@ -122,7 +122,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new PhysicManagementEntities())
             {
-                var Entity = db.TreatmentCategoryService.Where(e=>e.TreatmentCategoryId == treatmentCategoryId).ToList();
+                var Entity = db.TreatmentCategoryService.Where(e=>e.TreatmentCategoryId == treatmentCategoryId && e.IsActive == true).ToList();
                 return Entity;
             }
         }
@@ -131,6 +131,10 @@ namespace PhysicManagement.Logic.Services
             var validation = new TreatmentCategoryValidation.TreatmentCategoryServiceEntityValidate().Validate(entity);
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
+
+            if (string.IsNullOrEmpty(entity.Code))
+                entity.Code = new Random().Next(1100, 9909).ToString();
+            
 
             using (var db = new Model.PhysicManagementEntities())
             {
@@ -145,12 +149,20 @@ namespace PhysicManagement.Logic.Services
             if (!validation.IsValid)
                 throw new ValidationException(validation.Errors);
 
+            if (entity.RelativeProfessionalValue == null)
+                entity.RelativeProfessionalValue = 0;
+
+            //if (entity.RelativeTechnicalValue == null)
+            //    entity.RelativeTechnicalValue = 0;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.TreatmentCategoryService.Find(entity.Id);
                 Entity.Title = entity.Title;
                 Entity.Description = entity.Description;
-                Entity.RelativeValue = entity.RelativeValue;
+                Entity.RelativeTechnicalValue = entity.RelativeTechnicalValue;
+                Entity.RelativeProfessionalValue = entity.RelativeProfessionalValue;
+                Entity.RelativeValue = entity.RelativeProfessionalValue + entity.RelativeTechnicalValue;
                 Entity.TreatmentCategoryId = entity.TreatmentCategoryId;
                 Entity.Code = entity.Code;
                 return db.SaveChanges() == 1;

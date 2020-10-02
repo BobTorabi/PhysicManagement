@@ -80,7 +80,7 @@ namespace PhysicManagement.Controllers
         {
             var Data =
                 Service.GetTreatmentCategoryServiceByTreatmentCategoryId(id)
-                .Select(x=>new {x.Id,x.Title,x.RelativeValue,x.Code }).ToList();
+                .Select(x=>new {x.Id,x.Title,x.RelativeProfessionalValue, x.RelativeTechnicalValue, x.Code }).ToList();
 
             return Json(Data, JsonRequestBehavior.AllowGet);
         }

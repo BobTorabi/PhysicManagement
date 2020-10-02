@@ -31,7 +31,8 @@
                         <tr>
                             <th>ردیف</th>
                             <th>نام  </th>
-                            <th>ارزش نسبی </th>
+                            <th>ارزش نسبی فنی </th>
+                            <th>ارزش نسبی حرفه‌ای </th>
                             <th style="width:50px;">امکانات</th>
                         </tr>
                     </thead>
@@ -43,17 +44,18 @@
                                 <tr>
                                     <td>@Index</td>
                                     <td>@item.Title</td>
-                                    <td>@item.RelativeValue</td>
+                                    <td>@item.RelativeTechnicalValue</td>
+                                    <td>@item.RelativeProfessionalValue</td>
                                     <td>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 امکانات
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-left">
-                                                    <a class="dropdown-item" href="@Url.Action("Modify","TreatmentCategoryService",new { @id = item.Id , serviceId = item.TreatmentCategoryId})">ویرایش</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","TreatmentCategoryService", new { id = item.Id })')">حذف</a>
-                                                </div>
+                                                <a class="dropdown-item" href="@Url.Action("Modify","TreatmentCategoryService",new { @id = item.Id , serviceId = item.TreatmentCategoryId})">ویرایش</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#DeleteModal" onclick="DeleteEntity('حذف','@Url.Action("Delete","TreatmentCategoryService", new { id = item.Id })')">حذف</a>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

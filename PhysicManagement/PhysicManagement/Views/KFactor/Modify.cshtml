@@ -35,18 +35,33 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="GovernmentalFactor" class="bmd-label-floating">سازمان دولتی</label>
-                                    <input type="text" id="GovernmentalFactor" name="GovernmentalFactor" value="@Model.GovernmentalFactor" class="form-control">
+                                    <label for="GovernmentalFactor" class="bmd-label-floating">ضریب فنی دولتی</label>
+                                    <input type="text" id="GovernmentalTechnicalFactor" name="GovernmentalTechnicalFactor" value="@Model.GovernmentalTechnicalFactor" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="GovernmentalFactor" class="bmd-label-floating">ضریب حرفه‌ای دولتی</label>
+                                    <input type="text" id="GovernmentalProfessionalFactor" name="GovernmentalProfessionalFactor" value="@Model.GovernmentalProfessionalFactor" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="PrivateFactor" class="bmd-label-floating">ضریب فنی خصوصی</label>
+                                    <input type="text" id="PrivateTechnicalFactor" name="PrivateTechnicalFactor" value="@Model.PrivateTechnicalFactor" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="PrivateFactor" class="bmd-label-floating">سازمان خصوصی</label>
-                                    <input type="text" id="PrivateFactor" name="PrivateFactor" value="@Model.PrivateFactor" class="form-control">
+                                    <label for="PrivateFactor" class="bmd-label-floating">ضریب حرفه‌ای خصوصی</label>
+                                    <input type="text" id="PrivateProfessionalFactor" name="PrivateProfessionalFactor" value="@Model.PrivateProfessionalFactor" class="form-control">
                                 </div>
                             </div>
-                           
+
+
                         </div>
                         <button type="submit" class="btn btn-rose pull-right">ثبت تغییرات</button>
                         <div class="clearfix"></div>
