@@ -5,36 +5,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width" />
-<title>محاسبه هزینه</title>
-<link href="~/assets/css/fonts.css" rel="stylesheet" />
-<script src="~/assets/js/core/jquery.min.js"></script>
-<style type="text/css">
-* {margin: 0;padding: 0;}
-body {margin:30px;font-size:13px;}
-table {border: 1px solid #444;width: 100%;}
-table tr > td {border: 1px solid #444;padding: 5px 10px;}
-table tr > th{border: 1px solid #444;padding: 5px 10px;background-color:#444;color:#fff;}
-table tr > td:first-child{text-align:center;}
-table tr > td:last-child{text-align: center;}
-input[type=text]{border:medium none;border-bottom:1px dotted #444;padding:5px;}
-p {line-height:30px;}
-</style>
+    <meta name="viewport" content="width=device-width" />
+    <title>محاسبه هزینه</title>
+    <link href="~/assets/css/fonts.css" rel="stylesheet" />
+    <script src="~/assets/js/core/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 30px;
+            font-size: 13px;
+        }
+
+        table {
+            border: 1px solid #444;
+            width: 100%;
+        }
+
+            table tr > td {
+                border: 1px solid #444;
+                padding: 5px 10px;
+            }
+
+            table tr > th {
+                border: 1px solid #444;
+                padding: 5px 10px;
+                background-color: #444;
+                color: #fff;
+            }
+
+            table tr > td:first-child {
+                text-align: center;
+            }
+
+            table tr > td:last-child {
+                text-align: center;
+            }
+
+        input[type=text] {
+            border: medium none;
+            border-bottom: 1px dotted #444;
+            padding: 5px;
+        }
+
+        p {
+            line-height: 30px;
+        }
+    </style>
 </head>
 <body dir="rtl">
     <div style="margin:0 auto;max-width:1024px;">
         <p>
-            بیمار خانم / آقای <input type="text" /> <b>@ViewBag.TreatmentCategoryTitle</b> قرار گرفته و خدمات ذیل ارائه گردید.
+            بیمار خانم / آقای
+            <b>
+                @ViewBag.Name
+            </b>
+            <br />
+            <b>
+                @ViewBag.TreatmentCategoryTitle
+
+            </b> قرار گرفته و خدمات ذیل ارائه گردید.
         </p>
         <br />
         <div class="data">
 
+
+
         </div>
         <br />
-        <div class="price"></div>
+        <div>
+            <b>
+                ضریب K فنی :‌ @ViewBag.TechnicalKfactor
+                <br>
+                حرفه‌ای K فنی :‌ @ViewBag.ProfessionalKFactor
+            </b>
+        </div>
+
+        <br />
+        <div class="price">
+
+        </div>
+        <div>
+            <input type="submit" value="پرینت" onclick="window.print()" style="width:75px;" />
+        </div>
+
     </div>
+
     <script>
         $(document).ready(function () {
+            const params = new URLSearchParams(window.location.search);
+            var franchize = params.get('percent');
+
             $('.data').empty();
             $('<table>').html(window.opener.$('#dataTable').find('table').html()).appendTo('.data');
             $('input[data-rv]').each(function () {
@@ -43,10 +107,8 @@ p {line-height:30px;}
                 $(this).replaceWith('<b>' + $val + '</b>');
             });
 
+            $('<div>').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + '<b>' + window.opener.calculateWithPercent() + '</b>' + ' ريال می باشد' + ' <br/> فرانشیز محاسبه شده : ' + franchize).appendTo('.price');
 
-            var kFaktor = window.opener.$('input[name="KFactor"]:checked');
-            $('<div>').html('محاسبه با ' + '<b>' + kFaktor.attr('data-name') + '</b>' + ' به ارزش ' + kFaktor.val()+' ریال می باشد.').appendTo('.price');
-            $('<div>').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + window.opener.calculate() + ' ريال می باشد').appendTo('.price');
 
         })
     </script>

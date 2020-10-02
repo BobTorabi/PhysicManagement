@@ -16,8 +16,12 @@ namespace PhysicManagement.Model
     {
         public int Id { get; set; }
         public string Year { get; set; }
-        public int GovernmentalFactor { get; set; }
-        public int PrivateFactor { get; set; }
+        public Nullable<int> GovernmentalFactor { get; set; }
+        public Nullable<int> PrivateFactor { get; set; }
         public bool IsActive { get; set; }
+        public int GovernmentalTechnicalFactor { get; set; }
+        public Nullable<int> GovernmentalProfessionalFactor { get; set; }
+        public Nullable<int> PrivateTechnicalFactor { get; set; }
+        public Nullable<int> PrivateProfessionalFactor { get; set; }
     }
 }

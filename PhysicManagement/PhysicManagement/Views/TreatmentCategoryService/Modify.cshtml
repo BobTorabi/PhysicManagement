@@ -35,17 +35,28 @@
                             </div>
                         </div>
 
-                        @*<div class="col-md-6">
-                <div class="form-group">
-                    <label for="Code" class="bmd-label-floating">کد</label>
-                    <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
-                </div>
-            </div>*@
-
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="RelativeValue" class="bmd-label-floating">ارزش نسبی</label>
-                                <input type="text" id="RelativeValue" name="RelativeValue" value="@Model.RelativeValue" class="form-control">
+                                <label for="Code" class="bmd-label-floating">کد (در صورت خالی گذاشتن به صورت سیستمی تنظیم می‌شود)</label>
+                                <input type="text" id="Code" name="Code" value="@Model.Code" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="RelativeValue" class="bmd-label-floating">ارزش نسبی فنی</label>
+                                <input type="text" id="RelativeTechnicalValue" name="RelativeTechnicalValue" value="@Model.RelativeTechnicalValue" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="RelativeValue" class="bmd-label-floating">ارزش نسبی حرفه‌ای</label>
+                                <input type="text" id="RelativeProfessionalValue" name="RelativeProfessionalValue" value="@Model.RelativeProfessionalValue" class="form-control">
                             </div>
                         </div>
                     </div>

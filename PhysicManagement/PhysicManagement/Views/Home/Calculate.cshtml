@@ -42,44 +42,79 @@
                 <div class="card-body">
                     <p class="card-category">لطفا ضریب k را وارد نمایید:</p>
 
-                    <div class="row">
+                    <div class="row myform">
+
                         <div class="col-md-4">
                             <div class="form-group bmd-form-group">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" data-name="ضریب k دولتی" name="KFactor" value="@kFactor.GovernmentalFactor" checked="checked" />
-                                        ضریب k دولتی
+                                        <input class="form-check-input" type="radio" data-name="ضریب  k دولتی" name="KFactor" value="1" data-techk="@kFactor.GovernmentalTechnicalFactor" data-profk="@kFactor.GovernmentalProfessionalFactor" checked="checked" />
+                                        ضریب  k دولتی
                                         <span class="circle">
                                             <span class="check"></span>
                                         </span>
                                     </label>
                                 </div>
+
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب فنی
+                                </span>
                                 <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
-                                       value="@kFactor.GovernmentalFactor.ToString("N0")" readonly name="KFactor" />
+                                       value="@kFactor.GovernmentalTechnicalFactor.ToString()" readonly /><br />
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب حرفه‌ای
+                                </span>
+                                <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
+                                       value="@kFactor.GovernmentalProfessionalFactor.ToString()" readonly />
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group bmd-form-group">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input class="form-check-input" type="radio" data-name="ضریب k خصوصی" value="@kFactor.PrivateFactor" name="KFactor" />ضریب k خصوصی
+                                        <input class="form-check-input" type="radio" data-name="ضریب  k خصوصی" name="KFactor" value="2" data-techk="@kFactor.PrivateTechnicalFactor" data-profk="@kFactor.PrivateProfessionalFactor" />ضریب k خصوصی
                                         <span class="circle">
                                             <span class="check"></span>
                                         </span>
                                     </label>
                                 </div>
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب فنی
+                                </span>
                                 <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
-                                       value="@kFactor.PrivateFactor.ToString("N0")" readonly name="KFactor" />
+                                       value="@kFactor.PrivateTechnicalFactor.ToString()" readonly /><br />
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب حرفه‌ای
+                                </span>
+                                <input type="text" class="form-control" style="direction:ltr;text-align:left;padding:0 10px;"
+                                       value="@kFactor.PrivateProfessionalFactor.ToString()" readonly />
+
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group bmd-form-group">
                                 <div class="form-check">
-                                    <label class="form-check-label"><input class="form-check-input otherFaktor" data-name="ضریب k سایر" type="radio" name="KFactor" />ضریب k سایر<span class="circle"><span class="check"></span></span></label>
+                                    <label class="form-check-label">
+                                        <input class="form-check-input custom-boutorabi" type="radio" data-name="ضریب  k سایر" name="KFactor" value="2" data-techk="0" data-profk="0" />
+                                        ضریب k سایر
+
+                                        <span class="circle"><span class="check"></span></span>
+                                    </label>
                                 </div>
-                                <input type="text" class="form-control otherFaktorInput" value="1" onchange="$('.otherFaktor').val(this.value)" style="direction:ltr;text-align:left;padding:0 10px;" name="KFactor" />
+
+
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب فنی
+                                </span>
+                                <input type="text" class="form-control otherFaktorInputTech" value="1" onchange="$('.otherFaktorTech').val(this.value)" style="direction:ltr;text-align:left;padding:0 10px;" name="KFactor" id="customtech" />
+                                <span style="font-size:13px; color:#766f6f">
+                                    ضریب حرفه‌ای
+                                </span>
+                                <input type="text" class="form-control otherFaktorInputProf" value="1" onchange="$('.otherFaktorProf').val(this.value)" style="direction:ltr;text-align:left;padding:0 10px;" name="KFactor" id="customprof" />
+
                             </div>
                         </div>
+
                     </div>
                     <br />
                 </div>
@@ -89,7 +124,7 @@
             <div class="card">
                 <div class="card-header card-header-rose card-header-icon">
                     <div class="card-icon"><i class="material-icons">add_box</i></div>
-                    <h4 class="card-title">محاسبه خدمت</h4>
+                    <h4 class="card-title">خدمات</h4>
                 </div>
                 <div id="dataTable" class="card-body">
                     <table class="table table-hover">
@@ -97,20 +132,43 @@
                             <tr>
                                 <th>کد</th>
                                 <th>شرح کد</th>
-                                <th> ارزش نسبی</th>
+                                <th> ارزش نسبی فنی</th>
+                                <th> ارزش نسبی حرفه‌ای</th>
                                 <th class="phide">تعداد انجام خدمت</th>
                             </tr>
                         </thead>
                         <tbody id="Data"></tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon"><i class="material-icons">add_box</i></div>
+                    <h4 class="card-title">محاسبه خدمت</h4>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-6">
+                        <label for="PatientName" class="bmd-label-floating"> * نام بیمار</label>
+                        <input type="text" id="PatientName" name="PatientName" class="form-control" value="بیمار پیش فرض">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="percent" class="bmd-label-floating"> درصد فرانشیز</label>
+                        <input type="text" id="percent" name="percent" class="form-control" value="100">
+                    </div>
                     <div class="col-md-12">
                         <button type="button" onclick="calModal()" class="btn btn-rose pull-left">محاسبه قیمت</button>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -122,7 +180,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p class="text-success"> .</p>
+
+                <p class="text-success"> </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
@@ -133,10 +192,16 @@
 </div>
 
 <script type="text/javascript">
+    var technicalKFactor, professionalKFactor, patienName;
+    var percent = 100;
+    var totalAmount = 0;
+
+
     function gotoPrint() {
-        var kfaktor = parseInt($('[name=KFactor]:checked').val());
+        //var kfaktor = parseInt($('[name=KFactor]:checked').val());
         var tcId = $('input[name=treatmentCategories]:checked').val();
-        window.open('CalculatePrint?kItem=' + kfaktor + '&tcId=' + tcId);
+
+        window.open('CalculatePrint?techKFactor=' + technicalKFactor + '&profKFactor=' + professionalKFactor + '&tcId=' + tcId + '&name=' + patienName + '&percent=' + percent);
     }
     function getData() {
         $('#Data').empty();
@@ -146,10 +211,11 @@
                     `<tr>
                     <td>`+ d[i].Code + `</td>
                     <td>`+ d[i].Title + `</td>
-                    <td>`+ d[i].RelativeValue + `</td>
+                    <td>`+ d[i].RelativeTechnicalValue + `</td>
+                    <td>`+ d[i].RelativeProfessionalValue + `</td>
                     <td class="phide">
                         <div class="form-group bmd-form-group">
-                            <input type="text" class="form-control rv" name="code_`+ d[i].Code + `" data-rv='` + d[i].RelativeValue + `' value='1'>
+                            <input type="text" class="form-control rv" name="code_`+ d[i].Code + `" data-rv='` + d[i].RelativeTechnicalValue + `' data-pv='` + d[i].RelativeProfessionalValue + `' value='1'>
                         </div>
                     </td>
                 </tr>`;
@@ -157,29 +223,60 @@
             }
         });
     }
+
     $(document).ready(function () {
         $('[name="treatmentCategories"]:eq(0)').attr('checked', 'checked').change();
-        $('.otherFaktor').val($('.otherFaktorInput').val());
+        $('.otherFaktor').val($('.otherFaktorInputTech').val());
+        $('.otherFaktor').val($('.otherFaktorInputProf').val());
+
     });
+
+    function calculateWithPercent() {
+        return numberWithCommas(totalAmount * percent);
+    }
+
     function calculate() {
         var data = 0;
+        var pdata = 0;
+
         $('.rv').each(function () {
             data += (parseInt($(this).val()) * parseInt($(this).attr('data-rv')));
+            pdata += (parseInt($(this).val()) * parseInt($(this).attr('data-pv')));
         });
+
+        //alert(" data = "+data + ", pdata = " + pdata);
+
+        //var checkedValue = $('.form-check').find("input[name=KFactor]:checked").attr('data-techk'));
+
         debugger;
-        if (isNaN($('[name=KFactor]:checked').val())) {
-            alert('برای ضریب k مقداری معتبر وارد کنید.');
+        if (!isNaN($('.custom-boutorabi:checked').val())) {
+            technicalKFactor = $('#customtech').val();
+            professionalKFactor = $('#customprof').val();
+            totalAmount = (technicalKFactor * data) + (professionalKFactor * pdata);
+            return numberWithCommas(totalAmount);
+        }
+        else if (isNaN($('[name=KFactor]:checked').val())) {
+            alert('خطایی به وجود آمده است');
         }
         else {
-            var kfaktor = parseInt($('[name=KFactor]:checked').val());
-            return numberWithCommas(kfaktor * data);
+            technicalKFactor = parseInt($('[name=KFactor]:checked').attr('data-techk'));
+            professionalKFactor = parseInt($('[name=KFactor]:checked').attr('data-profk'));
+            //alert("tech: " + techFactor + " , prof: " + profFactor);
+            totalAmount = (technicalKFactor * data) + (professionalKFactor * pdata);
+            return numberWithCommas(totalAmount);
         }
     }
+
     function calModal() {
         var data = calculate();
-        $('#exampleModal .modal-body').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + data + ' ريال می باشد');
+        patienName = $('#PatientName').val();
+        //alert(data);
+        percent = $('#percent').val();
+        var resultInpercent = totalAmount * percent / 100;
+        $('#exampleModal .modal-body').html('با توجه به فیلد های انتخابی مورد نظر، مبلغ هزینه درمان شما ' + data + ' ريال می باشد' + '<br/>بیمار انتخابی :‌ ' + patienName + '<br/> مبلغ محاسبه شده با فرانشیز' + percent + ' درصدی، معادل ' + numberWithCommas(resultInpercent) + ' می‌باشد');
         $('#exampleModal').modal('show');
     }
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }

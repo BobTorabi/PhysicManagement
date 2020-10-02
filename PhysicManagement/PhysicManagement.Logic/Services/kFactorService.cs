@@ -10,7 +10,7 @@ using PhysicManagement.Model;
 
 namespace PhysicManagement.Logic.Services
 {
-   public class kFactorService
+    public class kFactorService
     {
         #region PhysicUser section
 
@@ -18,7 +18,7 @@ namespace PhysicManagement.Logic.Services
         {
             using (var db = new Model.PhysicManagementEntities())
             {
-                return db.KFactor.OrderBy(x => x.Year).ToList();
+                return db.KFactor.Where(x => x.IsActive == true).OrderBy(x => x.Year).ToList();
             }
         }
         public Model.KFactor GetkFactorById(int entityId)
@@ -47,13 +47,28 @@ namespace PhysicManagement.Logic.Services
             if (!vallidtion.IsValid)
                 throw new ValidationException(vallidtion.Errors);
 
+            if (entity.GovernmentalProfessionalFactor == null)
+                entity.GovernmentalProfessionalFactor = 0;
+
+            if (entity.GovernmentalTechnicalFactor == null)
+                entity.GovernmentalTechnicalFactor = 0;
+
+            if (entity.PrivateProfessionalFactor == null)
+                entity.PrivateProfessionalFactor = 0;
+
+            if (entity.PrivateTechnicalFactor== null)
+                entity.PrivateTechnicalFactor = 0;
+
             using (var db = new Model.PhysicManagementEntities())
             {
                 var Entity = db.KFactor.Find(entity.Id);
                 Entity.Year = entity.Year;
-                Entity.GovernmentalFactor = entity.GovernmentalFactor;
-                Entity.PrivateFactor = entity.PrivateFactor;
-              
+                Entity.GovernmentalProfessionalFactor = entity.GovernmentalProfessionalFactor;
+                Entity.GovernmentalTechnicalFactor = entity.GovernmentalTechnicalFactor;
+                Entity.PrivateTechnicalFactor = entity.PrivateTechnicalFactor;
+                Entity.PrivateProfessionalFactor = entity.PrivateProfessionalFactor;
+                Entity.PrivateFactor = entity.PrivateTechnicalFactor + entity.PrivateProfessionalFactor;
+                Entity.GovernmentalFactor = entity.GovernmentalTechnicalFactor + entity.GovernmentalProfessionalFactor;
 
                 return db.SaveChanges() == 1;
             }

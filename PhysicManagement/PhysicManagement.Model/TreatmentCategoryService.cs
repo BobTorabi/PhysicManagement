@@ -19,8 +19,10 @@ namespace PhysicManagement.Model
         public string Code { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int RelativeValue { get; set; }
+        public Nullable<int> RelativeValue { get; set; }
         public bool IsActive { get; set; }
+        public int RelativeTechnicalValue { get; set; }
+        public Nullable<int> RelativeProfessionalValue { get; set; }
     
         public virtual TreatmentCategory TreatmentCategory { get; set; }
     }
