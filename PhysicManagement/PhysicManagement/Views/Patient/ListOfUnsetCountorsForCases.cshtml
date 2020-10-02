@@ -4,7 +4,9 @@
     int Index = 1;
 }
 <style>
-    .toggle{margin-top:15px !important;}
+    .toggle {
+        margin-top: 15px !important;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -161,8 +163,17 @@
 </div>
 
 <script>
+
+    function disabled_scrollbar() {
+        $('html').removeClass('perfect-scrollbar-on');
+    };
+
     var med_id = null;
     function openpanel(id) {
+
+        //$('html').addClass('perfect-scrollbar-on');
+        $('html').removeClass('perfect-scrollbar-on');
+
         med_id = id;
         $('#patientName,#patientLatName,#doctorName,#receptionDate,#ctDate,#systemCode').val('');
         $.getJSON('../MedicalRecord/GetMedicalRecordData', { medicalRecordId: id }, function (d) {
@@ -305,4 +316,5 @@
             }
         });
     }
+   
 </script>
